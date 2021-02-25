@@ -21,6 +21,6 @@ function ss($path,$pattern){Select-String -Path $path -Pattern $pattern}
 function bf(){$x="";$files = Get-ChildItem . -Name -Include *.exe;foreach ($f in $files){$x += "[""" + $f + """," + """imp-" + ($f).split(".")[0] + """],"};Write-Host ("[" + ($x).TrimEnd(",") + "]")}
 function scn(){Get-ChildItem $env:scoop\cache\*|% {$_.Name.Split('#')[0]}}
 function go() {Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/contigon/Downloads/master/go.ps1')}
-function ga {git add Cyber*.*;git commit -m "2021";git push}
+function ga {git add Cyber*.* Microsoft.PowerShell_profile.ps1 go.ps1 AD.ps1 Bginfo64.exe Scuba2CSV.py WinPwn.ps1;git commit -m "2021";git push}
 function gitc {git rm --cached *}
 function gits {git status --ignored}
