@@ -1198,45 +1198,79 @@ $help = @"
         Skybox CheckPoint collector
         ----------------------------
 
-        Collect information from CheckPoint Firewalls R80.20 ane lower versions:
-        - OS 
-        - installed Software
-        - hotfixes
+        Retrieval of Check Point R80.10 and lower management configuration data and convert it to Skybox import format.
 
-        After getting all machines listed in the domain ou=computers, the script connects to
-        each machine and collects the relevant information using wmi protocol.
-
-        Needs user with domain administration permissions on all machines.
-        
-        The script can be downloaded from:
-        https://drive.google.com/open?id=1E-1ibwElj_JK2oRc6QbS5bwl5Aj0cs1F
-
-        wmi_collector.exe -s URI -b BASEDN -u USERNAME -p PASSWORD -o
-        -s URI >>> example : ldap://dc01.myorg.dom
-        -b BASEDN >>> example : dc=myorg,dc=dom
-        -u USERNAME >>> example : myuser@myorg.com
-        -p PASSWORD
-        -o >>> Output folder
+        Steps that will be executed:
+        1.Updating the collection_settings.xml file with relevant details:
+            user - User name for collection
+            pwd  - Password in clear text
+            url  - Management IP, e.g. 172.10.100.21
+    
+            Optional field:
+                output_file_prefix: A prefix can be added to the configuration filename
+                                    In the current example, the output filename will be offline_config_172.20.100.21.json
+                                    If left empty, the Tool creates 172.20.100.21.json.
+        2.running the Collect.bat script
 
 "@
         Write-Host $help
-        $ldapServer = (Get-ADDomain).pdcemulator
-        $basedn = (Get-ADDomain).distinguishedname
-        $domain = (Get-ADDomain).dnsroot
-        $ACQ = ACQ("Skybox-WMI")
-        $userName = Read-Host "Input user name with domain admin permissions"
+        $ACQ = ACQ("Skybox-CheckPointcollector")
+        $path =  scoop prefix skyboxcheckpointcollector
+        $path = $path + "\SkyboxCheckPointCollector"
+        $userName = Read-Host "Input user name with firewall admin permissions"
         $userPassword = Read-Host "Input password for this user"
-        $cmd = "wmi_collector -s 'ldap://$ldapServer' -b '$basedn' -u $username@$domain -p $userPassword -o $ACQ"
+        $FwURL = Read-Host "Input the firewall Management IP address (e.g. 172.10.100.21)"
+        $xmlFile = "$path\$FwURL" + "collection_settings.xml"
+        Push-Location $path
+        Write-Host "Updating the collection_settings.xml file"
+        (Get-Content "$path\collection_settings.xml") | ForEach-Object {$_ -replace "user"">","user"">$username" -replace "pwd"">","pwd"">$userPassword" -replace "url"">","url"">$FwURL"} | Set-Content $xmlFile
         success "Starting the collection phase"
-        Invoke-Expression $cmd
-        $null = New-Item -Path $ACQ -Name "parsedFiles" -ItemType Directory -Force
-        $cmd = "wmi_parser -i $ACQ -o $ACQ\parsedFiles"
-        success "Starting the parsing phase"
-        Invoke-Expression $cmd
+        CheckPointOfflineCollector $xmlFile
+        Pop-Location
         read-host "Press ENTER to continue"
         $null = start-Process -PassThru explorer $ACQ
         }
+ 
+     #Hamster
+     25 {
+        Cls
+        $help = @"
 
+        Skybox CheckPoint collector
+        ----------------------------
+
+        Retrieval of Check Point R80.10 and lower management configuration data and convert it to Skybox import format.
+
+        Steps that will be executed:
+        1.Updating the collection_settings.xml file with relevant details:
+            user - User name for collection
+            pwd  - Password in clear text
+            url  - Management IP, e.g. 172.10.100.21
+    
+            Optional field:
+                output_file_prefix: A prefix can be added to the configuration filename
+                                    In the current example, the output filename will be offline_config_172.20.100.21.json
+                                    If left empty, the Tool creates 172.20.100.21.json.
+        2.running the Collect.bat script
+
+"@
+        Write-Host $help
+        $ACQ = ACQ("Skybox-CheckPointcollector")
+        $path =  scoop prefix skyboxcheckpointcollector
+        $path = $path + "\SkyboxCheckPointCollector"
+        $userName = Read-Host "Input user name with firewall admin permissions"
+        $userPassword = Read-Host "Input password for this user"
+        $FwURL = Read-Host "Input the firewall Management IP address (e.g. 172.10.100.21)"
+        $xmlFile = "$path\$FwURL" + "collection_settings.xml"
+        Push-Location $path
+        Write-Host "Updating the collection_settings.xml file"
+        (Get-Content "$path\collection_settings.xml") | ForEach-Object {$_ -replace "user"">","user"">$username" -replace "pwd"">","pwd"">$userPassword" -replace "url"">","url"">$FwURL"} | Set-Content $xmlFile
+        success "Starting the collection phase"
+        CheckPointOfflineCollector $xmlFile
+        Pop-Location
+        read-host "Press ENTER to continue"
+        $null = start-Process -PassThru explorer $ACQ
+        }
 
     #Menu End
     } 
