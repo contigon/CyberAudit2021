@@ -1228,6 +1228,7 @@ $help = @"
         CheckPointOfflineCollector $xmlFile
         Pop-Location
         read-host "Press ENTER to continue"
+        Copy-Item -Path "$FwURL\offline_config_$FwURL.json -Destination $ACQ
         $null = start-Process -PassThru explorer $ACQ
         }
  
@@ -1236,38 +1237,41 @@ $help = @"
         Cls
         $help = @"
 
-        Skybox CheckPoint collector
-        ----------------------------
+        Hamster build and deploy
+        ------------------------
 
-        Retrieval of Check Point R80.10 and lower management configuration data and convert it to Skybox import format.
+        This will run the HamsterBuilder application in order to configure an create the deployment pack,
+        and later on execute the deployment phase.
 
         Steps that will be executed:
-        1.Updating the collection_settings.xml file with relevant details:
-            user - User name for collection
-            pwd  - Password in clear text
-            url  - Management IP, e.g. 172.10.100.21
-    
-            Optional field:
-                output_file_prefix: A prefix can be added to the configuration filename
-                                    In the current example, the output filename will be offline_config_172.20.100.21.json
-                                    If left empty, the Tool creates 172.20.100.21.json.
-        2.running the Collect.bat script
+        1.Create a shared directory on the file server with permission to copy files from all computers on the network
+        2.Run the HamsterBuilder application, Configure and Create a deployment pack for the organization
+        3.Deploy the executable created using PDQDeply application
+        4.Wait until running is finished and all .zip files for each computer is created
+        5.Copy all zip files to the audit directory
+        6.Dont forget to Upload the files to the Hamster server when you go back to the office
 
 "@
         Write-Host $help
-        $ACQ = ACQ("Skybox-CheckPointcollector")
-        $path =  scoop prefix skyboxcheckpointcollector
-        $path = $path + "\SkyboxCheckPointCollector"
-        $userName = Read-Host "Input user name with firewall admin permissions"
-        $userPassword = Read-Host "Input password for this user"
-        $FwURL = Read-Host "Input the firewall Management IP address (e.g. 172.10.100.21)"
-        $xmlFile = "$path\$FwURL" + "collection_settings.xml"
-        Push-Location $path
-        Write-Host "Updating the collection_settings.xml file"
-        (Get-Content "$path\collection_settings.xml") | ForEach-Object {$_ -replace "user"">","user"">$username" -replace "pwd"">","pwd"">$userPassword" -replace "url"">","url"">$FwURL"} | Set-Content $xmlFile
-        success "Starting the collection phase"
-        CheckPointOfflineCollector $xmlFile
-        Pop-Location
+        $ACQ = ACQ("Hamster")
+        Hamsterbuilder
+        PDQDeployConsole
+        $sharedPath = Read-Host "Input the shared path where all data is collected to"
+        $numOfcomputers = Read-Host "Input the nuber of computer that you have collected data from"
+        $numOfZip = (Get-ChildItem $sharedPath\*.zip).count
+        if ($numOfZip -lt $numOfcomputers) 
+          {
+            failed "Found only $numOfZip zip files, this is less than $numOfcomputers!!!"
+          }
+        else 
+         {
+            success "Found $numOfZip zip files"
+         }
+        $input = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
+        if ($input -eq "C")
+        {
+            Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
+        }
         read-host "Press ENTER to continue"
         $null = start-Process -PassThru explorer $ACQ
         }
