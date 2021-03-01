@@ -37,6 +37,7 @@ Write-Host "     2. Vulmap(online)		| Find Windows/Linux installed software vuln
 Write-Host "     3. cmdkey      		| Searching for usable domain admin stored credentials     " -ForegroundColor White
 Write-Host "     4. ncat         		| Hacking using ncat (netcat replacement)                  " -ForegroundColor White
 Write-Host "     5. NirSoft     		| Password recovery, networking, system and forensics      " -ForegroundColor White
+Write-Host "     6. Metasploit     		| Install the metasploit n      " -ForegroundColor White
 Write-Host ""
 Write-Host "    99. Quit                                                                           " -ForegroundColor White
 Write-Host ""
@@ -223,9 +224,9 @@ switch ($input)
         read-host “Press ENTER to exit”
         #$null = start-Process -PassThru explorer $ACQ
         }
-       #KerberosRun
+       #Nirsoft
     5 {
-       $KerberosRun = scoop prefix KerberosRun
+       $Nirsoft = scoop prefix Nirsoft
        $help = @"
 
         Nirsoft Utilities
@@ -246,7 +247,57 @@ switch ($input)
 
 "@
         Write-Host $help
-        $ACQ = ACQ("ncat")
+        $ACQ = ACQ("Nirsoft")
+
+        #$null = start-Process -PassThru explorer $ACQ
+        }
+     
+       #metasploit
+    6 {
+       $metasploitPath = scoop prefix metasploit
+       $help = @"
+
+        metasploit Utilities
+        -----------------
+        
+        Metasploit is a penetration testing framework
+
+        The basic concept you need to use in order to know how to use MetaSploit is pretty easy when you have used the tool a few times and is as follows:
+        – Identify a remote host and add to the metasploit database
+        – Identify a vulnerability in the remote host that you wish to exploit
+        – Configure the payload to exploit the vulnerability in the remote host
+        – Execute the payload against the remote host
+
+        Commands:
+        - help | back | exit 
+        - Jobs | kill 0 (kill job 0)
+        - connect 192.168.1.2 (same as ncat) (connect -h will show help for this command)
+        - route (route sockets through a session or ‘comm’, providing basic pivoting capabilities)
+        - search windows grep ftp (will search for a windows exploit and than will grep all windows ftp exploits)
+        - search flatform:windows cve:2020
+        - info exploit/unix/ftp/vsftpd_234_backdoor (will show all info regarding this exploit)
+        - load pcap_log (loads the pcap_log plugin from the plugins directory) | unload pcap_log
+        - loadpath /home/secret/modules (load a 3rd party module tree so you can point Metasploit to custom exploits, encoders, payloads)
+        - resource karma.rc (Some attacks, such as Karmetasploit, use resource files to run a set of commands in a karma.rc)
+        - sessions -l (list all running sessions) | session -i 1 (interact with session number 1)
+        - setg LHOST 10.10.10.10 (Sets this IP a global LHOST parameter, dont forget to SAVE this) 
+        
+        use and run an exploit:
+        - show exploits | payloads | auxiliary | post | encoder
+        - search ftp (this will search in the exploits database for ftp exploits)
+        - use exploit/unix/ftp/vsftpd_234_backdoor
+        - show options (this will show what options the above exploit has)
+        - set RHOST 192.168.0.5 (ip of the remote computer) | unset RHOST (unset the parameters for the specified option)
+        - set RHOSTS 192.168.0.0/24 (sets a subnet of ip addresses) | unset RHOSTS
+        - Set LHOST 10.1.1.1     (ip of the computer msf is running on)
+        - set LPORT 444          (Local port)
+        - Set RPORT 444          (Remote port)
+        - run | execute
+
+
+"@
+        Write-Host $help
+        $ACQ = ACQ("metasploit")
 
         #$null = start-Process -PassThru explorer $ACQ
         }

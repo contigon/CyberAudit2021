@@ -126,7 +126,7 @@ Write-Host "    21. Scanners	| ICMP, Port, IP, NetBIOS, ActiveDirectory and SNMP
 Write-Host "    22. Skybox-WMI	| WMI collector of installed programs from all windows machine " -ForegroundColor White
 Write-Host "    23. Skybox-WSUS	| Collect information from WSUS server                         " -ForegroundColor White
 Write-Host "    24. Skybox-CP	| Collect information from Checkpoint R80.10 and lower version " -ForegroundColor White
-Write-Host "    25. Hamster 	| Collect information from windows desktops and servers        " -ForegroundColor White
+Write-Host "    25. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
 Write-Host ""
 Write-Host "    99. Quit                                                                       " -ForegroundColor White
 Write-Host ""
@@ -1228,7 +1228,7 @@ $help = @"
         CheckPointOfflineCollector $xmlFile
         Pop-Location
         read-host "Press ENTER to continue"
-        Copy-Item -Path "$FwURL\offline_config_$FwURL.json -Destination $ACQ
+        Copy-Item -Path "$FwURL\offline_config_$FwURL.json" -Destination $ACQ
         $null = start-Process -PassThru explorer $ACQ
         }
  
@@ -1244,17 +1244,24 @@ $help = @"
         and later on execute the deployment phase.
 
         Steps that will be executed:
-        1.Create a shared directory on the file server with permission to copy files from all computers on the network
-        2.Run the HamsterBuilder application, Configure and Create a deployment pack for the organization
-        3.Deploy the executable created using PDQDeply application
-        4.Wait until running is finished and all .zip files for each computer is created
-        5.Copy all zip files to the audit directory
-        6.Dont forget to Upload the files to the Hamster server when you go back to the office
+        1.Choose the path to Hamsterbuilder.exe file
+        2.Create a shared directory on the file server with permission to copy files from all computers on the network
+        3.Run the HamsterBuilder application, Configure and Create a deployment pack for the organization
+        4.Deploy the executable created using PDQDeply application
+        5.Wait until running is finished and all .zip files for each computer is created
+        6.Copy all zip files to the audit directory
+        7.Dont forget to Upload the files to the Hamster server when you go back to the office
 
 "@
         Write-Host $help
         $ACQ = ACQ("Hamster")
-        Hamsterbuilder
+        [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+        $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+        $OpenFileDialog.filter = "HamsterBuilder.exe | HamsterBuilder.exe"
+        $OpenFileDialog.Title = "Locate and choose the HamsterBuilder.exe file to run !!!"
+        $OpenFileDialog.ShowDialog() | Out-Null
+        $HamsterBuilderPath = $OpenFileDialog.filename
+        & $HamsterBuilderPath
         PDQDeployConsole
         $sharedPath = Read-Host "Input the shared path where all data is collected to"
         $numOfcomputers = Read-Host "Input the nuber of computer that you have collected data from"

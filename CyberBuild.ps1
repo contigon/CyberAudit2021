@@ -47,10 +47,10 @@ $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -
 $PSGModules = @("Testimo","VMware.PowerCLI","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate")
 $PSGModulesOffline = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter")
 $utilities = @("dotnet-sdk","Net_Framework_Installed_Versions_Getter","python27","python38","oraclejdk","putty","winscp","npcap","nmap-portable","rclone","everything","VoidToolsCLI","notepadplusplus","googlechrome","firefox","foxit-reader","irfanview","grepwin","sysinternals","snmpget","wireshark")
-$CollectorApps = @("ntdsaudit","RemoteExecutionEnablerforPowerShell","PingCastle","goddi","SharpHound","Red-Team-Scripts","Scuba-Windows","azscan3","LGPO","grouper2","Outflank-Dumpert","lantopolog","nessus","NetScanner64","AdvancedPortScanner","skyboxwmicollector","skyboxwmiparser","skyboxwsuscollector","PDQDeploy","Hamster")
+$CollectorApps = @("ntdsaudit","RemoteExecutionEnablerforPowerShell","PingCastle","goddi","SharpHound","Red-Team-Scripts","Scuba-Windows","azscan3","LGPO","grouper2","Outflank-Dumpert","lantopolog","nessus","NetScanner64","AdvancedPortScanner","skyboxwmicollector","skyboxwmiparser","skyboxwsuscollector","PDQDeploy")
 $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
 $AnalyzerApps = @("PolicyAnalyzer","SetObjectSecurity","LGPO","BloodHoundAD","neo4j","ophcrack","hashcat","rockyou","vista_proba_free","AppInspector")
-$AttackApps = @("nirlauncher", "ruler","ncat","infectionmonkey")
+$AttackApps = @("nirlauncher", "ruler","ncat","metasploit","infectionmonkey")
 $pips = @("colorama","pysnmp","win_unicode_console")
 $pythonScripts = @("colorama","pysnmp","win_unicode_console")
 
@@ -670,6 +670,9 @@ switch ($input)
         Push-Location $pingcastlePath
         PingCastleAutoUpdater
         Pop-Location
+
+        #update metasploit
+        msfupdate
 
      read-host "œPress ENTER to continue" 
      }
