@@ -289,6 +289,9 @@ switch ($input)
         - show options (this will show what options the above exploit has)
         - set RHOST 192.168.0.5 (ip of the remote computer) | unset RHOST (unset the parameters for the specified option)
         - set RHOSTS 192.168.0.0/24 (sets a subnet of ip addresses) | unset RHOSTS
+
+
+
         - Set LHOST 10.1.1.1     (ip of the computer msf is running on)
         - set LPORT 444          (Local port)
         - Set RPORT 444          (Remote port)

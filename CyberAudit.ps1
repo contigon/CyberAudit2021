@@ -1261,23 +1261,30 @@ $help = @"
         $OpenFileDialog.Title = "Locate and choose the HamsterBuilder.exe file to run !!!"
         $OpenFileDialog.ShowDialog() | Out-Null
         $HamsterBuilderPath = $OpenFileDialog.filename
-        & $HamsterBuilderPath
-        PDQDeployConsole
-        $sharedPath = Read-Host "Input the shared path where all data is collected to"
-        $numOfcomputers = Read-Host "Input the nuber of computer that you have collected data from"
-        $numOfZip = (Get-ChildItem $sharedPath\*.zip).count
-        if ($numOfZip -lt $numOfcomputers) 
-          {
-            failed "Found only $numOfZip zip files, this is less than $numOfcomputers!!!"
-          }
-        else 
-         {
-            success "Found $numOfZip zip files"
-         }
-        $input = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
-        if ($input -eq "C")
+        if ($HamsterBuilderPath -notlike "") 
         {
-            Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
+            & $HamsterBuilderPath
+            PDQDeployConsole
+            $sharedPath = Read-Host "Input the shared path where all data is collected to"
+            $numOfcomputers = Read-Host "Input the nuber of computer that you have collected data from"
+            $numOfZip = (Get-ChildItem $sharedPath\*.zip).count
+            if ($numOfZip -lt $numOfcomputers) 
+              {
+                failed "Found only $numOfZip zip files, this is less than $numOfcomputers!!!"
+              }
+            else 
+             {
+                success "Found $numOfZip zip files"
+             }
+            $input = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
+            if ($input -eq "C")
+            {
+                Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
+            }
+        }
+        else
+        {
+            failed "Hamster.exe was not located so script will not execute, Please try again"
         }
         read-host "Press ENTER to continue"
         $null = start-Process -PassThru explorer $ACQ

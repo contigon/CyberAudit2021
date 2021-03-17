@@ -16,7 +16,7 @@ Add local project to github:
 1. cd <Projec>
 2. git init .
 3. Create New Git Folder in github
-4. git remote add origin https://github.com/contigon/CyberAuditPS2020.git
+4. git remote add origin https://github.com/contigon/CyberAuditPS2021.git
 
 #>
 

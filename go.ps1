@@ -10,13 +10,15 @@
 		Cyber Audit Tool - Cyber Audit tool launch from www Script
 #>
 
-# remote install command:
-#Invoke-Expression (New-Object System.Net.WebClient).DownloadString('http://cyberaudittool.c1.biz/go.ps1')
-#Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/contigon/Downloads/master/go.ps1')
-$zipURLA = "https://raw.githubusercontent.com/contigon/Downloads/master/go.pdf"
-$zipURLB = "http://cyberaudittool.c1.biz/go.pdf"
+$CatInstallRepository = "CATInstall"
 
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Installing...."
+# remote install command:
+#Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.ps1')
+
+$zipURLA = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
+$zipURLB = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
+
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 - Installing...."
 $Host.UI.RawUI.BackgroundColor = ($bckgrnd = "Black")
 $Host.UI.RawUI.ForegroundColor = "White"
 $BufferSize = $Host.UI.RawUI.BufferSize
@@ -103,7 +105,7 @@ a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
                    CyberAuditTool [CAT]                 :.     '8888o
                  Israel Cyber Directorate                .       "8888..
                    Prime Ministers Office                          888888o.
-                     V1.0 (08-03-2020)                              "888889,
+                     V1.1 (17-03-2021)                              "888889,
                                                              . : :.:::::::.: :.
 
 
@@ -146,7 +148,7 @@ While([bool](Get-ChildItem $BasePath)){
         exit
     }
     write-host "[Fail] The folder $BasePath is not empty" -ForegroundColor Red
-    Write-Host "Would you like to empty the chosen folder?(y\[N]) If the answer is No, you must choose an empty folder" -ForegroundColor Yellow
+    Write-Host "Would you like to empty the chosen folder?([Y]\[N]) If the answer is No, you must choose an empty folder" -ForegroundColor Yellow
     $input = Read-Host 
     if ($input -eq "y"){
         Get-ChildItem -Path $BasePath | foreach { rm -Recurse $BasePath\$_ -Force}
