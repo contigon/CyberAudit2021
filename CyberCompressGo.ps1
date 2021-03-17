@@ -23,7 +23,7 @@ Add local project to github:
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 - compress Go"
 
 Import-Module Posh-SSH
-
+mkdir "$PSScriptRoot\Downloads" -Force
 Copy-Item -Path "$PSScriptRoot\go.ps1" -Destination "$PSScriptRoot\Downloads\go.ps1" -Force
 Remove-Item "$PSScriptRoot\Downloads\go.zip" -ErrorAction SilentlyContinue
 Remove-Item "$PSScriptRoot\Downloads\go.pdf" -ErrorAction SilentlyContinue
