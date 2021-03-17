@@ -1,7 +1,7 @@
 <#	
 	.NOTES
 	===========================================================================
-	 Created on:   	2/24/2020 1:11 PM
+	 Created on:   	17/03/2021 1:11 PM
 	 Created by:   	Omerf
 	 Organization: 	Israel Cyber Directorate
 	 Filename:     	CyberCompress
@@ -20,7 +20,7 @@ Add local project to github:
 
 #>
 
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - compress Go"
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 - compress Go"
 
 Import-Module Posh-SSH
 
