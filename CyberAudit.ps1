@@ -104,29 +104,29 @@ Write-Host "     Aquisition folder: $AcqBaseFolder                              
 Write-Host ""
 Write-Host "     1. Domain		| Join/Disconnect machine to/from a Domain                     " -ForegroundColor White
 Write-Host "     2. Test		| Test Domain Connections and Configurations for audit         " -ForegroundColor White
-Write-Host "     3. NTDS		| Remote aquire ntds/SYSTEM                                    " -ForegroundColor White
-Write-Host "     4. Network 	| Collect config files and routing from network devices (V2)   " -ForegroundColor White
+Write-Host "     3. goddi		| dumps Active Directory domain information                    " -ForegroundColor White
+Write-Host "     4. NTDS		| Remote aquire ntds/SYSTEM from ActiveDirectory               " -ForegroundColor White
 Write-Host "     5. PingCastle 	| Active Directory Security Scoring                            " -ForegroundColor White
-Write-Host "     6. Testimo 	| Running audit checks of Active Directory                     " -ForegroundColor White
-Write-Host "     7. goddi		| dumps Active Directory domain information                    " -ForegroundColor White
-Write-Host "     8. GPO      	| Backup Domain GPO to compare using Microsoft PolicyAnalyzer  " -ForegroundColor White
-Write-Host "     9. SharpHound	| BloodHound Ingestor for collecting data from AD              " -ForegroundColor White
+Write-Host "     6. GPO      	| Backup Domain GPO to compare using Microsoft PolicyAnalyzer  " -ForegroundColor White
+Write-Host "     7. Testimo 	| Running audit checks of Active Directory                     " -ForegroundColor White
+Write-Host "     8. SharpHound	| BloodHound Ingestor for collecting data from AD              " -ForegroundColor White
+Write-Host "     9. Grouper2 	| Find ActiveDirectory GPO security-related misconfigurations  " -ForegroundColor White
 Write-Host "    10. HostEnum	| Red-Team-Script Collecting info from remote host and Domain  " -ForegroundColor White
 Write-Host "    11. SCUBA		| Vulnerability scanning Oracle,MS-SQL,SAP-Sybase,IBM-DB2,MySQ " -ForegroundColor White
 Write-Host "    12. azscan		| Oracle,Unix-Linux,iSeries,AS400-OS400,HP-Alpha,Vax,DECVax,VMS" -ForegroundColor White
-Write-Host "    13. Grouper2 	| Find ActiveDirectory GPO security-related misconfigurations  " -ForegroundColor White
-Write-Host "    14. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
-Write-Host "    15. Runecast	| Security Hardening checks of VMWARE vSphere/NSX/cloud        " -ForegroundColor White
-Write-Host "    16. Misc    	| collection of scripts that checks miscofigurations or vulns  " -ForegroundColor White
-Write-Host "    17. Skybox-Win	| All windows machines interface and routing config collector  " -ForegroundColor White
-Write-Host "    18. Nessus    	| Vulnerability misconfigurations scanning of OS,Net,Apps,DB..." -ForegroundColor White
-Write-Host "    19. Printers  	| Searching for printers and print servers vulnerabilities     " -ForegroundColor White
-Write-Host "    20. Sensitive  	| Searching for Sensitive documents and files on fileservers   " -ForegroundColor White
-Write-Host "    21. Scanners	| ICMP, Port, IP, NetBIOS, ActiveDirectory and SNMP scanners   " -ForegroundColor White
-Write-Host "    22. Skybox-WMI	| WMI collector of installed programs from all windows machine " -ForegroundColor White
-Write-Host "    23. Skybox-WSUS	| Collect information from WSUS server                         " -ForegroundColor White
-Write-Host "    24. Skybox-CP	| Collect information from Checkpoint R80.10 and lower version " -ForegroundColor White
-Write-Host "    25. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
+Write-Host "    13. Runecast	| Security Hardening checks of VMWARE vSphere/NSX/cloud        " -ForegroundColor White
+Write-Host "    14. Nessus    	| Vulnerability misconfigurations scanning of OS,Net,Apps,DB..." -ForegroundColor White
+Write-Host "    15. Misc    	| collection of scripts that checks miscofigurations or vulns  " -ForegroundColor White
+Write-Host "    16. Printers  	| Searching for printers and print servers vulnerabilities     " -ForegroundColor White
+Write-Host "    17. Sensitive  	| Searching for Sensitive documents and files on fileservers   " -ForegroundColor White
+Write-Host "    18. Scanners	| ICMP, Port, IP, NetBIOS, ActiveDirectory and SNMP scanners   " -ForegroundColor White
+Write-Host "    19. Network 	| Collect config files and routing from network devices (V2)   " -ForegroundColor White
+Write-Host "    20. Skybox-WMI	| WMI collector of installed programs from all windows machine " -ForegroundColor White
+Write-Host "    21. Skybox-WSUS	| Collect information from WSUS server                         " -ForegroundColor White
+Write-Host "    22. Skybox-CP	| Collect information from Checkpoint R80.10 and lower version " -ForegroundColor White
+Write-Host "    23. Skybox-Win	| All windows machines interface and routing config collector  " -ForegroundColor White
+Write-Host "    24. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
+Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
 Write-Host ""
 Write-Host "    99. Quit                                                                       " -ForegroundColor White
 Write-Host ""
@@ -134,6 +134,7 @@ $input=Read-Host "Select Script Number"
 
 switch ($input) 
      { 
+     #Domain
      1 {
         Cls
         $help = @"
@@ -229,7 +230,7 @@ switch ($input)
      }
 
      #NTDS and SYSTEM hive remote aquisition
-     3 {
+     4 {
         cls
         $help = @"
 
@@ -281,7 +282,7 @@ Write-Host $block -ForegroundColor Red
      }
 
      #Network
-     4 {
+     19 {
         Cls
         $help = @"
 
@@ -356,7 +357,7 @@ Write-Host $block -ForegroundColor Red
         }
 
     #Testimo
-    6 {
+    7 {
         Cls
         $help = @"
 
@@ -387,7 +388,7 @@ Write-Host $block -ForegroundColor Red
      }
 
     #goddi
-    7 {
+    3 {
         Cls
         $help = @"
 
@@ -432,7 +433,7 @@ Write-Host $block -ForegroundColor Red
      }
 
      #GPO
-     8 {
+     6 {
         cls
         $help = @"
 
@@ -478,7 +479,7 @@ Write-Host $block -ForegroundColor Red
      }
 
      #Sharphound
-     9 {
+     8 {
         cls
         $help = @"
 
@@ -636,7 +637,7 @@ Write-Host $block -ForegroundColor Red
      }
 
     #Grouper2
-     13 {
+     9 {
         cls
         $help = @"
 
@@ -659,7 +660,7 @@ Write-Host $block -ForegroundColor Red
         $null = start-Process -PassThru explorer $ACQ
      }
         #Dumpert
-     14 {
+     25 {
         cls
         $help = @"
 
@@ -686,7 +687,7 @@ Write-Host $block -ForegroundColor Red
         $null = start-Process -PassThru explorer $ACQ
      }
         #runecast
-     15 {
+     13 {
         cls
         $ACQ = ACQ("Runecast")
         $help = @"
@@ -735,7 +736,7 @@ Write-Host $block -ForegroundColor Red
      }
     
          #Misc
-     16 {
+     15 {
         Cls
         $help = @"
 
@@ -759,8 +760,8 @@ Write-Host $block -ForegroundColor Red
         $null = start-Process -PassThru explorer $ACQ
         }
     
-         #IpconfigNetstat
-     17 {
+         #skybox-win
+     23 {
         Cls
         $help = @"
 
@@ -807,7 +808,7 @@ Write-Host $block -ForegroundColor Red
         }
 
          #Nessus
-     18 {
+     14 {
         Cls
         $nessusPath = GetAppInstallPath("nessus")
         Push-Location $nessusPath
@@ -890,7 +891,7 @@ $help = @"
         }
               
         #Printers
-     19 {
+     16 {
         Cls
         $PretPath = scoop prefix PRET
         $help = @"
@@ -1011,7 +1012,7 @@ $help = @"
         }
 
         #Sensitive
-     20 {
+     17 {
         Cls
         $help = @"
 
@@ -1043,7 +1044,7 @@ $help = @"
         $null = start-Process -PassThru explorer $ACQ
         }
          #Network and Port Scanners
-     21 {
+     18 {
         Cls
         $help = @"
 
@@ -1097,8 +1098,8 @@ $help = @"
         read-host "Press ENTER to continue"
         $null = start-Process -PassThru explorer $ACQ
         }
-   #Skybox WMI scanner and parser
-     22 {
+   #Skybox-WMI scanner and parser
+     20 {
         Cls
         $help = @"
 
@@ -1144,8 +1145,8 @@ $help = @"
         $null = start-Process -PassThru explorer $ACQ
         }
 
-        #Skybox WSUS collection
-     23 {
+        #Skybox-WSUS collection
+     21 {
         Cls
         $help = @"
 
@@ -1190,8 +1191,8 @@ $help = @"
         $null = start-Process -PassThru explorer $ACQ
         }
  
- #Skybox CheckPoint collector
-     24 {
+ #Skybox-CP CheckPoint collector
+     22 {
         Cls
         $help = @"
 
@@ -1233,7 +1234,7 @@ $help = @"
         }
  
      #Hamster
-     25 {
+     24 {
         Cls
         $help = @"
 

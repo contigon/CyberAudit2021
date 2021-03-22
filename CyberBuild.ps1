@@ -53,6 +53,7 @@ $AnalyzerApps = @("PolicyAnalyzer","SetObjectSecurity","LGPO","BloodHoundAD","ne
 $AttackApps = @("nirlauncher", "ruler","ncat","metasploit","infectionmonkey")
 $pips = @("colorama","pysnmp","win_unicode_console")
 $pythonScripts = @("colorama","pysnmp","win_unicode_console")
+$licenses = @("AZScanKey.enc")
 
 #Creating desktop shortcuts
 if ((Test-Path -Path "C:\Users\Public\Desktop\Build.lnk","C:\Users\Public\Desktop\Audit.lnk","C:\Users\Public\Desktop\Analyze.lnk") -match "False")
@@ -64,7 +65,7 @@ if ((Test-Path -Path "C:\Users\Public\Desktop\Build.lnk","C:\Users\Public\Deskto
     $null = CreateShortcut -name "Attack" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAttack.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberYellowIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
 }
 
-read-host "œPress ENTER to continue (or Ctrl+C to quit)"
+read-host "Press ENTER to continue (or Ctrl+C to quit)"
 
 start-Transcript -path $PSScriptRoot\CyberBuildPhase.Log -Force -append
 
@@ -686,8 +687,13 @@ switch ($input)
         
         Install licenses for applications.
 
-        Licenses will be stored in base64 encoding inside the script
-        and will be generated as a license file which will be copied
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
         to the correct application path.
 
         New licenses can be added using by editing the $PSScriptRoot\CyberLicenses.ps1 file.
@@ -695,9 +701,11 @@ switch ($input)
 "@
         Write-Host $help
         $menuColor[11] = "Yellow"
+        scoop install CATLicenses --global
+        $CATLicensesFolder = scoop prefix CATLicenses
         $ScriptToRun = $PSScriptRoot+"\CyberLicenses.ps1"
         &$ScriptToRun
-     read-host "œPress ENTER to continue" 
+     read-host "Press ENTER to continue"
      }
      
      #Uninstal scoop utilities, applications and scoop itself

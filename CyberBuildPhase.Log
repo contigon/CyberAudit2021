@@ -1,0 +1,1445 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20210322192613
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 10988
+PSVersion: 5.1.17763.1490
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1490
+BuildVersion: 10.0.17763.1490
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+True
+Your Message: aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40X
+        FYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG
+        0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE
+        4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/
+        QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzW
+        jZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRD
+        FRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+**********************
+Windows PowerShell transcript end
+End time: 20210322192733
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20210322192747
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 10988
+PSVersion: 5.1.17763.1490
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1490
+BuildVersion: 10.0.17763.1490
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+Installing 'CATLicenses' (1.0) [64bit]
+Loading CATLicenses.rar from cache
+WARN  Warning: No hash in manifest. SHA256 for 'CATLicenses.rar' is:
+    cf03896b7f1415a30338eeb72f8d7a05d7766152e97fee09e727e1ff2f992491
+Extracting
+CATLicenses.rar
+ ...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\1.0
+'CATLicenses' (1.0) was installed successfully!
+True
+Your Message: aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40X
+        FYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG
+        0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE
+        4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/
+        QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzW
+        jZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRD
+        FRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+azscan license file was created successfully
+null : The term 'null' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At C:\CyberAudit2021\CyberLicenses.ps1:153 char:9
++         null = start-Process -PassThru explorer $azscanfolder
++         ~~~~
+    + CategoryInfo          : ObjectNotFound: (null:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+null : The term 'null' is not recognized as the name of a cmdlet, function, script file, or operable
+program. Check the spelling of the name, or if a path was included, verify that the path is correct and
+try again.
+At C:\CyberAudit2021\CyberLicenses.ps1:153 char:9
++         null = start-Process -PassThru explorer $azscanfolder
++         ~~~~
+    + CategoryInfo          : ObjectNotFound: (null:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+**********************
+Windows PowerShell transcript end
+End time: 20210322195854
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20210322195856
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 10988
+PSVersion: 5.1.17763.1490
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1490
+BuildVersion: 10.0.17763.1490
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+True
+Your Message: aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40X
+        FYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG
+        0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE
+        4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/
+        QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzW
+        jZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRD
+        FRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+False
+Your Message: Error occured while decoding string. Salt or Password incorrect?
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as it contains a 
+non-base 64 character, more than two padding characters, or an illegal character among the padding characters. "
+At C:\CyberAudit2021\CyberLicenses.ps1:149 char:9
++         $Content = [System.Convert]::FromBase64String(([System.Text.E ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : FormatException
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as
+it contains a non-base 64 character, more than two padding characters, or an illegal character among
+the padding characters. "
+At C:\CyberAudit2021\CyberLicenses.ps1:149 char:9
++         $Content = [System.Convert]::FromBase64String(([System.Text.E ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : FormatException
+
+azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+**********************
+Windows PowerShell transcript end
+End time: 20210322195936
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20210322200107
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 10988
+PSVersion: 5.1.17763.1490
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1490
+BuildVersion: 10.0.17763.1490
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+False
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as it contains a 
+non-base 64 character, more than two padding characters, or an illegal character among the padding characters. "
+At C:\CyberAudit2021\CyberLicenses.ps1:149 char:9
++         $Content = [System.Convert]::FromBase64String(([System.Text.E ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : FormatException
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as
+it contains a non-base 64 character, more than two padding characters, or an illegal character among
+the padding characters. "
+At C:\CyberAudit2021\CyberLicenses.ps1:149 char:9
++         $Content = [System.Convert]::FromBase64String(([System.Text.E ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : FormatException
+
+azscan license file was created successfully
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+False
+Your Message: Error occured while decoding string. Salt or Password incorrect?
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as it contains a 
+non-base 64 character, more than two padding characters, or an illegal character among the padding characters. "
+At C:\CyberAudit2021\CyberLicenses.ps1:149 char:9
++         $Content = [System.Convert]::FromBase64String(([System.Text.E ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : FormatException
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as
+it contains a non-base 64 character, more than two padding characters, or an illegal character among
+the padding characters. "
+At C:\CyberAudit2021\CyberLicenses.ps1:149 char:9
++         $Content = [System.Convert]::FromBase64String(([System.Text.E ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : FormatException
+
+azscan license file was created successfully
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+[Failed] [System.Text.Encoding]::UTF8.GetString
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+[Success] azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+[Failed] Error occured while decoding string. Salt or Password incorrect?
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+[Success] azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> function Get-FileName
+{  
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
+    Out-Null
+    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $OpenFileDialog.filter = "All files (*.*)| *.*"
+    $OpenFileDialog.ShowDialog() | Out-Null
+    $OpenFileDialog.filename
+}
+PS C:\CyberAudit2021> Get-FileName
+C:\Users\omerf.CYBERAUDITLAB\Downloads\desktop.ini
+PS C:\CyberAudit2021> (Get-FileName).name
+PS C:\CyberAudit2021> $a = Get-FileName$
+Get-FileName$ : The term 'Get-FileName$' is not recognized as the name of a cmdlet, function, script file, or operable 
+program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:6
++ $a = Get-FileName$
++      ~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-FileName$:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+Get-FileName$ : The term 'Get-FileName$' is not recognized as the name of a cmdlet, function, script
+file, or operable program. Check the spelling of the name, or if a path was included, verify that the
+path is correct and try again.
+At line:1 char:6
++ $a = Get-FileName$
++      ~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-FileName$:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> $a = Get-FileName
+PS C:\CyberAudit2021> $a
+C:\Users\omerf.CYBERAUDITLAB\Downloads\Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> ($a).name
+PS C:\CyberAudit2021> Get-ItemProperty $a
+
+
+    Directory: C:\Users\omerf.CYBERAUDITLAB\Downloads
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        2/23/2021   5:11 PM       48949520 Git-2.30.1-64-bit.exe
+
+
+PS C:\CyberAudit2021> Get-TypeData $a
+PS C:\CyberAudit2021> $a
+C:\Users\omerf.CYBERAUDITLAB\Downloads\Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> $a.path
+PS C:\CyberAudit2021> cd $a
+cd : Cannot find path 'C:\Users\omerf.CYBERAUDITLAB\Downloads\Git-2.30.1-64-bit.exe' because it does not exist.
+At line:1 char:1
++ cd $a
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\omerf....30.1-64-bit.exe:String) [Set-Location], 
+ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+cd : Cannot find path 'C:\Users\omerf.CYBERAUDITLAB\Downloads\Git-2.30.1-64-bit.exe' because it does
+not exist.
+At line:1 char:1
++ cd $a
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\omerf....30.1-64-bit.exe:String) [Set-Location]
+   , ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+PS C:\CyberAudit2021> $a.split("\")
+C:
+Users
+omerf.CYBERAUDITLAB
+Downloads
+Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> $a.split("\")[-1]
+Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> $a.tofolder
+PS C:\CyberAudit2021> Split-Path $a
+C:\Users\omerf.CYBERAUDITLAB\Downloads
+PS C:\CyberAudit2021> Split-Path $a -Leaf
+Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> Split-Path $a -Leaf -Resolve
+Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> Split-Path $a -Leaf
+Git-2.30.1-64-bit.exe
+PS C:\CyberAudit2021> Split-Path $a
+C:\Users\omerf.CYBERAUDITLAB\Downloads
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\desktop.ini was encoded to base64 successfully
+The password is: zaZA12#$!
+True
+[Success] Key from desktop.ini is now password encrypted and can be uploaded safetly to any cloud storage
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\desktop.ini was encoded to base64 successfully
+The password is: zaZA12#$!
+True
+[Success] Key from desktop.ini is now password encrypted and can be uploaded safetly to any cloud storage
+
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\desktop.ini was encoded to base64 successfully
+--------------------------------------------
+//4NAAoAWwAuAFMAaABlAGwAbABDAGwAYQBzAHMASQBuAGYAbwBdAA0ACgBMAG8AYwBhAGwAaQB6AGUAZABSAGUAcwBvAHUAcgBjAGUATgBhAG0AZQA9AEAAJQBTAHkAcwB0AGUAbQBSAG8AbwB0ACUAXABzAHkAcwB0AGUAbQAzADIAXABzAGgAZQBsAGwAMwAyAC4AZABsAGwALAAtADIAMQA3ADkAOAANAAoASQBjAG8AbgBSAGUAcwBvAHUAcgBjAGUAPQAlAFMAeQBzAHQAZQBtAFIAbwBvAHQAJQBcAHMAeQBzAHQAZQBtADMAMgBcAGkAbQBhAGcAZQByAGUAcwAuAGQAbABsACwALQAxADgANAANAAoA
+--------------------------------------------
+The password is: zaZA12#$!
+True
+[Success] Key from desktop.ini is now password encrypted and can be uploaded safetly to any cloud storage
+
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\desktop.ini was encoded to base64 successfully
+--------------------------------------------
+//4NAAoAWwAuAFMAaABlAGwAbABDAGwAYQBzAHMASQBuAGYAbwBdAA0ACgBMAG8AYwBhAGwAaQB6AGUAZABSAGUAcwBvAHUAcgBjAGUATgBhAG0AZQA9AEAAJQBTAHkAcwB0AGUAbQBSAG8AbwB0ACUAXABzAHkAcwB0AGUAbQAzADIAXABzAGgAZQBsAGwAMwAyAC4AZABsAGwALAAtADIAMQA3ADkAOAANAAoASQBjAG8AbgBSAGUAcwBvAHUAcgBjAGUAPQAlAFMAeQBzAHQAZQBtAFIAbwBvAHQAJQBcAHMAeQBzAHQAZQBtADMAMgBcAGkAbQBhAGcAZQByAGUAcwAuAGQAbABsACwALQAxADgANAANAAoA
+--------------------------------------------
+The password is: zaZA12#$!
+True
+[Success] Key from desktop.ini is now password encrypted and can be uploaded safetly to any cloud storage
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."

@@ -13,7 +13,7 @@
 $CatInstallRepository = "CATInstall"
 
 # remote install command:
-#Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.ps1')
+#Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/contigon/CATInstall/master/go.ps1')
 
 $zipURLA = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
 $zipURLB = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"

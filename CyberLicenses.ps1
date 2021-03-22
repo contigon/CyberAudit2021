@@ -13,8 +13,94 @@
 . $PSScriptRoot\CyberFunctions.ps1
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Licenses"
 
+[System.reflection.assembly]::LoadWithPartialName("System.Security")|out-null
+[System.reflection.assembly]::LoadWithPartialName("System.IO")|out-null
 
-$input = Read-Host "Press [Enter] to install licenses or [C] to get help on creating the license from file"
+function fAESEncrypt()
+{
+    Param(
+        [Parameter(Mandatory=$true)][byte[]]$aBytesToBeEncrypted,
+        [Parameter(Mandatory=$true)][byte[]]$aPasswordBytes,
+        [Parameter(Mandatory=$true)][ref]$raEncryptedBytes,
+        [Parameter(Mandatory=$false)][byte[]]$aCustomSalt
+    )       
+    [byte[]] $encryptedBytes = @()
+    # Salt must have at least 8 Bytes!!
+    # Encrypt and decrypt must use the same salt
+    # Define your own Salt here
+    [byte[]]$aSaltBytes = @(4,7,12,254,123,98,34,12,67,12,122,111) 
+    if($aCustomSalt.Count -ge 1)
+    {
+        $aSaltBytes=$aCustomSalt
+    }   
+    [System.IO.MemoryStream] $oMemoryStream = new-object System.IO.MemoryStream
+    [System.Security.Cryptography.RijndaelManaged] $oAES = new-object System.Security.Cryptography.RijndaelManaged
+    $oAES.KeySize = 256;
+    $oAES.BlockSize = 128;
+    [System.Security.Cryptography.Rfc2898DeriveBytes] $oKey = new-object System.Security.Cryptography.Rfc2898DeriveBytes($aPasswordBytes, $aSaltBytes, 1000);
+    $oAES.Key = $oKey.GetBytes($oAES.KeySize / 8);
+    $oAES.IV = $oKey.GetBytes($oAES.BlockSize / 8);
+    $oAES.Mode = [System.Security.Cryptography.CipherMode]::CBC
+    $oCryptoStream = new-object System.Security.Cryptography.CryptoStream($oMemoryStream, $oAES.CreateEncryptor(), [System.Security.Cryptography.CryptoStreamMode]::Write)
+    try
+    {
+        $oCryptoStream.Write($aBytesToBeEncrypted, 0, $aBytesToBeEncrypted.Length);
+        $oCryptoStream.Close();
+    }
+    catch [Exception]
+    {
+        $raEncryptedBytes.Value=[system.text.encoding]::ASCII.GetBytes("Error occured while encoding string. Salt or Password incorrect?")
+        return $false
+    }   
+    $oEncryptedBytes = $oMemoryStream.ToArray();
+    $raEncryptedBytes.Value=$oEncryptedBytes;
+    return $true
+}
+
+function fAESDecrypt()
+{
+    Param(
+        [Parameter(Mandatory=$true)][byte[]]$aBytesToDecrypt,
+        [Parameter(Mandatory=$true)][byte[]]$aPasswordBytes,
+        [Parameter(Mandatory=$true)][ref]$raDecryptedBytes,
+        [Parameter(Mandatory=$false)][byte[]]$aCustomSalt
+    )   
+    [byte[]]$oDecryptedBytes = @();
+    # Salt must have at least 8 Bytes!!
+    # Encrypt and decrypt must use the same salt
+    [byte[]]$aSaltBytes = @(4,7,12,254,123,98,34,12,67,12,122,111) 
+    if($aCustomSalt.Count -ge 1)
+    {
+        $aSaltBytes=$aCustomSalt
+    }
+    [System.IO.MemoryStream] $oMemoryStream = new-object System.IO.MemoryStream
+    [System.Security.Cryptography.RijndaelManaged] $oAES = new-object System.Security.Cryptography.RijndaelManaged
+    $oAES.KeySize = 256;
+    $oAES.BlockSize = 128;
+    [System.Security.Cryptography.Rfc2898DeriveBytes] $oKey = new-object System.Security.Cryptography.Rfc2898DeriveBytes($aPasswordBytes, $aSaltBytes, 1000);
+    $oAES.Key = $oKey.GetBytes($oAES.KeySize / 8);
+    $oAES.IV = $oKey.GetBytes($oAES.BlockSize / 8);
+    $oAES.Mode = [System.Security.Cryptography.CipherMode]::CBC
+    $oCryptoStream = new-object System.Security.Cryptography.CryptoStream($oMemoryStream, $oAES.CreateDecryptor(), [System.Security.Cryptography.CryptoStreamMode]::Write)
+    try
+    {
+        $oCryptoStream.Write($aBytesToDecrypt, 0, $aBytesToDecrypt.Length)
+        $oCryptoStream.Close()
+    }
+    catch [Exception]
+    {
+        $raDecryptedBytes.Value=[system.text.encoding]::ASCII.GetBytes("Error occured while decoding string. Salt or Password incorrect?")
+        return $false
+    }
+    $oDecryptedBytes = $oMemoryStream.ToArray();
+    $raDecryptedBytes.Value=$oDecryptedBytes
+    return $true
+}
+
+
+$CustomSalt=@(1,2,3,4,5,6,7,9,10,11,254,253,252)
+
+$input = Read-Host "Press [Enter] to install licenses or [C] to get help on creating the license from the original file"
 if ($input -eq "C") {
     #Encrypt the license file to base64
     function encFile ($infile) {
@@ -22,32 +108,47 @@ if ($input -eq "C") {
         $Base64 = [System.Convert]::ToBase64String($Content)
         $Base64 
         }
-     Write-Host "Select the file you want to encrypt"
-     Write-Host "You need to edit the $PSScriptRoot\CyberLicenses.ps1 file and use the yellow encryption text as key value"
-     Write-Host "the key is also in your clipboard so you can paste it (Ctrl+V) into the script"
-     Write-Host "----------------------------------------------------------------------------------------"
+     Write-Host "Select the key file you want to encrypt"
      $filePath = Get-FileName
+     $fileName = Split-Path $filePath -Leaf
+     $fileParent = Split-Path $filePath
      $key = encFile($filePath)
-     write-host $key -ForegroundColor Yellow
-     Set-Clipboard -Value $key
-     Write-Host "----------------------------------------------------------------------------------------"
+     success "$filePath was encoded to base64 successfully"
+     Write-Host "--------------------------------------------"
+     Write-Host $key
+     Write-Host "--------------------------------------------"
+     $sPassword = Read-Host "Input password to password encrypt the base64 key (don't forget it)"
+     Write-Host "The password is: $sPassword" -BackgroundColor Yellow -ForegroundColor Black
+     $sInput = $key
+     [byte[]]$aEncryptedMessage=$null
+     fAESEncrypt ([system.text.encoding]::ASCII.GetBytes($sInput)) ([system.text.encoding]::ASCII.GetBytes($sPassword)) ([ref]$aEncryptedMessage) $aCustomSalt
+     success "Key from $fileName is now password encrypted and can be uploaded safetly to any cloud storage"
+     Set-Content -Path "$fileParent\$fileName.enc" -Value $aEncryptedMessage -Force
+     $null = Start-Process -PassThru explorer $fileParent
 } 
 else
 {
-    #create the azscan key file in the azscan3 folder
+    #Decrypt and copy the azscan key file to the azscan3 application folder
     $azscanfolder = scoop prefix azscan3
     if (Test-Path -Path $azscanfolder -PathType Any)
     {
-        $AZScanKey = "aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40X
-        FYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG
-        0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE
-        4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/
-        QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzW
-        jZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRD
-        FRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg=="
-        $Content = [System.Convert]::FromBase64String($AZScanKey)
-        Set-Content -Path $azscanfolder\AZScanKey.dat -Value $Content -Encoding Byte
-        Write-Host "azscan license file was created successfully" -ForegroundColor Green
+        $encryptedKey =  Get-Content -Path "$CATLicensesFolder\AZScanKey.enc"
+        #Write-Host ([system.text.encoding]::ASCII.GetBytes($xxx))
+        
+        $sPassword = Read-Host "Input the password in order to decrypt [AZSCAN] licenses key"
+        [byte[]]$aDecryptedMessage=$null
+        if ((fAESDecrypt $encryptedKey ([system.text.encoding]::ASCII.GetBytes($sPassword)) ([ref]$aDecryptedMessage) $aCustomSalt) -like $false)
+        {
+            failed ([System.Text.Encoding]::UTF8.GetString($aDecryptedMessage))
+         }
+         else
+         {
+            $Content = [System.Convert]::FromBase64String(([System.Text.Encoding]::UTF8.GetString($aDecryptedMessage)))
+            #Write-Host $Content -ForegroundColor Yellow
+            Set-Content -Path $azscanfolder\AZScanKey.dat -Value $Content -Encoding Byte -Force
+            success "azscan license file was created successfully" -ForegroundColor Green
+            $null = start-Process -PassThru explorer $azscanfolder
+        }
     }
 
     else {
