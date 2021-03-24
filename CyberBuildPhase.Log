@@ -1489,3 +1489,463 @@ Merge made by the 'recursive' strategy.
  delete mode 100644 Downloads/go.pdf
  delete mode 100644 Downloads/go.ps1
  delete mode 100644 Downloads/goUpdate.pdf
+PS C:\CyberAudit2021> gadd
+warning: LF will be replaced by CRLF in CyberBuildPhase.Log.
+The file will have its original line endings in your working directory
+[main d9730ed] 2021
+ 1 file changed, 46 insertions(+)
+Enumerating objects: 22, done.
+Counting objects: 100% (18/18), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (12/12), 9.41 KiB | 3.14 MiB/s, done.
+Total 12 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), completed with 4 local objects.
+To https://github.com/contigon/CyberAudit2021
+   0dc76cc..d9730ed  main -> main
+PS C:\CyberAudit2021> .\CyberAudit.ps1
+                         ..,co88oc.oo8888cc,..
+  o8o.               ..,o8889689ooo888o"88888888oooc..
+.88888             .o888896888".88888888o'?888888888889ooo....
+a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
+088P        ..atc88889"".,oo8o.86888888888o 88988889",o888888888888.
+888t  ...coo688889"'.ooo88o88b.'86988988889 8688888'o8888896989^888o
+ 888888888888"..ooo888968888888  "9o688888' "888988 8888868888'o88888
+  ""G8889""'ooo888888888888889 .d8o9889""'   "8688o."88888988"o888888o .
+           o8888'""""""""""'   o8688"          88868. 888888.68988888"o8o.
+           88888o.              "8888ooo.        '8888. 88888.8898888o"888o.
+           "888888'               "888888'          '""8o"8888.8869888oo8888o .
+      . :.:::::::::::.: .     . :.::::::::.: .   . : ::.:."8888 "888888888888o
+                                                        :..8888,. "88888888888.
+                                                        .:o888.o8o.  "866o9888o
+                                                         :888.o8888.  "88."89".
+                                                        . 89  888888    "88":.
+                   CyberAuditTool [C.A.T]                 :.     '8888o
+                 Israel Cyber Directorate                .       "8888..
+                   Prime Ministers Office                          888888o.
+                     V1.1 (01-03-2021)                              "888889,
+                                                             . : :.:::::::.: :.
+ Aquisition folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+[Success] You have credentials stored for:  CYBERAUDITLAB\Omerf
+Transcript started, output file is C:\CyberAudit2021\CYBER-AUDIT-PC\CyberAuditPhase.Log
+PS C:\CyberAudit2021> TerminatingError(Get-ADDomainController): "Unable to find a default server with Active Directory Web Services running."
+[Failed] No domain server was found, please connect this machine to a domain
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> $MyInvocation.HistoryId
+46
+PS C:\CyberAudit2021> $MyInvocation.ExpectingInput
+False
+PS C:\CyberAudit2021> $MyInvocation.MyCommand
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Script
+
+
+PS C:\CyberAudit2021> $MyInvocation.MyCommand.Parameters
+PS C:\CyberAudit2021> $MyInvocation.MyCommand.Path
+PS C:\CyberAudit2021> $MyInvocation.MyCommand.Path
+PS C:\CyberAudit2021> .\CyberAudit.ps1
+                         ..,co88oc.oo8888cc,..
+  o8o.               ..,o8889689ooo888o"88888888oooc..
+.88888             .o888896888".88888888o'?888888888889ooo....
+a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
+088P        ..atc88889"".,oo8o.86888888888o 88988889",o888888888888.
+888t  ...coo688889"'.ooo88o88b.'86988988889 8688888'o8888896989^888o
+ 888888888888"..ooo888968888888  "9o688888' "888988 8888868888'o88888
+  ""G8889""'ooo888888888888889 .d8o9889""'   "8688o."88888988"o888888o .
+           o8888'""""""""""'   o8688"          88868. 888888.68988888"o8o.
+           88888o.              "8888ooo.        '8888. 88888.8898888o"888o.
+           "888888'               "888888'          '""8o"8888.8869888oo8888o .
+      . :.:::::::::::.: .     . :.::::::::.: .   . : ::.:."8888 "888888888888o
+                                                        :..8888,. "88888888888.
+                                                        .:o888.o8o.  "866o9888o
+                                                         :888.o8888.  "88."89".
+                                                        . 89  888888    "88":.
+                   CyberAuditTool [C.A.T]                 :.     '8888o
+                 Israel Cyber Directorate                .       "8888..
+                   Prime Ministers Office                          888888o.
+                     V1.1 (01-03-2021)                              "888889,
+                                                             . : :.:::::::.: :.
+ Aquisition folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+[Success] You have credentials stored for:  CYBERAUDITLAB\Omerf
+Transcript started, output file is C:\CyberAudit2021\CYBER-AUDIT-PC\CyberAuditPhase.Log
+PS C:\CyberAudit2021> TerminatingError(Get-ADDomainController): "Unable to find a default server with Active Directory Web Services running."
+[Failed] No domain server was found, please connect this machine to a domain
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberAudit.ps1
+                         ..,co88oc.oo8888cc,..
+  o8o.               ..,o8889689ooo888o"88888888oooc..
+.88888             .o888896888".88888888o'?888888888889ooo....
+a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
+088P        ..atc88889"".,oo8o.86888888888o 88988889",o888888888888.
+888t  ...coo688889"'.ooo88o88b.'86988988889 8688888'o8888896989^888o
+ 888888888888"..ooo888968888888  "9o688888' "888988 8888868888'o88888
+  ""G8889""'ooo888888888888889 .d8o9889""'   "8688o."88888988"o888888o .
+           o8888'""""""""""'   o8688"          88868. 888888.68988888"o8o.
+           88888o.              "8888ooo.        '8888. 88888.8898888o"888o.
+           "888888'               "888888'          '""8o"8888.8869888oo8888o .
+      . :.:::::::::::.: .     . :.::::::::.: .   . : ::.:."8888 "888888888888o
+                                                        :..8888,. "88888888888.
+                                                        .:o888.o8o.  "866o9888o
+                                                         :888.o8888.  "88."89".
+                                                        . 89  888888    "88":.
+                   CyberAuditTool [C.A.T]                 :.     '8888o
+                 Israel Cyber Directorate                .       "8888..
+                   Prime Ministers Office                          888888o.
+                     V1.1 (01-03-2021)                              "888889,
+                                                             . : :.:::::::.: :.
+ Aquisition folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+[Success] You have credentials stored for:  CYBERAUDITLAB\Omerf
+Transcript started, output file is C:\CyberAudit2021\CYBER-AUDIT-PC\CyberAuditPhase.Log
+PS C:\CyberAudit2021> TerminatingError(Get-ADDomainController): "Unable to find a default server with Active Directory Web Services running."
+[Failed] No domain server was found, please connect this machine to a domain
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberAudit.ps1
+                         ..,co88oc.oo8888cc,..
+  o8o.               ..,o8889689ooo888o"88888888oooc..
+.88888             .o888896888".88888888o'?888888888889ooo....
+a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
+088P        ..atc88889"".,oo8o.86888888888o 88988889",o888888888888.
+888t  ...coo688889"'.ooo88o88b.'86988988889 8688888'o8888896989^888o
+ 888888888888"..ooo888968888888  "9o688888' "888988 8888868888'o88888
+  ""G8889""'ooo888888888888889 .d8o9889""'   "8688o."88888988"o888888o .
+           o8888'""""""""""'   o8688"          88868. 888888.68988888"o8o.
+           88888o.              "8888ooo.        '8888. 88888.8898888o"888o.
+           "888888'               "888888'          '""8o"8888.8869888oo8888o .
+      . :.:::::::::::.: .     . :.::::::::.: .   . : ::.:."8888 "888888888888o
+                                                        :..8888,. "88888888888.
+                                                        .:o888.o8o.  "866o9888o
+                                                         :888.o8888.  "88."89".
+                                                        . 89  888888    "88":.
+                   CyberAuditTool [C.A.T]                 :.     '8888o
+                 Israel Cyber Directorate                .       "8888..
+                   Prime Ministers Office                          888888o.
+                     V1.1 (01-03-2021)                              "888889,
+                                                             . : :.:::::::.: :.
+ Aquisition folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+[Success] You have credentials stored for:  CYBERAUDITLAB\Omerf
+Transcript started, output file is C:\CyberAudit2021\CYBER-AUDIT-PC\CyberAuditPhase.Log
+PS C:\CyberAudit2021> TerminatingError(Get-ADDomainController): "Unable to find a default server with Active Directory Web Services running."
+[Failed] No domain server was found, please connect this machine to a domain
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberAudit.ps1
+                         ..,co88oc.oo8888cc,..
+  o8o.               ..,o8889689ooo888o"88888888oooc..
+.88888             .o888896888".88888888o'?888888888889ooo....
+a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
+088P        ..atc88889"".,oo8o.86888888888o 88988889",o888888888888.
+888t  ...coo688889"'.ooo88o88b.'86988988889 8688888'o8888896989^888o
+ 888888888888"..ooo888968888888  "9o688888' "888988 8888868888'o88888
+  ""G8889""'ooo888888888888889 .d8o9889""'   "8688o."88888988"o888888o .
+           o8888'""""""""""'   o8688"          88868. 888888.68988888"o8o.
+           88888o.              "8888ooo.        '8888. 88888.8898888o"888o.
+           "888888'               "888888'          '""8o"8888.8869888oo8888o .
+      . :.:::::::::::.: .     . :.::::::::.: .   . : ::.:."8888 "888888888888o
+                                                        :..8888,. "88888888888.
+                                                        .:o888.o8o.  "866o9888o
+                                                         :888.o8888.  "88."89".
+                                                        . 89  888888    "88":.
+                   CyberAuditTool [C.A.T]                 :.     '8888o
+                 Israel Cyber Directorate                .       "8888..
+                   Prime Ministers Office                          888888o.
+                     V1.1 (01-03-2021)                              "888889,
+                                                             . : :.:::::::.: :.
+ Aquisition folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+[Success] You have credentials stored for:  CYBERAUDITLAB\Omerf
+Transcript started, output file is C:\CyberAudit2021\CYBER-AUDIT-PC\CyberAuditPhase.Log
+PS C:\CyberAudit2021> TerminatingError(Get-ADDomainController): "Unable to find a default server with Active Directory Web Services running."
+[Failed] No domain server was found, please connect this machine to a domain
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberAnalyzers.ps1
+                         ..,co88oc.oo8888cc,..
+  o8o.               ..,o8889689ooo888o"88888888oooc..
+.88888             .o888896888".88888888o'?888888888889ooo....
+a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
+088P        ..atc88889"".,oo8o.86888888888o 88988889",o888888888888.
+888t  ...coo688889"'.ooo88o88b.'86988988889 8688888'o8888896989^888o
+ 888888888888"..ooo888968888888  "9o688888' "888988 8888868888'o88888
+  ""G8889""'ooo888888888888889 .d8o9889""'   "8688o."88888988"o888888o .
+           o8888'""""""""""'   o8688"          88868. 888888.68988888"o8o.
+           88888o.              "8888ooo.        '8888. 88888.8898888o"888o.
+           "888888'               "888888'          '""8o"8888.8869888oo8888o .
+      . :.:::::::::::.: .     . :.::::::::.: .   . : ::.:."8888 "888888888888o
+                                                        :..8888,. "88888888888.
+                                                        .:o888.o8o.  "866o9888o
+                                                         :888.o8888.  "88."89".
+                                                        . 89  888888    "88":.
+                   CyberAuditTool [C.A.T]                 :.     '8888o
+                 Israel Cyber Directorate                .       "8888..
+                   Prime Ministers Office                          888888o.
+                     V1.1 (01-03-2021)                              "888889,
+                                                             . : :.:::::::.: :.
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+
+Choose the root folder with the audit data you want to analyze
+[Failed] No folder was choosen, Please try again
+Choose the root folder with the audit data you want to analyze
+[Failed] No folder was choosen, Please try again
+Choose the root folder with the audit data you want to analyze
+[Failed] No folder was choosen, Please try again
+Choose the root folder with the audit data you want to analyze
+[Failed] No folder was choosen, Please try again
+Choose the root folder with the audit data you want to analyze
+[Failed] No folder was choosen, Please try again
+Choose the root folder with the audit data you want to analyze
+[Success] C:\CyberAudit2021\CYBER-AUDIT-PC
+[Note] C:\CyberAudit2021\CYBER-AUDIT-PC\ folder already exsits, this will not affect the process
+Transcript started, output file is C:\CyberAudit2021\CYBER-AUDIT-PC\\CyberAnalyzersPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     Audit Data Analysis:
+
+     Data folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+
+     1. hash dumping   | Process NTDS/SYSTEM files and export the password hashes
+     2. Ophcrack       | Password cracker based on rainbow tables
+     3. Hashcat        | Password cracker based on dictionaries
+     4. BloodHound     | Find attack vectors within Active Directory
+     5. PolicyAnalizer | Compare GPO to Microdoft Security configuration baselines
+     6. statistics     | Cracked Enterprise & Domain Admin passwords statistics
+     7. Dsinternals    | Password cracking using haveibeenpawned NTLM v5 file
+     8. AppInspector   | Software source code analysis to identify good or bad patterns
+     9. XlsCharts      | Generate an excel Risk and remediation efforts charts
+    10. NTDS-Offline   | Mount ndts.dit file and SYSVOL for offline audit
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     Audit Data Analysis:
+
+     Data folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+
+     1. hash dumping   | Process NTDS/SYSTEM files and export the password hashes
+     2. Ophcrack       | Password cracker based on rainbow tables
+     3. Hashcat        | Password cracker based on dictionaries
+     4. BloodHound     | Find attack vectors within Active Directory
+     5. PolicyAnalizer | Compare GPO to Microdoft Security configuration baselines
+     6. statistics     | Cracked Enterprise & Domain Admin passwords statistics
+     7. Dsinternals    | Password cracking using haveibeenpawned NTLM v5 file
+     8. AppInspector   | Software source code analysis to identify good or bad patterns
+     9. XlsCharts      | Generate an excel Risk and remediation efforts charts
+    10. NTDS-Offline   | Mount ndts.dit file and SYSVOL for offline audit
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     Audit Data Analysis:
+
+     Data folder is: C:\CyberAudit2021\CYBER-AUDIT-PC
+
+     1. hash dumping   | Process NTDS/SYSTEM files and export the password hashes
+     2. Ophcrack       | Password cracker based on rainbow tables
+     3. Hashcat        | Password cracker based on dictionaries
+     4. BloodHound     | Find attack vectors within Active Directory
+     5. PolicyAnalizer | Compare GPO to Microdoft Security configuration baselines
+     6. statistics     | Cracked Enterprise & Domain Admin passwords statistics
+     7. Dsinternals    | Password cracking using haveibeenpawned NTLM v5 file
+     8. AppInspector   | Software source code analysis to identify good or bad patterns
+     9. XlsCharts      | Generate an excel Risk and remediation efforts charts
+    10. NTDS-Offline   | Mount ndts.dit file and SYSVOL for offline audit
+
+    99. Quit
+
+Stop-Service : Cannot find any service with service name 'neo4j'.
+At C:\CyberAudit2021\CyberAnalyzers.ps1:679 char:1
++ Stop-Service "neo4j" -Verbose
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (neo4j:String) [Stop-Service], ServiceCommandException
+    + FullyQualifiedErrorId : NoServiceFoundForGivenName,Microsoft.PowerShell.Commands.StopServiceCommand
+Stop-Service : Cannot find any service with service name 'neo4j'.
+At C:\CyberAudit2021\CyberAnalyzers.ps1:679 char:1
++ Stop-Service "neo4j" -Verbose
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (neo4j:String) [Stop-Service], ServiceCommandException
+    + FullyQualifiedErrorId : NoServiceFoundForGivenName,Microsoft.PowerShell.Commands.StopServiceCommand
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> git pull
+hint: Pulling without specifying how to reconcile divergent branches is
+hint: discouraged. You can squelch this message by running one of the following
+hint: commands sometime before your next pull:
+hint:
+hint:   git config pull.rebase false  # merge (the default strategy)
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint:
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+Already up to date.

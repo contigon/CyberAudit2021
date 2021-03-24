@@ -1,7 +1,7 @@
 <#	
 	.NOTES
 	===========================================================================
-	 Created on:   	2/24/2020 1:11 PM
+	 Created on:   	2/24/2021 1:11 PM
 	 Created by:   	Omerf
 	 Organization: 	Israel Cyber Directorate
 	 Filename:     	CyberFunctions
@@ -10,10 +10,42 @@
 		Cyber Audit Tool - Helper Functions
 #>
 
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
 #Split-File C:\CyberAuditPS2020\Downloads\Nessus-8.10.0-x64.msi -PartSizeBytes 25MB
 #Join-File 
+
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+
+#Set Script directory tree variables
+$Tools = "$PSScriptRoot\Tools"
+$scoopDir = "$Tools\Scoop"
+$scoopGlobalDir = "$Tools\GlobalScoopApps"
+$SVNDir = "$Tools\SVN"
+$PowerShellsDir = "$Tools\PowerShells"
+$DownloadsDir = "$Tools\Downloads"
+$bucketsDir = "$scoopDir\buckets"
+$appsDir = "$scoopGlobalDir\apps"
+
+#Set GUI
+$Host.UI.RawUI.BackgroundColor = ($bckgrnd = "Black")
+$Host.UI.RawUI.ForegroundColor = "White"
+$BufferSize = $Host.UI.RawUI.BufferSize
+$BufferSize.Height = 500
+$Host.UI.RawUI.BufferSize = $BufferSize
+#$WindowSize = $host.UI.RawUI.WindowSize
+#$WindowSize.Height = 45
+#$host.UI.RawUI.WindowSize = $WindowSize
+
+#Set Acquisition folders
+$AcqBaseFolder = New-Item -Path $PSScriptRoot -Name $env:computername -ItemType "directory" -Force
+
+Function ACQ{
+    Param ($dir)
+    $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force
+    Write-Host "$dir Aquisition folder is: $ACQdir" -ForegroundColor Yellow
+    Return $ACQdir.FullName
+}
+
 
 function screenshot ()
 {
@@ -141,16 +173,6 @@ function dl($url,$to) {
     $wc.downloadFile($url,$to)
 }
 
-#Set Script directory tree variables
-$Tools = "$PSScriptRoot\Tools"
-$scoopDir = "$Tools\Scoop"
-$scoopGlobalDir = "$Tools\GlobalScoopApps"
-$SVNDir = "$Tools\SVN"
-$PowerShellsDir = "$Tools\PowerShells"
-$DownloadsDir = "$Tools\Downloads"
-$bucketsDir = "$scoopDir\buckets"
-$appsDir = "$scoopGlobalDir\apps"
-
 #locate a scoop application directory
 function appDir ($appName){
     $c = scoop prefix $appName
@@ -169,28 +191,6 @@ function YesNo ($FirstName, $LastName) {
         return $false
     }
 }
-
-#Set Acquisition folders
-$AcqBaseFolder = New-Item -Path $PSScriptRoot -Name $env:computername -ItemType "directory" -Force
-
-Function ACQ{
-    Param ($dir)
-    $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force
-    Write-Host "$dir Aquisition folder is: $ACQdir" -ForegroundColor Yellow
-    Return $ACQdir.FullName
-}
-
-#Set GUI
-$Host.UI.RawUI.BackgroundColor = ($bckgrnd = "Black")
-$Host.UI.RawUI.ForegroundColor = "White"
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - functions"
-$BufferSize = $Host.UI.RawUI.BufferSize
-$BufferSize.Height = 500
-$Host.UI.RawUI.BufferSize = $BufferSize
-#$WindowSize = $host.UI.RawUI.WindowSize
-#$WindowSize.Height = 45
-#$host.UI.RawUI.WindowSize = $WindowSize
-
 
 Function Get-Folder($initialDirectory) {
     [void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
@@ -256,10 +256,10 @@ a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
                                                         .:o888.o8o.  "866o9888o
                                                          :888.o8888.  "88."89".
                                                         . 89  888888    "88":.
-                   CyberAuditTool [CAT]                 :.     '8888o
+                   CyberAuditTool [C.A.T]                 :.     '8888o
                  Israel Cyber Directorate                .       "8888..
                    Prime Ministers Office                          888888o.
-                     V1.0 (08-03-2020)                              "888889,
+                     V1.1 (01-03-2021)                              "888889,
                                                              . : :.:::::::.: :.
 
 "@

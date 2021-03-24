@@ -10,6 +10,9 @@
 		Cyber Audit Tool - PingCastle
 #>
 
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
+
 push-Location $ACQ
 Copy-Item $appsDir\PingCastle\current\*.* $ACQ -Recurse -Force
 $key = Read-Host "Press A for Automatically or I for Interactively running PingCastle"

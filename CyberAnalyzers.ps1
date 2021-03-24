@@ -15,7 +15,8 @@ ShowIncd
 DisableFirewall
 DisableAntimalware
 CyberBginfo
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Analyzers"
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 Write-Host " "
 

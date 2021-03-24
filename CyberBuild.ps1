@@ -11,7 +11,9 @@
 #>
 
 . $PSScriptRoot\CyberFunctions.ps1
-#ShowIncd
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
+
 if (![Environment]::Is64BitProcess)
 {
     failed "OS architecture must be 64 bit, exiting ..."
@@ -32,8 +34,6 @@ Name = "GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}"
 ItemType = "Directory"
 }
 $null = New-Item @godmodeSplat -Force
-
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - build"
 
 #Checkpoint-Computer -Description 'before installing CyberAuditTool'
 

@@ -12,7 +12,8 @@
 #>
 
 . $PSScriptRoot\CyberFunctions.ps1
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - CollectNetworkConfig"
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 $ACQ = ACQ("Network")
 

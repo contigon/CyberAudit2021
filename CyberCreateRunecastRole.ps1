@@ -12,7 +12,8 @@
     original file : https://raw.githubusercontent.com/Runecast/public/master/PowerCLI/createRunecastRole.ps1
 #>
 
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Runecast"
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 #User created in the vCenter
 $UserName = Read-Host "Please input the user you created for this task (eg. CyberAudit)"

@@ -13,7 +13,8 @@
 . $PSScriptRoot\CyberFunctions.ps1
 ShowIncd
 CyberBginfo
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Attack"
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 #Set the credentials for this Audit (it will be stored in a file)
 #Get-Credential $env:userdomain\$env:USERNAME | Export-Clixml -Path $PSScriptRoot\Tools\credentials.xml

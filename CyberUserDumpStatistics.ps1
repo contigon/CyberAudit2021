@@ -13,9 +13,9 @@
         https://blog.psskills.com/2019/01/13/excel-reports-using-importexcel-module-from-powershell-gallery/
 #>
 
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Domain and Enterprise admins users Statistics"
-
 . $PSScriptRoot\CyberFunctions.ps1
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 #Get-Process EXCEL | kill
 #kills any excel process with a file name "cyber" if running

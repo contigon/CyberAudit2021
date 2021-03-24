@@ -20,7 +20,8 @@ Add local project to github:
 
 #>
 
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 - compress installation files and upload to github"
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 $CatInstallRepository = "CATInstall"
 mkdir "c:\$CatInstallRepository" -Force

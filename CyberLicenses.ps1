@@ -11,7 +11,8 @@
 #>
 
 . $PSScriptRoot\CyberFunctions.ps1
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Licenses"
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
 [System.reflection.assembly]::LoadWithPartialName("System.Security")|out-null
 [System.reflection.assembly]::LoadWithPartialName("System.IO")|out-null

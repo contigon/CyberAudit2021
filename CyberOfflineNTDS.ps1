@@ -10,6 +10,9 @@
 		Cyber Audit Tool - Offline ntds.dit mount
 #>
 
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
+
 Write-Host "Browse and Choose the ntds.dit file to mount"
 $ntdsfile = Get-FileName
 $DomCont = Read-Host "Input name of Domain Controller Server"
