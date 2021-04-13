@@ -284,12 +284,12 @@ switch ($input)
         }
         $menuColor[4] = "Yellow"
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-        Install-PackageProvider Nuget -Force
-        
+        #add -FORCE if you have problem installing modules or providers
+        Install-PackageProvider Nuget
         $moduleExists = Get-Module "PowerShellGet"
         If ($moduleExists.name -eq "")
         {
-            Install-Module -Name PowerShellGet -Force -AllowClobber
+            Install-Module -Name PowerShellGet -AllowClobber
         }
 
         foreach ($PSGModule in $PSGModules)
@@ -298,20 +298,21 @@ switch ($input)
             If ($moduleExists -eq "")
             {
                 Write-Host "Installing module $PSGModule"
-                Install-Module -Name $PSGModule -AllowClobber -Force     
+                Install-Module -Name $PSGModule -AllowClobber  
                 Import-Module $PSGModule    
             }
         }
         
-        Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
-        success "These powershell modules are installed"
-        Get-Module
-        Write-Host "Saving powershell modules needed for offline running on remote machines"
-        foreach ($PSGModule in $PSGModulesOffline)
-        {
-            Save-Module -Name $PSGModulesOffline -Path $PowerShellsDir -Repository PSGallery -Force
-        }
-     $null = Start-Process -PassThru explorer $PowerShellsDir
+        #Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
+        #success "These powershell modules are installed"
+        #Get-Module
+        #Write-Host "Saving powershell modules needed for offline running on remote machines"
+        #foreach ($PSGModule in $PSGModulesOffline)
+        #{
+        #
+        #    Save-Module -Name $PSGModulesOffline -Path $PowerShellsDir -Repository PSGallery -Force
+        #}
+     #$null = Start-Process -PassThru explorer $PowerShellsDir
      read-host "œPress ENTER to continue"
      }
     
