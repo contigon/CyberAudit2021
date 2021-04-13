@@ -44,7 +44,8 @@ $PowerShellsDir = New-Item -Path $Tools -Name "\PowerShells" -ItemType "director
 $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -Force
 
 #Powershell Modules, Utilities and Applications that needs to be installed
-$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
+#$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
+$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate")
 $PSGModulesOffline = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter")
 $utilities = @("dotnet-sdk","Net_Framework_Installed_Versions_Getter","python27","python38","oraclejdk","putty","winscp","npcap","nmap-portable","rclone","everything","VoidToolsCLI","notepadplusplus","googlechrome","firefox","foxit-reader","irfanview","grepwin","sysinternals","snmpget","wireshark")
 $CollectorApps = @("ntdsaudit","RemoteExecutionEnablerforPowerShell","PingCastle","goddi","SharpHound","Red-Team-Scripts","Scuba-Windows","azscan3","LGPO","grouper2","Outflank-Dumpert","lantopolog","nessus","NetScanner64","AdvancedPortScanner","skyboxwmicollector","skyboxwmiparser","skyboxwsuscollector","PDQDeploy")
@@ -295,11 +296,16 @@ switch ($input)
         foreach ($PSGModule in $PSGModules)
         {
             $moduleExists = (Get-Module $PSGModule).Name
+            Write-Host "Checking if $moduleExists module exists and if not install it..."
             If ($moduleExists -eq "")
             {
                 Write-Host "Installing module $PSGModule"
                 Install-Module -Name $PSGModule -AllowClobber  
                 Import-Module $PSGModule    
+            }
+            else
+            {
+                success "$moduleExists module exists"
             }
         }
         
