@@ -288,28 +288,16 @@ switch ($input)
         Install-Module -Name PowerShellGet -Force -AllowClobber
         foreach ($PSGModule in $PSGModules)
         {
-            If ((Get-Module $PSGModule) -eq $null)
-             {
-                Try
-	            {
-                    if (Get-InstalledModule -Name $PSGModule -ErrorAction SilentlyContinue)
-                    {
-                        Install-Module -Name $PSGModule -AllowClobber -Force     
-                        Import-Module $PSGModule    
-                    }
-                    else
-                    {
-                        success "$PSGModule is already installed and imported"
-                    }
-                }
-                Catch
-	            {
-                    Write-Host "$PSGModule To Load" -ForegroundColor Red
-                }
-             }
+            $moduleExists = Get-Module $PSGModule
+            If (-NOT[string]::IsNullOrEmpty($moduleExists))
+            {
+                Write-Host "Installing module $PSGModule"
+                Install-Module -Name $PSGModule -AllowClobber -Force     
+                Import-Module $PSGModule    
+            }
             else
             {
-                Write-Host "$PSGModule is already installed" -ForegroundColor Green
+                success "$PSGModule is already installed and imported"
             }
             Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
             success "These powershell modules are installed"
@@ -320,6 +308,7 @@ switch ($input)
         {
             Save-Module -Name $PSGModulesOffline -Path $PowerShellsDir -Repository PSGallery -Force
         }
+     $null = Start-Process -PassThru explorer $PowerShellsDir
      read-host "œPress ENTER to continue"
      }
     
@@ -664,7 +653,6 @@ switch ($input)
             dl $zipurlB $zipfile
             }
         Write-Output 'Extracting Cyber Audit Tool core files updates...'
-        #Remove-Item -Path "$PSScriptRoot\update" -Recurse -Confirm:$false -Force
         New-Item -Path "$PSScriptRoot\update" -ItemType directory | Out-Null
         Add-Type -Assembly "System.IO.Compression.FileSystem"
         [IO.Compression.ZipFile]::ExtractToDirectory($zipfile, "$PSScriptRoot\update")
@@ -691,7 +679,12 @@ switch ($input)
         Pop-Location
 
         #update metasploit
-        msfupdate
+        try {
+            msfupdate
+            }
+        catch {
+            failed "Metasploit is not installed so we can not update it"
+        }
 
      read-host "œPress ENTER to continue" 
      }

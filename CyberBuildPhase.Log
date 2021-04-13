@@ -5143,3 +5143,2223 @@ PS C:\CyberAudit2021>       $FilesToUpdate = (
           "CyberBginfo.bgi"
           )
 PS C:\CyberAudit2021> gadd
+warning: LF will be replaced by CRLF in CyberBuildPhase.Log.
+The file will have its original line endings in your working directory
+[main a428164] 2021
+ 3 files changed, 60 insertions(+), 4 deletions(-)
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 1.19 KiB | 405.00 KiB/s, done.
+Total 5 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/contigon/CyberAudit2021
+   0c77f7b..a428164  main -> main
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Update
+        ------
+        
+        - Update core audit scripts
+        - Update scoop and buckets
+        - Update Powershell modules
+        - Check if there is a newer powershell version
+        - AutoUpdate PingCastle
+Updating the core CyberAuditTool scripts
+Trying to Download Cyber Audit Tool Updates from https://raw.githubusercontent.com/contigon/CATInstall/master/go.pdf to C:\CyberAudit2021
+Extracting Cyber Audit Tool core files updates...
+[No Updates] cyberAnalyzers.ps1
+[No Updates] cyberAudit.ps1
+[No Updates] cyberAuditRemote.ps1
+[No Updates] cyberBuild.ps1
+[No Updates] cyberAttack.ps1
+[No Updates] CyberCollectNetworkConfig.ps1
+[No Updates] CyberCollectNetworkConfigV2.ps1
+[No Updates] CyberCompressGo.ps1
+[No Updates] CyberCreateRunecastRole.ps1
+[No Updates] CyberFunctions.ps1
+[No Updates] CyberLicenses.ps1
+[No Updates] CyberPasswordStatistics.ps1
+[No Updates] CyberUserDumpStatistics.ps1
+[No Updates] CyberPingCastle.ps1
+[No Updates] go.ps1
+[No Updates] CyberMisc.ps1
+[No Updates] CyberReport.ps1
+[No Updates] CyberOfflineNTDS.ps1
+[No Updates] CyberGPLinkReport.ps1
+Get-Item : Cannot find path 'C:\CyberAudit2021\update\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' because it does 
+not exist.
+At C:\CyberAudit2021\CyberBuild.ps1:673 char:85
++ ... troot\$_).LastWriteTime -lt (Get-Item $psscriptroot\update\$_).LastWr ...
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\CyberAudit20...9v2004v20H2.ps1:String) [Get-Item], 
+ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemCommand
+Get-Item : Cannot find path 'C:\CyberAudit2021\update\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' because it does not
+exist.
+At C:\CyberAudit2021\CyberBuild.ps1:673 char:85
++ ... troot\$_).LastWriteTime -lt (Get-Item $psscriptroot\update\$_).LastWr ...
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\CyberAudit20...9v2004v20H2.ps1:String) [Get-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemCommand
+
+[No Updates] CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1
+[No Updates] CyberRamTrimmer.ps1
+[No Updates] Scuba2CSV.py
+[No Updates] CyberRiskCompute.xlsx
+[No Updates] CyberAuditPrep.xlsx
+[No Updates] CyberAuditDevelopersHelp.txt
+[No Updates] CyberBginfo.bgi
+[No Updates] Bginfo64.exe
+[No Updates] CyberRedIcon.ico
+[No Updates] CyberBlackIcon.ico
+[No Updates] CyberGreenIcon.ico
+[No Updates] CyberYellowIcon.ico
+Updating Scoop and applications...
+
+WARN  Scoop is out of date. Run 'scoop update' to get the latest changes.
+Updates are available for:
+    ccleaner: 5.77.8448 -> 5.77.8521
+    dotnet-sdk: 5.0.103 -> 5.0.201
+    firefox: 86.0 -> 87.0
+    git: 2.30.1.windows.1 -> 2.31.0.windows.1
+    notepadplusplus: 7.9.3 -> 7.9.5
+    rclone: 1.54.0 -> 1.54.1
+    skyboxcheckpointcollector: 1.0 -> 1.0.1
+    wireshark: 3.4.3 -> 3.4.4
+These app manifests have been removed:
+    hamster
+Updating Scoop...
+
+ * 3d67b7d3 Fixed trailing whitespace issue (#4307)                      13 days ago
+Updating 'CyberAuditBucket' bucket...
+
+
+Updating 'extras' bucket...
+
+ * 1d81312e1 okular: Update to version 20.12.3-603                       3 days ago
+ * 6469b73d7 http-downloader: Update to version 1.0.3.8                  3 days ago
+ * ce91f411c android-line-transfer: Update to version 3.1.63             4 days ago
+ * 36a14221e micmute: Update to version 0.9.1                            4 days ago
+ * 45ad65a1c lens: Update to version 4.2.1                               4 days ago
+ * 40436b0ec keeweb: Update to version 1.17.6                            4 days ago
+ * 939f20b71 cudatext: Update to version 1.131.0.0                       4 days ago
+ * 5853b6cb7 chipmunk: Update to version 2.16.3                          4 days ago
+ * c6bd3e9b0 Merge branch 'master' of https://github.com/lukesampson/s.. 4 days ago
+ * 9723f33e0 capframex@1.6.0: Fix installation                           4 days ago
+ * 02cf050fb dosbox-x@0.83.12: Hash fix (#5981)                          4 days ago
+ * e08ab4d76 scite@5.0.1: Hash fix (#6000)                               4 days ago
+ * b84b710bd bandizip@7.16: Hash fix (#5985)                             4 days ago
+ * 061300dc7 sigil@1.5.1: Hash fix (#5983)                               4 days ago
+ * e5d39fbd0 mkvtoolnix: Update to version 56.1.0                        4 days ago
+ * 219b53217 fork: Update to version 1.61.0                              4 days ago
+ * 92d0792f9 firefox-beta: Update to version 88.0b9                      4 days ago
+ * 19e2c346d renamer: Use https (#5995)                                  4 days ago
+ * 5cd850861 tomcat: Update to version 10.0.5 (#5990)                    4 days ago
+ * 098e1ac65 firefox-developer: Update to version 88.0b9                 4 days ago
+ * d7605ab3f nswagstudio: Update to version 13.10.9                      4 days ago
+ * 9f71f5cc1 micmute: Update to version 0.9.0                            4 days ago
+ * fc19b6a9a tableplus: Update to version 3.12.20.160                    4 days ago
+ * 2b730dbc2 firefox-nightly: Update to version 89.0a1.20210409092020    4 days ago
+ * 2fc30fcd3 dart-dev: Update to version 2.13.0-216.0.dev                4 days ago
+ * 8aea9a585 dart-dev: Update to version 2.13.0-116.0.dev                4 days ago
+ * 2d43da299 caprine: Update to version 2.52.3                           4 days ago
+ * 9bf158834 markdown-monster: Update to version 1.26.10                 4 days ago
+ * 9ecc316c9 yakyak: Update to version 1.5.11.1                          4 days ago
+ * 16042e00f vscodium: Update to version 1.55.1                          4 days ago
+ * d28dff645 vscodium-portable: Update to version 1.55.1                 4 days ago
+ * 1272770d2 protobuf: Update to version 3.15.8                          4 days ago
+ * 72f60c637 netch: Update to version 1.8.3                              4 days ago
+ * 7415fa1ec losslesscut: Update to version 3.36.0                       4 days ago
+ * ab9cefd32 lazygit: Update to version 0.27.2                           4 days ago
+ * d18891636 kate: Update to version 20.12.3-1238                        4 days ago
+ * 64725b444 scite: Update to version 5.0.1                              4 days ago
+ * b02abd1e3 sc1: Update to version 5.0.1                                4 days ago
+ * 2af137c40 okular: Update to version 20.12.3-602                       4 days ago
+ * 213a1365b firefox-nightly: Update to version 89.0a1.20210408215439    5 days ago
+ * b05b6d35d squirrel-sql: Update to version 4.2.0                       5 days ago
+ * a225bc763 thunderbird: Update to version 78.9.1                       5 days ago
+ * 4772ccae0 thunderbird-portable: Update to version 78.9.1              5 days ago
+ * db5de4fac postman: Update to version 8.2.1                            5 days ago
+ * 9596ae81a vscode: Update to version 1.55.1                            5 days ago
+ * 62d66b0b4 vscode-portable: Update to version 1.55.1                   5 days ago
+ * b5fe68861 postman: Update to version 8.1.0                            5 days ago
+ * 11df5770b balabolka: Update to version 2.15.0.779                     5 days ago
+ * 1a77e15d3 electrum: Update to version 4.1.2                           5 days ago
+ * 725f32cdb dart-dev: Update to version 2.13.0-211.0.dev                5 days ago
+ * e634971f7 firefox-nightly: Update to version 89.0a1.20210408095111    5 days ago
+ * 652171401 php-xdebug: Update to version 3.0.4-8.0                     5 days ago
+ * c9e15fabb php-nts-xdebug: Update to version 3.0.4-8.0                 5 days ago
+ * ee5a3d68d postman: Update to version 8.2.0                            5 days ago
+ * 8e42b7a9f dotPeek: Update to version 2021.1                           5 days ago
+ * db76fe95f zeplin: Update to version 6.0.0                             5 days ago
+ * d3cd778ba kate: Update to version 20.12.3-1237                        5 days ago
+ * 0a57f3d51 okular: Update to version 20.12.3-601                       5 days ago
+ * 35e19e820 syncthingtray: Update to version 1.1.5                      6 days ago
+ * efead7647 firefox-nightly: Update to version 89.0a1.20210407212527    6 days ago
+ * e14e01784 hydrus-network: Update to version 434                       6 days ago
+ * 19d206680 altair: Update to version 4.0.0                             6 days ago
+ * 7c014f16c altair: Update to version 4.0.1                             6 days ago
+ * 5d0b2599c flyctl: Update to version 0.0.201                           6 days ago
+ * d10e9285d xmrig: Update to version 6.11.1                             6 days ago
+ * 279741a48 syncthingtray: Update to version 1.1.4                      6 days ago
+ * f8d87a133 stretchly: Update to version 1.5.0                          6 days ago
+ * cb0e6eb5c lazygit: Update to version 0.27.1                           6 days ago
+ * 96e7f3473 fbflipper: Update to version 0.84.0                         6 days ago
+ * d655bf945 pycharm: Update to version 2021.1                           6 days ago
+ * fd95d663e opera-gx: Update to version 73.0.3856.427                   6 days ago
+ * 24f8cc1a4 grafana: Update to version 7.5.3                            6 days ago
+ * 75b0e9ff6 firefox-nightly: Update to version 89.0a1.20210407094544    6 days ago
+ * 4c70ae58e github: Update to version 2.7.2                             6 days ago
+ * 74386562a idea: Update to version 2021.1                              6 days ago
+ * 510c3e488 idea-ultimate: Update to version 2021.1                     6 days ago
+ * 07364f389 deepl: Update to version 2.3.1                              6 days ago
+ * dd0590032 kate: Update to version 20.12.3-1236                        6 days ago
+ * ce4bcfea5 okular: Update to version 20.12.3-600                       6 days ago
+ * d43fd1aab obsidian: Update to version 0.11.13                         6 days ago
+ * ac04274b4 firefox-developer: Update to version 88.0b8                 7 days ago
+ * 4b2de3718 firefox-beta: Update to version 88.0b8                      7 days ago
+ * 4c6771303 nwjs: Update to version 0.52.2                              7 days ago
+ * 68d88abe4 nwjs-sdk: Update to version 0.52.2                          7 days ago
+ * 1c5bcadc4 firefox-nightly: Update to version 89.0a1.20210406152948    7 days ago
+ * 696eb6761 civo: Update to version 0.7.11                              7 days ago
+ * ffc2e7478 chipmunk: Update to version 2.16.2                          7 days ago
+ * c150ce8de webstorm: Update to version 2021.1                          7 days ago
+ * 708d0aa58 xmrig: Update to version 6.11.0                             7 days ago
+ * ffdb6d357 simplenote: Update to version 2.9.0                         7 days ago
+ * 0a0acfaf2 rssguard: Update to version 3.9.1                           7 days ago
+ * 9109656ad listen1desktop: Update to version 2.20.1                    7 days ago
+ * 5e21cb09a waterfox: Update to version 2021.03                         7 days ago
+ * 2915ec663 lazygit: Update to version 0.27                             7 days ago
+ * 28d1da2fb gcloud: Update to version 335.0.0                           7 days ago
+ * 27ed89d3f gitkraken: Update to version 7.5.4                          7 days ago
+ * 2884ff1b6 quicktextpaste: Update to version 7.11                      7 days ago
+ * a6e7070bd hwinfo: Update to version 7.02-4430                         7 days ago
+ * d5858cd55 tomcat: Update to version 9.0.45                            7 days ago
+ * 96c8d342e streamdeck: Update to version 4.9.4.13228                   7 days ago
+ * b082e8d08 firefox-nightly: Update to version 89.0a1.20210406094706    7 days ago
+ * a8e5fbbd5 etcher: Update to version 1.5.117                           7 days ago
+ * 901663e69 coppeliasim: Update to version 4.2.0                        7 days ago
+ * 69d5546e5 gitify: Update to version 4.2.1                             7 days ago
+ * 8d9a24de1 foobar2000: Update to version 1.6.5                         7 days ago
+ * c054e3bee foobar2000-portable: Update to version 1.6.5                7 days ago
+ * 5228e0def dart-dev: Update to version 2.13.0-204.0.dev                7 days ago
+ * 7253139f7 kate: Update to version 20.12.3-1235                        7 days ago
+ * bb736c1f0 okular: Update to version 20.12.3-599                       7 days ago
+ * 6646582d8 wezterm: Update to version 20210405-110924-a5bb5be8         7 days ago
+ * e1cddfbd7 vieb: Update to version 4.3.0                               7 days ago
+ * febec6a83 lagrange: Update to version 1.3.1                           7 days ago
+ * 80fc629cf firefox-nightly: Update to version 89.0a1.20210405212812    8 days ago
+ * b2cf10c95 stunnel: Update to version 5.59                             8 days ago
+ * e7bef5aa0 zmc: Update to version 8.0.0.17                             8 days ago
+ * 9953d4af5 qalculate: Update to version 3.18.0                         8 days ago
+ * d64ff407a nirlauncher: Update to version 1.23.43                      8 days ago
+ * e18226fa2 firefox-nightly: Update to version 89.0a1.20210405094633    8 days ago
+ * 764e210d4 mkvtoolnix: Update to version 56.0.0                        8 days ago
+ * a4105b959 bandizip: Update to version 7.16                            8 days ago
+ * cd2f86251 msbuild-structured-log-viewer: Update to version 2.1.404    8 days ago
+ * 118aa1d13 google-java-format: Update to version 1.10.0                8 days ago
+ * 5b634360a database.net: Update to version 32.1.7761.1                 8 days ago
+ * 28ace3d11 netch@1.8.2: Fix installation (#5966)                       8 days ago
+ * ff8786f3a dopamine: Update to version 2.0.7                           8 days ago
+ * 8bd95f484 shadowsocks: Update to version 4.4.0.185 (#5971)            8 days ago
+ * e63044f39 potplayer@210318: Hash fix (#5962)                          8 days ago
+ * 7ab0809b6 mkvtoolnix: Update to version 55.0.0 (#5963)                8 days ago
+ * 32423ab7a kate: Update to version 20.12.3-1234                        8 days ago
+ * 323bc061f okular: Update to version 20.12.3-598                       8 days ago
+ * e13f9ca07 centertaskbar: Add version 1.92 (#5948)                     8 days ago
+ * 1eefa8f30 wezterm: Update to version 20210404-112810-b63a949d         9 days ago
+ * f764a5e22 shadered: Update to version 1.5.1                           9 days ago
+ * bbc26dde9 firefox-nightly: Update to version 89.0a1.20210404214218    9 days ago
+ * 80994406c firefox-developer: Update to version 88.0b7                 9 days ago
+ * 1c24a47f3 firefox-beta: Update to version 88.0b7                      9 days ago
+ * 8b7cc1be6 ungoogled-chromium: Update to version 89.0.4389.114-1       9 days ago
+ * 167b09e59 http-downloader: Update to version 1.0.3.7                  9 days ago
+ * a0d784f4d dbeaver: Update to version 21.0.2                           9 days ago
+ * 5b72e02ba aimp: Update to version 4.70.2248                           9 days ago
+ * b5c12d973 grepwin: Update to version 2.0.7                            9 days ago
+ * 4832254f9 aimp: Update to version 4.70.2247                           9 days ago
+ * ccbb8d8ee plantuml: Update to version 1.2021.4                        9 days ago
+ * 5eab90a8a x64dbg: Update to version 2021-04-03_21-04                  9 days ago
+ * 0a191f148 trilium: Update to version 0.46.7                           9 days ago
+ * 9f1de542a matterbridge: Update to version 1.22.1                      9 days ago
+ * 010dccec5 openclosedriveeject: Update to version 2.22                 9 days ago
+ * 6ebca01c5 mpv-git: Update to version 20210404                         9 days ago
+ * 5fe071f8e kate: Update to version 20.12.3-1233                        9 days ago
+ * 8a17307ff okular: Update to version 20.12.3-597                       9 days ago
+ * 7a3b2f28b chromium-dev: Update to version 91.0.4467.0-r869045         10 days ago
+ * 5074236c2 firefox-nightly: Update to version 89.0a1.20210403214826    10 days ago
+ * 87de5a77f coretemp: Update to version 1.17                            10 days ago
+ * 740610842 firefox-nightly: Update to version 89.0a1.20210403093157    10 days ago
+ * dccff9e1c netron: Update to version 4.8.7                             10 days ago
+ * f8626673a dopamine: Update to version 2.0.6                           10 days ago
+ * e63b73fa2 kate: Update to version 20.12.3-1232                        10 days ago
+ * bcb3dfd21 okular: Update to version 20.12.3-596                       10 days ago
+ * 649fd5021 protobuf: Update to version 3.15.7                          10 days ago
+ * 605bd009f oripa: Update to version 1.45                               10 days ago
+ * 799874aa6 anki: Update to version 2.1.43                              11 days ago
+ * ab2a515a2 whatsapp: Update to version 2.2110.12                       11 days ago
+ * 620841e41 firefox-nightly: Update to version 89.0a1.20210402214149    11 days ago
+ * 5fb77e83c flyctl: Update to version 0.0.200                           11 days ago
+ * 3f880d9db tagspaces: Update to version 3.9.5                          11 days ago
+ * 26efb43aa flutter: Update to version 2.0.4                            11 days ago
+ * 69b3940df ds4windows: Update to version 3.0.1                         11 days ago
+ * f26796499 electrum: Update to version 4.1.1                           11 days ago
+ * 2ffa6b241 chipmunk: Update to version 2.16.0                          11 days ago
+ * 1493daac7 civo: Update to version 0.7.10                              11 days ago
+ * 42629b94b firefox-nightly: Update to version 89.0a1.20210402094809    11 days ago
+ * 2305340f0 tinymediamanager: Update to version 4.1.3                   11 days ago
+ * 49ac51911 kate: Update to version 20.12.3-1231                        11 days ago
+ * 5274b7b55 aida64extreme: Update to version 6.33.5700 (#5941)          11 days ago
+ * a4dc7d488 zoom: Update to version 5.6.1.617 (#5928)                   11 days ago
+ * 4d6f69b6a retroarch@1.9.1: Fix installation (#5929)                   11 days ago
+ * 0f9eec361 okular: Update to version 20.12.3-595                       11 days ago
+ * 2f157e601 format-factory: Update to version 5.7.1.0                   11 days ago
+ * 1da30d1e4 autoit-script-editor@21.316.1639.0.0: Hash fix (#5934)      11 days ago
+ * 39f05a9ef netch@1.8.2: Hash fix (#5950)                               11 days ago
+ * d3991974c markdown-monster@1.26.6: Hash fix (#5945)                   11 days ago
+ * c754c651f deepl: Update to version 2.2.0                              11 days ago
+ * c2473548a vscodium: Update to version 1.55.0                          11 days ago
+ * 4a65e1f22 vscodium-portable: Update to version 1.55.0                 11 days ago
+ * 2d173fb9b tumblthree: Update to version 1.4.0                         11 days ago
+ * 5559da102 qutebrowser: Update to version 2.1.1                        11 days ago
+ * 9c1e0f363 ds4windows: Update to version 3.0.0                         11 days ago
+ * 232960f7c deepl: Update to version 2.3.1                              11 days ago
+ * 273ca85f0 firefox-developer: Update to version 88.0b6                 12 days ago
+ * 3261eba4d firefox-beta: Update to version 88.0b6                      12 days ago
+ * 8eb62aafd firefox-nightly: Update to version 89.0a1.20210401155139    12 days ago
+ * 8e553bdf4 josm: Update to version 17702                               12 days ago
+ * 883b1c523 pspad: Update to version 5.0.6                              12 days ago
+ * f77f9638f lens: Update to version 4.2.0                               12 days ago
+ * 7d92f79ef dosbox-x: Update to version 0.83.12                         12 days ago
+ * eaeb4e17f firefox-nightly: Update to version 89.0a1.20210401094845    12 days ago
+ * f6a31f6c6 libreoffice-fresh: Update to version 7.1.2.2                12 days ago
+ * 710cf75d5 cudatext: Update to version 1.130.0.0                       12 days ago
+ * 38b24bcb0 postman: Update to version 8.1.0                            12 days ago
+ * e50f42a75 snappy-driver-installer-origin: Update to version 1.10.1... 12 days ago
+ * 20935193a kate: Update to version 20.12.3-1230                        12 days ago
+ * b1b49e40d okular: Update to version 20.12.3-594                       12 days ago
+ * c4156a0f7 firefox-nightly: Update to version 89.0a1.20210331215444    13 days ago
+ * 17847ff45 raspberry-pi-imager: Update to version 1.6.1                13 days ago
+ * e6536e826 msbuild-structured-log-viewer: Update to version 2.1.397    13 days ago
+ * 0f14966a4 digikam: Update to version 7.2.0                            13 days ago
+ * 12bac0b69 cyberduck: Update to version 7.8.5.34493                    13 days ago
+ * 9f0f5e7b8 azure-iot-explorer: Update to version 0.14.1                13 days ago
+ * 157ed4d12 emacs: Update to version 27.2                               13 days ago
+ * dea93c568 vscode: Update to version 1.55.0                            13 days ago
+ * a37b3ae08 vscode-portable: Update to version 1.55.0                   13 days ago
+ * ee8e3bfb9 fbflipper: Update to version 0.83.0                         13 days ago
+ * 50c6ed663 q-dir: Update to version 9.33                               13 days ago
+ * 0d8b1296f electrum: Update to version 4.1.0                           13 days ago
+ * 68da8c290 zeplin: Update to version 5.10.0                            13 days ago
+ * 61d28fd84 opera-gx: Update to version 73.0.3856.424                   13 days ago
+ * 3601dff23 ausweisapp2: Update to version 1.22.2                       13 days ago
+ * 92f3f19e4 nvcleanstall: Update to version 1.9.0                       13 days ago
+ * d33df71fc chipmunk: Update to version 2.15.6                          13 days ago
+ * 10f2d4f1c sabnzbd: Update to version 3.2.1                            13 days ago
+ * ebcfa1ac5 lagrange: Update to version 1.3.0                           13 days ago
+ * b6e50bb12 firefox-nightly: Update to version 89.0a1.20210331092207    13 days ago
+ * 726e09596 sysgauge: Update to version 7.8.16                          13 days ago
+ * ee75169fa cryptomator: Update to version 1.5.14                       13 days ago
+ * 47cebb1b8 vivaldi: Update to version 3.7.2218.52                      13 days ago
+ * 6363d6211 fclones: Update to version 0.9.1                            13 days ago
+ * d0ed9a324 kate: Update to version 20.12.3-1229                        13 days ago
+ * 940f12f7f okular: Update to version 20.12.3-593                       13 days ago
+ * 1dcd5e1dc firefox-nightly: Update to version 89.0a1.20210330215136    2 weeks ago
+ * 37d4f9e00 firefox-beta: Update to version 88.0b5                      2 weeks ago
+ * ef1b846a8 notion: Update to version 2.0.16                            2 weeks ago
+ * cd2d32ad1 jitsi-meet: Update to version 2.8.4                         2 weeks ago
+ * f6ea9faa1 firefox-developer: Update to version 88.0b5                 2 weeks ago
+ * 5cdfeefb8 picpick: Update to version 5.1.5                            2 weeks ago
+ * 8a07da44e insomnia: Update to version 2021.2.2                        2 weeks ago
+ * 228919b13 cabal: Update to version 6.0.7                              2 weeks ago
+ * 0215327a8 xmedia-recode: Update to version 3.5.3.4                    2 weeks ago
+ * be691f8a9 balabolka: Update to version 2.15.0.778                     2 weeks ago
+ * 00f2f7a3b grafana: Update to version 7.5.2                            2 weeks ago
+ * 63fa6e270 gcloud: Update to version 334.0.0                           2 weeks ago
+ * 182af21a8 yubikey-manager-qt: Update to version 1.2.1                 2 weeks ago
+ * c52f07ab7 fbflipper: Update to version 0.82.2                         2 weeks ago
+ * f34158a11 electerm: Update to version 1.12.9                          2 weeks ago
+ * 23ddeab7d picard: Update to version 2.6                               2 weeks ago
+ * b2815cb3f firefox-nightly: Update to version 89.0a1.20210330035059    2 weeks ago
+ * 830af3018 stoplight-studio: Update to version 2.3.0-stable.5602.git.. 2 weeks ago
+ * 75c0ee78c shutup10: Update to version 1.8.1420                        2 weeks ago
+ * 249025389 palemoon: Update to version 29.1.1                          2 weeks ago
+ * a1686f52d palemoon-portable: Update to version 29.1.1                 2 weeks ago
+ * 00404dcea github: Update to version 2.7.1                             2 weeks ago
+ * 1a9f61e8b fclones: Update to version 0.9.0                            2 weeks ago
+ * 6d913513f github: Update to version 2.7.0                             2 weeks ago
+ * 280a48813 seamonkey: Update to version 2.53.7                         2 weeks ago
+ * 17b2e181c kate: Update to version 20.12.3-1228                        2 weeks ago
+ * af42d0b88 okular: Update to version 20.12.3-592                       2 weeks ago
+ * 6f92b07a5 firefox-nightly: Update to version 89.0a1.20210329214331    2 weeks ago
+ * 04e845645 rapidcrc: Update to version 0.3.36                          2 weeks ago
+ * 8facfbb80 aida64extreme: Update to version 6.33                       2 weeks ago
+ * 82681b1de reaper: Update to version 6.26                              2 weeks ago
+ * 6f13b2e68 renderdoc: Update to version 1.13                           2 weeks ago
+ * 346638d31 dasel: Update to version 1.13.6                             2 weeks ago
+ * e6cb46480 zoom: Update to version 5.6.1                               2 weeks ago
+ * fe558c19e freeclipboardviewer: Update to version 4.0                  2 weeks ago
+ * 4ea1051e2 firefox-nightly: Update to version 89.0a1.20210329095128    2 weeks ago
+ * e00d244d5 element: Update to version 1.7.24                           2 weeks ago
+ * ac3651e96 languagetool: Update to version 5.3                         2 weeks ago
+ * 477e9e833 postman: Update to version 8.0.10                           2 weeks ago
+ * 8d0b4534c wire: Update to version 3.24.4036                           2 weeks ago
+ * 2a963278e sejda-pdf: Update to version 7.2.1                          2 weeks ago
+ * 51dfba4e9 x64dbg: Update to version 2021-03-28_17-36                  2 weeks ago
+ * d8795cf44 workrave: Update to version 1.10.45                         2 weeks ago
+ * b0765a761 switchhosts: Update to version 3.5.8                        2 weeks ago
+ * cea417b20 quick-picture-viewer: Update to version 3.1.3               2 weeks ago
+ * 0ac8be6f5 praat: Update to version 6.1.41                             2 weeks ago
+ * 49f1e6939 kate: Update to version 20.12.3-1227                        2 weeks ago
+ * 852c006dd markdown-monster: Update to version 1.26.6                  2 weeks ago
+ * 4caac64b4 okular: Update to version 20.12.3-591                       2 weeks ago
+ * 9b4d5ab2c retroarch: Update to version 1.9.1                          2 weeks ago
+ * cce65b4ae firefox-nightly: Update to version 89.0a1.20210328213901    2 weeks ago
+ * 166ef8ffc firefox-developer: Update to version 88.0b4                 2 weeks ago
+ * c8c0d89ea firefox-beta: Update to version 88.0b4                      2 weeks ago
+ * 6d96a1271 filezilla: Update to version 3.53.1                         2 weeks ago
+ * 638474c70 sumo: Update to version 5.12.10.486                         2 weeks ago
+ * 67a858ea8 deltachat: Update to version 1.15.5                         2 weeks ago
+ * be1793f3e gnucash: Update to version 4.5                              2 weeks ago
+ * 169cfed01 rtss: Update to version 7.3.1 (#5852)                       2 weeks ago
+ * 3bf5e043b ddu: Update to version 18.0.3.8                             2 weeks ago
+ * 1fa47bfff phraseexpress: Update to version 15.0.86d (#5887)           2 weeks ago
+ * 6ea86d83b ksnip@1.8.2: Hash fix (#5894)                               2 weeks ago
+ * 0deee89ed caffeine@1.96: Hash fix (#5898)                             2 weeks ago
+ * 155d0f335 android-sms-backup-and-restore@2.14.39: Hash fix (#5902)    2 weeks ago
+ * 7a6a286df potplayer@210318: Hash fix (#5907)                          2 weeks ago
+ * 03335eb74 ventoy: Update to version 1.0.39                            2 weeks ago
+ * 55ac42cec qbittorrent: Update to version 4.3.4.1                      2 weeks ago
+ * c88bad147 qbittorrent-portable: Update to version 4.3.4.1             2 weeks ago
+ * 4857c8ac2 firefox-nightly: Update to version 89.0a1.20210328095625    2 weeks ago
+ * 0ca2bf23c exaile: Update to version 4.1.1                             2 weeks ago
+ * 3ee442286 ydl-ui: Update to version 2.7.0                             2 weeks ago
+ * fbeee10d2 nwjs: Update to version 0.52.1                              2 weeks ago
+ * baaf43dca nwjs-sdk: Update to version 0.52.1                          2 weeks ago
+ * 841fc8a43 kate: Update to version 20.12.3-1226                        2 weeks ago
+ * 318b5bdfb vieb: Update to version 4.2.1                               2 weeks ago
+ * 5628d86bc qgroundcontrol: Update to version 4.1.2                     2 weeks ago
+ * 58b179a59 netron: Update to version 4.8.6                             2 weeks ago
+ * 481944b55 okular: Update to version 20.12.3-590                       2 weeks ago
+ * 80e059d05 tor-browser: Update to version 10.0.15                      2 weeks ago
+ * 0a7b18e47 firefox-nightly: Update to version 89.0a1.20210327205315    2 weeks ago
+ * 2909c4e05 keeweb: Update to version 1.17.5                            2 weeks ago
+ * 9f2974ebf firefox-nightly: Update to version 89.0a1.20210327094311    2 weeks ago
+ * a2f07a1ce netron: Update to version 4.8.5                             2 weeks ago
+ * fc16b31e1 msbuild-structured-log-viewer: Update to version 2.1.370    2 weeks ago
+ * f6bf73acb ungoogled-chromium: Update to version 89.0.4389.90-1        2 weeks ago
+ * 3ccca39cd kate: Update to version 20.12.3-1225                        2 weeks ago
+ * f37192473 okular: Update to version 20.12.3-589                       2 weeks ago
+ * 30e49a6b0 firefox-nightly: Update to version 89.0a1.20210326215106    3 weeks ago
+ * ad749afd5 altair: Update to version 4.0.0                             3 weeks ago
+ * b8bebbeb3 omegat: Update to version 5.4.3                             3 weeks ago
+ * c75d13f76 flyctl: Update to version 0.0.198                           3 weeks ago
+ * d1dc787a7 jami: Update to version 202103251843                        3 weeks ago
+ * 97c05001f flyctl: Update to version 0.0.197                           3 weeks ago
+ * 158b7b53b pycharm: Update to version 2020.3.5                         3 weeks ago
+ * 129de0f0b mediainfo-gui: Update to version 21.03                      3 weeks ago
+ * 5987f789d chipmunk: Update to version 2.15.5                          3 weeks ago
+ * 8db3cd080 standardnotes: Update to version 3.6.4                      3 weeks ago
+ * aca95bab9 sigil: Update to version 1.5.1                              3 weeks ago
+ * 89beec09f grafana: Update to version 7.5.1                            3 weeks ago
+ * 6b8a5fbdb format-factory: Update to version 5.7.0.0                   3 weeks ago
+ * 191e0b247 fbflipper: Update to version 0.82.1                         3 weeks ago
+ * a09a1830b postman: Update to version 8.0.7                            3 weeks ago
+ * ca71b2689 firefox-nightly: Update to version 89.0a1.20210326093737    3 weeks ago
+ * 101e3ba8a mp3tag: Update to version 3.06a                             3 weeks ago
+ * a05d69026 v2rayn: Update to version 4.13                              3 weeks ago
+ * dad49ca58 taskbarx: Update to version 1.6.8.0                         3 weeks ago
+ * f8d6e2672 strawberry: Update to version 0.9.2                         3 weeks ago
+ * cf645f8de octant: Update to version 0.18.0                            3 weeks ago
+ * 9789ecd50 obsidian: Update to version 0.11.9                          3 weeks ago
+ * 4da6bef28 losslesscut: Update to version 3.34.3                       3 weeks ago
+ * 0ef9348eb lens: Update to version 4.1.5                               3 weeks ago
+ * 2b41a5d75 istio: Update to version 1.9.2                              3 weeks ago
+ * 25d496428 kate: Update to version 20.12.3-1224                        3 weeks ago
+ * ea2718276 okular: Update to version 20.12.3-588                       3 weeks ago
+ * 7dae77be8 calibre: Update to version 5.14.0                           3 weeks ago
+ * abf659f3c calibre-normal: Update to version 5.14.0                    3 weeks ago
+ * 42e905d1f slack: Update to version 4.14.0                             3 weeks ago
+ * 8ddc2433c httptoolkit: Update to version 1.2.2                        3 weeks ago
+ * 0b5138913 firefox-developer: Update to version 88.0b3                 3 weeks ago
+ * 903df3c14 firefox-beta: Update to version 88.0b3                      3 weeks ago
+ * 9a9ada89f firefox-nightly: Update to version 89.0a1.20210325161138    3 weeks ago
+ * 1cdc5ada7 flyctl: Update to version 0.0.196                           3 weeks ago
+ * 0ee0d0697 mp3tag: Update to version 3.06                              3 weeks ago
+ * 7e8c82a2c ds4windows: Update to version 2.2.15                        3 weeks ago
+ * 046473cfd gitkraken: Update to version 7.5.3                          3 weeks ago
+ * c658dd951 dart-dev: Update to version 2.13.0-165.0.dev                3 weeks ago
+ * dbf2e0979 postman: Update to version 8.0.9                            3 weeks ago
+ * 09536558c standardnotes: Update to version 3.6.3                      3 weeks ago
+ * 613be5dc2 omegat: Update to version 5.4.2                             3 weeks ago
+ * 9af4a8390 idea-ultimate-eap: Update to version 211.6693.14            3 weeks ago
+ * 92f8eb4f5 idea-eap: Update to version 211.6693.14                     3 weeks ago
+ * 482557087 grafana: Update to version 7.5.0                            3 weeks ago
+ * 1d782e432 dbeaver: Update to version 21.0.1                           3 weeks ago
+ * c058f5bee draw.io: Update to version 14.5.1                           3 weeks ago
+ * 48478e3c3 firefox-nightly: Update to version 89.0a1.20210325085523    3 weeks ago
+ * 067b877cd enpass: Update to version 6.6.1.809                         3 weeks ago
+ * 5bdfacaf6 ccleaner: Update to version 5.78.8558                       3 weeks ago
+ * 4cc0b908f kate: Update to version 20.12.3-1223                        3 weeks ago
+ * d38f08f86 x64dbg: Update to version 2021-03-24_22-52                  3 weeks ago
+ * 44299d1fc wabt: Update to version 1.0.23                              3 weeks ago
+ * 4e0101a1e testcentric: Update to version 1.6.2                        3 weeks ago
+ * 1c844b545 streamlink: Update to version 2.1.1                         3 weeks ago
+ * 8a44c103f stoplight-studio: Update to version 2.3.0-stable.5579.git.. 3 weeks ago
+ * e2c701af7 pdfsam-visual: Update to version 3.0.11                     3 weeks ago
+ * 324d1e9af jitsi-meet: Update to version 2.8.3                         3 weeks ago
+ * bf4337aea insomnia: Update to version 2021.2.1                        3 weeks ago
+ * 5c42092a7 vscode(-insiders)(-portable): Fix URL                       3 weeks ago
+ * f79eb5b1e okular: Update to version 20.12.3-587                       3 weeks ago
+ * a04dddf90 flyctl: Update to version 0.0.195                           3 weeks ago
+ * 45c381808 qbittorrent: Update to version 4.3.4                        3 weeks ago
+ * a84da7aac qbittorrent-portable: Update to version 4.3.4               3 weeks ago
+ * e41450e1b flyctl: Update to version 0.0.194                           3 weeks ago
+ * a668237b1 balabolka: Update to version 2.15.0.777                     3 weeks ago
+ * 812977f30 qbittorrent: Update to version 4.3.4.1                      3 weeks ago
+ * b8252a747 qbittorrent-portable: Update to version 4.3.4.1             3 weeks ago
+ * f2818145c qbittorrent: Update to version 4.3.4                        3 weeks ago
+ * 6e61ce3f3 qbittorrent-portable: Update to version 4.3.4               3 weeks ago
+ * a3da08b12 tor-browser: Update to version 10.0.14                      3 weeks ago
+ * 8aa9e9233 qbittorrent: Update to version 4.3.4.1                      3 weeks ago
+ * a59190ba4 qbittorrent-portable: Update to version 4.3.4.1             3 weeks ago
+ * 8aaf2aff8 firefox-nightly: Update to version 89.0a1.20210324160546    3 weeks ago
+ * f8967b0e6 flyctl: Update to version 0.0.193                           3 weeks ago
+ * 5f4ac1e89 ds4windows: Update to version 2.2.14                        3 weeks ago
+ * 9be1cd205 vivaldi: Update to version 3.7.2218.49                      3 weeks ago
+ * 593a21638 thunderbird: Update to version 78.9.0                       3 weeks ago
+ * ac70d868c thunderbird-portable: Update to version 78.9.0              3 weeks ago
+ * 3df8bddd5 slack: Update to version 4.13.0                             3 weeks ago
+ * 7aab839f4 flyctl: Update to version 0.0.192                           3 weeks ago
+ * bb133e5f5 waterfox-current: Update to version 3.2.0                   3 weeks ago
+ * 6022f011d qbittorrent: Update to version 4.3.4                        3 weeks ago
+ * c5837f34e qbittorrent-portable: Update to version 4.3.4               3 weeks ago
+ * 6978a86fc firefox-nightly: Update to version 89.0a1.20210324084848    3 weeks ago
+ * 0a46a83b8 potplayer@210318: Hash fix (#5885)                          3 weeks ago
+Updating 'java' bucket...
+
+
+Updating 'main' bucket...
+
+
+Updating 'versions' bucket...
+
+
+Scoop was updated successfully!
+ccleaner: 5.77.8448 -> 5.78.8558 (global)
+dotnet-sdk: 5.0.103 -> 5.0.202 (global)
+firefox: 86.0 -> 87.0 (global)
+git: 2.30.1.windows.1 -> 2.31.1.windows.1 (global)
+notepadplusplus: 7.9.3 -> 7.9.5 (global)
+python38: 3.8.8 -> 3.8.9 (global)
+rclone: 1.54.0 -> 1.55.0 (global)
+skyboxcheckpointcollector: 1.0 -> 1.0.1 (global)
+wireshark: 3.4.3 -> 3.4.4 (global)
+Updating 9 outdated apps:
+Updating 'ccleaner' (5.77.8448 -> 5.78.8558)
+Downloading new version
+ccsetup578.zip (28.0 MB) [>                                                                                       ]   0%
+ccsetup578.zip (28.0 MB) [>                                                                                       ]   0%
+ccsetup578.zip (28.0 MB) [>                                                                                       ]   1%
+ccsetup578.zip (28.0 MB) [>                                                                                       ]   2%
+ccsetup578.zip (28.0 MB) [====>                                                                                   ]   6%
+ccsetup578.zip (28.0 MB) [========>                                                                               ]  10%
+ccsetup578.zip (28.0 MB) [==========>                                                                             ]  13%
+ccsetup578.zip (28.0 MB) [===================>                                                                    ]  23%
+ccsetup578.zip (28.0 MB) [=======================>                                                                ]  27%
+ccsetup578.zip (28.0 MB) [========================>                                                               ]  28%
+ccsetup578.zip (28.0 MB) [===========================>                                                            ]  32%
+ccsetup578.zip (28.0 MB) [===================================>                                                    ]  41%
+ccsetup578.zip (28.0 MB) [=======================================>                                                ]  45%
+ccsetup578.zip (28.0 MB) [================================================>                                       ]  56%
+ccsetup578.zip (28.0 MB) [====================================================>                                   ]  60%
+ccsetup578.zip (28.0 MB) [=====================================================>                                  ]  61%
+ccsetup578.zip (28.0 MB) [=============================================================>                          ]  71%
+ccsetup578.zip (28.0 MB) [=================================================================>                      ]  75%
+ccsetup578.zip (28.0 MB) [=====================================================================>                  ]  79%
+ccsetup578.zip (28.0 MB) [=========================================================================>              ]  84%
+ccsetup578.zip (28.0 MB) [============================================================================>           ]  88%
+ccsetup578.zip (28.0 MB) [================================================================================>       ]  92%
+ccsetup578.zip (28.0 MB) [===================================================================================>    ]  96%
+ccsetup578.zip (28.0 MB) [========================================================================================] 100%
+ccsetup578.zip (28.0 MB) [========================================================================================] 100%
+
+Checking hash of
+ccsetup578.zip
+ ...
+ok.
+Uninstalling 'ccleaner' (5.77.8448)
+Running uninstaller script...
+Removing shim for 'CCleaner'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\ccleaner\current
+Installing 'ccleaner' (5.78.8558) [64bit]
+Loading ccsetup578.zip from cache
+Extracting
+ccsetup578.zip
+ ...
+done.
+Running pre-install script...
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\ccleaner\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\ccleaner\5.78.8558
+Creating shim for 'CCleaner'.
+Creating shortcut for CCleaner (CCleaner64.exe)
+Persisting ccleaner.ini
+Persisting winapp.ini
+Persisting winreg.ini
+Persisting winsys.ini
+'ccleaner' (5.78.8558) was installed successfully!
+Updating 'dotnet-sdk' (5.0.103 -> 5.0.202)
+Downloading new version
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   0%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   1%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   2%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [>                                                                      ]   3%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==>                                                                    ]   4%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   5%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===>                                                                   ]   6%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====>                                                                  ]   7%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====>                                                                  ]   7%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====>                                                                  ]   7%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====>                                                                  ]   7%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====>                                                                  ]   7%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   8%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   8%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   8%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   8%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   9%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   9%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   9%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   9%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====>                                                                 ]   9%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======>                                                                ]  10%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======>                                                                ]  10%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======>                                                                ]  10%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======>                                                                ]  10%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======>                                                               ]  11%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======>                                                               ]  11%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======>                                                               ]  11%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======>                                                               ]  11%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========>                                                              ]  12%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========>                                                              ]  12%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========>                                                              ]  12%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========>                                                              ]  13%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========>                                                              ]  13%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========>                                                              ]  13%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========>                                                             ]  14%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========>                                                             ]  14%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========>                                                             ]  14%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========>                                                            ]  15%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========>                                                            ]  15%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========>                                                            ]  15%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========>                                                            ]  15%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========>                                                            ]  16%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========>                                                            ]  16%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========>                                                           ]  17%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========>                                                           ]  17%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========>                                                           ]  17%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============>                                                          ]  18%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============>                                                          ]  18%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============>                                                          ]  18%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============>                                                          ]  19%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============>                                                          ]  19%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============>                                                          ]  19%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============>                                                         ]  20%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============>                                                         ]  20%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============>                                                        ]  21%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============>                                                        ]  21%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============>                                                       ]  22%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============>                                                       ]  22%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============>                                                       ]  23%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============>                                                       ]  23%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================>                                                      ]  24%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================>                                                      ]  24%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================>                                                      ]  24%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================>                                                     ]  25%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================>                                                     ]  25%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================>                                                     ]  26%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================>                                                     ]  26%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================>                                                     ]  26%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================>                                                    ]  27%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================>                                                   ]  28%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================>                                                   ]  28%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  29%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  29%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  29%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  29%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  30%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  30%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  30%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  30%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  30%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================>                                                  ]  30%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================>                                                 ]  31%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================>                                                 ]  31%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================>                                                 ]  31%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  32%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  32%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  32%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  32%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  33%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  33%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================>                                                ]  33%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================>                                               ]  34%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================>                                               ]  34%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================>                                               ]  34%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================>                                               ]  34%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================>                                              ]  35%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================>                                              ]  35%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  36%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  36%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  36%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  36%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  37%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  37%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================>                                             ]  37%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================>                                            ]  38%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================>                                            ]  38%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================>                                           ]  39%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================>                                           ]  39%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================>                                           ]  39%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================>                                           ]  40%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================>                                           ]  40%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================>                                          ]  41%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================>                                          ]  41%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================>                                          ]  41%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================>                                         ]  42%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================>                                         ]  42%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================>                                        ]  43%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================>                                        ]  43%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================>                                        ]  44%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================>                                        ]  44%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================>                                       ]  45%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================>                                       ]  45%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================>                                       ]  45%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================>                                      ]  46%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================>                                      ]  46%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================>                                      ]  47%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================>                                      ]  47%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================>                                     ]  48%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================>                                    ]  49%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================>                                    ]  49%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================>                                   ]  50%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================>                                   ]  50%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================>                                   ]  51%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================>                                   ]  51%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================>                                  ]  52%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================>                                  ]  52%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================>                                 ]  53%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================>                                 ]  54%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================>                                 ]  54%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================>                                 ]  54%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================>                                ]  55%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================>                                ]  55%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================>                                ]  55%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  56%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  56%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  56%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  57%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  57%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  57%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================>                               ]  57%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================>                              ]  58%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================>                              ]  58%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================>                              ]  58%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================>                             ]  59%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================>                             ]  59%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================>                             ]  59%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================>                            ]  60%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================>                            ]  60%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================>                            ]  60%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================>                            ]  60%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================>                            ]  61%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================>                            ]  61%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================>                           ]  62%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================>                           ]  62%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================>                           ]  62%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================>                           ]  62%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================>                          ]  63%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================>                          ]  63%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================>                          ]  63%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================>                          ]  64%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================>                          ]  64%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================>                         ]  65%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================>                         ]  65%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================>                         ]  65%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================>                         ]  65%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================>                        ]  66%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================>                        ]  66%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================>                       ]  67%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================>                       ]  67%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================>                       ]  67%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================>                       ]  68%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================>                       ]  68%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================>                       ]  68%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================>                      ]  69%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================>                      ]  69%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================>                     ]  70%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================>                     ]  70%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================>                     ]  70%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================>                     ]  70%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================>                     ]  71%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================>                     ]  71%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================>                    ]  72%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================>                    ]  72%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================>                   ]  73%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================>                   ]  73%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================>                   ]  73%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================>                   ]  73%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  74%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  74%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  75%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  75%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  75%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  75%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================>                  ]  75%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================>                 ]  76%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  77%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  78%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  78%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  78%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  78%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [======================================================>                ]  78%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================>               ]  79%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================>               ]  79%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================>               ]  79%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================>               ]  79%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================>               ]  79%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================================>              ]  80%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================================>              ]  80%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================================>              ]  80%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================================>              ]  80%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [========================================================>              ]  80%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  81%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  81%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  81%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  82%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  82%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  82%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  82%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=========================================================>             ]  82%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================================>            ]  83%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================================>            ]  83%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==========================================================>            ]  83%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  84%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===========================================================>           ]  85%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [============================================================>          ]  86%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  87%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  87%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  87%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  87%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  87%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  87%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=============================================================>         ]  88%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================================>        ]  89%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================================>        ]  89%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================================>        ]  89%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================================>        ]  89%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==============================================================>        ]  89%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================================>       ]  90%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================================>       ]  90%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================================>       ]  90%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================================>       ]  90%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===============================================================>       ]  90%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  91%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  91%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  91%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  91%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  92%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  92%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  92%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [================================================================>      ]  92%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================================>     ]  93%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================================>     ]  93%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================================>     ]  93%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=================================================================>     ]  93%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================================>    ]  94%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================================>    ]  94%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================================>    ]  94%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================================>    ]  95%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================================>    ]  95%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [==================================================================>    ]  95%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================================>   ]  96%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================================>   ]  96%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [===================================================================>   ]  96%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================================>  ]  97%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================================>  ]  97%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================================>  ]  97%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [====================================================================>  ]  97%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================================> ]  98%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================================> ]  98%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================================> ]  98%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================================> ]  99%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================================> ]  99%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=====================================================================> ]  99%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================================] 100%
+dotnet-sdk-5.0.202-win-x64.zip (185.6 MB) [=======================================================================] 100%
+
+Checking hash of
+dotnet-sdk-5.0.202-win-x64.zip
+ ...
+ok.
+Uninstalling 'dotnet-sdk' (5.0.103)
+Removing shim for 'dotnet'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\dotnet-sdk\current
+Installing 'dotnet-sdk' (5.0.202) [64bit]
+Loading dotnet-sdk-5.0.202-win-x64.zip from cache
+Extracting
+dotnet-sdk-5.0.202-win-x64.zip
+ ...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\dotnet-sdk\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\dotnet-sdk\5.0.202
+Creating shim for 'dotnet'.
+'dotnet-sdk' (5.0.202) was installed successfully!
+Updating 'firefox' (86.0 -> 87.0)
+Downloading new version
+Firefox%20Setup%2087.0.exe (54.2 MB) [>                                                                           ]   0%
+Firefox%20Setup%2087.0.exe (54.2 MB) [>                                                                           ]   0%
+Firefox%20Setup%2087.0.exe (54.2 MB) [>                                                                           ]   0%
+Firefox%20Setup%2087.0.exe (54.2 MB) [>                                                                           ]   1%
+Firefox%20Setup%2087.0.exe (54.2 MB) [>                                                                           ]   1%
+Firefox%20Setup%2087.0.exe (54.2 MB) [>                                                                           ]   2%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==>                                                                         ]   4%
+Firefox%20Setup%2087.0.exe (54.2 MB) [====>                                                                       ]   6%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=====>                                                                      ]   8%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==========>                                                                 ]  14%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==========>                                                                 ]  15%
+Firefox%20Setup%2087.0.exe (54.2 MB) [============>                                                               ]  17%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=============>                                                              ]  19%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===============>                                                            ]  21%
+Firefox%20Setup%2087.0.exe (54.2 MB) [================>                                                           ]  23%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==================>                                                         ]  25%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=====================>                                                      ]  29%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=======================>                                                    ]  31%
+Firefox%20Setup%2087.0.exe (54.2 MB) [========================>                                                   ]  33%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=========================>                                                  ]  34%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==========================>                                                 ]  36%
+Firefox%20Setup%2087.0.exe (54.2 MB) [============================>                                               ]  38%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=============================>                                              ]  40%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===============================>                                            ]  42%
+Firefox%20Setup%2087.0.exe (54.2 MB) [================================>                                           ]  44%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==================================>                                         ]  46%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==================================>                                         ]  46%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===================================>                                        ]  48%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=======================================>                                    ]  52%
+Firefox%20Setup%2087.0.exe (54.2 MB) [========================================>                                   ]  54%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=========================================>                                  ]  55%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==========================================>                                 ]  57%
+Firefox%20Setup%2087.0.exe (54.2 MB) [============================================>                               ]  59%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=============================================>                              ]  61%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===============================================>                            ]  63%
+Firefox%20Setup%2087.0.exe (54.2 MB) [================================================>                           ]  65%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==================================================>                         ]  67%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===================================================>                        ]  69%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=====================================================>                      ]  71%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=====================================================>                      ]  71%
+Firefox%20Setup%2087.0.exe (54.2 MB) [======================================================>                     ]  72%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===========================================================>                ]  79%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=============================================================>              ]  81%
+Firefox%20Setup%2087.0.exe (54.2 MB) [==============================================================>             ]  83%
+Firefox%20Setup%2087.0.exe (54.2 MB) [================================================================>           ]  85%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=================================================================>          ]  87%
+Firefox%20Setup%2087.0.exe (54.2 MB) [===================================================================>        ]  89%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=====================================================================>      ]  92%
+Firefox%20Setup%2087.0.exe (54.2 MB) [======================================================================>     ]  94%
+Firefox%20Setup%2087.0.exe (54.2 MB) [========================================================================>   ]  96%
+Firefox%20Setup%2087.0.exe (54.2 MB) [=========================================================================>  ]  98%
+Firefox%20Setup%2087.0.exe (54.2 MB) [============================================================================] 100%
+Firefox%20Setup%2087.0.exe (54.2 MB) [============================================================================] 100%
+
+Checking hash of
+Firefox%20Setup%2087.0.exe
+ ...
+ok.
+Uninstalling 'firefox' (86.0)
+Removing shim for 'firefox'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\firefox\current
+Installing 'firefox' (87.0) [64bit]
+Loading Firefox%20Setup%2087.0.exe from cache
+Extracting
+dl.7z
+ ...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\firefox\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\firefox\87.0
+Creating shim for 'firefox'.
+Creating shortcut for Firefox (firefox.exe)
+'firefox' (87.0) was installed successfully!
+Updating 'git' (2.30.1.windows.1 -> 2.31.1.windows.1)
+Downloading new version
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   0%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   0%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   1%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   1%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   2%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   3%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [>                                                                     ]   3%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==>                                                                   ]   4%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===>                                                                  ]   5%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===>                                                                  ]   6%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=====>                                                                ]   8%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=====>                                                                ]   9%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=======>                                                              ]  11%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=======>                                                              ]  12%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=========>                                                            ]  14%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==========>                                                           ]  16%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===========>                                                          ]  17%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [============>                                                         ]  19%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==============>                                                       ]  21%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===============>                                                      ]  23%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=================>                                                    ]  25%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==================>                                                   ]  27%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [====================>                                                 ]  30%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=====================>                                                ]  32%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=======================>                                              ]  34%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [========================>                                             ]  36%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=========================>                                            ]  37%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==========================>                                           ]  39%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [============================>                                         ]  41%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=============================>                                        ]  43%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==============================>                                       ]  44%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=================================>                                    ]  49%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===================================>                                  ]  51%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [====================================>                                 ]  53%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=====================================>                                ]  55%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [========================================>                             ]  58%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=========================================>                            ]  60%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==========================================>                           ]  62%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [============================================>                         ]  64%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=============================================>                        ]  66%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===============================================>                      ]  68%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=================================================>                    ]  71%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==================================================>                   ]  73%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===================================================>                  ]  75%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=====================================================>                ]  77%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [======================================================>               ]  79%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [========================================================>             ]  82%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==========================================================>           ]  84%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===========================================================>          ]  86%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=============================================================>        ]  88%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [==============================================================>       ]  90%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [================================================================>     ]  93%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [=================================================================>    ]  95%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [===================================================================>  ]  97%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [====================================================================> ]  99%
+PortableGit-2.31.1-64-bit.7z.exe (43.1 MB) [======================================================================] 100%
+
+Checking hash of
+PortableGit-2.31.1-64-bit.7z.exe
+ ...
+ok.
+Uninstalling 'git' (2.30.1.windows.1)
+Removing shim for 'git'.
+Removing shim for 'gitk'.
+Removing shim for 'git-gui'.
+Removing shim for 'tig'.
+Removing shim for 'git-bash'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\git\current
+Installing 'git' (2.31.1.windows.1) [64bit]
+Loading PortableGit-2.31.1-64-bit.7z.exe from cache
+Extracting
+dl.7z
+ ...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\git\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\git\2.31.1.windows.1
+Creating shim for 'git'.
+Creating shim for 'gitk'.
+Creating shim for 'git-gui'.
+Creating shim for 'tig'.
+Creating shim for 'git-bash'.
+Creating shortcut for Git Bash (git-bash.exe)
+Creating shortcut for Git GUI (git-gui.exe)
+Running post-install script...
+
+'git' (2.31.1.windows.1) was installed successfully!
+Updating 'notepadplusplus' (7.9.3 -> 7.9.5)
+Downloading new version
+npp.7.9.5.portable.x64.zip (4.8 MB) [>                                                                            ]   0%
+npp.7.9.5.portable.x64.zip (4.8 MB) [===============================>                                             ]  41%
+npp.7.9.5.portable.x64.zip (4.8 MB) [==============================================>                              ]  61%
+npp.7.9.5.portable.x64.zip (4.8 MB) [==================================================================>          ]  87%
+npp.7.9.5.portable.x64.zip (4.8 MB) [=============================================================================] 100%
+
+Checking hash of
+npp.7.9.5.portable.x64.zip
+ ...
+ok.
+ERROR Application is still running. Close all instances and try again.
+Updating 'python38' (3.8.8 -> 3.8.9)
+Downloading new version
+python-3.8.9-amd64.exe (26.9 MB) [>                                                                               ]   0%
+python-3.8.9-amd64.exe (26.9 MB) [>                                                                               ]   0%
+python-3.8.9-amd64.exe (26.9 MB) [>                                                                               ]   1%
+python-3.8.9-amd64.exe (26.9 MB) [>                                                                               ]   2%
+python-3.8.9-amd64.exe (26.9 MB) [>                                                                               ]   2%
+python-3.8.9-amd64.exe (26.9 MB) [>                                                                               ]   3%
+python-3.8.9-amd64.exe (26.9 MB) [==>                                                                             ]   4%
+python-3.8.9-amd64.exe (26.9 MB) [===>                                                                            ]   5%
+python-3.8.9-amd64.exe (26.9 MB) [====>                                                                           ]   6%
+python-3.8.9-amd64.exe (26.9 MB) [=====>                                                                          ]   7%
+python-3.8.9-amd64.exe (26.9 MB) [=====>                                                                          ]   8%
+python-3.8.9-amd64.exe (26.9 MB) [=======>                                                                        ]  10%
+python-3.8.9-amd64.exe (26.9 MB) [========>                                                                       ]  11%
+python-3.8.9-amd64.exe (26.9 MB) [=========>                                                                      ]  12%
+python-3.8.9-amd64.exe (26.9 MB) [==========>                                                                     ]  14%
+python-3.8.9-amd64.exe (26.9 MB) [===========>                                                                    ]  15%
+python-3.8.9-amd64.exe (26.9 MB) [=============>                                                                  ]  17%
+python-3.8.9-amd64.exe (26.9 MB) [=============>                                                                  ]  17%
+python-3.8.9-amd64.exe (26.9 MB) [================>                                                               ]  21%
+python-3.8.9-amd64.exe (26.9 MB) [=================>                                                              ]  23%
+python-3.8.9-amd64.exe (26.9 MB) [===================>                                                            ]  25%
+python-3.8.9-amd64.exe (26.9 MB) [=====================>                                                          ]  28%
+python-3.8.9-amd64.exe (26.9 MB) [=======================>                                                        ]  30%
+python-3.8.9-amd64.exe (26.9 MB) [=========================>                                                      ]  33%
+python-3.8.9-amd64.exe (26.9 MB) [============================>                                                   ]  36%
+python-3.8.9-amd64.exe (26.9 MB) [==============================>                                                 ]  39%
+python-3.8.9-amd64.exe (26.9 MB) [=================================>                                              ]  43%
+python-3.8.9-amd64.exe (26.9 MB) [====================================>                                           ]  46%
+python-3.8.9-amd64.exe (26.9 MB) [=======================================>                                        ]  50%
+python-3.8.9-amd64.exe (26.9 MB) [==========================================>                                     ]  54%
+python-3.8.9-amd64.exe (26.9 MB) [==============================================>                                 ]  59%
+python-3.8.9-amd64.exe (26.9 MB) [=================================================>                              ]  63%
+python-3.8.9-amd64.exe (26.9 MB) [=====================================================>                          ]  67%
+python-3.8.9-amd64.exe (26.9 MB) [========================================================>                       ]  71%
+python-3.8.9-amd64.exe (26.9 MB) [===========================================================>                    ]  75%
+python-3.8.9-amd64.exe (26.9 MB) [===============================================================>                ]  80%
+python-3.8.9-amd64.exe (26.9 MB) [==================================================================>             ]  84%
+python-3.8.9-amd64.exe (26.9 MB) [=====================================================================>          ]  88%
+python-3.8.9-amd64.exe (26.9 MB) [=========================================================================>      ]  92%
+python-3.8.9-amd64.exe (26.9 MB) [=============================================================================>  ]  97%
+python-3.8.9-amd64.exe (26.9 MB) [================================================================================] 100%
+
+Checking hash of
+python-3.8.9-amd64.exe
+ ...
+ok.
+Uninstalling 'python38' (3.8.8)
+Running uninstaller...
+done.
+Removing shim for 'python'.
+Removing shim for 'pythonw'.
+Removing shim for 'python3'.
+Removing shim for 'python38'.
+Removing shim for 'idle'.
+Removing shim for 'idle3'.
+Removing shim for 'idle38'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\python38\current
+Installing 'python38' (3.8.9) [64bit]
+Loading python-3.8.9-amd64.exe from cache
+Running installer...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\python38\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\python38\3.8.9
+Creating shim for 'python'.
+Creating shim for 'pythonw'.
+Creating shim for 'python3'.
+Creating shim for 'python38'.
+Creating shim for 'idle'.
+Creating shim for 'idle3'.
+Creating shim for 'idle38'.
+'python38' (3.8.9) was installed successfully!
+Updating 'rclone' (1.54.0 -> 1.55.0)
+Downloading new version
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [>                                                                     ]   0%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [>                                                                     ]   1%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [>                                                                     ]   2%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [==>                                                                   ]   4%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [===>                                                                  ]   6%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=====>                                                                ]   8%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [======>                                                               ]  10%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=======>                                                              ]  12%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=========>                                                            ]  15%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [===========>                                                          ]  17%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=============>                                                        ]  20%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [===============>                                                      ]  23%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=================>                                                    ]  26%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [====================>                                                 ]  30%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=======================>                                              ]  34%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [==========================>                                           ]  38%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [============================>                                         ]  42%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [================================>                                     ]  47%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [====================================>                                 ]  53%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [========================================>                             ]  58%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [============================================>                         ]  64%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [================================================>                     ]  70%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [=====================================================>                ]  77%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [==========================================================>           ]  84%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [===============================================================>      ]  92%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [======================================================================] 100%
+rclone-v1.55.0-windows-amd64.zip (13.6 MB) [======================================================================] 100%
+
+Checking hash of
+rclone-v1.55.0-windows-amd64.zip
+ ...
+ok.
+Uninstalling 'rclone' (1.54.0)
+Removing shim for 'rclone'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\rclone\current
+Installing 'rclone' (1.55.0) [64bit]
+Loading rclone-v1.55.0-windows-amd64.zip from cache
+Extracting
+rclone-v1.55.0-windows-amd64.zip
+ ...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\rclone\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\rclone\1.55.0
+Creating shim for 'rclone'.
+'rclone' (1.55.0) was installed successfully!
+Updating 'skyboxcheckpointcollector' (1.0 -> 1.0.1)
+Downloading new version
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [>                                                                 ]   0%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [>                                                                 ]   0%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [>                                                                 ]   1%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [>                                                                 ]   3%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [==>                                                               ]   5%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [====>                                                             ]   7%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=====>                                                            ]   9%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [======>                                                           ]  11%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [========>                                                         ]  14%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [==========>                                                       ]  16%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [============>                                                     ]  19%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [==============>                                                   ]  22%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [===============>                                                  ]  25%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=================>                                                ]  28%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [====================>                                             ]  32%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=======================>                                          ]  36%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=========================>                                        ]  40%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [============================>                                     ]  44%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [===============================>                                  ]  48%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [==================================>                               ]  53%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=====================================>                            ]  57%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [========================================>                         ]  62%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [==========================================>                       ]  65%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=============================================>                    ]  70%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [================================================>                 ]  74%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [===================================================>              ]  79%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [======================================================>           ]  84%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [=========================================================>        ]  88%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [============================================================>     ]  93%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [===============================================================>  ]  97%
+SkyboxCheckPointCollector.rar.0.part (24.0 MB) [==================================================================] 100%
+
+WARN  Warning: No hash in manifest. SHA256 for 'skyboxcheckpointcollector#1.0.1#https_github.com_contigon_Downloads_raw_master_SkyboxCheckPointCollector.rar.0.part' is:
+    11e53fa5f0543093c95d4ec16697d3a6e2e2ef7b27c8a5f25326ea65dfa4fd96
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [>                                                                 ]   0%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [==>                                                               ]   5%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [=====>                                                            ]   9%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [========>                                                         ]  14%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [===========>                                                      ]  18%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [==============>                                                   ]  23%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [=================>                                                ]  27%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [====================>                                             ]  32%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [=======================>                                          ]  36%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [==========================>                                       ]  41%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [=============================>                                    ]  46%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [==============================>                                   ]  47%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [===================================>                              ]  55%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [===========================================>                      ]  66%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [=============================================>                    ]  70%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [=================================================>                ]  75%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [====================================================>             ]  80%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [======================================================>           ]  84%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [==========================================================>       ]  89%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [============================================================>     ]  93%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [================================================================> ]  98%
+SkyboxCheckPointCollector.rar.1.part (24.0 MB) [==================================================================] 100%
+
+WARN  Warning: No hash in manifest. SHA256 for 'skyboxcheckpointcollector#1.0.1#https_github.com_contigon_Downloads_raw_master_SkyboxCheckPointCollector.rar.1.part' is:
+    c0d9d15d9c53ded5b0da42f481244c9f602fcb8951167f50e0cf11400d5f10cb
+SkyboxCheckPointCollector.rar.2.part (2.8 MB) [>                                                                  ]   0%
+SkyboxCheckPointCollector.rar.2.part (2.8 MB) [==========================>                                        ]  41%
+SkyboxCheckPointCollector.rar.2.part (2.8 MB) [=====================================================>             ]  81%
+SkyboxCheckPointCollector.rar.2.part (2.8 MB) [===================================================================] 100%
+
+WARN  Warning: No hash in manifest. SHA256 for 'skyboxcheckpointcollector#1.0.1#https_github.com_contigon_Downloads_raw_master_SkyboxCheckPointCollector.rar.2.part' is:
+    fdef046eb659adaf15e58b084705f2831ed8473a51cfc0d4bb9c431b5a9b51c7
+Uninstalling 'skyboxcheckpointcollector' (1.0)
+Removing shim for 'CheckPointOfflineCollector'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\skyboxcheckpointcollector\current
+Installing 'skyboxcheckpointcollector' (1.0.1) [64bit]
+Loading SkyboxCheckPointCollector.rar.0.part from cache
+Loading SkyboxCheckPointCollector.rar.1.part from cache
+Loading SkyboxCheckPointCollector.rar.2.part from cache
+Running pre-install script...
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\skyboxcheckpointcollector\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\skyboxcheckpointcollector\1.0.1
+Creating shim for 'CheckPointOfflineCollector'.
+'skyboxcheckpointcollector' (1.0.1) was installed successfully!
+Updating 'wireshark' (3.4.3 -> 3.4.4)
+Downloading new version
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [>                                                                      ]   0%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [>                                                                      ]   0%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [>                                                                      ]   1%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [>                                                                      ]   3%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===>                                                                   ]   5%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=====>                                                                 ]   8%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=======>                                                               ]  11%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=========>                                                             ]  14%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===========>                                                           ]  17%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=============>                                                         ]  20%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===============>                                                       ]  23%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=================>                                                     ]  26%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [====================>                                                  ]  29%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [======================>                                                ]  32%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [========================>                                              ]  35%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [==========================>                                            ]  38%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [============================>                                          ]  41%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [==============================>                                        ]  44%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [================================>                                      ]  47%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===================================>                                   ]  50%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=====================================>                                 ]  53%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [==========================================>                            ]  61%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [============================================>                          ]  64%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===============================================>                       ]  67%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=================================================>                     ]  70%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===================================================>                   ]  73%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=====================================================>                 ]  76%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=======================================================>               ]  79%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=========================================================>             ]  82%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [===========================================================>           ]  85%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [==============================================================>        ]  89%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [================================================================>      ]  91%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [==================================================================>    ]  95%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=====================================================================> ]  98%
+WiresharkPortable_3.4.4.paf.exe (36.6 MB) [=======================================================================] 100%
+
+Checking hash of
+WiresharkPortable_3.4.4.paf.exe
+ ...
+ok.
+Uninstalling 'wireshark' (3.4.3)
+Removing shim for 'capinfos'.
+Removing shim for 'captype'.
+Removing shim for 'dumpcap'.
+Removing shim for 'editcap'.
+Removing shim for 'mergecap'.
+Removing shim for 'randpkt'.
+Removing shim for 'rawshark'.
+Removing shim for 'reordercap'.
+Removing shim for 'text2pcap'.
+Removing shim for 'tshark'.
+Removing shim for 'Wireshark'.
+Unlinking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\wireshark\current
+Installing 'wireshark' (3.4.4) [64bit]
+Loading WiresharkPortable_3.4.4.paf.exe from cache
+Extracting
+dl.7z
+ ...
+done.
+Linking C:\CyberAudit2021\Tools\GlobalScoopApps\apps\wireshark\current => C:\CyberAudit2021\Tools\GlobalScoopApps\apps\wireshark\3.4.4
+Creating shim for 'capinfos'.
+Creating shim for 'captype'.
+Creating shim for 'dumpcap'.
+Creating shim for 'editcap'.
+Creating shim for 'mergecap'.
+Creating shim for 'randpkt'.
+Creating shim for 'rawshark'.
+Creating shim for 'reordercap'.
+Creating shim for 'text2pcap'.
+Creating shim for 'tshark'.
+Creating shim for 'Wireshark'.
+Creating shortcut for Wireshark (WiresharkPortable.exe)
+Persisting Data
+
+'wireshark' (3.4.4) was installed successfully!
+Notes
+-----
+WinPcap was replaced by Npcap.
+Run 'scoop install nmap' (from a elevated shell) to install 'Npcap' automatically,
+or run 'scoop install nmap-portable' and then install the 'npcap-oem.exe' from the 'nmap-portable' directory manually.
+No problems identified!
+Everything is shiny now!
+Checking and installing Updates of Powershell Modules, This can take some time...
+7Zip4Powershell 1.13.0 is the latest
+Module:ADEssentials Installed Version:0.0.119 Last Version:0.0.124
+CheckSec 2.1.1 is the latest
+Connectimo 0.0.6 is the latest
+Module:dbatools Installed Version:1.0.104 Last Version:1.0.142
+Module:DSInternals Installed Version:4.2 Last Version:4.4.1
+Emailimo 0.0.12 is the latest
+FileSplitter 1.3 is the latest
+Module:GPOZaurr Installed Version:0.0.122 Last Version:0.0.126
+ImportExcel 7.1.1 is the latest
+Module:MyTasks Installed Version:2.3.0 Last Version:2.4.0
+PackageManagement 1.4.7 is the latest
+Posh-Cisco 1.0.3 is the latest
+Posh-FortiGate 1.0.1 is the latest
+Posh-SSH 2.3.0 is the latest
+PowerShellGet 2.2.5 is the latest
+PowerUpSQL 1.103.8 is the latest
+Module:ps2exe Installed Version:1.0.7 Last Version:1.0.10
+PSEventViewer 1.0.17 is the latest
+PsIni 3.1.2 is the latest
+Module:PSParseHTML Installed Version:0.0.14 Last Version:0.0.19
+Module:PSSharedGoods Installed Version:0.0.197 Last Version:0.0.199
+Module:PSWinDocumentation.AD Installed Version:0.1.16 Last Version:0.1.20
+PSWinDocumentation.DNS 0.0.10 is the latest
+PSWindowsUpdate 2.2.0.2 is the latest
+Module:PSWriteColor Installed Version:0.87.2 Last Version:0.87.3
+Module:PSWriteHTML Installed Version:0.0.132 Last Version:0.0.148
+Module:Testimo Installed Version:0.0.57 Last Version:0.0.67
+VMware.CloudServices 12.2.0.17531656 is the latest
+Module:VMware.DeployAutomation Installed Version:7.0.0.15902843 Last Version:7.0.2.17849781
+Module:VMware.ImageBuilder Installed Version:7.0.0.15902843 Last Version:7.0.2.17849781
+Module:VMware.PowerCLI Installed Version:12.2.0.17538434 Last Version:12.3.0.17860403
+Module:VMware.Vim Installed Version:7.0.1.17531376 Last Version:7.0.2.17839075
+Module:VMware.VimAutomation.Cis.Core Installed Version:12.2.0.17531611 Last Version:12.3.0.17839331
+VMware.VimAutomation.Cloud 12.0.0.15940183 is the latest
+Module:VMware.VimAutomation.Common Installed Version:12.2.0.17531244 Last Version:12.3.0.17838947
+Module:VMware.VimAutomation.Core Installed Version:12.2.0.17531987 Last Version:12.3.0.17839688
+Module:VMware.VimAutomation.Hcx Installed Version:12.2.0.17537207 Last Version:12.3.0.17860192
+Module:VMware.VimAutomation.HorizonView Installed Version:12.2.0.17463427 Last Version:12.3.0.17806051
+VMware.VimAutomation.License 12.0.0.15939670 is the latest
+Module:VMware.VimAutomation.Nsxt Installed Version:12.2.0.17531710 Last Version:12.3.0.17843496
+VMware.VimAutomation.Sdk 12.2.0.17531155 is the latest
+Module:VMware.VimAutomation.Security Installed Version:12.1.0.17009513 Last Version:12.3.0.17833870
+Module:VMware.VimAutomation.Srm Installed Version:12.2.0.17536698 Last Version:12.3.0.17843071
+Module:VMware.VimAutomation.Storage Installed Version:12.2.0.17489905 Last Version:12.3.0.17855705
+VMware.VimAutomation.StorageUtility 1.6.0.0 is the latest
+Module:VMware.VimAutomation.Vds Installed Version:12.2.0.17532578 Last Version:12.3.0.17856667
+VMware.VimAutomation.Vmc 12.2.0.17531704 is the latest
+VMware.VimAutomation.vROps 12.2.0.17532798 is the latest
+Module:VMware.VimAutomation.WorkloadManagement Installed Version:12.2.0.17532793 Last Version:12.3.0.17856842
+VMware.VumAutomation 12.1.0.16941488 is the latest
+checking .Net version so you can update it manually...
+
+*****************]=- .net framework -=[*******************
+=> Installed .Net Framework 2.0
+=> Installed .Net Framework 3.0
+=> Installed .Net Framework 3.5
+=> Installed .Net Framework 4.0c
+=> Installed .Net Framework 4.0
+
+**********************************************************
+*****************]=- .net 4.x family -=[******************
+=> Installed .Net Framework 4.8
+
+**********************************************************
+*****]=- Copyright ֲ© 2015 Peter Malik - (MalikP.) -=[*****
+**********************************************************
+
+Downloading latest Metasploit Framework
+Updating Metasploit Framework
+Update Complete
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberCompressGo.ps1
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        3/22/2021   7:00 PM                CATInstall
+Files (C:\CyberAudit2021\cyberAnalyzers.ps1 C:\CyberAudit2021\cyberAudit.ps1 C:\CyberAudit2021\cyberAuditRemote.ps1 C:\CyberAudit2021\cyberBuild.ps1 C:\CyberAudit2021\cyberAttack.ps1 C:\CyberAudit2021\CyberCollectNetworkConfig.ps1 C:\CyberAudit2021\CyberCollectNetworkConfigV2.ps1 C:\CyberAudit2021\CyberCompressGo.ps1 C:\CyberAudit2021\CyberCreateRunecastRole.ps1 C:\CyberAudit2021\CyberFunctions.ps1 C:\CyberAudit2021\CyberLicenses.ps1 C:\CyberAudit2021\CyberPasswordStatistics.ps1 C:\CyberAudit2021\CyberUserDumpStatistics.ps1 C:\CyberAudit2021\CyberPingCastle.ps1 C:\CyberAudit2021\go.ps1 C:\CyberAudit2021\CyberMisc.ps1 C:\CyberAudit2021\CyberReport.ps1 C:\CyberAudit2021\CyberOfflineNTDS.ps1 C:\CyberAudit2021\CyberGPLinkReport.ps1 C:\CyberAudit2021\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 C:\CyberAudit2021\CyberRamTrimmer.ps1 C:\CyberAudit2021\Scuba2CSV.py C:\CyberAudit2021\CyberRiskCompute.xlsx C:\CyberAudit2021\CyberAuditPrep.xlsx C:\CyberAudit2021\CyberAuditDevelopersHelp.txt C:\CyberAudit2021\CyberBginfo.bgi C:\CyberAudit2021\Bginfo64.exe C:\CyberAudit2021\CyberRedIcon.ico C:\CyberAudit2021\CyberBlackIcon.ico C:\CyberAudit2021\CyberGreenIcon.ico C:\CyberAudit2021\CyberYellowIcon.ico) will be compressed now
+
+Rename-Item : Cannot create a file when that file already exists.
+
+At C:\CyberAudit2021\CyberCompressGo.ps1:70 char:1
++ Rename-Item -Path "c:\$CatInstallRepository\go.zip" -NewName "go.pdf"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (C:\CATInstall\go.zip:String) [Rename-Item], IOException
+    + FullyQualifiedErrorId : RenameItemIOError,Microsoft.PowerShell.Commands.RenameItemCommand
+Rename-Item : Cannot create a file when that file already exists.
+
+At C:\CyberAudit2021\CyberCompressGo.ps1:70 char:1
++ Rename-Item -Path "c:\$CatInstallRepository\go.zip" -NewName "go.pdf"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (C:\CATInstall\go.zip:String) [Rename-Item], IOException
+    + FullyQualifiedErrorId : RenameItemIOError,Microsoft.PowerShell.Commands.RenameItemCommand
+
+go.pdf created successfully
+remote: Enumerating objects: 13, done.
+remote: Counting objects: 100% (13/13), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 11 (delta 6), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (11/11), 2.60 KiB | 80.00 KiB/s, done.
+From https://github.com/contigon/CATInstall
+   c64d83a..0d32e70  main       -> origin/main
+Updating c64d83a..0d32e70
+Fast-forward
+ README.md    |   4 ++++
+ goUpdate.pdf | Bin 265101 -> 0 bytes
+ 2 files changed, 4 insertions(+)
+ delete mode 100644 goUpdate.pdf
+Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
+
+[main 99a3660] commiting from Omerf from CYBER-AUDIT-PC
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+ create mode 100644 go.zip
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 2.33 MiB | 1.92 MiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/contigon/CATInstall.git
+   0d32e70..99a3660  main -> main
+
+
+PS C:\CyberAudit2021> .\CyberCompressGo.ps1
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        4/13/2021   4:16 PM                CATInstall
+Files (C:\CyberAudit2021\cyberAnalyzers.ps1 C:\CyberAudit2021\cyberAudit.ps1 C:\CyberAudit2021\cyberAuditRemote.ps1 C:\CyberAudit2021\cyberBuild.ps1 C:\CyberAudit2021\cyberAttack.ps1 C:\CyberAudit2021\CyberCollectNetworkConfig.ps1 C:\CyberAudit2021\CyberCollectNetworkConfigV2.ps1 C:\CyberAudit2021\CyberCompressGo.ps1 C:\CyberAudit2021\CyberCreateRunecastRole.ps1 C:\CyberAudit2021\CyberFunctions.ps1 C:\CyberAudit2021\CyberLicenses.ps1 C:\CyberAudit2021\CyberPasswordStatistics.ps1 C:\CyberAudit2021\CyberUserDumpStatistics.ps1 C:\CyberAudit2021\CyberPingCastle.ps1 C:\CyberAudit2021\go.ps1 C:\CyberAudit2021\CyberMisc.ps1 C:\CyberAudit2021\CyberReport.ps1 C:\CyberAudit2021\CyberOfflineNTDS.ps1 C:\CyberAudit2021\CyberGPLinkReport.ps1 C:\CyberAudit2021\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 C:\CyberAudit2021\CyberRamTrimmer.ps1 C:\CyberAudit2021\Scuba2CSV.py C:\CyberAudit2021\CyberRiskCompute.xlsx C:\CyberAudit2021\CyberAuditPrep.xlsx C:\CyberAudit2021\CyberAuditDevelopersHelp.txt C:\CyberAudit2021\CyberBginfo.bgi C:\CyberAudit2021\Bginfo64.exe C:\CyberAudit2021\CyberRedIcon.ico C:\CyberAudit2021\CyberBlackIcon.ico C:\CyberAudit2021\CyberGreenIcon.ico C:\CyberAudit2021\CyberYellowIcon.ico) will be compressed now
+
+Rename-Item : Cannot create a file when that file already exists.
+
+At C:\CyberAudit2021\CyberCompressGo.ps1:70 char:1
++ Rename-Item -Path "c:\$CatInstallRepository\go.zip" -NewName "go.pdf" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (C:\CATInstall\go.zip:String) [Rename-Item], IOException
+    + FullyQualifiedErrorId : RenameItemIOError,Microsoft.PowerShell.Commands.RenameItemCommand
+Rename-Item : Cannot create a file when that file already exists.
+
+At C:\CyberAudit2021\CyberCompressGo.ps1:70 char:1
++ Rename-Item -Path "c:\$CatInstallRepository\go.zip" -NewName "go.pdf" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (C:\CATInstall\go.zip:String) [Rename-Item], IOException
+    + FullyQualifiedErrorId : RenameItemIOError,Microsoft.PowerShell.Commands.RenameItemCommand
+
+go.pdf created successfully
+Already up to date.
+Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
+
+[main 8883b08] commiting from Omerf from CYBER-AUDIT-PC
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.68 KiB | 1.68 MiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/contigon/CATInstall.git
+   99a3660..8883b08  main -> main
+
+
+PS C:\CyberAudit2021> .\CyberCompressGo.ps1
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        4/13/2021   4:19 PM                CATInstall
+Files (C:\CyberAudit2021\cyberAnalyzers.ps1 C:\CyberAudit2021\cyberAudit.ps1 C:\CyberAudit2021\cyberAuditRemote.ps1 C:\CyberAudit2021\cyberBuild.ps1 C:\CyberAudit2021\cyberAttack.ps1 C:\CyberAudit2021\CyberCollectNetworkConfig.ps1 C:\CyberAudit2021\CyberCollectNetworkConfigV2.ps1 C:\CyberAudit2021\CyberCompressGo.ps1 C:\CyberAudit2021\CyberCreateRunecastRole.ps1 C:\CyberAudit2021\CyberFunctions.ps1 C:\CyberAudit2021\CyberLicenses.ps1 C:\CyberAudit2021\CyberPasswordStatistics.ps1 C:\CyberAudit2021\CyberUserDumpStatistics.ps1 C:\CyberAudit2021\CyberPingCastle.ps1 C:\CyberAudit2021\go.ps1 C:\CyberAudit2021\CyberMisc.ps1 C:\CyberAudit2021\CyberReport.ps1 C:\CyberAudit2021\CyberOfflineNTDS.ps1 C:\CyberAudit2021\CyberGPLinkReport.ps1 C:\CyberAudit2021\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 C:\CyberAudit2021\CyberRamTrimmer.ps1 C:\CyberAudit2021\Scuba2CSV.py C:\CyberAudit2021\CyberRiskCompute.xlsx C:\CyberAudit2021\CyberAuditPrep.xlsx C:\CyberAudit2021\CyberAuditDevelopersHelp.txt C:\CyberAudit2021\CyberBginfo.bgi C:\CyberAudit2021\Bginfo64.exe C:\CyberAudit2021\CyberRedIcon.ico C:\CyberAudit2021\CyberBlackIcon.ico C:\CyberAudit2021\CyberGreenIcon.ico C:\CyberAudit2021\CyberYellowIcon.ico) will be compressed now
+
+go.pdf created successfully
+Already up to date.
+Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
+
+[main fdbef2b] commiting from Omerf from CYBER-AUDIT-PC
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 go.zip
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 82.00 KiB | 2.34 MiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/contigon/CATInstall.git
+   8883b08..fdbef2b  main -> main
+
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Update
+        ------
+        
+        - Update core audit scripts
+        - Update scoop and buckets
+        - Update Powershell modules
+        - Check if there is a newer powershell version
+        - AutoUpdate PingCastle
+Updating the core CyberAuditTool scripts
+Trying to Download Cyber Audit Tool Updates from https://raw.githubusercontent.com/contigon/CATInstall/master/go.pdf to C:\CyberAudit2021
+Extracting Cyber Audit Tool core files updates...
+[No Updates] cyberAnalyzers.ps1
+[No Updates] cyberAudit.ps1
+[No Updates] cyberAuditRemote.ps1
+[No Updates] cyberBuild.ps1
+[No Updates] cyberAttack.ps1
+[No Updates] CyberCollectNetworkConfig.ps1
+[No Updates] CyberCollectNetworkConfigV2.ps1
+[No Updates] CyberCompressGo.ps1
+[No Updates] CyberCreateRunecastRole.ps1
+[No Updates] CyberFunctions.ps1
+[No Updates] CyberLicenses.ps1
+[No Updates] CyberPasswordStatistics.ps1
+[No Updates] CyberUserDumpStatistics.ps1
+[No Updates] CyberPingCastle.ps1
+[No Updates] go.ps1
+[No Updates] CyberMisc.ps1
+[No Updates] CyberReport.ps1
+[No Updates] CyberOfflineNTDS.ps1
+[No Updates] CyberGPLinkReport.ps1
+[No Updates] CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1
+[No Updates] CyberRamTrimmer.ps1
+[No Updates] Scuba2CSV.py
+[No Updates] CyberRiskCompute.xlsx
+[No Updates] CyberAuditPrep.xlsx
+[No Updates] CyberAuditDevelopersHelp.txt
+[No Updates] CyberBginfo.bgi
+[No Updates] Bginfo64.exe
+[No Updates] CyberRedIcon.ico
+[No Updates] CyberBlackIcon.ico
+[No Updates] CyberGreenIcon.ico
+[No Updates] CyberYellowIcon.ico
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Update
+        ------
+        
+        - Update core audit scripts
+        - Update scoop and buckets
+        - Update Powershell modules
+        - Check if there is a newer powershell version
+        - AutoUpdate PingCastle
+Updating the core CyberAuditTool scripts
+Trying to Download Cyber Audit Tool Updates from https://raw.githubusercontent.com/contigon/CATInstall/master/go.pdf to C:\CyberAudit2021
+Extracting Cyber Audit Tool core files updates...
+[No Updates] cyberAnalyzers.ps1
+[No Updates] cyberAudit.ps1
+[No Updates] cyberAuditRemote.ps1
+[No Updates] cyberBuild.ps1
+[No Updates] cyberAttack.ps1
+[No Updates] CyberCollectNetworkConfig.ps1
+[No Updates] CyberCollectNetworkConfigV2.ps1
+[No Updates] CyberCompressGo.ps1
+[No Updates] CyberCreateRunecastRole.ps1
+[No Updates] CyberFunctions.ps1
+[No Updates] CyberLicenses.ps1
+[No Updates] CyberPasswordStatistics.ps1
+[No Updates] CyberUserDumpStatistics.ps1
+[No Updates] CyberPingCastle.ps1
+[No Updates] go.ps1
+[No Updates] CyberMisc.ps1
+[No Updates] CyberReport.ps1
+[No Updates] CyberOfflineNTDS.ps1
+[No Updates] CyberGPLinkReport.ps1
+[No Updates] CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1
+[No Updates] CyberRamTrimmer.ps1
+[No Updates] Scuba2CSV.py
+[No Updates] CyberRiskCompute.xlsx
+[No Updates] CyberAuditPrep.xlsx
+[No Updates] CyberAuditDevelopersHelp.txt
+[No Updates] CyberBginfo.bgi
+[No Updates] Bginfo64.exe
+[No Updates] CyberRedIcon.ico
+[No Updates] CyberBlackIcon.ico
+[No Updates] CyberGreenIcon.ico
+[No Updates] CyberYellowIcon.ico
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Update
+        ------
+        
+        - Update core audit scripts
+        - Update scoop and buckets
+        - Update Powershell modules
+        - Check if there is a newer powershell version
+        - AutoUpdate PingCastle
+Updating the core CyberAuditTool scripts
+Trying to Download Cyber Audit Tool Updates from https://raw.githubusercontent.com/contigon/CATInstall/master/go.pdf to C:\CyberAudit2021
+Extracting Cyber Audit Tool core files updates...
+[No Updates] cyberAnalyzers.ps1
+[No Updates] cyberAudit.ps1
+[No Updates] cyberAuditRemote.ps1
+[No Updates] cyberBuild.ps1
+[No Updates] cyberAttack.ps1
+[No Updates] CyberCollectNetworkConfig.ps1
+[No Updates] CyberCollectNetworkConfigV2.ps1
+[No Updates] CyberCompressGo.ps1
+[No Updates] CyberCreateRunecastRole.ps1
+[No Updates] CyberFunctions.ps1
+[No Updates] CyberLicenses.ps1
+[No Updates] CyberPasswordStatistics.ps1
+[No Updates] CyberUserDumpStatistics.ps1
+[No Updates] CyberPingCastle.ps1
+[No Updates] go.ps1
+[No Updates] CyberMisc.ps1
+[No Updates] CyberReport.ps1
+[No Updates] CyberOfflineNTDS.ps1
+[No Updates] CyberGPLinkReport.ps1
+[No Updates] CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1
+[No Updates] CyberRamTrimmer.ps1
+[No Updates] Scuba2CSV.py
+[No Updates] CyberRiskCompute.xlsx
+[No Updates] CyberAuditPrep.xlsx
+[No Updates] CyberAuditDevelopersHelp.txt
+[No Updates] CyberBginfo.bgi
+[No Updates] Bginfo64.exe
+[No Updates] CyberRedIcon.ico
+[No Updates] CyberBlackIcon.ico
+[No Updates] CyberGreenIcon.ico
+[No Updates] CyberYellowIcon.ico
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Update
+        ------
+        
+        - Update core audit scripts
+        - Update scoop and buckets
+        - Update Powershell modules
+        - Check if there is a newer powershell version
+        - AutoUpdate PingCastle
+Updating the core CyberAuditTool scripts
+Trying to Download Cyber Audit Tool Updates from https://raw.githubusercontent.com/contigon/CATInstall/master/go.pdf to C:\CyberAudit2021
+Extracting Cyber Audit Tool core files updates...
+[No Updates] cyberAnalyzers.ps1
+[No Updates] cyberAudit.ps1
+[No Updates] cyberAuditRemote.ps1
+[No Updates] cyberBuild.ps1
+[No Updates] cyberAttack.ps1
+[No Updates] CyberCollectNetworkConfig.ps1
+[No Updates] CyberCollectNetworkConfigV2.ps1
+[No Updates] CyberCompressGo.ps1
+[No Updates] CyberCreateRunecastRole.ps1
+[No Updates] CyberFunctions.ps1
+[No Updates] CyberLicenses.ps1
+[No Updates] CyberPasswordStatistics.ps1
+[No Updates] CyberUserDumpStatistics.ps1
+[No Updates] CyberPingCastle.ps1
+[No Updates] go.ps1
+[No Updates] CyberMisc.ps1
+[No Updates] CyberReport.ps1
+[No Updates] CyberOfflineNTDS.ps1
+[No Updates] CyberGPLinkReport.ps1
+[No Updates] CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1
+[No Updates] CyberRamTrimmer.ps1
+[No Updates] Scuba2CSV.py
+[No Updates] CyberRiskCompute.xlsx
+[No Updates] CyberAuditPrep.xlsx
+[No Updates] CyberAuditDevelopersHelp.txt
+[No Updates] CyberBginfo.bgi
+[No Updates] Bginfo64.exe
+[No Updates] CyberRedIcon.ico
+[No Updates] CyberBlackIcon.ico
+[No Updates] CyberGreenIcon.ico
+[No Updates] CyberYellowIcon.ico
+Updating Scoop and applications...
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021\Tools\Scoop\apps\scoop\current> #update metasploit
+PS C:\CyberAudit2021\Tools\Scoop\apps\scoop\current>         try {
+            msfupdate
+            }
+        catch {
+            failed "Metasploit is not installed so we can not update it"
+        }
+Downloading latest Metasploit Framework
+PS C:\CyberAudit2021\Tools\Scoop\apps\scoop\current> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021\Tools\Scoop\apps\scoop\current>         try {
+            msfupdate
+            }
+        catch {
+            failed "Metasploit is not installed so we can not update it"
+        }
+Downloading latest Metasploit Framework
+Updating Metasploit Framework
+Update Complete
+PS C:\CyberAudit2021\Tools\Scoop\apps\scoop\current> Get-Module "filesplitter"
+
+ModuleType Version    Name                                ExportedCommands
+---------- -------    ----                                ----------------
+Script     1.3        FileSplitter                        {Join-File, Split-File}
+
+
+PS C:\CyberAudit2021\Tools\Scoop\apps\scoop\current> cdd
+PS C:\CyberAudit2021> gadd

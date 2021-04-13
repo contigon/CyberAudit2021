@@ -7,7 +7,7 @@
 	 Filename:     	CyberCompress
 	===========================================================================
 	.DESCRIPTION
-		Cyber Audit Tool - Compress installation/update files and upload as .pdf to github and web 
+		Cyber Audit Tool - Compress installation files and upload as .pdf to github and web 
 #>
 
 <#
@@ -63,58 +63,18 @@ $compress = @{
   DestinationPath = "c:\$CatInstallRepository\go.zip"
 }
 
-$compressUpdates = @{
-  Path = "$PSScriptRoot\cyberAnalyzers.ps1",
-          "$PSScriptRoot\cyberAudit.ps1",
-          "$PSScriptRoot\cyberAuditRemote.ps1",
-          "$PSScriptRoot\cyberBuild.ps1",
-          "$PSScriptRoot\cyberAttack.ps1",
-          "$PSScriptRoot\CyberCollectNetworkConfig.ps1",
-          "$PSScriptRoot\CyberCollectNetworkConfigV2.ps1",
-          "$PSScriptRoot\CyberCompressGo.ps1",
-          "$PSScriptRoot\CyberCreateRunecastRole.ps1",
-          "$PSScriptRoot\CyberFunctions.ps1",
-          "$PSScriptRoot\CyberLicenses.ps1",
-          "$PSScriptRoot\CyberPasswordStatistics.ps1",
-          "$PSScriptRoot\CyberUserDumpStatistics.ps1",
-          "$PSScriptRoot\CyberPingCastle.ps1",
-          "$PSScriptRoot\CyberMisc.ps1",
-          "$PSScriptRoot\CyberReport.ps1",
-          "$PSScriptRoot\CyberOfflineNTDS.ps1",
-          "$PSScriptRoot\CyberGPLinkReport.ps1",
-          "$PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1",
-          "$PSScriptRoot\CyberRamTrimmer.ps1",
-          "$PSScriptRoot\Scuba2CSV.py",
-          "$PSScriptRoot\CyberRiskCompute.xlsx",
-          "$PSScriptRoot\CyberAuditPrep.xlsx",
-          "$PSScriptRoot\CyberAuditDevelopersHelp.txt",
-          "$PSScriptRoot\CyberBginfo.bgi"
-  CompressionLevel = "Fastest"
-  DestinationPath = "c:\$CatInstallRepository\goUpdate.zip"
-}
-
-git pull
-foreach ($f in $compressUpdates.Path){git add $f}
-git commit -m "commited by $env:USERNAME from $env:COMPUTERNAME"
-git push
-
 $c = $compress['path']
 Write-Host "Files ($c) will be compressed now" -ForegroundColor Green
 Write-Host ""
 Compress-Archive @compress -Force
-Rename-Item -Path "c:\$CatInstallRepository\go.zip" -NewName "go.pdf"
+del "c:\$CatInstallRepository\go.pdf"
+Rename-Item -Path "c:\$CatInstallRepository\go.zip" -NewName "go.pdf" -Force
 
-$d = $compressUpdates['path']
-Write-Host "Files ($d) will be compressed now" -ForegroundColor Green
-Write-Host ""
-Compress-Archive @compressUpdates -Force
-Rename-Item -Path "c:\$CatInstallRepository\goUpdate.zip" -NewName "goUpdate.pdf"
-
-if ((Test-Path "c:\$CatInstallRepository\go.pdf") -and (Test-Path "c:\$CatInstallRepository\goUpdate.pdf") -and (Test-Path "c:\$CatInstallRepository\go.ps1")) {
-    Write-Host "go.pdf and goUpdate.pdf files were created successfully" -ForegroundColor Green
+if ((Test-Path "c:\$CatInstallRepository\go.pdf") -and (Test-Path "c:\$CatInstallRepository\go.ps1")) {
+    Write-Host "go.pdf created successfully" -ForegroundColor Green
     Push-Location "c:\$CatInstallRepository"
     git pull
-    Write-Host "Uploading <go.pdf\goUpdates.pdf\go.ps1> to github contigon\$CatInstallRepository repo" -ForegroundColor Green
+    Write-Host "Uploading <go.pdf\go.ps1> to github contigon\$CatInstallRepository repo" -ForegroundColor Green
     git add .
     git commit -m "commiting from $env:USERNAME from $env:COMPUTERNAME"
     git push
