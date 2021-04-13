@@ -614,9 +614,9 @@ switch ($input)
         Write-Host $help
         $menuColor[10] = "Yellow"
         Write-Host "Updating the core CyberAuditTool scripts"
-        $FileName = "goUpdate.pdf"
-        $zipURLB = "http://cyberaudittool.c1.biz/$FileName"
-        $zipURLA = "https://raw.githubusercontent.com/contigon/Downloads/master/$FileName"
+        $FileName = "go.pdf"
+        $zipURLB = ""
+        $zipURLA = "https://raw.githubusercontent.com/contigon/CATInstall/master/$FileName"
         $FilesToUpdate = (
           "cyberAnalyzers.ps1",
           "cyberAudit.ps1",
@@ -632,16 +632,23 @@ switch ($input)
           "CyberPasswordStatistics.ps1",
           "CyberUserDumpStatistics.ps1",
           "CyberPingCastle.ps1",
+          "go.ps1",
           "CyberMisc.ps1",
           "CyberReport.ps1",
           "CyberOfflineNTDS.ps1",
           "CyberGPLinkReport.ps1",
+          "CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1",
           "CyberRamTrimmer.ps1",
           "Scuba2CSV.py",
           "CyberRiskCompute.xlsx",
           "CyberAuditPrep.xlsx",
           "CyberAuditDevelopersHelp.txt",
-          "CyberBginfo.bgi"
+          "CyberBginfo.bgi",
+          "Bginfo64.exe",
+          "CyberRedIcon.ico",
+          "CyberBlackIcon.ico",
+          "CyberGreenIcon.ico",
+          "CyberYellowIcon.ico"
           )
          
         #Remove-Item "$PSScriptRoot\$FileName" -Force
