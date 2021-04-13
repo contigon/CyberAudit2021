@@ -7911,3 +7911,45 @@ Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
 
 
 
+PS C:\CyberAudit2021> gadd
+
+
+
+PS C:\CyberAudit2021> .\CyberCompressGo.ps1
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        4/13/2021   8:33 PM                CATInstall
+Files (C:\CyberAudit2021\cyberAnalyzers.ps1 C:\CyberAudit2021\cyberAudit.ps1 C:\CyberAudit2021\cyberAuditRemote.ps1 C:\CyberAudit2021\cyberBuild.ps1 C:\CyberAudit2021\cyberAttack.ps1 C:\CyberAudit2021\CyberCollectNetworkConfig.ps1 C:\CyberAudit2021\CyberCollectNetworkConfigV2.ps1 C:\CyberAudit2021\CyberCompressGo.ps1 C:\CyberAudit2021\CyberCreateRunecastRole.ps1 C:\CyberAudit2021\CyberFunctions.ps1 C:\CyberAudit2021\CyberLicenses.ps1 C:\CyberAudit2021\CyberPasswordStatistics.ps1 C:\CyberAudit2021\CyberUserDumpStatistics.ps1 C:\CyberAudit2021\CyberPingCastle.ps1 C:\CyberAudit2021\go.ps1 C:\CyberAudit2021\CyberMisc.ps1 C:\CyberAudit2021\CyberReport.ps1 C:\CyberAudit2021\CyberOfflineNTDS.ps1 C:\CyberAudit2021\CyberGPLinkReport.ps1 C:\CyberAudit2021\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 C:\CyberAudit2021\CyberRamTrimmer.ps1 C:\CyberAudit2021\Scuba2CSV.py C:\CyberAudit2021\CyberRiskCompute.xlsx C:\CyberAudit2021\CyberAuditPrep.xlsx C:\CyberAudit2021\CyberAuditDevelopersHelp.txt C:\CyberAudit2021\CyberBginfo.bgi C:\CyberAudit2021\Bginfo64.exe C:\CyberAudit2021\CyberRedIcon.ico C:\CyberAudit2021\CyberBlackIcon.ico C:\CyberAudit2021\CyberGreenIcon.ico C:\CyberAudit2021\CyberYellowIcon.ico) will be compressed now
+
+go.pdf created successfully
+
+Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
+
+
+
+
+
+PS C:\CyberAudit2021> .\CyberCompressGo.ps1
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        4/13/2021   8:38 PM                CATInstall
+Files (C:\CyberAudit2021\cyberAnalyzers.ps1 C:\CyberAudit2021\cyberAudit.ps1 C:\CyberAudit2021\cyberAuditRemote.ps1 C:\CyberAudit2021\cyberBuild.ps1 C:\CyberAudit2021\cyberAttack.ps1 C:\CyberAudit2021\CyberCollectNetworkConfig.ps1 C:\CyberAudit2021\CyberCollectNetworkConfigV2.ps1 C:\CyberAudit2021\CyberCompressGo.ps1 C:\CyberAudit2021\CyberCreateRunecastRole.ps1 C:\CyberAudit2021\CyberFunctions.ps1 C:\CyberAudit2021\CyberLicenses.ps1 C:\CyberAudit2021\CyberPasswordStatistics.ps1 C:\CyberAudit2021\CyberUserDumpStatistics.ps1 C:\CyberAudit2021\CyberPingCastle.ps1 C:\CyberAudit2021\go.ps1 C:\CyberAudit2021\CyberMisc.ps1 C:\CyberAudit2021\CyberReport.ps1 C:\CyberAudit2021\CyberOfflineNTDS.ps1 C:\CyberAudit2021\CyberGPLinkReport.ps1 C:\CyberAudit2021\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 C:\CyberAudit2021\CyberRamTrimmer.ps1 C:\CyberAudit2021\Scuba2CSV.py C:\CyberAudit2021\CyberRiskCompute.xlsx C:\CyberAudit2021\CyberAuditPrep.xlsx C:\CyberAudit2021\CyberAuditDevelopersHelp.txt C:\CyberAudit2021\CyberBginfo.bgi C:\CyberAudit2021\Bginfo64.exe C:\CyberAudit2021\CyberRedIcon.ico C:\CyberAudit2021\CyberBlackIcon.ico C:\CyberAudit2021\CyberGreenIcon.ico C:\CyberAudit2021\CyberYellowIcon.ico) will be compressed now
+
+go.pdf created successfully
+
+Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
+
+
+
+
+

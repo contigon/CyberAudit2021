@@ -287,15 +287,20 @@ switch ($input)
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
         #add -FORCE if you have problem installing modules or providers
         Install-PackageProvider Nuget
-        $moduleExists = Get-Module "PowerShellGet"
+        $moduleExists = (Get-InstalledModule "PowerShellGet").name
         If ($moduleExists.name -eq "")
         {
+            Write-Host "Checking if $moduleExists module exists and if not install it..."
             Install-Module -Name PowerShellGet -AllowClobber
+        }
+        else
+        {
+            success "$moduleExists module exists"
         }
 
         foreach ($PSGModule in $PSGModules)
         {
-            $moduleExists = (Get-Module $PSGModule).Name
+            $moduleExists = (Get-InstalledModule $PSGModule).Name
             Write-Host "Checking if $moduleExists module exists and if not install it..."
             If ($moduleExists -eq "")
             {
