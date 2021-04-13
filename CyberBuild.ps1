@@ -44,7 +44,7 @@ $PowerShellsDir = New-Item -Path $Tools -Name "\PowerShells" -ItemType "director
 $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -Force
 
 #Powershell Modules, Utilities and Applications that needs to be installed
-$PSGModules = @("Testimo","VMware.PowerCLI","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate")
+$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
 $PSGModulesOffline = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter")
 $utilities = @("dotnet-sdk","Net_Framework_Installed_Versions_Getter","python27","python38","oraclejdk","putty","winscp","npcap","nmap-portable","rclone","everything","VoidToolsCLI","notepadplusplus","googlechrome","firefox","foxit-reader","irfanview","grepwin","sysinternals","snmpget","wireshark")
 $CollectorApps = @("ntdsaudit","RemoteExecutionEnablerforPowerShell","PingCastle","goddi","SharpHound","Red-Team-Scripts","Scuba-Windows","azscan3","LGPO","grouper2","Outflank-Dumpert","lantopolog","nessus","NetScanner64","AdvancedPortScanner","skyboxwmicollector","skyboxwmiparser","skyboxwsuscollector","PDQDeploy")
@@ -274,7 +274,7 @@ switch ($input)
         
         Install PowerShell Modules from Powershell gallery.
 
-        Modules Installed:
+        Modules that will be Installed:
              
 "@
         Write-Host $help
@@ -285,24 +285,27 @@ switch ($input)
         $menuColor[4] = "Yellow"
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
         Install-PackageProvider Nuget -Force
-        Install-Module -Name PowerShellGet -Force -AllowClobber
+        
+        $moduleExists = Get-Module "PowerShellGet"
+        If ($moduleExists.name -eq "")
+        {
+            Install-Module -Name PowerShellGet -Force -AllowClobber
+        }
+
         foreach ($PSGModule in $PSGModules)
         {
-            $moduleExists = Get-Module $PSGModule
-            If (-NOT[string]::IsNullOrEmpty($moduleExists))
+            $moduleExists = (Get-Module $PSGModule).Name
+            If ($moduleExists -eq "")
             {
                 Write-Host "Installing module $PSGModule"
                 Install-Module -Name $PSGModule -AllowClobber -Force     
                 Import-Module $PSGModule    
             }
-            else
-            {
-                success "$PSGModule is already installed and imported"
-            }
-            Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
-            success "These powershell modules are installed"
-            Get-Module
         }
+        
+        Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
+        success "These powershell modules are installed"
+        Get-Module
         Write-Host "Saving powershell modules needed for offline running on remote machines"
         foreach ($PSGModule in $PSGModulesOffline)
         {
