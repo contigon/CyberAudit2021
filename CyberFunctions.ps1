@@ -46,6 +46,17 @@ Function ACQ{
     Return $ACQdir.FullName
 }
 
+# Create Pending Reboot function for registry
+function Test-PendingRebootRegistry {
+    $cbsRebootKey = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction Ignore
+    $wuRebootKey = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired" -ErrorAction Ignore
+    if (($cbsRebootKey -ne $null) -OR ($wuRebootKey -ne $null)) {
+        $true
+    }
+    else {
+        $false
+    }
+}
 
 function screenshot ()
 {
@@ -720,3 +731,95 @@ function Get-IPrange
     }
 
 }
+
+
+
+#Password Encrypt/Decrypt string with AES256
+#https://michlstechblog.info/blog/powershell-en-and-decrypt-string-with-aes256/
+
+$CustomSalt=@(1,2,3,4,5,6,7,9,10,11,254,253,252)
+[System.reflection.assembly]::LoadWithPartialName("System.Security")|out-null
+[System.reflection.assembly]::LoadWithPartialName("System.IO")|out-null
+
+function fAESEncrypt()
+{
+    Param(
+        [Parameter(Mandatory=$true)][byte[]]$aBytesToBeEncrypted,
+        [Parameter(Mandatory=$true)][byte[]]$aPasswordBytes,
+        [Parameter(Mandatory=$true)][ref]$raEncryptedBytes,
+        [Parameter(Mandatory=$false)][byte[]]$aCustomSalt
+    )       
+    [byte[]] $encryptedBytes = @()
+    # Salt must have at least 8 Bytes!!
+    # Encrypt and decrypt must use the same salt
+    # Define your own Salt here
+    [byte[]]$aSaltBytes = @(4,7,12,254,123,98,34,12,67,12,122,111) 
+    if($aCustomSalt.Count -ge 1)
+    {
+        $aSaltBytes=$aCustomSalt
+    }   
+    [System.IO.MemoryStream] $oMemoryStream = new-object System.IO.MemoryStream
+    [System.Security.Cryptography.RijndaelManaged] $oAES = new-object System.Security.Cryptography.RijndaelManaged
+    $oAES.KeySize = 256;
+    $oAES.BlockSize = 128;
+    [System.Security.Cryptography.Rfc2898DeriveBytes] $oKey = new-object System.Security.Cryptography.Rfc2898DeriveBytes($aPasswordBytes, $aSaltBytes, 1000);
+    $oAES.Key = $oKey.GetBytes($oAES.KeySize / 8);
+    $oAES.IV = $oKey.GetBytes($oAES.BlockSize / 8);
+    $oAES.Mode = [System.Security.Cryptography.CipherMode]::CBC
+    $oCryptoStream = new-object System.Security.Cryptography.CryptoStream($oMemoryStream, $oAES.CreateEncryptor(), [System.Security.Cryptography.CryptoStreamMode]::Write)
+    try
+    {
+        $oCryptoStream.Write($aBytesToBeEncrypted, 0, $aBytesToBeEncrypted.Length);
+        $oCryptoStream.Close();
+    }
+    catch [Exception]
+    {
+        $raEncryptedBytes.Value=[system.text.encoding]::ASCII.GetBytes("Error occured while encoding string. Salt or Password incorrect?")
+        return $false
+    }   
+    $oEncryptedBytes = $oMemoryStream.ToArray();
+    $raEncryptedBytes.Value=$oEncryptedBytes;
+    return $true
+}
+
+function fAESDecrypt()
+{
+    Param(
+        [Parameter(Mandatory=$true)][byte[]]$aBytesToDecrypt,
+        [Parameter(Mandatory=$true)][byte[]]$aPasswordBytes,
+        [Parameter(Mandatory=$true)][ref]$raDecryptedBytes,
+        [Parameter(Mandatory=$false)][byte[]]$aCustomSalt
+    )   
+    [byte[]]$oDecryptedBytes = @();
+    # Salt must have at least 8 Bytes!!
+    # Encrypt and decrypt must use the same salt
+    [byte[]]$aSaltBytes = @(4,7,12,254,123,98,34,12,67,12,122,111) 
+    if($aCustomSalt.Count -ge 1)
+    {
+        $aSaltBytes=$aCustomSalt
+    }
+    [System.IO.MemoryStream] $oMemoryStream = new-object System.IO.MemoryStream
+    [System.Security.Cryptography.RijndaelManaged] $oAES = new-object System.Security.Cryptography.RijndaelManaged
+    $oAES.KeySize = 256;
+    $oAES.BlockSize = 128;
+    [System.Security.Cryptography.Rfc2898DeriveBytes] $oKey = new-object System.Security.Cryptography.Rfc2898DeriveBytes($aPasswordBytes, $aSaltBytes, 1000);
+    $oAES.Key = $oKey.GetBytes($oAES.KeySize / 8);
+    $oAES.IV = $oKey.GetBytes($oAES.BlockSize / 8);
+    $oAES.Mode = [System.Security.Cryptography.CipherMode]::CBC
+    $oCryptoStream = new-object System.Security.Cryptography.CryptoStream($oMemoryStream, $oAES.CreateDecryptor(), [System.Security.Cryptography.CryptoStreamMode]::Write)
+    try
+    {
+        $oCryptoStream.Write($aBytesToDecrypt, 0, $aBytesToDecrypt.Length)
+        $oCryptoStream.Close()
+    }
+    catch [Exception]
+    {
+        $raDecryptedBytes.Value=[system.text.encoding]::ASCII.GetBytes("Error occured while decoding string. Salt or Password incorrect?")
+        return $false
+    }
+    $oDecryptedBytes = $oMemoryStream.ToArray();
+    $raDecryptedBytes.Value=$oDecryptedBytes
+    return $true
+}
+
+

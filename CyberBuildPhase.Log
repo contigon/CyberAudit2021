@@ -1949,3 +1949,3150 @@ hint: preference for all repositories. You can also pass --rebase, --no-rebase,
 hint: or --ff-only on the command line to override the configured default per
 hint: invocation.
 Already up to date.
+PS C:\CyberAudit2021> gadd
+warning: LF will be replaced by CRLF in CyberBuildPhase.Log.
+The file will have its original line endings in your working directory
+[main eb69655] 2021
+ 18 files changed, 535 insertions(+), 53 deletions(-)
+Enumerating objects: 39, done.
+Counting objects: 100% (39/39), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (20/20), done.
+Writing objects: 100% (20/20), 4.75 KiB | 1.19 MiB/s, done.
+Total 20 (delta 19), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (19/19), completed with 19 local objects.
+To https://github.com/contigon/CyberAudit2021
+   d9730ed..eb69655  main -> main
+PS C:\CyberAudit2021> .\CyberLicenses.ps1
+Get-Content : Cannot find path 'C:\AZScanKey.enc' because it does not exist.
+At C:\CyberAudit2021\CyberLicenses.ps1:136 char:26
++ ... $encryptedKey =  Get-Content -Path "$CATLicensesFolder\AZScanKey.enc"
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\AZScanKey.enc:String) [Get-Content], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+Get-Content : Cannot find path 'C:\AZScanKey.enc' because it does not exist.
+At C:\CyberAudit2021\CyberLicenses.ps1:136 char:26
++ ... $encryptedKey =  Get-Content -Path "$CATLicensesFolder\AZScanKey.enc"
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\AZScanKey.enc:String) [Get-Content], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberLicenses.ps1
+Get-Content : Cannot find path 'C:\AZScanKey.enc' because it does not exist.
+At C:\CyberAudit2021\CyberLicenses.ps1:50 char:26
++ ... $encryptedKey =  Get-Content -Path "$CATLicensesFolder\AZScanKey.enc"
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\AZScanKey.enc:String) [Get-Content], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+Get-Content : Cannot find path 'C:\AZScanKey.enc' because it does not exist.
+At C:\CyberAudit2021\CyberLicenses.ps1:50 char:26
++ ... $encryptedKey =  Get-Content -Path "$CATLicensesFolder\AZScanKey.enc"
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\AZScanKey.enc:String) [Get-Content], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberLicenses.ps1
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberLicenses.ps1
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberLicenses.ps1
+Create a new password protected and encrypted key file
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberLicenses.ps1
+Create a new password protected and encrypted key file
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+Updating Scoop...
+
+
+Updating 'CyberAuditBucket' bucket...
+
+
+Updating 'extras' bucket...
+
+ * 9e000fccf kate: Update to version 20.12.3-1222                        2 hours ago
+ * 53681a206 x64dbg: Update to version 2021-03-23_19-17                  3 hours ago
+ * 4e988584e wabt: Update to version 1.0.22                              3 hours ago
+ * 82493ebcd trilium: Update to version 0.46.6                           3 hours ago
+ * 109b1166e rambox-pro: Update to version 1.5.1                         3 hours ago
+ * 91cb5ea5f insomnia: Update to version 2021.2.0                        3 hours ago
+ * 01c1f3b91 okular: Update to version 20.12.3-586                       4 hours ago
+ * 674ea3e91 firefox-beta: Update to version 88.0b2                      6 hours ago
+ * fd9648637 flyctl: Update to version 0.0.190                           7 hours ago
+ * 30a66e4cc firefox-nightly: Update to version 89.0a1.20210323214359    7 hours ago
+ * 4e66881bf firefox-developer: Update to version 88.0b2                 7 hours ago
+ * 55bd0bebc deltachat: Update to version 1.15.4                         7 hours ago
+ * dab24e9c8 flyctl: Update to version 0.0.191                           9 hours ago
+ * 7b00e5135 sysinternals: Update to version 2021.March.23               10 hours ago
+ * c77c8bd20 streamlabs-obs: Update to version 1.0.7                     10 hours ago
+ * 0ae262310 steamcmd: Update to version 1616532452                      10 hours ago
+ * 75cf63de9 dart-dev: Update to version 2.13.0-161.0.dev                13 hours ago
+ * c6c008085 firefox-beta: Update to version 88.0b1                      14 hours ago
+ * 3196959d3 streamlabs-obs: Update to version 1.0.6                     15 hours ago
+ * c5659c41a gcloud: Update to version 333.0.0                           15 hours ago
+ * 0597f9ec1 zoom: Update to version 5.6.0                               16 hours ago
+ * 929fa17c3 logstash: Update to version 6.8.15                          16 hours ago
+ * f6a29a1de kibana: Update to version 7.12.0                            16 hours ago
+ * aead04224 flyctl: Update to version 0.0.190                           16 hours ago
+ * a35919363 elasticsearch: Update to version 7.12.0                     16 hours ago
+ * b043efce6 firefox-developer: Update to version 88.0b1                 17 hours ago
+ * 2a56a121d firefox: Update to version 87.0                             19 hours ago
+ * 96c21e8cb firefox-portable: Update to version 87.0                    19 hours ago
+ * ca98a464e firefox-esr: Update to version 78.9.0                       19 hours ago
+ * c399f27a1 firefox-esr-portable: Update to version 78.9.0              19 hours ago
+ * 9c00d3750 autoit-script-editor: Update to version 21.316.1639.0.0     19 hours ago
+ * 155af81a8 teamviewer: Update to version 15.16.8                       20 hours ago
+ * 82c47aa3c firefox-nightly: Update to version 89.0a1.20210323094659    20 hours ago
+ * 088680e74 sourcetree: Update to version 3.4.4                         22 hours ago
+ * 4e5622094 ddu@18.0.3.7: Hash fix (#5833)                              25 hours ago
+ * e810b9c2c kate: Update to version 20.12.3-1221                        26 hours ago
+ * b77e9356e mini-sftp-server: Update to version 2.26                    27 hours ago
+ * 1c3f4a7e4 okular: Update to version 20.12.3-585                       28 hours ago
+ * 75b82cdbf streamlink: Update to version 2.1.0                         29 hours ago
+ * dd13991b1 simplenote: Update to version 2.8.0                         29 hours ago
+ * 6fa1958c2 shotcut: Update to version 21.03.21                         29 hours ago
+ * 00037e405 session: Update to version 1.5.1                            29 hours ago
+ * 438fd2fdd quick-picture-viewer: Update to version 3.1.2               29 hours ago
+ * d9b6fa7f3 notepadplusplus: Update to version 7.9.5                    29 hours ago
+ * c5c258b5a netron: Update to version 4.8.4                             29 hours ago
+ * a143304c1 msbuild-structured-log-viewer: Update to version 2.1.364    29 hours ago
+ * bbdc6dfdc lightbulb: Update to version 2.3                            29 hours ago
+ * 9ae7a1795 juce: Update to version 6.0.8                               29 hours ago
+ * c6d2579b4 firefox-nightly: Update to version 89.0a1.20210322174641    33 hours ago
+ * f29b30f5c steamcmd: Update to version 1616449720                      34 hours ago
+ * bd0a63380 ksnip: Update to version 1.8.2                              2 days ago
+ * 298125559 beekeeper-studio: Update to version 1.10.2                  2 days ago
+ * 5c210aca8 plantuml: Update to version 1.2021.3                        2 days ago
+ * 9b4952ee1 nirlauncher: Update to version 1.23.42                      2 days ago
+Updating 'java' bucket...
+
+ * 6eea6282 graalvm8-nightly: Update to version 21.1.0-dev-20210324_0142 5 hours ago
+ * a4a626a6 graalvm11-nightly: Update to version 21.1.0-dev-20210324_0.. 5 hours ago
+ * 37fb0fbd graalvm-nightly: Update to version 21.1.0-dev-20210324_0142  5 hours ago
+ * 36cca7f5 graalvm8-nightly: Update to version 21.1.0-dev-20210323_2140 10 hours ago
+ * 503aa8d3 graalvm11-nightly: Update to version 21.1.0-dev-20210323_2.. 10 hours ago
+ * ec543985 graalvm-nightly: Update to version 21.1.0-dev-20210323_2140  10 hours ago
+ * 9c8423bc adopt8-hotspot-nightly: Update to version 202103231440       11 hours ago
+ * 979cbc48 adopt8-hotspot-jre-nightly: Update to version 202103231440   11 hours ago
+ * 7f74c1fc graalvm8-nightly: Update to version 21.1.0-dev-20210323_1605 15 hours ago
+ * 80c8d8e1 graalvm11-nightly: Update to version 21.1.0-dev-20210323_1.. 15 hours ago
+ * 6fb830b0 graalvm-nightly: Update to version 21.1.0-dev-20210323_1605  15 hours ago
+ * ecec55a4 adopt16-openj9-nightly: Update to version 202103230910       17 hours ago
+ * 7d7098ec adopt16-openj9-jre-nightly: Update to version 202103230910   17 hours ago
+ * 7464c1de adopt16-hotspot-nightly: Update to version 202103230910      17 hours ago
+ * b42c34ad adopt8-openj9-nightly: Update to version 202103230507        23 hours ago
+ * e7b1dfeb adopt8-openj9-jre-nightly: Update to version 202103230507    23 hours ago
+ * af9e23e6 adopt8-hotspot-nightly: Update to version 202103230507       23 hours ago
+ * 2d2ceafd adopt8-hotspot-jre-nightly: Update to version 202103230507   23 hours ago
+ * 7b7723ab openjdk-ea: Update to version 17-14-ea                       2 days ago
+ * 0e47153c Update openjdk-ea.json                                       2 days ago
+Updating 'main' bucket...
+
+ * 6a91bcc18 oh-my-posh3: fix referenced link (#1945)                    3 hours ago
+ * 9b123fbca csview: fix extract_dir (#1950)                             3 hours ago
+ * 98c1811dc nano: fix shim (#1972)                                      3 hours ago
+ * f69cda75c vim-nightly: Update to version 8.2.2648                     3 hours ago
+ * 517e249f9 ugrep: Update to version 3.1.10                             3 hours ago
+ * 3432d0661 starship: Update to version 0.51.0                          3 hours ago
+ * ca7606f9d liquibase: Update to version 4.3.2                          3 hours ago
+ * 88688e23b gitea: Update to version 1.13.6                             5 hours ago
+ * 8595ea31e clink: Update to version 1.1.44                             10 hours ago
+ * 08b4b5d3e puppet-bolt: Update to version 3.4.0                        12 hours ago
+ * 2b5a94688 git-chglog: Update to version 0.13.0                        12 hours ago
+ * a914a1f9c edgedriver: Update to version 91.0.835.0                    12 hours ago
+ * 81eda79c9 coursier: Update to version 2.0.16                          12 hours ago
+ * 4c7398005 cloudflared: Update to version 2021.3.2                     15 hours ago
+ * f4d55dc91 azure-cli: Update to version 2.21.0                         17 hours ago
+ * f0c6fe15f serverless: Update to version 2.31.0                        18 hours ago
+ * abf56c030 minio-client: Update to version 2021-03-23T05-46-11Z        18 hours ago
+ * 36d0b55f2 docker-compose: Update to version 1.28.6                    18 hours ago
+ * 35d9055ab ffmpeg-nightly: Update to version 101666                    19 hours ago
+ * b19e88f4f ffmpeg-nightly-vulkan: Update to version 101666             19 hours ago
+ * 9f029fb9a ffmpeg-nightly-shared: Update to version 101666             19 hours ago
+ * 1a1f55d3c ffmpeg-nightly-shared-vulkan: Update to version 101666      19 hours ago
+ * 8b2faa8f1 azure-ps: Update to version 5.7.0.34162                     23 hours ago
+ * 191948792 cppcheck: Update to version 2.4.1                           24 hours ago
+ * e7ac45143 edgedriver: Update to version 91.0.834.0                    29 hours ago
+ * 4e187c269 vim-nightly: Update to version 8.2.2646                     29 hours ago
+ * 6c3904565 rust-analyzer: Update to version 2021-03-22                 29 hours ago
+ * 9cd1b40cd protolint: Update to version 0.31.0                         29 hours ago
+ * 17c4b3a50 pack: Update to version 0.18.0                              29 hours ago
+ * c69c10884 oh-my-posh3: Update to version 3.120.0                      29 hours ago
+ * a82fa0d74 nano: Update to version 5.6.1-12                            30 hours ago
+ * 64cc1a657 balena-cli: Update to version 12.43.0                       30 hours ago
+ * 9caeb4901 sbt: Update to version 1.4.9                                33 hours ago
+Updating 'versions' bucket...
+
+ * 9b34914 rstudio-daily: Update to version 1.4.1646                     8 hours ago
+ * dbe1023 rclone-beta: Update to version 1.55.0-beta.5333.12cd32264     8 hours ago
+ * d2f3aa6 rstudio-daily: Update to version 1.4.1642                     32 hours ago
+ * 5e26356 rclone-beta: Update to version 1.55.0-beta.5328.1fe2460e3     32 hours ago
+Scoop was updated successfully!
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+Create a new password protected and encrypted key file
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+1 | Create a new password protected and encrypted key file
+2 | Decrypt and copy the azscan3 license file to the azscan isntallation folder
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+
+************************************************************************************
+***  Creating and installing licenses for Applications                           ***
+************************************************************************************
+
+     1 | Create a new password protected and encrypted key file
+     2 | Decrypt and copy the azscan3 license file to the azscan isntallation folder
+
+************************************************************************************
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+
+************************************************************************************
+***  Creating and installing licenses for Applications                           ***
+************************************************************************************
+
+PS C:\CyberAudit2021> TerminatingError(help): "A positional parameter cannot be found that accepts argument '
+        OS
+        --
+
+        Checks Windows version and upgrade it to latest build and update.
+                '."
+help : A positional parameter cannot be found that accepts argument '
+        OS
+        --
+
+        Checks Windows version and upgrade it to latest build and update.
+                '.
+At C:\CyberAudit2021\CyberLicenses.ps1:26 char:1
++ help = @"
++ ~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [help], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,help
+help : A positional parameter cannot be found that accepts argument '
+        OS
+        --
+
+        Checks Windows version and upgrade it to latest build and update.
+                '.
+At C:\CyberAudit2021\CyberLicenses.ps1:26 char:1
++ help = @"
++ ~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [help], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,help
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+
+     1 | Create a new password protected and encrypted key file
+     2 | Decrypt and copy the azscan3 license file to the azscan isntallation folder
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+
+************************************************************************************
+***  Creating and installing licenses for Applications                           ***
+************************************************************************************
+
+
+        Licenses
+        --------
+        
+        Install licenses for applications.
+
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added using by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+
+     1 | Create a new password protected and encrypted key file
+     2 | Decrypt and copy the azscan3 license file to the azscan isntallation folder
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> pro
+PS C:\CyberAudit2021> appDir catlicenses
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+PS C:\CyberAudit2021> (appDir catlicenses).dir
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+PS C:\CyberAudit2021> dir (appDir catlicenses)
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   7:27 PM             70 install.json
+-a----        3/22/2021   7:10 PM            234 manifest.json
+
+
+PS C:\CyberAudit2021> cd (appDir catlicenses)
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+PS C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current> ls
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   7:27 PM             70 install.json
+-a----        3/22/2021   7:10 PM            234 manifest.json
+
+
+PS C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current> cp .\AZScanKey.enc nessus.enc
+PS C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current> ls
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   7:27 PM             70 install.json
+-a----        3/22/2021   7:10 PM            234 manifest.json
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current> cdd
+PS C:\CyberAudit2021>      $CATLicensesFolder = scoop prefix CATLicenses
+PS C:\CyberAudit2021> Get-ChildItem $CATLicensesFolder
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   7:27 PM             70 install.json
+-a----        3/22/2021   7:10 PM            234 manifest.json
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> Get-ChildItem $CATLicensesFolder -Filter "*.enc"
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $c = Get-ChildItem $CATLicensesFolder -Filter "*.enc"
+PS C:\CyberAudit2021> $c
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $c | ForEach {$_}
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $c | ForEach {$_.basename}
+AZScanKey
+nessus
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+At C:\CyberAudit2021\CyberLicenses.ps1:77 char:83
++ ...  "Input password which will encrypt the base64 key (don't forget it)"
++                                                            ~~~~~~~~~~~~~~
+The string is missing the terminator: '.
+
+At C:\CyberAudit2021\CyberLicenses.ps1:115 char:2
++ }
++  ~
+Missing closing ')' in expression.
+
+At C:\CyberAudit2021\CyberLicenses.ps1:20 char:4
++ do {
++    ~
+Missing closing '}' in statement block or type definition.
+
+At C:\CyberAudit2021\CyberLicenses.ps1:115 char:2
++ }
++  ~
+Missing while or until keyword in do loop.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString
+At C:\CyberAudit2021\CyberLicenses.ps1:77 char:83
++ ...  "Input password which will encrypt the base64 key (don't forget it)"
++                                                            ~~~~~~~~~~~~~~
+The string is missing the terminator: '.
+
+At C:\CyberAudit2021\CyberLicenses.ps1:115 char:2
++ }
++  ~
+Missing closing ')' in expression.
+
+At C:\CyberAudit2021\CyberLicenses.ps1:20 char:4
++ do {
++    ~
+Missing closing '}' in statement block or type definition.
+
+At C:\CyberAudit2021\CyberLicenses.ps1:115 char:2
++ }
++  ~
+Missing while or until keyword in do loop.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString
+
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> $c | ForEach {$_}
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> ($c | ForEach {$_})
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> ($c | ForEach {$_}).count
+2
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){$c[$i]}
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){$c[$i].basename}
+AZScanKey
+nessus
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){$i $c[$i].basename}
+At line:1 char:36
++ for ($i=0;$i -lt $c.Count;$i++){$i $c[$i].basename}
++                                    ~~
+Unexpected token '$c' in expression or statement.
+At line:1 char:36
++ for ($i=0;$i -lt $c.Count;$i++){$i $c[$i].basename}
++                                    ~~
+Unexpected token '$c' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){Write-Host $i $c[$i].basename}
+0 AZScanKey
+1 nessus
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){Write-Host ($i+1) $c[$i].basename}
+1 AZScanKey
+2 nessus
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){Write-Host ($i+1) } $c[$i].basename}
+At line:1 char:68
++ for ($i=0;$i -lt $c.Count;$i++){Write-Host ($i+1) } $c[$i].basename}
++                                                                    ~
+Unexpected token '}' in expression or statement.
+At line:1 char:68
++ for ($i=0;$i -lt $c.Count;$i++){Write-Host ($i+1) } $c[$i].basename}
++                                                                    ~
+Unexpected token '}' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+
+PS C:\CyberAudit2021> for ($i=0;$i -lt $c.Count;$i++){Write-Host ($i+1) - $c[$i].basename}
+1 - AZScanKey
+2 - nessus
+PS C:\CyberAudit2021> $c
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $c | Select-Object {}
+>> TerminatingError(Select-Object): "A property is an empty script block and does not provide a name."
+Select-Object : A property is an empty script block and does not provide a name.
+At line:1 char:6
++ $c | Select-Object {}
++      ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Select-Object], PSArgumentException
+    + FullyQualifiedErrorId : EmptyScriptBlockAndNoName,Microsoft.PowerShell.Commands.SelectObjectCommand
+Select-Object : A property is an empty script block and does not provide a name.
+At line:1 char:6
++ $c | Select-Object {}
++      ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Select-Object], PSArgumentException
+    + FullyQualifiedErrorId : EmptyScriptBlockAndNoName,Microsoft.PowerShell.Commands.SelectObjectCommand
+
+PS C:\CyberAudit2021> alias ?
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Alias           % -> ForEach-Object
+Alias           ? -> Where-Object
+Alias           h -> Get-History
+Alias           r -> Invoke-History
+
+
+PS C:\CyberAudit2021> $c | Where-Object {$c -contains "azscan"}
+PS C:\CyberAudit2021> $c | Where-Object {$c -contains "azscankey.enc"}
+PS C:\CyberAudit2021> $c.Contains("a")
+False
+PS C:\CyberAudit2021> $c.Contains("AZScanKey.enc")
+False
+PS C:\CyberAudit2021> $c[1]
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> Split-Path $c
+
+
+PS C:\CyberAudit2021> Split-Path $c[1]
+
+PS C:\CyberAudit2021> Split-Path $c[0]
+
+PS C:\CyberAudit2021> $c
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $c
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $keyfile = $c
+PS C:\CyberAudit2021> $keyfiles = $c
+PS C:\CyberAudit2021> $keyfile
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $keyfiles
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+At C:\CyberAudit2021\CyberLicenses.ps1:48 char:1
++ {
++ ~
+Missing closing '}' in statement block or type definition.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEndCurlyBrace
+At C:\CyberAudit2021\CyberLicenses.ps1:48 char:1
++ {
++ ~
+Missing closing '}' in statement block or type definition.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEndCurlyBrace
+
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+[Failed] AZScanKey.enc was not located in the CATInstall directory
+[Failed] AZScanKey.enc was not located in the CATInstall directory
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> cdd CATlicenses
+PS C:\CyberAudit2021> appDir catlicenses
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+PS C:\CyberAudit2021> ls
+
+
+    Directory: C:\CyberAudit2021
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        3/16/2021   3:38 PM                CYBER-AUDIT-PC
+d-----        2/23/2021   7:06 PM                Tools
+-a----        2/25/2021  12:18 PM             62 .gitignore
+-a----        2/23/2021   5:14 PM          31065 AD.ps1
+-a----        2/23/2021   5:14 PM        4601208 Bginfo64.exe
+-a----        3/24/2021   8:35 AM          28998 CyberAnalyzers.ps1
+-a----        3/24/2021   8:31 AM          12760 CyberAttack.ps1
+-a----        3/24/2021   8:30 AM          55164 CyberAudit.ps1
+-a----        2/25/2021  12:30 PM            897 CyberAuditDevelopersHelp.txt
+-a----        1/20/2020   1:32 PM         173295 CyberAuditPrep.xlsx
+-a----        2/23/2021   5:14 PM          52376 CyberAuditRemote.ps1
+-a----        2/23/2021   5:14 PM           3097 CyberBginfo.bgi
+-a----        2/23/2021   5:14 PM          67646 CyberBlackIcon.ico
+-a----        3/24/2021  10:39 AM          39517 CyberBuild.ps1
+-a----        3/24/2021  11:15 AM         158785 CyberBuildPhase.Log
+-a----        3/24/2021   8:32 AM          21522 CyberCollectNetworkConfig.ps1
+-a----        3/24/2021   8:32 AM          25423 CyberCollectNetworkConfigV2.ps1
+-a----        3/24/2021   8:31 AM           4919 CyberCompressGo.ps1
+-a----        3/24/2021   8:32 AM           3991 CyberCreateRunecastRole.ps1
+-a----        3/24/2021   8:46 AM          31800 CyberFunctions.ps1
+-a----        2/23/2021   5:14 PM          30832 CyberGPLinkReport.ps1
+-a----        2/23/2021   5:14 PM          67646 CyberGreenIcon.ico
+-a----        3/24/2021  11:14 AM           3744 CyberLicenses.ps1
+-a----        2/23/2021   5:14 PM           1724 CyberMenu.ps1
+-a----        3/24/2021   8:32 AM           1532 CyberMisc.ps1
+-a----        3/24/2021   8:33 AM           5651 CyberNmap.ps1
+-a----        3/24/2021   8:33 AM           1769 CyberOfflineNTDS.ps1
+-a----        3/24/2021   8:33 AM           5824 CyberPasswordStatistics.ps1
+-a----        3/24/2021   8:33 AM           1453 CyberPingCastle.ps1
+-a----        2/23/2021   5:14 PM          40184 CyberRamTrimmer.ps1
+-a----        2/23/2021   5:14 PM            328 CyberRamTrimmer.vbs
+-a----        2/23/2021   5:14 PM          67646 CyberRedIcon.ico
+-a----        2/23/2021   5:14 PM           2866 CyberReport.ps1
+-a----        5/21/2020   3:30 PM          29339 CyberRiskCompute.xlsx
+-a----        2/23/2021   5:14 PM            160 CyberSharpHound.bat
+-a----        2/23/2021   5:14 PM            753 CyberSPN.ps1
+-a----        2/23/2021   5:14 PM           3586 CyberTrayLauncher.ps1
+-a----        3/24/2021   8:34 AM           2633 CyberUserDumpStatistics.ps1
+-a----        2/23/2021   5:14 PM          67646 CyberYellowIcon.ico
+-a----        3/24/2021   8:34 AM          11854 go.ps1
+-a----        2/28/2021   7:09 PM         462336 Ionic.Zip.dll
+-a----        2/25/2021  12:53 PM           1716 Microsoft.PowerShell_profile.ps1
+-a----        2/23/2021   5:14 PM             41 README.md
+-a----        2/23/2021   5:14 PM           2898 Scuba2CSV.py
+-a----        2/23/2021   5:14 PM         153988 WinPwn.ps1
+
+
+PS C:\CyberAudit2021> appDir catlicenses
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+PS C:\CyberAudit2021> $x = appDir catlicenses
+[Success] Setting directory to C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+PS C:\CyberAudit2021> ls $x
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\catlicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   7:27 PM             70 install.json
+-a----        3/22/2021   7:10 PM            234 manifest.json
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> $keyfile
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $keyfiles
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -contains "AZScanKey.enc")
+            {true}
+}
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -contains "AZScanKey.enc")
+            {Write-Host "AZ"}
+}
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -contains "AZScanKey.enc")
+            {Write-Host "AZ"}
+} else {write-host "FUCK"}
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:5 char:3
++ } else {write-host "FUCK"}
++   ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:5 char:3
++ } else {write-host "FUCK"}
++   ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -contains "AZScanKey.enc")
+            {Write-Host "AZ"}
+} else {write-host "FUCK"}
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:5 char:3
++ } else {write-host "FUCK"}
++   ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:5 char:3
++ } else {write-host "FUCK"}
++   ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -contains "AZScanKey.enc")
+            {Write-Host "AZ"}
+else {write-host "FUCK"}}
+FUCK
+FUCK
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -contains "AZScanKey.enc")
+            {Write-Host "AZ"}
+else {write-host $keyFiles[$i]}}
+AZScanKey.enc
+nessus.enc
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -eq "AZScanKey.enc")
+            {Write-Host "AZ"}
+else {write-host $keyFiles[$i]}}
+AZScanKey.enc
+nessus.enc
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -like "AZScanKey.enc")
+            {Write-Host "AZ"}
+else {write-host $keyFiles[$i]}}
+AZScanKey.enc
+nessus.enc
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -like "AZScanKey.enc")
+            {Write-Host "AZ"}
+else {write-host $keyFiles[$i]}}
+AZScanKey.enc
+nessus.enc
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -like "AZScanKey")
+            {Write-Host "AZ"}
+else {write-host $keyFiles[$i]}}
+AZ
+nessus.enc
+PS C:\CyberAudit2021> for ($i=0;$i -lt $keyFiles.Count;$i++)
+        {
+            if ($keyFiles[$i].basename -like "AZScanKey")
+            {Write-Host "AZ"}
+else {write-host $keyFiles[$i]}}
+AZ
+nessus.enc
+PS C:\CyberAudit2021> .\CyberBginfo.bgi
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+[Success] AZScanKey.enc was found
+[Failed] Error occured while decoding string. Salt or Password incorrect?
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+azscan folder was not found, please install it before assigning license
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+[Success] AZScanKey.enc was found
+[Success] azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: 1q2w3e$R!
+True
+[Success] Key from AZScanKey.dat is now password encrypted and can be uploaded safetly to any cloud storage
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files and upload them to github download repository
+Files (AZScanKey.dat.enc AZScanKey.enc nessus.enc) will be compressed now
+PS C:\CyberAudit2021> TerminatingError(Resolve-Path): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: Cannot find path 'C:\CyberAudit2021\AZScanKey.dat.enc' because it does not exist."
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(Compress-Archive): "The path 'AZScanKey.dat.enc' either does not exist or is not a valid file system path."
+Compress-Archive : The path 'AZScanKey.dat.enc' either does not exist or is not a valid file system path.
+At C:\CyberAudit2021\CyberLicenses.ps1:54 char:9
++         Compress-Archive @compress -Force
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (AZScanKey.dat.enc:String) [Compress-Archive], InvalidOperationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive
+Compress-Archive : The path 'AZScanKey.dat.enc' either does not exist or is not a valid file system path.
+At C:\CyberAudit2021\CyberLicenses.ps1:54 char:9
++         Compress-Archive @compress -Force
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (AZScanKey.dat.enc:String) [Compress-Archive], InvalidOperationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1
+.
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1 -Leaf
+CyberAnalyzers.ps1
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1 -Leaf -Resolve
+CyberAnalyzers.ps1
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1 -NoQualifier
+.\CyberAnalyzers.ps1
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1
+.
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1 -Resolve
+C:\CyberAudit2021
+PS C:\CyberAudit2021> Split-Path .\CyberAnalyzers.ps1 -Resolve -Leaf
+CyberAnalyzers.ps1
+PS C:\CyberAudit2021> (Split-Path .\CyberAnalyzers.ps1 -Resolve)
+C:\CyberAudit2021
+PS C:\CyberAudit2021> (Split-Path .\CyberAnalyzers.ps1 -Leaf).basename
+PS C:\CyberAudit2021> (Split-Path .\CyberAnalyzers.ps1 -Leaf)
+CyberAnalyzers.ps1
+PS C:\CyberAudit2021> (Split-Path .\CyberAnalyzers.ps1 -Leaf).basename
+PS C:\CyberAudit2021> (Split-Path .\CyberAnalyzers.ps1 -Leaf).Split(".")
+CyberAnalyzers
+ps1
+PS C:\CyberAudit2021> (Split-Path .\CyberAnalyzers.ps1 -Leaf).Split(".")[0]
+CyberAnalyzers
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files and upload them to github download repository
+Files (AZScanKey.enc nessus.enc) will be compressed now
+PS C:\CyberAudit2021> TerminatingError(Resolve-Path): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: Cannot find path 'C:\CyberAudit2021\AZScanKey.enc' because it does not exist."
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(Compress-Archive): "The path 'AZScanKey.enc' either does not exist or is not a valid file system path."
+Compress-Archive : The path 'AZScanKey.enc' either does not exist or is not a valid file system path.
+At C:\CyberAudit2021\CyberLicenses.ps1:55 char:9
++         Compress-Archive @compress -Force
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (AZScanKey.enc:String) [Compress-Archive], InvalidOperationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive
+Compress-Archive : The path 'AZScanKey.enc' either does not exist or is not a valid file system path.
+At C:\CyberAudit2021\CyberLicenses.ps1:55 char:9
++         Compress-Archive @compress -Force
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (AZScanKey.enc:String) [Compress-Archive], InvalidOperationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive
+
+$CATLicensesFolder
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> $CATLicensesFolder
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+PS C:\CyberAudit2021> cls
+PS C:\CyberAudit2021> $CATLicensesFolder
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+PS C:\CyberAudit2021> $compress = @{
+          Path = Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"
+          CompressionLevel = "Fastest"
+          DestinationPath = "$CATLicensesFolder\CATLicenses.zip"
+        }
+PS C:\CyberAudit2021> $compress
+
+Name                           Value
+----                           -----
+Path                           {AZScanKey.enc, nessus.enc}
+CompressionLevel               Fastest
+DestinationPath                C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\CATLicenses.zip
+
+
+PS C:\CyberAudit2021> $c = $compress['path']
+PS C:\CyberAudit2021> $c
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/24/2021  12:34 PM           5049 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> Write-Host "Files ($c) will be compressed now" -ForegroundColor Green
+Files (AZScanKey.enc nessus.enc) will be compressed now
+PS C:\CyberAudit2021> Compress-Archive @compress -Force
+PS C:\CyberAudit2021> TerminatingError(Resolve-Path): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: Cannot find path 'C:\CyberAudit2021\AZScanKey.enc' because it does not exist."
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(Compress-Archive): "The path 'AZScanKey.enc' either does not exist or is not a valid file system path."
+Compress-Archive : The path 'AZScanKey.enc' either does not exist or is not a valid file system path.
+At line:1 char:1
++ Compress-Archive @compress -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (AZScanKey.enc:String) [Compress-Archive], InvalidOperationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive
+Compress-Archive : The path 'AZScanKey.enc' either does not exist or is not a valid file system path.
+At line:1 char:1
++ Compress-Archive @compress -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (AZScanKey.enc:String) [Compress-Archive], InvalidOperationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive
+
+PS C:\CyberAudit2021> Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/24/2021  12:34 PM           5049 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $compress['path']
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/24/2021  12:34 PM           5049 AZScanKey.enc
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $compress['path'][1]
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $compress['path'][1].PSPath
+Microsoft.PowerShell.Core\FileSystem::C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\nessus.enc
+PS C:\CyberAudit2021> $compress['path'][1]
+
+
+    Directory: C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        3/22/2021   6:57 PM           5334 nessus.enc
+
+
+PS C:\CyberAudit2021> $compress['path'][1].Name
+nessus.enc
+PS C:\CyberAudit2021> $compress['path'][1].FullName
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\nessus.enc
+PS C:\CyberAudit2021> [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
+At line:1 char:4
++ [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
++    ~
+Missing ] at end of attribute or type literal.
+
+At line:1 char:5
++ [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
++     ~~~~~~~~~~
+Unexpected token '-ChildItem' in expression or statement.
+
+At line:1 char:16
++ [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
++                ~~~~~
+Unexpected token '-Path' in expression or statement.
+At line:1 char:4
++ [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
++    ~
+Missing ] at end of attribute or type literal.
+
+At line:1 char:5
++ [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
++     ~~~~~~~~~~
+Unexpected token '-ChildItem' in expression or statement.
+
+At line:1 char:16
++ [Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"].fullname
++                ~~~~~
+Unexpected token '-Path' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : EndSquareBracketExpectedAtEndOfAttribute
+
+PS C:\CyberAudit2021> @compress
+At line:1 char:1
++ @compress
++ ~~~~~~~~~
+The splatting operator '@' cannot be used to reference variables in an expression. '@compress' can be used only as an argument to a command. To reference variables in an expression use '$compress'.
+At line:1 char:1
++ @compress
++ ~~~~~~~~~
+The splatting operator '@' cannot be used to reference variables in an expression. '@compress' can be used only as an
+argument to a command. To reference variables in an expression use '$compress'.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : SplattingNotPermitted
+
+PS C:\CyberAudit2021>    $compress = @{
+          Path = "$CATLicensesFolder *.enc"
+          CompressionLevel = "Fastest"
+          DestinationPath = "$CATLicensesFolder\CATLicenses.zip"
+        }
+PS C:\CyberAudit2021> $c = $compress['path']
+PS C:\CyberAudit2021> $c
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current *.enc
+PS C:\CyberAudit2021>    $compress = @{
+          Path = "$CATLicensesFolder\*.enc"
+          CompressionLevel = "Fastest"
+          DestinationPath = "$CATLicensesFolder\CATLicenses.zip"
+        }
+PS C:\CyberAudit2021> $c
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current *.enc
+PS C:\CyberAudit2021> $c = $compress['path']
+PS C:\CyberAudit2021> $c
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc
+PS C:\CyberAudit2021> cls
+PS C:\CyberAudit2021>    $compress = @{
+          Path = "$CATLicensesFolder\*.enc"
+          CompressionLevel = "Fastest"
+          DestinationPath = "$CATLicensesFolder\CATLicenses.zip"
+        }
+PS C:\CyberAudit2021> $c = $compress['path']
+PS C:\CyberAudit2021> $c
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc
+PS C:\CyberAudit2021> $c[1]
+:
+PS C:\CyberAudit2021> $c[2]
+\
+PS C:\CyberAudit2021> $c[3]
+C
+PS C:\CyberAudit2021> $c[]
+At line:1 char:4
++ $c[]
++    ~
+Array index expression is missing or not valid.
+At line:1 char:4
++ $c[]
++    ~
+Array index expression is missing or not valid.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingArrayIndexExpression
+
+PS C:\CyberAudit2021> $c
+C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc
+PS C:\CyberAudit2021> $compress
+
+Name                           Value
+----                           -----
+Path                           C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc
+CompressionLevel               Fastest
+DestinationPath                C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\CATLicenses.zip
+
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files and upload them to github download repository
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: asdas
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files,Don't forget to upload them to the download repozitory
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+Updating Scoop...
+
+
+Updating 'CyberAuditBucket' bucket...
+
+ * d9e11cd Update CATLicenses.json                                       87 minutes ago
+Updating 'extras' bucket...
+
+ * 219f38a8d postman: Update to version 8.0.8                            2 minutes ago
+ * 31d603efb session: Update to version 1.5.2                            2 hours ago
+ * 88237a46c opera: Update to version 75.0.3969.93                       3 hours ago
+ * 755320aa8 opera-gx: Update to version 73.0.3856.421                   3 hours ago
+ * 16caa228e krita: Update to version 4.4.3                              3 hours ago
+Updating 'java' bucket...
+
+
+Updating 'main' bucket...
+
+ * 3fa8a096e hadolint: Update to version 2.0.0                           2 hours ago
+ * d3bea38a0 fnm: Update to version 1.23.2                               3 hours ago
+Updating 'versions' bucket...
+
+
+Scoop was updated successfully!
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files,Don't forget to upload them to the download repozitory
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+Select the key file you want to encrypt
+[Success] C:\Temp\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files,Don't forget to upload them to the download repozitory
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+[Success] AZScanKey.enc was found
+[Failed] Error occured while decoding string. Salt or Password incorrect?
+zaZA12#$!
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessus
+[Success] AZScanKey.enc was found
+[Success] azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> $null = Start-Process "https://github.com/contigon/Downloads/upload/master"
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\AZScanKey.dat was encoded to base64 successfully
+--------------------------------------------
+aFpMS0NoVGVDM29oM0w4QjBIOENkazVMOG40WjBDVThrY1hWXTJjZ29SNGJzSTReWllQM0Y2T3U4TzVkWkU4aDlPSDZmWGw0XTFKNGhCbVkNCmtfUDddNko+SjE0d0paMjk7STNoMWsxZnA0SFBvWUI5XnBxOF40XFYzMl5PMEkzbjN1OU4wXFgyaDFdYEFjMl9VTTVnMWw2WjFcMnVvM2xZDQpqXDBvQ0tHNVRcMEY3YksxcjJUcmFcc3EwbVBRMWEyXlkyZTVnNmcxYTFqOW85ZDBre31XVzZmNVFARlY5TDdoXmczRjRiZTNKNEQyRG0yQQ0KZVpjN140VElQNE1Lc0Y1cTJgNUs1dDBcajJVMkR1MFQ3QW9qNmFFbTc4SzZOM0k0dTFIclwwQjlxMnVnM0pQRUBzSWtTNGFwbFo4YDBoMlENCnNgMFMyMDA1NlcwbXI4T2M0al1eOEwxXVJjYTJpYmZDTmE4XEhIQWI2XzdqZ01aRDNqMVM0dTFuMHEzSjZmOF1icVU5c1c5TTlINFYybjFTDQpkXDZuaVlXUlRQNTU1PTU1JS0lOWw5YjZSN2ZxNF83YjJwMGM4YVExVz01LSAxOm8gJD02Y0s0cTlKNFowUWdsOXNtbVlUQ0E/QnIxX2w0TA0KZVprN1dsME9UM2E0WGM2bGtKMlw2SjhkMWk0RzZWe30hJDZla1BON2I4U3M5QThPZ2QyXXMwYVJOOGIxUUYzQjJOMUlzMlg3ZzVfbWc4clENCm5iMUY3QTZkRlwxbzRwWWVPbTBPV1dXV0c1bjdzWjZxY0tmN0o2YjdhOHFxOF40XFYzUzZvOEM1aEI5RzVlUTFiNmxgOGZrZ3BnOWs2YHJBDQpmWlM1dDdtZzZoMmw1YzVpOEoxczk1NTU9NTUlLSU3SmcyYGA5ZXU3RjlcMUJkN1Q3aXAwUTVDY1hYRVY3XTBIQ0UwRDFRUmQySThJXjNwVQ0KS19VXEdxSmtCY05mRmdRZkVgQmtMbUtmUlxCaVhfT21HblBmSXBXcFNjVmZRclBoUV5OckJvUlxCbEtsSV5JYVVfWWBJcEheSG9ZXVpqRXINCg==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from AZScanKey.dat is now password encrypted
+We will now zip all key files,Don't forget to upload them to the download repozitory
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\nessusKey.txt was encoded to base64 successfully
+--------------------------------------------
+bmVzc3VzY2xpIGZldGNoIC0tcmVnaXN0ZXIgQ1FKSi00VFE0LUVRQ0wtVUVLSw==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from nessusKey.txt is now password encrypted
+We will now zip all key files,Don't forget to upload them to the download repozitory
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessusKey
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\SkyboxKey.txt was encoded to base64 successfully
+--------------------------------------------
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSI/Pg0KPHNreWJveF9zZWN1cml0eV9saWNlbnNlPg0KCTxrZXk+TzhOSWs4VStBWGFOMlgxZkZCYlF0SEVGa1RTbWp2SWVUMFhuZFFpVUR0az08L2tleT4NCgk8c29mdHdhcmVfdmVyc2lvbj45LjAuODAxPC9zb2Z0d2FyZV92ZXJzaW9uPg0KCTxpc3N1ZV9kYXRlPjIwMjAtMTItMjk8L2lzc3VlX2RhdGU+DQoJPGVkaXRpb24gbmFtZT0iRW50ZXJwcmlzZSIgLz4NCgk8bW9kZSB0eXBlPSJ1bmxpbWl0ZWQiIC8+DQoJPGhhcmR3YXJlIGlkPSJ1bmxpbWl0ZWQiIC8+DQoJPGxpY2Vuc2VlIG5hbWU9IlBNT0lMTmF0aW9uYWxDeWJlckRpcmVjdG9yYXRlLVByb2R1Y3Rpb24iIC8+DQoJPG1vZGVsX2xpbWl0cyB2dWxuZXJhYmlsaXR5X2NvbnRyb2xfbm9kZXM9IjE4MDAwIiBuZXR3b3JrX25vZGVzPSIxODAwMCIgZmlyZXdhbGxfbm9kZXM9IjE4MDAiIHZpcnR1YWxfbm9kZXM9IjAiIC8+DQoJPGNvbXBvbmVudF9saW1pdHMgc2VydmVycz0iMSIgY29sbGVjdG9ycz0iOTk5OSIgbWFuYWdlcnM9Ijk5OTkiIC8+DQoJPG1vZHVsZSBuYW1lPSJTa3lib3ggRmlyZXdhbGwgQXNzdXJhbmNlIiBleHA9IjIwMjEtMTItMzEiIC8+DQoJPG1vZHVsZSBuYW1lPSJTa3lib3ggTmV0d29yayBBc3N1cmFuY2UiIGV4cD0iMjAyMS0xMi0zMSIgLz4NCgk8bW9kdWxlIG5hbWU9IlNreWJveCBWdWxuZXJhYmlsaXR5IENvbnRyb2wiIGV4cD0iMjAyMS0xMi0zMSIgLz4NCgk8bW9kdWxlIG5hbWU9IlByZW1pdW0gRGljdGlvbmFyeSIgZXhwPSIyMDIxLTEyLTMxIiAvPg0KCTxtb2R1bGUgbmFtZT0iVGVjaG5pY2FsIFN1cHBvcnQiIGV4cD0iMjAyMS0xMi0zMSIgLz4NCgk8c3BsYXNoIHRleHQ9IlBNT0lMTmF0aW9uYWxDeWJlckRpcmVjdG9yYXRlLVByb2R1Y3Rpb24iIC8+DQo8L3NreWJveF9zZWN1cml0eV9saWNlbnNlPg0K
+--------------------------------------------
+The password is:
+PS C:\CyberAudit2021> TerminatingError(fAESEncrypt): "Cannot bind argument to parameter 'aPasswordBytes' because it is an empty array."
+fAESEncrypt : Cannot bind argument to parameter 'aPasswordBytes' because it is an empty array.
+At C:\CyberAudit2021\CyberLicenses.ps1:43 char:72
++ ... s($sInput)) ([system.text.encoding]::ASCII.GetBytes($sPassword)) ([re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [fAESEncrypt], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidationErrorEmptyArrayNotAllowed,fAESEncrypt
+fAESEncrypt : Cannot bind argument to parameter 'aPasswordBytes' because it is an empty array.
+At C:\CyberAudit2021\CyberLicenses.ps1:43 char:72
++ ... s($sInput)) ([system.text.encoding]::ASCII.GetBytes($sPassword)) ([re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [fAESEncrypt], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidationErrorEmptyArrayNotAllowed,fAESEncrypt
+
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> git pull
+hint: Pulling without specifying how to reconcile divergent branches is
+hint: discouraged. You can squelch this message by running one of the following
+hint: commands sometime before your next pull:
+hint:
+hint:   git config pull.rebase false  # merge (the default strategy)
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint:
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+Already up to date.
+PS C:\CyberAudit2021> .\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1
+VERBOSE: Creating C:\WINDOWS\Install-RSAT.log.
+VERBOSE: Running correct Windows 10 build number for installing RSAT with Features on Demand. Build number is: 17763
+VERBOSE: ***********************************************************
+PS C:\CyberAudit2021> We will Install RSAT features for Windows 10 1809 or 1903 or 1909 
+We : The term 'We' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ We will Install RSAT features for Windows 10 1809 or 1903 or 1909
++ ~~
+    + CategoryInfo          : ObjectNotFound: (We:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+We : The term 'We' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ We will Install RSAT features for Windows 10 1809 or 1903 or 1909
++ ~~
+    + CategoryInfo          : ObjectNotFound: (We:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> TerminatingError(Resolve-Path): "The specified wildcard character pattern is not valid: test-\[*"
+PS C:\CyberAudit2021> TerminatingError(Get-Command): "The specified wildcard character pattern is not valid: test-[*"
+PS C:\CyberAudit2021> TerminatingError(Resolve-Path): "The specified wildcard character pattern is not valid: test-\[*"
+PS C:\CyberAudit2021> Test-Penfunction Test-PendingRebootRegistry {
+    $cbsRebootKey = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction Ignore
+    $wuRebootKey = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired" -ErrorAction Ignore
+    if (($cbsRebootKey -ne $null) -OR ($wuRebootKey -ne $null)) {
+        $true
+    }
+    else {
+        $false
+    }
+}
+Test-Penfunction : The term 'Test-Penfunction' is not recognized as the name of a cmdlet, function, script file, or 
+operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:1 char:1
++ Test-Penfunction Test-PendingRebootRegistry {
++ ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Test-Penfunction:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+Test-Penfunction : The term 'Test-Penfunction' is not recognized as the name of a cmdlet, function, script file, or
+operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Test-Penfunction Test-PendingRebootRegistry {
++ ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Test-Penfunction:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> function Test-PendingRebootRegistry {
+    $cbsRebootKey = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction Ignore
+    $wuRebootKey = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired" -ErrorAction Ignore
+    if (($cbsRebootKey -ne $null) -OR ($wuRebootKey -ne $null)) {
+        $true
+    }
+    else {
+        $false
+    }
+}
+PS C:\CyberAudit2021> Test-PendingRebootRegistry
+False
+PS C:\CyberAudit2021> Test-PendingRebootRegistry
+False
+PS C:\CyberAudit2021>  Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
+Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        RSAT
+        ----
+        
+        Remote Server Administration Tools for Windows 10 includes Server Manager, 
+        Microsoft Management Console (MMC) snap-ins, consoles, Windows PowerShell cmdlets and providers,
+        and command-line tools for managing roles and features that run on Windows Server.
+
+        Starting with Windows 10 October 2018 Update, you can manually add RSAT tools right from Windows 10.
+        Just go to "Manage optional features" in Settings and click "Add a feature" to see the list of available RSAT tools.
+
+        The downloadable packages above can still be used to install RSAT on Windows 10 versions prior to the October 2018 Update.
+        https://www.microsoft.com/en-us/download/details.aspx?id=45520
+
+        This script can automatically install RSAT features for Windows 10 1809/1903/1909/2004/20H2
+        with all features online from Microsoft Update site.
+CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 : The term 'CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' is not 
+recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a 
+path was included, verify that the path is correct and try again.
+At C:\CyberAudit2021\CyberBuild.ps1:251 char:13
++             CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 -ALL
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (CyberInstall-RS...9v2004v20H2.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 : The term 'CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' is not
+recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a
+path was included, verify that the path is correct and try again.
+At C:\CyberAudit2021\CyberBuild.ps1:251 char:13
++             CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 -ALL
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (CyberInstall-RS...9v2004v20H2.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS C:\CyberAudit2021> .\CyberBuild.ps1
+**************************************************************************************
+We will try now to disable the local firewall protection profiles
+@{name=Domain; Enabled=False} @{name=Private; Enabled=False} @{name=Public; Enabled=False}
+**************************************************************************************
+You are running [1] antivirus realtime protection solutions:
+--> Windows Defender
+
+Searching for network proxy...
+No proxy detected, continuing...
+Setting power scheme to ultimate performance
+
+Adding GodMode shortcut to desktop
+
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        RSAT
+        ----
+        
+        Remote Server Administration Tools for Windows 10 includes Server Manager, 
+        Microsoft Management Console (MMC) snap-ins, consoles, Windows PowerShell cmdlets and providers,
+        and command-line tools for managing roles and features that run on Windows Server.
+
+        Starting with Windows 10 October 2018 Update, you can manually add RSAT tools right from Windows 10.
+        Just go to "Manage optional features" in Settings and click "Add a feature" to see the list of available RSAT tools.
+
+        The downloadable packages above can still be used to install RSAT on Windows 10 versions prior to the October 2018 Update.
+        https://www.microsoft.com/en-us/download/details.aspx?id=45520
+
+        This script can automatically install RSAT features for Windows 10 1809/1903/1909/2004/20H2
+        with all features online from Microsoft Update site.
+& : The term 'CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' is not recognized as the name of a cmdlet, function, 
+script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At C:\CyberAudit2021\CyberBuild.ps1:252 char:15
++             & CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 -ALL
++               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (CyberInstall-RS...9v2004v20H2.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+& : The term 'CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' is not recognized as the name of a cmdlet, function, script
+file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and
+try again.
+At C:\CyberAudit2021\CyberBuild.ps1:252 char:15
++             & CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 -ALL
++               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (CyberInstall-RS...9v2004v20H2.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+PS C:\CyberAudit2021> $scr = "\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1"
+PS C:\CyberAudit2021> &$scr
+& : The term '\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' is not recognized as the name of a cmdlet, function, 
+script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:1 char:2
++ &$scr
++  ~~~~
+    + CategoryInfo          : ObjectNotFound: (\CyberInstall-R...9v2004v20H2.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+& : The term '\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1' is not recognized as the name of a cmdlet, function, script
+file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and
+try again.
+At line:1 char:2
++ &$scr
++  ~~~~
+    + CategoryInfo          : ObjectNotFound: (\CyberInstall-R...9v2004v20H2.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\CyberAudit2021> $scr = ".\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1"
+PS C:\CyberAudit2021> &$scr
+VERBOSE: Running correct Windows 10 build number for installing RSAT with Features on Demand. Build number is: 17763
+VERBOSE: ***********************************************************
+PS C:\CyberAudit2021> &$scr -ALL
+VERBOSE: Running correct Windows 10 build number for installing RSAT with Features on Demand. Build number is: 17763
+VERBOSE: ***********************************************************
+VERBOSE: ***********************************************************
+VERBOSE: Script is running with -All parameter. Installing all available RSAT features
+VERBOSE: All RSAT features seems to be installed already
+PS C:\CyberAudit2021> $testPendingReboot = Test-PendingRebootRegistry      
+PS C:\CyberAudit2021>             if ($testPendingReboot -eq $true) {
+               
+                Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
+            }
+PS C:\CyberAudit2021>             if ($testPendingReboot -eq $true) {
+               
+                Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
+               $testPendingReboot = Test-PendingRebootRegistry      }
+PS C:\CyberAudit2021>             if ($testPendingReboot -eq $false) {
+               
+                Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
+            }
+Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase
+PS C:\CyberAudit2021> pro
+PS C:\CyberAudit2021> gadd

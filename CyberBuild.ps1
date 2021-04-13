@@ -232,25 +232,36 @@ switch ($input)
         Microsoft Management Console (MMC) snap-ins, consoles, Windows PowerShell cmdlets and providers,
         and command-line tools for managing roles and features that run on Windows Server.
 
-        Starting with Windows 10 October 2018 Update, add RSAT tools right from Windows 10.
+        Starting with Windows 10 October 2018 Update, you can manually add RSAT tools right from Windows 10.
         Just go to "Manage optional features" in Settings and click "Add a feature" to see the list of available RSAT tools.
 
         The downloadable packages above can still be used to install RSAT on Windows 10 versions prior to the October 2018 Update.
         https://www.microsoft.com/en-us/download/details.aspx?id=45520
+
+        This script can automatically install RSAT features for Windows 10 1809/1903/1909/2004/20H2
+        with all features online from Microsoft Update site.
                 
 "@
         Write-Host $help
         $menuColor[3] = "Yellow"
-        $RSATinstalled = Get-WindowsCapability -online | ? Name -like Rsat* | ? state -eq installed
-        if ($RSATinstalled.Count -lt 21)
+        
+        $input = Read-Host "Press [A] to install RSAT automatically or [Enter] to skip and manually install it"
+        if ($input -eq "A") 
         {
-            Get-WindowsCapability -online | ? Name -like Rsat* | FT
-            Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability  -Online
+                  
+            $ScriptToRun = $PSScriptRoot+"\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1"
+            &$ScriptToRuns -ALL
+            $testPendingReboot = Test-PendingRebootRegistry      
+            if ($testPendingReboot -eq $true) {
+               
+                Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
+            }
         }
         else
         {
-            Write-Host "All Windows RSAT (Remote Server Administration tools) modules are already installed" -ForegroundColor Green
+            failed "You have decided to manually install RSAT, please note that if you will not install is C.A.T will not operate properly"
         }
+
      read-host "œPress ENTER to continue"
      }
     
@@ -685,8 +696,6 @@ switch ($input)
         Licenses
         --------
         
-        Install licenses for applications.
-
         Licenses will be stored in base64 encoding and then encrypted using a password that
         is specific for the encrypted licenses file (Please write it down and do not forget!!!)
 
@@ -696,7 +705,7 @@ switch ($input)
         and then the file will be encoded to the original license file which will then be copied
         to the correct application path.
 
-        New licenses can be added using by editing the $PSScriptRoot\CyberLicenses.ps1 file.
+        New licenses can be added by editing the $PSScriptRoot\CyberLicenses.ps1 file.
 
 "@
         Write-Host $help
