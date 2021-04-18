@@ -251,7 +251,7 @@ switch ($input)
         {
                   
             $ScriptToRun = $PSScriptRoot+"\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1"
-            &$ScriptToRuns -ALL
+            &$ScriptToRun -ALL
             $testPendingReboot = Test-PendingRebootRegistry      
             if ($testPendingReboot -eq $true) {
                
@@ -285,33 +285,14 @@ switch ($input)
         }
         $menuColor[4] = "Yellow"
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-        #add -FORCE if you have problem installing modules or providers
         Install-PackageProvider Nuget
-        $moduleExists = (Get-InstalledModule "PowerShellGet").name
-        If ($moduleExists.name -eq "")
-        {
-            Write-Host "Checking if $moduleExists module exists and if not install it..."
-            Install-Module -Name PowerShellGet -AllowClobber
-        }
-        else
-        {
-            success "$moduleExists module exists"
-        }
+        Install-Module -Name PowerShellGet -Force -AllowClobber
 
         foreach ($PSGModule in $PSGModules)
         {
-            $moduleExists = (Get-InstalledModule $PSGModule).Name
-            Write-Host "Checking if $moduleExists module exists and if not install it..."
-            If ($moduleExists -eq "")
-            {
                 Write-Host "Installing module $PSGModule"
-                Install-Module -Name $PSGModule -AllowClobber  
-                Import-Module $PSGModule    
-            }
-            else
-            {
-                success "$moduleExists module exists"
-            }
+                Install-Module -Name $PSGModule -AllowClobber -Force
+                Import-Module $PSGModule 
         }
         
         #Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
@@ -694,11 +675,16 @@ switch ($input)
         Pop-Location
 
         #update metasploit
-        try {
-            msfupdate
+        Write-Host "In order to update Metasploit framework please make sure you disable any AntiMalware protection" -ForegroundColor Yellow
+        $input = Read-Host "Press [M] if you want to update Metasploit framework or [Enter] to skip"
+        if ($input -eq "M")
+        {
+            try {
+                msfupdate
+                }
+            catch {
+                failed "Metasploit is not installed so we can not update it"
             }
-        catch {
-            failed "Metasploit is not installed so we can not update it"
         }
 
      read-host "œPress ENTER to continue" 
@@ -726,7 +712,6 @@ switch ($input)
         Write-Host $help
         $menuColor[11] = "Yellow"
         scoop install CATLicenses --global
-        $CATLicensesFolder = scoop prefix CATLicenses
         $ScriptToRun = $PSScriptRoot+"\CyberLicenses.ps1"
         &$ScriptToRun
      read-host "Press ENTER to continue"

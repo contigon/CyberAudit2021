@@ -14,11 +14,21 @@
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
+$CATLicensesFolder = scoop prefix CATLicenses
+
 Write-Host "These are the key files you have:"
 $keyFiles = Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"
 for ($i=0;$i -lt $keyFiles.Count;$i++){Write-Host ($i+1) - $keyFiles[$i].basename}
 
-$input = Read-Host "Press [I] to install all key files or [C] to create the protected key file"
+if ($keyFiles.count -gt 0) {
+    $input = Read-Host "Press [I] to install all key files or [C] to create the protected key file"
+}
+else {
+    $input = Read-Host "[C] to create a protected key file or [Enter] to skip installing licenses"
+}
+
+
+
 if ($input -eq "C") {
     #Encrypt the license file to base64
     function encFile ($infile) {
@@ -63,7 +73,7 @@ if ($input -eq "C") {
       }
       else 
       {
-        failed "Could not encrypt the file, figure out the prom and try again !"
+        failed "Could not encrypt the file, please figure out the problem and try again !"
       }
 } 
 elseif ($input -eq "I")
@@ -96,7 +106,7 @@ elseif ($input -eq "I")
             }
         }
     }
-}
-else {
+    else {
         Write-Host "azscan folder was not found, please install it before assigning license" -ForegroundColor Green
+    }
 }

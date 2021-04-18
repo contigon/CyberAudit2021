@@ -7953,3 +7953,558 @@ Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
 
 
 
+PS C:\CyberAudit2021> GADD
+
+
+
+PS C:\CyberAudit2021> .\CyberCompressGo.ps1
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        4/13/2021   8:39 PM                CATInstall
+Files (C:\CyberAudit2021\cyberAnalyzers.ps1 C:\CyberAudit2021\cyberAudit.ps1 C:\CyberAudit2021\cyberAuditRemote.ps1 C:\CyberAudit2021\cyberBuild.ps1 C:\CyberAudit2021\cyberAttack.ps1 C:\CyberAudit2021\CyberCollectNetworkConfig.ps1 C:\CyberAudit2021\CyberCollectNetworkConfigV2.ps1 C:\CyberAudit2021\CyberCompressGo.ps1 C:\CyberAudit2021\CyberCreateRunecastRole.ps1 C:\CyberAudit2021\CyberFunctions.ps1 C:\CyberAudit2021\CyberLicenses.ps1 C:\CyberAudit2021\CyberPasswordStatistics.ps1 C:\CyberAudit2021\CyberUserDumpStatistics.ps1 C:\CyberAudit2021\CyberPingCastle.ps1 C:\CyberAudit2021\go.ps1 C:\CyberAudit2021\CyberMisc.ps1 C:\CyberAudit2021\CyberReport.ps1 C:\CyberAudit2021\CyberOfflineNTDS.ps1 C:\CyberAudit2021\CyberGPLinkReport.ps1 C:\CyberAudit2021\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1 C:\CyberAudit2021\CyberRamTrimmer.ps1 C:\CyberAudit2021\Scuba2CSV.py C:\CyberAudit2021\CyberRiskCompute.xlsx C:\CyberAudit2021\CyberAuditPrep.xlsx C:\CyberAudit2021\CyberAuditDevelopersHelp.txt C:\CyberAudit2021\CyberBginfo.bgi C:\CyberAudit2021\Bginfo64.exe C:\CyberAudit2021\CyberRedIcon.ico C:\CyberAudit2021\CyberBlackIcon.ico C:\CyberAudit2021\CyberGreenIcon.ico C:\CyberAudit2021\CyberYellowIcon.ico) will be compressed now
+
+go.pdf created successfully
+
+Uploading <go.pdf\go.ps1> to github contigon\CATInstall repo
+
+
+
+
+
+**********************
+Windows PowerShell transcript start
+Start time: 20210418145738
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 2744
+PSVersion: 5.1.17763.1490
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1490
+BuildVersion: 10.0.17763.1490
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+**********************
+Windows PowerShell transcript end
+End time: 20210418145742
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20210418170525
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 8772
+PSVersion: 5.1.17763.1852
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1852
+BuildVersion: 10.0.17763.1852
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+Updating Scoop...
+
+
+Updating 'CyberAuditBucket' bucket...
+
+
+Updating 'extras' bucket...
+
+ * 5f9d3d3bc firefox-nightly: Update to version 89.0a1.20210418092832    54 minutes ago
+ * 651786426 cudatext: Update to version 1.132.0.6                       6 hours ago
+ * 8a9e2de5a musikcube: Update to version 0.96.6                         8 hours ago
+ * 9001879fb okular: Update to version 20.12.3-611                       10 hours ago
+ * a40814307 notejoy: Update to version 1.18.0                           11 hours ago
+ * ab6956a4a firefox-nightly: Update to version 89.0a1.20210417214426    14 hours ago
+ * ba895e2c7 x64dbg: Update to version 2021-04-17_18-28                  17 hours ago
+ * 97fabc5ca task: Update to version 3.4.1                               17 hours ago
+ * a4525cc11 kitty: Update to version 0.74.4.10                          17 hours ago
+ * 1db4f6f34 jami: Update to version 202104171024                        19 hours ago
+ * 738189ca9 imageglass: Update to version 8.1.4.18                      21 hours ago
+ * 65e3c0d55 chatterino: Update to version 2.3.0                         23 hours ago
+ * 94e2775db praat: Update to version 6.1.42                             24 hours ago
+ * b0ed3fb52 firefox-nightly: Update to version 89.0a1.20210417095008    26 hours ago
+ * 78bc4ec89 extraterm: Update to version 0.59.0                         28 hours ago
+ * fe83e6188 sumo: Update to version 5.12.11.488                         30 hours ago
+ * 3064a1d7c calibre: Update to version 5.16.0                           31 hours ago
+ * dfaa7018a calibre-normal: Update to version 5.16.0                    31 hours ago
+ * 7601072ee x64dbg: Update to version 2021-04-16_23-17                  33 hours ago
+ * b028d2c8c terminus: Update to version 1.0.137                         33 hours ago
+ * 223a1b730 netron: Update to version 4.8.9                             33 hours ago
+ * 6d0925ccb mailspring: Update to version 1.9.1                         33 hours ago
+ * b5e0ad6af okular: Update to version 20.12.3-610                       34 hours ago
+ * fd5beda85 kitty: Update to version 0.74.4.9                           34 hours ago
+ * 41abfdc66 jamovi: Update to version 1.6.23.0                          2 days ago
+ * 4e7090aba butterflow-ui: Update to version 1.1.1                      2 days ago
+ * 4c9e2a759 firefox-nightly: Update to version 89.0a1.20210416155149    2 days ago
+ * e3085f7fe jami: Update to version 202104151616                        2 days ago
+ * e01f6937d cudatext: Update to version 1.132.0.5                       2 days ago
+ * a98ea7799 chipmunk: Update to version 2.16.5                          2 days ago
+ * ad11dbf55 balabolka: Update to version 2.15.0.781                     2 days ago
+ * 37e998d25 flutter: Update to version 2.0.5                            2 days ago
+ * 5ef20d9f4 freedownloadmanager: Update to version 6.14.1               2 days ago
+ * 9c12e320b fclones: Update to version 0.10.2                           2 days ago
+ * 67adf6856 openliberty: Update to version 21.0.0.4                     2 days ago
+ * 18afcd1cf lens: Update to version 4.2.2                               2 days ago
+ * 6982d2d56 azuredatastudio: Update to version 1.28.0                   2 days ago
+ * a105d3612 x64dbg: Update to version 2021-04-16_14-02                  2 days ago
+ * 05743f112 stretchly: Update to version 1.6.0                          2 days ago
+ * 775544149 firefox-nightly: Update to version 89.0a1.20210416093642    2 days ago
+ * ffa4a2ad6 cudatext: Update to version 1.132.0.3                       2 days ago
+ * 31bc8dfa6 kakaotalk: Update to version 3.2.6.2748                     2 days ago
+ * 8afd98b88 waterfox-current: Update to version 3.2.1                   2 days ago
+ * 7a350006e zotero: Update to version 5.0.96.2                          2 days ago
+ * c0cf1906d postman: Update to version 8.2.3                            2 days ago
+ * bb94a558f kate: Update to version 20.12.3-1245                        2 days ago
+ * 88425c4a0 okular: Update to version 20.12.3-609                       2 days ago
+ * e64ad470d calibre: Update to version 5.15.0                           2 days ago
+ * 2ea58314a calibre-normal: Update to version 5.15.0                    2 days ago
+ * 16dea46c5 storageexplorer: Update to version 1.19.0                   3 days ago
+ * c58bd3d23 firefox-nightly: Update to version 89.0a1.20210415214643    3 days ago
+ * 148990e6b istio: Update to version 1.9.3                              3 days ago
+ * f7318ce72 dasel: Update to version 1.14.1                             3 days ago
+ * c35cb3fb4 cudatext: Update to version 1.132.0.2                       3 days ago
+ * 0f7c8d017 firefox-nightly: Update to version 89.0a1.20210415133200    3 days ago
+ * 7b5f04e9b opera-gx: Update to version 73.0.3856.434                   3 days ago
+ * 7f8ff43ec linkerd: Update to version 2.10.1                           3 days ago
+ * 2128262f4 ds4windows: Update to version 3.0.3                         3 days ago
+ * f6e5742e3 mpc-be: Update to version 1.5.7.6180                        3 days ago
+ * cb0fdfd13 vivaldi: Update to version 3.7.2218.55                      3 days ago
+ * 51215f462 springboot: Update to version 2.3.10                        3 days ago
+ * dd46e6285 picard: Update to version 2.6.1                             3 days ago
+ * 5fd092c22 yakyak: Update to version 1.5.11.3                          3 days ago
+ * b77435d2b skaffold: Update to version 1.22.0                          3 days ago
+ * 13cc63ae5 openboard: Update to version 1.6.1                          3 days ago
+ * 05e142172 firefox-nightly: Update to version 89.0a1.20210415092954    3 days ago
+ * ad9025d0c cpu-z: Update to version 1.96                               3 days ago
+ * 949dfbeb8 kakaotalk: Update to version 3.2.6.2745                     3 days ago
+ * da36a4de1 gpodder: Update to version 3.10.19                          3 days ago
+ * 77926bb1a chipmunk: Update to version 2.16.4                          3 days ago
+ * 489120933 copyq@4.0.0: Hash fix (#6021)                               3 days ago
+ * d95e97392 zeplin: Update to version 6.0.1                             3 days ago
+ * baacb0a5f fileoptimizer: Update to version 14.70.2618                 3 days ago
+ * eb64a6b5d seamonkey: Update to version 2.53.7.1                       3 days ago
+ * 625c30ebc kate: Update to version 20.12.3-1244                        3 days ago
+ * 32bd353fa q-dir: Update to version 9.39                               3 days ago
+ * 45f537650 okular: Update to version 20.12.3-608                       3 days ago
+ * d7fdb2a3f session: Update to version 1.5.4                            3 days ago
+ * 3d7db59e1 wiztree: Update to version 3.39                             3 days ago
+ * cda09b464 hydrus-network: Update to version 435                       4 days ago
+ * 41b6281e6 firefox-nightly: Update to version 89.0a1.20210414160838    4 days ago
+ * 2d6c45130 crow-translate: Update to version 2.8.2                     4 days ago
+ * f08f2b16c windows-terminal: Update to version 1.7.1033.0              4 days ago
+ * 23424da40 vieb: Update to version 4.4.0                               4 days ago
+ * a325da8e7 standardnotes: Update to version 3.6.7                      4 days ago
+ * 3275e6ee5 monero: Update to version 0.17.2.1                          4 days ago
+ * 89e75e410 jami: Update to version 202104091901                        4 days ago
+ * b6a8e7081 renamer: Update to version 7.3                              4 days ago
+ * 7bd98cb38 fbflipper: Update to version 0.85.0                         4 days ago
+ * 669de7feb civo: Update to version 0.7.12                              4 days ago
+ * 713305dc6 yubikey-manager-qt: Update to version 1.2.2                 4 days ago
+ * 71bf37c86 wavebox10-pro: Update to version 10.0.487.2                 4 days ago
+ * c5a318c85 firefox-nightly: Update to version 89.0a1.20210414093129    4 days ago
+ * 819359525 dont-sleep: Update to version 8.11                          4 days ago
+ * 924f11ee8 jitsi-meet: Update to version 2.8.5                         4 days ago
+ * 7b5a3c813 grafana: Update to version 7.5.4                            4 days ago
+ * 0423c33a5 dart-dev: Update to version 2.14.0-3.0.dev                  4 days ago
+ * ceb8c571f okular: Update to version 20.12.3-607                       4 days ago
+ * 78623973d x64dbg: Update to version 2021-04-13_22-19                  4 days ago
+ * 9e2bfc6bd vscodium: Update to version 1.55.2                          4 days ago
+ * 5d255b831 vscodium-portable: Update to version 1.55.2                 4 days ago
+ * fa23a52cd mailspring: Update to version 1.9.0                         4 days ago
+ * c64446eaf natural-docs: Update to version 2.1.1                       4 days ago
+ * b27de06c0 flyctl: Update to version 0.0.210                           5 days ago
+ * a7e9cd6bb pritunl-client: Update to version 1.2.2768.85               5 days ago
+ * bd51cfd0f wiztree: Update to version 3.38                             5 days ago
+ * 9210a75a5 markdown-monster: Update to version 1.26.12                 5 days ago
+ * e05aec3fc firefox-nightly: Update to version 89.0a1.20210413214314    5 days ago
+ * 86acf6ff6 gcloud: Update to version 336.0.0                           5 days ago
+ * 61450f102 vscode: Update to version 1.55.2                            5 days ago
+ * db0aa9caa vscode-portable: Update to version 1.55.2                   5 days ago
+ * d3afa50e4 atom: Update to version 1.56.0                              5 days ago
+ * 6b408d999 session: Update to version 1.5.3                            5 days ago
+ * 425533f12 qutebrowser: Update to version 2.2.0                        5 days ago
+ * c0e77d894 httptoolkit: Update to version 1.2.3                        5 days ago
+ * f0e14f3b1 element: Update to version 1.7.25                           5 days ago
+Updating 'java' bucket...
+
+ * 7e33196f adopt16-openj9-nightly: Update to version 202104171140       26 hours ago
+ * 7d69bf79 adopt16-openj9-jre-nightly: Update to version 202104171140   26 hours ago
+ * 0b8acaf9 adopt16-hotspot-nightly: Update to version 202104171140      26 hours ago
+ * ac1e2d88 adopt16-hotspot-jre-nightly: Update to version 202104171140  26 hours ago
+ * 962293f2 adopt8-hotspot-nightly: Update to version 202104170918       28 hours ago
+ * 9b3caf1b adopt8-hotspot-jre-nightly: Update to version 202104170918   28 hours ago
+ * aab8122d graalvm-nightly: Update to version 21.1.0-dev-20210416_2341  2 days ago
+ * e6e4e680 graalvm-nightly-jdk8: Update to version 21.1.0-dev-2021041.. 2 days ago
+ * 75f2b433 graalvm-nightly-jdk16: Update to version 21.1.0-dev-202104.. 2 days ago
+ * 4faa417d graalvm-nightly-jdk11: Update to version 21.1.0-dev-202104.. 2 days ago
+ * bbe96bfc gluon-openjfx-sdk-ea: Update to version 17-7                 2 days ago
+ * ac155e7b gluon-openjfx-jmods-ea: Update to version 17-7               2 days ago
+ * 1c0e0ad8 adopt17-openj9-nightly: Update to version 202104161602       2 days ago
+ * dfdf2fba adopt17-openj9-jre-nightly: Update to version 202104161602   2 days ago
+ * 7f634031 adopt17-hotspot-nightly: Update to version 202104161602      2 days ago
+ * 0402a092 adopt17-hotspot-jre-nightly: Update to version 202104161602  2 days ago
+ * a32b974a openjdk17: Update to version 17-18-ea                        2 days ago
+ * 8e3c6e10 openjdk-ea: Update to version 17-18-ea                       2 days ago
+ * fb8242c6 adopt11-openj9-nightly: Update to version 202104160642       2 days ago
+ * 0fd6bdd8 adopt11-openj9-jre-nightly: Update to version 202104160642   2 days ago
+ * 055dbe42 adopt11-hotspot-nightly: Update to version 202104160642      2 days ago
+ * 5b79de9d adopt11-hotspot-jre-nightly: Update to version 202104160642  2 days ago
+ * 872f5786 graalvm-nightly: Update to version 21.1.0-dev-20210415_2033  3 days ago
+ * b2de6836 graalvm-nightly-jdk8: Update to version 21.1.0-dev-2021041.. 3 days ago
+ * b6ac597d graalvm-nightly-jdk16: Update to version 21.1.0-dev-202104.. 3 days ago
+ * 3a428f96 graalvm-nightly-jdk11: Update to version 21.1.0-dev-202104.. 3 days ago
+ * ed4ae982 adopt16-openj9-nightly: Update to version 202104151412       3 days ago
+ * 4774ce08 adopt16-openj9-jre-nightly: Update to version 202104151412   3 days ago
+ * 88237ee3 adopt8-hotspot-nightly: Update to version 202104150649       3 days ago
+ * 3a524ce6 adopt8-hotspot-jre-nightly: Update to version 202104150649   3 days ago
+ * b5c4104b adopt17-openj9-nightly: Update to version 202104142136       4 days ago
+ * 78b6a819 adopt17-openj9-jre-nightly: Update to version 202104142136   4 days ago
+ * 4f8dcde1 adopt17-hotspot-nightly: Update to version 202104142136      4 days ago
+ * 028ac7cd adopt17-hotspot-jre-nightly: Update to version 202104142136  4 days ago
+ * b7355b6a graalvm-nightly: Update to version 21.1.0-dev-20210414_1951  4 days ago
+ * 86f00b76 graalvm-nightly-jdk8: Update to version 21.1.0-dev-2021041.. 4 days ago
+ * a5d0f241 graalvm-nightly-jdk16: Update to version 21.1.0-dev-202104.. 4 days ago
+ * 1e35b13a graalvm-nightly-jdk11: Update to version 21.1.0-dev-202104.. 4 days ago
+ * 4d57ac5c adopt8-openj9-nightly: Update to version 202104141824        4 days ago
+ * cbe428d1 adopt8-openj9-jre-nightly: Update to version 202104141824    4 days ago
+ * cd901a53 adopt8-hotspot-nightly: Update to version 202104141824       4 days ago
+ * 8e296060 adopt8-hotspot-jre-nightly: Update to version 202104141824   4 days ago
+ * e3dc5b94 adopt11-openj9-nightly: Update to version 202104141543       4 days ago
+ * b57d5355 adopt11-openj9-jre-nightly: Update to version 202104141543   4 days ago
+ * df4f2787 adopt11-hotspot-nightly: Update to version 202104141543      4 days ago
+ * 892fd874 adopt11-hotspot-jre-nightly: Update to version 202104141543  4 days ago
+ * 03d6b2eb adopt16-openj9-nightly: Update to version 202104140043       5 days ago
+ * bd010540 adopt16-openj9-jre-nightly: Update to version 202104140043   5 days ago
+ * f29b6308 adopt16-hotspot-nightly: Update to version 202104140043      5 days ago
+ * 78aaa8fb adopt16-hotspot-jre-nightly: Update to version 202104140043  5 days ago
+Updating 'main' bucket...
+
+ * d50177afe ffmpeg: Update to version 4.4-5                             65 minutes ago
+ * a6eb6490b ffmpeg-shared: Update to version 4.4-5                      65 minutes ago
+ * 96af2262a ffmpeg-nightly: Update to version 101988                    65 minutes ago
+ * 31e530354 ffmpeg-nightly-shared: Update to version 101988             65 minutes ago
+ * a9628a862 vim-nightly: Update to version 8.2.2779                     8 hours ago
+ * e6a5f4b5e oh-my-posh3: Update to version 3.139.2                      8 hours ago
+ * ce34a6685 croc: Update to version 9.0.0                               10 hours ago
+ * 3159f1a1e shadowsocks-rust: Update to version 1.10.7                  17 hours ago
+ * 737290e61 oh-my-posh3: Update to version 3.139.1                      17 hours ago
+ * f85877b78 pulumi: Update to version 2.25.2                            19 hours ago
+ * c005892c4 imagemagick: Update to version 7.0.11-8                     19 hours ago
+ * bc852fecb ant: Update to version 1.10.10                              21 hours ago
+ * 6ef2d99b8 okteto: Update to version 1.12.7                            24 hours ago
+ * e107fe3e7 oh-my-posh3: Update to version 3.139.0                      24 hours ago
+ * 9175da3f4 jx: Update to version 3.2.46                                24 hours ago
+ * 6f4b3d79e ffmpeg-nightly: Update to version 101969                    25 hours ago
+ * e0c934ebf ffmpeg-nightly-shared: Update to version 101969             25 hours ago
+ * be7c7105d watchexec: Update to version 1.15.1                         33 hours ago
+ * 6792ee4ba vim-nightly: Update to version 8.2.2772                     33 hours ago
+ * 7dee16ec5 sass: Update to version 1.32.10                             33 hours ago
+ * 402c4540d leiningen: Update to version 2.9.6                          33 hours ago
+ * fa1c59eda jx: Update to version 3.2.45                                33 hours ago
+ * 69523d0cf git-istage: Update to version 0.3.33                        2 days ago
+ * 458e2c255 trid: Update to version 2.24-21.04.17                       2 days ago
+ * 52a9cbf54 ddev: Update to version 1.17.1                              2 days ago
+ * 0bbb06221 youtube-dl: Update to version 2021.04.17                    2 days ago
+ * 2bc1d01dc edgedriver: Update to version 91.0.859.0                    2 days ago
+ * 0e38e69e4 geoipupdate: Update to version 4.7.0                        2 days ago
+ * b758ecd46 eksctl: Update to version 0.45.0                            2 days ago
+ * c9755b8ed jx: Update to version 3.2.44                                2 days ago
+ * c4e89243f terragrunt: Update to version 0.28.24                       2 days ago
+ * 2272c3373 oh-my-posh3: Update to version 3.137.3                      2 days ago
+ * fc72b1a0e jx: Update to version 3.2.43                                2 days ago
+ * 382bfb790 gitea: Update to version 1.14.1                             2 days ago
+ * 2432be68b git-chglog: Update to version 0.14.2                        2 days ago
+ * 3c6051585 flyway: Update to version 7.8.1                             2 days ago
+ * 9da558fd2 ffmpeg-nightly: Update to version 101958                    2 days ago
+ * abe1f51fd ffmpeg-nightly-shared: Update to version 101958             2 days ago
+ * 44bb9ca37 spotbugs: Update to version 4.2.3                           2 days ago
+ * 69aa5baa8 docfx: Update to version 2.57.2                             3 days ago
+ * d6446c1df wrangler: Update to version 1.16.0                          3 days ago
+ * a3666adb1 vim-nightly: Update to version 8.2.2771                     3 days ago
+ * 94addcf18 pack: Update to version 0.18.1                              3 days ago
+ * 11c1cd5b4 mdcat: Update to version 0.22.4                             3 days ago
+ * 18ad656bf llvm: Update to version 12.0.0                              3 days ago
+ * 221d83f3b kustomize: Update to version 4.1.2                          3 days ago
+ * 31bd45f33 consul: Update to version 1.9.5                             3 days ago
+ * 4f007364c balena-cli: Update to version 12.44.10                      3 days ago
+ * 025fff100 aws: Update to version 2.1.38                               3 days ago
+ * ee7e207b3 argocd: Update to version 2.0.1                             3 days ago
+ * e0ff8692e adb: Update to version 31.0.2                               3 days ago
+ * 6a595c0d0 pulumi: Update to version 2.25.1                            3 days ago
+ * 16dd420cb edgedriver: Update to version 91.0.858.0                    3 days ago
+ * 1fc892cca edgedriver: Update to version 91.0.857.0                    3 days ago
+ * 26b103967 dvc: Update to version 2.0.18                               3 days ago
+ * 5ef4bf818 cuda: Update to version 11.3.0_465.89                       3 days ago
+ * b8099c704 qemu: Update to version 6.0.0-rc3                           3 days ago
+ * 226e47bb2 edgedriver: Update to version 91.0.858.0                    3 days ago
+ * 9f1803085 gh: Update to version 1.9.1                                 3 days ago
+ * e88423386 flyway: Update to version 7.8.0                             3 days ago
+ * 286d69c70 invoke-build: Update to version 5.8.0                       3 days ago
+ * b53eaacb8 ffmpeg-nightly: Update to version 101953                    3 days ago
+ * b332ab8f8 ffmpeg-nightly-shared: Update to version 101953             3 days ago
+ * 2e7b336de dart: Update to version 2.12.4                              3 days ago
+ * aace0f7d8 cloud-nuke: Update to version 0.1.29                        3 days ago
+ * 8a65c66f9 yq: Update to version 4.7.0                                 3 days ago
+ * d781a4ad5 vt-cli: Update to version 0.9.3                             3 days ago
+ * 85c8891e1 terragrunt: Update to version 0.28.22                       3 days ago
+ * a73a2dbe0 k0s: Update to version 0.13.1                               3 days ago
+ * 6b66ca548 jx: Update to version 3.2.42                                3 days ago
+ * bbe691864 nim: Update to version 1.4.6                                3 days ago
+ * dc3fd6fe1 vim-nightly: Update to version 8.2.2767                     3 days ago
+ * f35c028f3 lychee: Update to version 0.6.0                             3 days ago
+ * 00f468ef8 lean-cli: Update to version 0.24.3                          3 days ago
+ * 9e5bc0273 kustomize: Update to version 4.1.1                          3 days ago
+ * 48ef63b5b jx: Update to version 3.2.39                                3 days ago
+ * 482053dae helm: Update to version 3.5.4                               3 days ago
+ * 3dc57d16a bit: Update to version 1.1.1                                3 days ago
+ * e58eb1f45 boundary: Update to version 0.2.0                           3 days ago
+ * 3cd382e0d gh: Update to version 1.9.0                                 4 days ago
+ * 3e4ef70f8 edgedriver: Update to version 91.0.857.0                    4 days ago
+ * e8886c307 edgedriver: Update to version 91.0.856.0                    4 days ago
+ * 6c23155b1 oh-my-posh3: Update to version 3.137.2                      4 days ago
+ * e843f06f8 jx: Update to version 3.2.37                                4 days ago
+ * 7da96640b pulumi: Update to version 2.25.0                            4 days ago
+ * 7ff600035 edgedriver: Update to version 91.0.857.0                    4 days ago
+ * 2e3b758b1 docker-compose: Update to version 1.29.1                    4 days ago
+ * 16e6a8dc4 terraform: Update to version 0.15.0                         4 days ago
+ * 480553b1e curl: Update to version 7.76.1                              4 days ago
+ * b4bf2f646 brotli: Update to version 1.0.9                             4 days ago
+ * e72eb7da8 premake: Update to version 5.0.0-alpha16                    4 days ago
+ * 202581c1a concourse-fly: Update to version 7.2.0                      4 days ago
+ * ad7c3b891 ffmpeg-nightly: Update to version 101947                    4 days ago
+ * bf32afbf2 ffmpeg-nightly-shared: Update to version 101947             4 days ago
+ * a1af8b858 aws-copilot: Update to version 1.5.0                        4 days ago
+ * 0bda37d8e dart: Update to version 2.12.3                              4 days ago
+ * 745481add trid: Update to version 2.24-21.04.14                       4 days ago
+ * b4c2770cd oh-my-posh3: Update to version 3.137.1                      4 days ago
+ * 6832bf0c9 svtplay-dl: Update to version 3.5                           4 days ago
+ * d232aaf4f wrangler: Update to version 1.15.1                          4 days ago
+ * ff2bae507 vim-nightly: Update to version 8.2.2760                     4 days ago
+ * 549b555bb velero: Update to version 1.6.0                             4 days ago
+ * 0b1db6fa0 lf: Update to version r22                                   4 days ago
+ * 364994c38 kustomize: Update to version 4.1.0                          4 days ago
+ * 5a4b7d729 jx: Update to version 3.2.32                                4 days ago
+ * dcd148ab2 balena-cli: Update to version 12.44.9                       5 days ago
+ * 10f856d53 aws: Update to version 2.1.37                               5 days ago
+ * dee990c29 git-chglog: Update to version 0.14.1                        5 days ago
+ * 3cc791eaa x264: Update to version 3053                                5 days ago
+ * a1bc6c990 edgedriver: Update to version 91.0.856.0                    5 days ago
+ * 3d3393905 svtplay-dl: Update to version 3.4                           5 days ago
+ * 015904fd3 deno: Update to version 1.9.0                               5 days ago
+ * 01d8211db puppet-bolt: Update to version 3.7.0                        5 days ago
+ * 1a010190f doctl: Update to version 1.59.0                             5 days ago
+ * e12652023 nginx: Update to version 1.19.10                            5 days ago
+ * 60dfdd7a4 flux2: Update to version 0.12.3                             5 days ago
+ * 5b45e9eef exiftool: Update to version 12.24                           5 days ago
+ * e3f0a8a1e chromedriver: Update to version 90.0.4430.24                5 days ago
+ * 66859b024 terragrunt: Update to version 0.28.21                       5 days ago
+ * 78978bd4d sentry-cli: Update to version 1.64.0                        5 days ago
+ * 5add73313 jx: Update to version 3.2.30                                5 days ago
+ * 075543d91 jcli: Update to version 0.0.37                              5 days ago
+ * d646557b8 docfx: Update to version 2.57.1                             5 days ago
+ * 5f9dda65e ravendb: Update to version 5.1.6                            5 days ago
+ * 0f721c532 arduino-cli: Update to version 0.18.1                       5 days ago
+ * dd44d074d flux2: Update to version 0.12.2                             5 days ago
+ * 94223ec68 ffmpeg-nightly: Update to version 101944                    5 days ago
+ * e93083cdc ffmpeg-nightly-shared: Update to version 101944             5 days ago
+ * c6ca993bb 1password-cli: Update to version 1.9.0                      5 days ago
+Updating 'versions' bucket...
+
+ * 549c3ef rclone-beta: Update to version 1.56.0-beta.5412.3544e09e9     14 hours ago
+ * 391d997 imagemagick-ffmpeg: Update to version 7.0.11-8                14 hours ago
+ * b1e7b6f spotbugs-beta: Update to version 4.2.3                        2 days ago
+ * 86af843 rstudio-daily: Update to version 1.4.1679                     2 days ago
+ * 426cac6 rclone-beta: Update to version 1.56.0-beta.5409.4a5cbf2a1     2 days ago
+ * b3a7281 vivaldi-beta: Update to version 3.8.2259.3                    4 days ago
+ * 4e45508 rstudio-daily: Update to version 1.4.1677                     4 days ago
+ * 6d20a7c pwsh-beta: Update to version 7.2.0-preview.5                  4 days ago
+ * 04262cc rstudio-daily: Update to version 1.4.1676                     5 days ago
+ * 4ae80cc rclone-beta: Update to version 1.56.0-beta.5405.6366d3dfc     5 days ago
+ * 81ba1f3 atom-portable: Update to version 1.56.0                       5 days ago
+ * 7fc54d9 atom-beta: Update to version 1.57.0-beta0                     5 days ago
+ * da97c1c atom-beta-portable: Update to version 1.57.0-beta0            5 days ago
+Scoop was updated successfully!
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessusKey
+[Success] AZScanKey.enc was found
+[Success] azscan license file was created successfully
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+
+        Licenses
+        --------
+        
+        Licenses will be stored in base64 encoding and then encrypted using a password that
+        is specific for the encrypted licenses file (Please write it down and do not forget!!!)
+
+        All Licenses will be store in a compressed file downloaded from external URL before installed.
+
+        During Installation phase you will be asked for the encryption password 
+        and then the file will be encoded to the original license file which will then be copied
+        to the correct application path.
+
+        New licenses can be added by editing the C:\CyberAudit2021\CyberLicenses.ps1 file.
+WARN  'CATLicenses' (1.0) is already installed.
+Use 'scoop update CATLicenses --global' to install a new version.
+These are the key files you have:
+1 - AZScanKey
+2 - nessusKey
+Select the key file you want to encrypt
+[Success] C:\Users\omerf.CYBERAUDITLAB\Downloads\nessusKey.txt was encoded to base64 successfully
+--------------------------------------------
+bmVzc3VzY2xpIGZldGNoIC0tcmVnaXN0ZXIgQ1FKSi00VFE0LUVRQ0wtVUVLSw==
+--------------------------------------------
+The password is: zaZA12#$!
+[Success] Key from nessusKey.txt is now password encrypted
+We will now zip all key files,Don't forget to upload them to the download repozitory
+Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] will be compressed now
+
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+**********************
+Windows PowerShell transcript end
+End time: 20210418171618
+**********************

@@ -419,7 +419,7 @@ function CheckDotNet()
             if (!$DotNet35Installed)
             { 
                 Write-Host "Attention, You need to install DotNet 3.5 as well as latest .Net version" -ForegroundColor Red
-                write-host "We will try and download the .NET Framework 3.5, if this failes you can" -ForegroundColor Yellow
+                write-host "We will try and download the .NET Framework 3.5, if this fails you can" -ForegroundColor Yellow
                 write-host "enable the .NET Framework 3.5 in Control Panel --> Turn Windows features on or off" -ForegroundColor Yellow
                 Enable-WindowsOptionalFeature -Online -FeatureName "NetFx3" -Source "SourcePath"
             }
