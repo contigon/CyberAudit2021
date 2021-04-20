@@ -239,12 +239,12 @@ switch ($input)
         --------------------------------------
         
         This script will try to connect to $DC Domain controller and create a remote backup of the
-        ntds.dit database and SYSTEM hive, and then copies the files to the aquisition folder.
+        ntds.dit database, SYSTEM hive and SYSVOL, and then copies the files to the aquisition folder.
 
         In order for this script to succeed you need to have domain administrative permissions.
 
         Note: This script supports AD running on Windows Servers 2012 and up,
-              on windows 2003/2008 we will show manual instructions. 
+              on windows 2003/2008 we will show the manual instructions. 
                 
 "@
         Write-Host $help
@@ -262,7 +262,7 @@ switch ($input)
         1. ntdsutil
         2. activate instance ntds
         3. ifm
-        4. create full C:\ntdsdump
+        4. create sysvol full C:\ntdsdump
         5. quit
         6. quit
         --------------------------
@@ -275,7 +275,7 @@ Write-Host $block -ForegroundColor Red
         {
             Write-Host "Please wait untill the backup process is completed" -ForegroundColor Green
             remove-item $env:LOGONSERVER\c$\ntdsdump -Recurse -ErrorAction SilentlyContinue
-            winrs -r:$DC ntdsutil "ac i ntds" "ifm" "create full c:\ntdsdump" q q
+            winrs -r:$DC ntdsutil "ac i ntds" "ifm" "create sysvol full c:\ntdsdump" q q
             Copy-Item -Path $env:LOGONSERVER\c$\ntdsdump\* -Destination $ACQ -Recurse -Force
         }
      read-host "Press ENTER to continue"

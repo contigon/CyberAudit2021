@@ -8508,3 +8508,54 @@ Files [C:\CyberAudit2021\Tools\GlobalScoopApps\apps\CATLicenses\current\*.enc] w
 Windows PowerShell transcript end
 End time: 20210418171618
 **********************
+**********************
+Windows PowerShell transcript start
+Start time: 20210420124634
+Username: CYBERAUDITLAB\Omerf
+RunAs User: CYBERAUDITLAB\Omerf
+Configuration Name: 
+Machine: CYBER-AUDIT-PC (Microsoft Windows NT 10.0.17763.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Unrestricted -File C:\CyberAudit2021\cyberBuild.ps1
+Process ID: 10384
+PSVersion: 5.1.17763.1852
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.17763.1852
+BuildVersion: 10.0.17763.1852
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\CyberAudit2021\CyberBuildPhase.Log
+
+************************************************************************
+*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***
+************************************************************************
+
+     install OS minimal requirements and Applications:
+
+     Baseline folder is C:\CyberAudit2021
+
+     1. OS		| Check Windows version and upgrade it to latest build and update
+     2. PS and .Net	| Check and Update Powershell and .Net framework versions
+     3. RSAT		| Install Microsoft Remote Server Administration Tool
+     4. PSGallery	| Install PowerShell Modules from Powershell gallery
+     5. Scoop		| Install Scoop framework
+     6. Utilities	| Install Buckets and utilities Applications
+     7. Collectors	| Install Collector Applications
+     8. Analyzers	| Install Analyzers and Reporting tools
+     9. Attack!  	| Install attacking and Exploiting Scripts and tools
+    10. Update   	| Update scoop applications and powershell modules
+    11. Licenses   	| Install or Create licenses to/from license files
+    12. Uninstall  	| Uninstall scoop applications and powershell modules
+    13. Backup  	| Compress and Backup all Audit folders and Files
+    14. Linux   	| Install Windows Subsystem for Linux
+    15. RAM     	| Schedule Trimming of processes working sets and release RAM
+    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine
+
+    99. Quit
+
+**********************
+Windows PowerShell transcript end
+End time: 20210420125919
+**********************
