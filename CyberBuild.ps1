@@ -10,7 +10,7 @@
 		Cyber Audit Tool - Build
 #>
 
-. $PSScriptRoot\CyberFunctions.ps1
+
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
@@ -73,10 +73,40 @@ start-Transcript -path $PSScriptRoot\CyberBuildPhase.Log -Force -append
 cls
 
 $menuColor  = New-Object System.Collections.ArrayList
-for ($i = 1; $i -lt 100;$i++) {
+for ($i = 0; $i -lt 100;$i++) {
         $null = $menuColor.Add("White")
     }
 
+# The following function set the modules environment in the PC (copy module -> update rootModule path -> import the module )
+function copy-ModuleToDirectory {
+    [CmdletBinding()]
+    [OutputType('System.Management.Automation.PSModuleInfo')]
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Name
+    )
+    Write-Host "starting building the dev environment...`n"
+    # get the path to put the module in
+    $modulePathDests = $env:PSModulePath -Split ';'
+    $Destination = $modulePathDests[0]
+    # get the name of the desired module to import
+    $leafNameList = $Name -Split "\\"
+    $leafName = $leafNameList[$leafNameList.Count-1]
+    $modulRealPath = (Join-Path $Destination $leafName)
+    # copy the module into destionation in case not already exist
+    if (-not (Test-Path $modulRealPath)) {
+        Write-Host "copying module: $Name into: $Destination...`n"
+        Copy-Item "$Name" -Destination "$Destination" -Recurse
+        Write-Host "copied.`n"
+    }
+    # update the rootModule to the path of the file in the new location
+    Update-ModuleManifest -Path "$modulRealPath\$leafName.psd1"  -RootModule $modulRealPath\$leafName.psm1
+    # Import the module from the custom directory.
+    Import-Module -Force $modulRealPath
+    Write-Host " and... imported! `n"
+    Write-Host "finished the dev environment build.`n"
+}
 
 do {
 #Create the main menu
@@ -89,6 +119,7 @@ Write-Host "     install OS minimal requirements and Applications:              
 Write-Host ""
 Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
 Write-Host ""
+Write-Host "     0. Dev. setup  | developers environment tools setup                          " -ForegroundColor $menuColor[0]
 Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
 Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
 Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
@@ -112,7 +143,10 @@ $input=Read-Host "Select Script Number"
 
 switch ($input) 
 { 
-    
+     # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
+     0{
+        copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"
+     }
      #Check Windows OS and build versions and if needed it can help upgrade an update latest build
      1{
         $help = @"
