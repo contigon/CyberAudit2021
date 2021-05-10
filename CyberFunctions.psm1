@@ -16,7 +16,15 @@
 
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
-#ugs
+#Set Script directory tree variables
+$global:Tools = "$PSScriptRoot\Tools"
+$global:scoopDir = "$Tools\Scoop"
+$global:scoopGlobalDir = "$Tools\GlobalScoopApps"
+$global:SVNDir = "$Tools\SVN"
+$global:PowerShellsDir = "$Tools\PowerShells"
+$global:DownloadsDir = "$Tools\Downloads"
+$global:bucketsDir = "$scoopDir\buckets"
+$global:appsDir = "$scoopGlobalDir\apps"
 
 #Set GUI
 $Host.UI.RawUI.BackgroundColor = ($bckgrnd = "Black")
@@ -517,7 +525,7 @@ Function CreateShortcut
 	    [System.IO.FileInfo] $Target,
 	
         [parameter(Mandatory=$false)]
-        [ValidateSet('"C:\Users\Public\Desktop"')]
+        [ValidateSet('C:\Users\Public\Desktop')]
 	    [ValidateScript( {[IO.Directory]::Exists($_)} )]
 	    [System.IO.DirectoryInfo] $OutputDirectory,
 	
@@ -525,7 +533,7 @@ Function CreateShortcut
         [ValidateSet('Build','Audit','Analyze','Attack')]
 	    [string] $Name,
 
-        [ValidateSet('"CyberAuditTool Powershell Edition"')]
+        [ValidateSet('CyberAuditTool Powershell Edition')]
 	    [string] $Description,
 	
 	    [string] $Arguments,
