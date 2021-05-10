@@ -119,7 +119,7 @@ Write-Host "     install OS minimal requirements and Applications:              
 Write-Host ""
 Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
 Write-Host ""
-Write-Host "     0. Setup Env.  | Developers environment tools and modules setup              " -ForegroundColor $menuColor[0]
+Write-Host "     0. Setup Env.      | Developers environment tools and modules setup              " -ForegroundColor $menuColor[0]
 Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
 Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
 Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
@@ -145,6 +145,7 @@ switch ($input)
 { 
      # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
      0{
+        $menuColor[0] = "Yellow"
         copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"
      }
      #Check Windows OS and build versions and if needed it can help upgrade an update latest build
@@ -190,7 +191,7 @@ switch ($input)
             Import-Module -Name PSWindowsUpdate
             Add-WUServiceManager -ServiceID "7971f918-a847-4430-9279-4a52d1efe18d" -AddServiceFlag 7
             Get-WindowsUpdate
-            Get-WUInstall -AcceptAll "“IgnoreReboot
+            Get-WUInstall -AcceptAll "IgnoreReboot"
         }
         if ($update -eq "R")
         {
@@ -236,7 +237,7 @@ switch ($input)
                 Write-Error $_.Exception.Message 
             }
         }
-      read-host "œPress ENTER to continue"
+      read-host "Press ENTER to continue"
       }
     
      #Check Powershell and .Net versions and install if needed and add turn on more features
@@ -253,7 +254,7 @@ switch ($input)
         Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" -Source "SourcePath" -NoRestart -All
         Write-Host "Downloading and installing .NET Core 3.1 SDK (v3.1.201) Windows x64"
         &powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://dot.net/v1/dotnet-install.ps1')))"
-      read-host "œPress ENTER to continue"
+      read-host "Press ENTER to continue"
       }
     
      #Install RSAT
@@ -297,7 +298,7 @@ switch ($input)
             failed "You have decided to manually install RSAT, please note that if you will not install is C.A.T will not operate properly"
         }
 
-     read-host "œPress ENTER to continue"
+     read-host "Press ENTER to continue"
      }
     
      #Install PowerShell Modules from PSGallery Online
@@ -390,7 +391,7 @@ switch ($input)
         scoop status
         scoop update
         #sudo Add-MpPreference -ExclusionPath 'C:\CAT2020\Tools\GlobalScoopApps'        
-        read-host "œPress ENTER to continue"  
+        read-host "ï¿½Press ENTER to continue"  
      }
     
     #add buckets and isntall global utilities
@@ -434,7 +435,7 @@ switch ($input)
             pip install $pip --progress-bar=off
         }
 
-     read-host "œPress ENTER to continue" 
+     read-host "ï¿½Press ENTER to continue" 
      }
     
     #install audit applications from cyberauditbucket
@@ -483,7 +484,7 @@ switch ($input)
                 }
             }
         }
-     read-host "œPress ENTER to continue" 
+     read-host "ï¿½Press ENTER to continue" 
      }
      
       #install Analyzers and Reporting applications from cyberauditbucket
@@ -581,7 +582,7 @@ switch ($input)
         {
             Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
         }
-     read-host "œPress ENTER to continue" 
+     read-host "ï¿½Press ENTER to continue" 
      }
      
      #install Attacking scripts and tools
@@ -613,7 +614,7 @@ switch ($input)
                 }
             }
         }
-     read-host "œPress ENTER to continue" 
+     read-host "ï¿½Press ENTER to continue" 
      }
 
      #Update scoop, Powershell and applications
@@ -721,7 +722,7 @@ switch ($input)
             }
         }
 
-     read-host "œPress ENTER to continue" 
+     read-host "ï¿½Press ENTER to continue" 
      }
      
      #Licenses
@@ -802,7 +803,7 @@ switch ($input)
             Restore-Computer -RestorePoint $resPoint -Confirm -ErrorAction SilentlyContinue
             }
         Get-ComputerRestorePoint -LastStatus
-     read-host "œPress ENTER to continue"       
+     read-host "ï¿½Press ENTER to continue"       
      }
     
     #Backup
@@ -850,7 +851,7 @@ switch ($input)
         Write-Host "Backup file Password is: $pass" -ForegroundColor Yellow
         Get-7ZipInformation "$dst\$file" -Password $pass
         Write-Host $verify
-        read-host "œPress ENTER to continue"
+        read-host "ï¿½Press ENTER to continue"
         $null = start-Process -PassThru explorer $dst
      }
 
@@ -869,7 +870,7 @@ switch ($input)
         dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
         Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
         wsl --set-default-version 2
-        read-host "œPress ENTER to continue"
+        read-host "ï¿½Press ENTER to continue"
      }
      #RAM
     15 {
@@ -881,7 +882,7 @@ switch ($input)
         processes can grab memory but not necessarily actually need to use it.
 
         Memory trimming is where the OS forces processes to empty their working sets.
-        They don"™t just discard this memory, since the processes may need it at a later 
+        They don"ï¿½t just discard this memory, since the processes may need it at a later 
         juncture and it could already contain data,  instead the OS writes it to the page file
         for them such that it can be retrieved at a later time if required.
 
@@ -895,7 +896,7 @@ switch ($input)
             $scripttorun = $PSScriptRoot+"\CyberRamTrimmer.ps1"
             &$scripttorun
         }
-        read-host "œPress ENTER to continue"
+        read-host "ï¿½Press ENTER to continue"
      }
           #Shrink VM
     16 {
@@ -922,7 +923,7 @@ switch ($input)
         scoop cache rm * -g
         scoop cache rm *
         Write-Host "Clearing all windows event logs"
-        Wevtutil el | ForEach { wevtutil cl “$_”}
+        Wevtutil el | ForEach { wevtutil cl ï¿½$_ï¿½}
         write-host "Running the windows Disk Cleanup tool and removing files from the previous Windows installations/upgrades"
         $input = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
         if ($input -eq "A"){
@@ -942,7 +943,7 @@ switch ($input)
             ccleaner
         }
         Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow
-        read-host "œPress ENTER to continue"
+        read-host "ï¿½Press ENTER to continue"
      }
 #Menu End
    }
