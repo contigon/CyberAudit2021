@@ -36,7 +36,7 @@ function copy-ModuleToDirectory {
         Write-Host "copied.`n"
     }
     # update the rootModule to the path of the file in the new location
-    Update-ModuleManifest -Path "$modulRealPath\$leafName.psd1"  -RootModule $PSScriptRoot\$leafName.psm1 -FunctionsToExport "*" -CmdletsToExport "*" -VariablesToExport "*" -AliasesToExport "*"
+    Update-ModuleManifest -Path "$modulRealPath\$leafName.psd1"  -RootModule $PSScriptRoot\$leafName.psm1 -FunctionsToExport "*" -CmdletsToExport "*" -VariablesToExport "*" -AliasesToExport "*" -Verbose
     # Import the module from the custom directory.
     Import-Module -Force $modulRealPath
     Write-Host " and... imported! `n"
@@ -590,7 +590,7 @@ switch ($input)
         {
             Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
         }
-     read-host "�Press ENTER to continue" 
+     read-host "Press ENTER to continue" 
      }
      
      #install Attacking scripts and tools
@@ -622,7 +622,7 @@ switch ($input)
                 }
             }
         }
-     read-host "�Press ENTER to continue" 
+     read-host "Press ENTER to continue" 
      }
 
      #Update scoop, Powershell and applications
