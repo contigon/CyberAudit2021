@@ -117,22 +117,10 @@ a888P          ..c6888969""..,"o888888888o.?8888888888"".ooo8888oo.
 Write-Host $incd -ForegroundColor Green
 }
 
-ShowINCD
-
 function checkAdmin {
     $admin = [security.principal.windowsbuiltinrole]::administrator
     $id = [security.principal.windowsidentity]::getcurrent()
     ([security.principal.windowsprincipal]($id)).isinrole($admin)
-}
-
-if (checkAdmin) {
-    Write-Host "[Passed] Checking for Administrator creadentials" -ForegroundColor Green
-}
-else
-{
-    Write-Host "[Failed] Checking for Administrator creadentials" -ForegroundColor red
-    Read-Host "Press [Enter] to quit the installation and start again in Elevated Powershell console"
-    break
 }
 
 #Downloding the CyberAuditTool Files (compressed/zip and renamed to CyberAuditTool.pdf)
@@ -144,7 +132,36 @@ Function Get-Folder($initialDirectory) {
     [void] $FolderBrowserDialog.ShowDialog()
     return $FolderBrowserDialog.SelectedPath
 }
+function Get-UserAgent() {
+    return "CyberAuditTool/1.0 (+http://cyberaudittool.c1.biz/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)"
+}
+function fname($path) { split-path $path -leaf }
+function strip_ext($fname) { $fname -replace '\.[^\.]*$', '' }
+function strip_filename($path) { $path -replace [regex]::escape((fname $path)) }
+function strip_fragment($url) { $url -replace (new-object uri $url).fragment }
+function url_filename($url) {
+    (split-path $url -leaf).split('?') | Select-Object -First 1
+}
 
+function dl($url,$to) {
+    $wc = New-Object Net.Webclient
+    $wc.headers.add('Referer', (strip_filename $url))
+    $wc.Headers.Add('User-Agent', (Get-UserAgent))
+    $wc.downloadFile($url,$to)
+}
+
+#                                       Script starts here
+ShowINCD
+
+if (checkAdmin) {
+    Write-Host "[Passed] Checking for Administrator creadentials" -ForegroundColor Green
+}
+else
+{
+    Write-Host "[Failed] Checking for Administrator creadentials" -ForegroundColor red
+    Read-Host "Press [Enter] to quit the installation and start again in Elevated Powershell console"
+    break
+}
 Write-Host "Browse and Create a new path for the installation..."
 $BasePath = Get-Folder
 While([bool](Get-ChildItem $BasePath)){
@@ -168,25 +185,6 @@ While([bool](Get-ChildItem $BasePath)){
 }
 write-host "[Success] The folder $BasePath is empty" -ForegroundColor Green
 Set-Location $BasePath
-
-function Get-UserAgent() {
-    return "CyberAuditTool/1.0 (+http://cyberaudittool.c1.biz/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)"
-}
-
-function fname($path) { split-path $path -leaf }
-function strip_ext($fname) { $fname -replace '\.[^\.]*$', '' }
-function strip_filename($path) { $path -replace [regex]::escape((fname $path)) }
-function strip_fragment($url) { $url -replace (new-object uri $url).fragment }
-function url_filename($url) {
-    (split-path $url -leaf).split('?') | Select-Object -First 1
-}
-
-function dl($url,$to) {
-    $wc = New-Object Net.Webclient
-    $wc.headers.add('Referer', (strip_filename $url))
-    $wc.Headers.Add('User-Agent', (Get-UserAgent))
-    $wc.downloadFile($url,$to)
-}
 
 # download CyberAuditTool sources in pdf/zip format
 try {
