@@ -312,11 +312,57 @@ function DisableFirewall(){
     Write-Host ("**************************************************************************************") -ForegroundColor green
 }
 
-#Locate AntiMalware product and try to stop realtime protection
+<#
+    Find the installed anti-malware softwares on OS
+    Supported OSs: Client - windows 10 and newer, Windows server - 2016, 2008, 2008 R2
+#>
+function get-installedAVProducts {
+    $winEdition = (Get-WmiObject -class Win32_OperatingSystem).Caption
+    $winEditionSplitted = $winEdition -split ' '
+    $verNum = $winEditionSplitted[2] #holds the OS version number
+    $AVProduct = "" 
+    if (!$winEdition.Contains("Server")) { # client OS
+        $verNum = [int]$verNum
+        if($verNum -lt 10) {
+            Write-Host "Antivirus detection does not support windows versions older than 10"
+        } else {
+            $AVProduct = Get-WmiObject -Namespace root\SecurityCenter2 -Class AntiVirusProduct
+        }
+    } else { #Windows Server version
+        $verNum = [int]$winEditionSplitted[3]
+        if ($verNum -eq 2016) {
+            $AVProduct = (ls HKLM:\SOFTWARE\Microsoft -Name) | Where-Object {$_.Contains("Defender")}
+        } elseif ($verNum -eq 2008) {
+            $AVProduct = Get-WmiObject -Namespace root\SecurityCenter2 -Class AntiVirusProduct
+        } else {
+            # "Couldn\'t find Antivirus product: please disable any AV manually if exist."
+            $AVProduct = ""
+        }
+    }
 
+    return $AVProduct
+}
+
+
+
+
+#Locate AntiMalware product and try to stop realtime protection
 function DisableAntimalware(){
-    $AntiVirusProduct = Get-WmiObject -Namespace root\SecurityCenter2 -Class AntiVirusProduct 
-    Write-Host ("You are running [" + ($AntiVirusProduct | measure).Count + "] antivirus realtime protection solutions:") -ForegroundColor green
+    $AntiVirusProduct = get-installedAVProducts
+    $AVType = $AntiVirusProduct.GetType()
+    if ($AVType -match "string"){
+        if ($AntiVirusProduct.Length -gt 0) {
+            Write-Host ("You are running at least [1] antivirus realtime protection solutions:") -ForegroundColor green
+            write-host "$AntiVirusProduct"
+            Write-Host ("We will try to disable Windows Defender real time protection") -ForegroundColor red
+            Set-MpPreference -DisableRealtimeMonitoring $true
+            Write-Host "Windows Defender is now disabled." -ForegroundColor green
+            Write-Host "Please check for existance of other AVs and disable them manually." -ForegroundColor red
+        } else {
+            Write-Host "Couldn\'t find Antivirus products: please disable any AV manually if exist."
+        }
+    } else {
+        Write-Host ("You are running [" + ($AntiVirusProduct | measure).Count + "] antivirus realtime protection solutions:") -ForegroundColor green
     write-host ($AntiVirusProduct | % $_ {write-host "-->" $_.displayname  -ForegroundColor Green})
     $WinEdition = (Get-WmiObject -Class Win32_OperatingSystem -ComputerName .).caption
     if (!$WinEdition.Contains("HOME") -or !$WinEdition.Contains("Education")) {
@@ -357,7 +403,9 @@ function DisableAntimalware(){
 
 "@
         Write-Host $note -ForegroundColor Yellow
-    }
+        }
+    }  
+    
 } 
 
 
