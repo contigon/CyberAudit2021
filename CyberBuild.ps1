@@ -128,7 +128,6 @@ Write-Host "     install OS minimal requirements and Applications:              
 Write-Host ""
 Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
 Write-Host ""
-# Write-Host "     0. Setup Env.      | Developers environment tools and modules setup              " -ForegroundColor $menuColor[0]
 Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
 Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
 Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
