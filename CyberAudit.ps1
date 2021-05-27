@@ -12,7 +12,7 @@
 
 CLS
 
-. $PSScriptRoot\CyberFunctions.ps1
+. $PSScriptRoot\CyberFunctions.psm1
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 ShowIncd

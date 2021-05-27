@@ -1,4 +1,4 @@
-﻿. $PSScriptRoot\CyberFunctions.ps1
+﻿. $PSScriptRoot\CyberFunctions.psm1
 
 $ACQ = ACQ("Network")
 

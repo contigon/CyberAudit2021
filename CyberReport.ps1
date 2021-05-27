@@ -10,7 +10,7 @@
 		Cyber Audit Tool - Report information about organization 
 #>
 
-# . $PSScriptRoot\CyberFunctions.ps1
+# . $PSScriptRoot\CyberFunctions.psm1
 #ShowIncd
 #DisableFirewall
 #DisableAntimalware

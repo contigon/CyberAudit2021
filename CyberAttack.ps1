@@ -10,7 +10,7 @@
 		Cyber Audit Tool - Attack
 #>
 
-. $PSScriptRoot\CyberFunctions.ps1
+. $PSScriptRoot\CyberFunctions.psm1
 ShowIncd
 CyberBginfo
 $runningScriptName = $MyInvocation.MyCommand.Name
