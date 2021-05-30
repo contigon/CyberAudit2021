@@ -151,11 +151,7 @@ $input=Read-Host "Select Script Number"
 
 switch ($input) 
 { 
-     # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
-    #  0{
-    #     $menuColor[0] = "Yellow"
-    #     copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"
-    #  }
+
      #Check Windows OS and build versions and if needed it can help upgrade an update latest build
      1{
         $help = @"
@@ -168,7 +164,7 @@ switch ($input)
 "@
         Write-Host $help
         $menuColor[1] = "Yellow"
-        if (!(test-connection 8.8.8.8 -Count 1 -Quiet)) 
+        if (!(test-connection 8.8.8.8 -Count 1 -Quiet)) # internet is down or corporation Firewall is blocking ICMP protocol
             {
         Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
             } 
