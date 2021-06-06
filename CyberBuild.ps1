@@ -61,8 +61,8 @@ CyberBginfo
 DisableFirewall
 DisableAntimalware
 proxydetect
-Write-Host "Setting power scheme to ultimate performance"
-$cmd = "powercfg -s e9a42b02-d5df-448d-aa00-03f14749eb61"
+Write-Host "Setting power scheme to High performance"
+$cmd = "powercfg -s 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
 Invoke-Expression $cmd
 
 Write-Host "Adding GodMode shortcut to desktop"
