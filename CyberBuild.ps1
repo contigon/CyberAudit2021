@@ -10,8 +10,9 @@
 		Cyber Audit Tool - Build
 #>
 
+# Imports
 . $PSScriptRoot\CyberFunctions.psm1
-
+. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2
 # The following function set the modules environment in the PC (copy module -> update rootModule path, functions and vars  to  export -> import the module )
 function copy-ModuleToDirectory {
     [CmdletBinding()]
