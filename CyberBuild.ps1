@@ -53,10 +53,9 @@ function isInternetConnected {
     # test connection to the internet by downloading a file from github
     $zipurlA = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
     
-    if (!(Test-Path -Path ".\CATDownloads")) 
-        {
-            New-Item -ItemType "directory" -Path ".\CATDownloads"
-        }
+    if (!(Test-Path -Path ".\CATDownloads")) {
+        New-Item -ItemType "directory" -Path ".\CATDownloads"
+    }
     
     
     Set-Location ".\CATDownloads\" 
@@ -359,9 +358,18 @@ switch ($input)
 
         foreach ($PSGModule in $PSGModules)
         {
+            if ($PSGModule -eq "7Zip4PowerShell") {
+                Write-Host "Installing module $PSGModule"
+                Install-Module -Name 7Zip4Powershell -RequiredVersion 2.0.0-beta0009 -AllowPrerelease
+                Import-Module "$PSGModule"
+                Write-Host "Imported module: $PSGModule"
+            }
+            else{
                 Write-Host "Installing module $PSGModule"
                 Install-Module -Name $PSGModule -AllowClobber -Force
-                Import-Module $PSGModule 
+                Import-Module "$PSGModule"
+                Write-Host "Imported module: $PSGModule"
+            }
         }
         
         #Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false

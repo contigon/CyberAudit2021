@@ -466,45 +466,47 @@ function CheckPowershell()
 #Checks if DotNet 3.5 is installed and also if latest 4.8 is installed
 function CheckDotNet()
 {
-        try
-        {
-            $ScoopInstalled = $null
-            $ScoopInstalled = scoop
-            $dotNet = detect.ps1
-        }
-        catch 
-        {
-            if (-not (test-path "C:\Temp")) {mkdir "C:\Temp" }
-            Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
-            Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force
-            $dotNet = C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1
-        }
-        foreach ($dotnetVer in $dotNet)
-        {
-            if ($dotnetVer -ne "=> Installed .Net Framework 3.5") 
-                {
-                    Write-Host $dotnetVer
-                }
-            else
-                {
-                    Write-Host "Great, You have DotNet 3.5 which is needed for some of the tools" -ForegroundColor Gree
-                    $DotNet35Installed = "true"
-                }
-        }
-            if (!$DotNet35Installed)
-            { 
-                Write-Host "Attention, You need to install DotNet 3.5 as well as latest .Net version" -ForegroundColor Red
-                write-host "We will try and download the .NET Framework 3.5, if this fails you can" -ForegroundColor Yellow
-                write-host "enable the .NET Framework 3.5 in Control Panel --> Turn Windows features on or off" -ForegroundColor Yellow
-                Enable-WindowsOptionalFeature -Online -FeatureName "NetFx3" -Source "SourcePath" -All
+    try
+    {
+        $ScoopInstalled = $null
+        $ScoopInstalled = scoop
+        $dotNet = detect.ps1
+    }
+    catch 
+    {
+        if (-not (test-path "C:\Temp")) {mkdir "C:\Temp" }
+        Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
+        Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force
+        $dotNet = C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1
+    }
+    foreach ($dotnetVer in $dotNet)
+    {
+        if ($dotnetVer -ne "=> Installed .Net Framework 3.5") 
+            {
+                Write-Host $dotnetVer
             }
-        
-        $latest = 
-        $update = Read-Host "Press [I] if you want to Install .Net version 4.8 (Or Enter to continue)"
-        if ($update -eq "I")
-        {
-            C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1 c:\Temp\ -requestVersion 12
+        else
+            {
+                Write-Host "Great, You have DotNet 3.5 which is needed for some of the tools" -ForegroundColor Gree
+                $DotNet35Installed = "true"
+            }
+    }
+        if (!$DotNet35Installed)
+        { 
+            Write-Host "Attention, You need to install DotNet 3.5 as well as latest .Net version" -ForegroundColor Red
+            write-host "We will try and download the .NET Framework 3.5, if this fails you can" -ForegroundColor Yellow
+            write-host "enable the .NET Framework 3.5 in Control Panel --> Turn Windows features on or off" -ForegroundColor Yellow
+            Enable-WindowsOptionalFeature -Online -FeatureName "NetFx3" -Source "SourcePath" -All
         }
+    $update = Read-Host "Press [I] if you want to Install .Net version 4.8 (Or Enter to continue)"
+    if ($update -eq "I")
+    {
+        if (-not (test-path "C:\Temp")) {mkdir "C:\Temp" }
+        Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
+        Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force
+        # $dotNet = C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1
+        C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1 c:\Temp\ -requestVersion 12
+    }
 }
 
 #Clean the Scoop environment variables from Path,GIT_SSH,SCOOP_GLOBAL,SCOOP,GIT_INSTALL_ROOT,JAVA_HOME,PSModulePath
