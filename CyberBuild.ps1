@@ -12,7 +12,7 @@
 
 # Imports
 . $PSScriptRoot\CyberFunctions.psm1
-. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2
+. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
 # The following function set the modules environment in the PC (copy module -> update rootModule path, functions and vars  to  export -> import the module )
 function copy-ModuleToDirectory {
     [CmdletBinding()]
@@ -43,6 +43,35 @@ function copy-ModuleToDirectory {
     Import-Module -Force $modulRealPath
     Write-Host " and... imported! `n"
     Write-Host "finished the dev environment build.`n"
+}
+<#
+    checks if the machine is connected to the internet
+    returns true in case of connectivity, otherwise return false
+#>
+function isInternetConnected {
+    $origCurLocation = Get-Location
+    # test connection to the internet by downloading a file from github
+    $zipurlA = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
+    
+    if (!(Test-Path -Path ".\CATDownloads")) 
+        {
+            New-Item -ItemType "directory" -Path ".\CATDownloads"
+        }
+    
+    
+    Set-Location ".\CATDownloads\" 
+    try {
+        # Trying to Download a file from $zipurlA to $BasePath"
+        dl $zipurlA .
+        }
+    catch {
+            Set-Location $origCurLocation
+            Remove-Item -LiteralPath ".\CATDownloads" -Force -Recurse
+            return $false
+        }
+    Set-Location $origCurLocation
+    Remove-Item -LiteralPath ".\CATDownloads" -Force -Recurse
+    return $true
 }
 
 
@@ -165,9 +194,9 @@ switch ($input)
 "@
         Write-Host $help
         $menuColor[1] = "Yellow"
-        if (!(test-connection 8.8.8.8 -Count 1 -Quiet)) # internet is down or corporation Firewall is blocking ICMP protocol
+        if (!(isInternetConnected)) # internet is down or corporation Firewall is blocking ICMP protocol
             {
-        Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
+                 Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
             } 
         else 
             {
