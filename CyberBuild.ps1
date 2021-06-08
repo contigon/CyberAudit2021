@@ -355,7 +355,7 @@ switch ($input)
         {
             if ($PSGModule -eq "7Zip4PowerShell") {
                 Write-Host "installing standard lib package"
-                Install-Package PowerShellStandard.Library
+                #Install-Package PowerShellStandard.Library -Version 5.1.0
                 Write-Host "Installing module $PSGModule"
                 Install-Module -Name 7Zip4Powershell -AllowClobber -Force
                 Import-Module "$PSGModule"
