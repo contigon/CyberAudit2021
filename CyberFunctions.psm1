@@ -475,6 +475,7 @@ function CheckDotNet()
     catch 
     {
         if (-not (test-path "C:\Temp")) {mkdir "C:\Temp" }
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
         Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force
         $dotNet = C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1
@@ -502,6 +503,7 @@ function CheckDotNet()
     if ($update -eq "I")
     {
         if (-not (test-path "C:\Temp")) {mkdir "C:\Temp" }
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
         Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force
         # $dotNet = C:\Temp\Net_Framework_Installed_Versions_Getter-master\Source\detect.ps1
