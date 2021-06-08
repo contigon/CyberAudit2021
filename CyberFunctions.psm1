@@ -313,12 +313,19 @@ function DisableFirewall(){
 }
 
 <#
+    returns the name of the installed  Operating system on the machine
+#>
+function get-OSName {
+    return (Get-WmiObject -class Win32_OperatingSystem).Caption
+}
+
+<#
     Find the installed anti-malware softwares on OS.
     Returns as object in case its client and the name in case it is on server.
     Supported OSs: Client - windows 10 and newer, Windows server - 2016
 #>
 function get-installedAVProducts {
-    $winEdition = (Get-WmiObject -class Win32_OperatingSystem).Caption
+    $winEdition = get-OSName
     $winEditionSplitted = $winEdition -split ' '
     $verNum = $winEditionSplitted[2] #holds the OS version number
     $AVProduct = "" 
@@ -909,6 +916,22 @@ function fAESDecrypt()
     $oDecryptedBytes = $oMemoryStream.ToArray();
     $raDecryptedBytes.Value=$oDecryptedBytes
     return $true
+}
+
+<#
+    enable additional required windows features by os version related features
+#>
+function activateWinOptFeatures {
+    $osName = get-OSName
+    if ($osName.Contains(" 10 ")){
+         #Get-WindowsOptionalFeature -Online | Where-Object -FilterScript {$_.featurename -Like "*nfs*"}
+         Enable-WindowsOptionalFeature -Online -FeatureName "telnetclient" -Source "SourcePath"
+         Enable-WindowsOptionalFeature -Online -FeatureName "ServicesForNFS-ClientOnly" -Source "SourcePath"
+         Enable-WindowsOptionalFeature -Online -FeatureName "ClientForNFS-Infrastructure" -Source "SourcePath"
+         Enable-WindowsOptionalFeature -Online -FeatureName "NFS-Administration" -Source "SourcePath"
+         Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -Source "SourcePath" -NoRestart -All
+         Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" -Source "SourcePath" -NoRestart -All
+    }
 }
 
 

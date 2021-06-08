@@ -276,18 +276,13 @@ switch ($input)
      #Check Powershell and .Net versions and install if needed and add turn on more features
      2{
         $menuColor[2] = "Yellow"
-        CheckPowershell
-        CheckDotNet
-        #Get-WindowsOptionalFeature -Online | Where-Object -FilterScript {$_.featurename -Like "*nfs*"}
-        Enable-WindowsOptionalFeature -Online -FeatureName "telnetclient" -Source "SourcePath"
-        Enable-WindowsOptionalFeature -Online -FeatureName "ServicesForNFS-ClientOnly" -Source "SourcePath"
-        Enable-WindowsOptionalFeature -Online -FeatureName "ClientForNFS-Infrastructure" -Source "SourcePath"
-        Enable-WindowsOptionalFeature -Online -FeatureName "NFS-Administration" -Source "SourcePath"
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -Source "SourcePath" -NoRestart -All
-        Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" -Source "SourcePath" -NoRestart -All
+        CheckPowershell             # check and ask for upgrading in case required
+        CheckDotNet                 # check  and install in case required
+        # install .net fit version 
         Write-Host "Downloading and installing .NET Core 3.1 SDK (v3.1.201) Windows x64"
         &powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://dot.net/v1/dotnet-install.ps1')))"
-      read-host "Press ENTER to continue"
+        activateWinOptFeatures      # enable required optional features according to the installed OS 
+        read-host "Press ENTER to continue"
       }
     
      #Install RSAT
