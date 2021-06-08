@@ -421,8 +421,9 @@ switch ($input)
         scoop install aria2 7zip innounp dark -g
         scoop config aria2-enabled false
         scoop install git -g
-        Write-Host "We will not install openssh untill there is a fix with bucket!!!!" -ForegroundColor Red
-        #scoop install OpenSSH -g
+         #Write-Host "We will not install openssh untill there is a fix with bucket!!!!" -ForegroundColor Red
+         scoop install win32-openssh -g
+         #scoop install OpenSSH -g
         scoop install sudo -g
         [environment]::setenvironmentvariable('GIT_SSH', (resolve-path (scoop which ssh)), 'MACHINE')
         Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
@@ -430,7 +431,7 @@ switch ($input)
         scoop status
         scoop update
         #sudo Add-MpPreference -ExclusionPath 'C:\CAT2020\Tools\GlobalScoopApps'        
-        read-host "�Press ENTER to continue"  
+        read-host "Press ENTER to continue"  
      }
     
     #add buckets and isntall global utilities
@@ -474,7 +475,7 @@ switch ($input)
             pip install $pip --progress-bar=off
         }
 
-     read-host "�Press ENTER to continue" 
+     read-host "Press ENTER to continue" 
      }
     
     #install audit applications from cyberauditbucket
@@ -523,7 +524,7 @@ switch ($input)
                 }
             }
         }
-     read-host "�Press ENTER to continue" 
+     read-host "Press ENTER to continue" 
      }
      
       #install Analyzers and Reporting applications from cyberauditbucket
@@ -761,7 +762,7 @@ switch ($input)
             }
         }
 
-     read-host "�Press ENTER to continue" 
+     read-host "Press ENTER to continue" 
      }
      
      #Licenses
@@ -842,7 +843,7 @@ switch ($input)
             Restore-Computer -RestorePoint $resPoint -Confirm -ErrorAction SilentlyContinue
             }
         Get-ComputerRestorePoint -LastStatus
-     read-host "�Press ENTER to continue"       
+     read-host "Press ENTER to continue"       
      }
     
     #Backup
@@ -909,7 +910,7 @@ switch ($input)
         dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
         Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
         wsl --set-default-version 2
-        read-host "�Press ENTER to continue"
+        read-host "Press ENTER to continue"
      }
      #RAM
     15 {
@@ -935,7 +936,7 @@ switch ($input)
             $scripttorun = $PSScriptRoot+"\CyberRamTrimmer.ps1"
             &$scripttorun
         }
-        read-host "�Press ENTER to continue"
+        read-host "Press ENTER to continue"
      }
           #Shrink VM
     16 {
@@ -982,7 +983,7 @@ switch ($input)
             ccleaner
         }
         Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow
-        read-host "�Press ENTER to continue"
+        read-host "Press ENTER to continue"
      }
 #Menu End
    }
