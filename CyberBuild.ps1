@@ -114,7 +114,7 @@ $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -
 #$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
 $PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","DSInternals")
 $PSGModulesOffline = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter")
-$utilities = @("dotnet-sdk","Net_Framework_Installed_Versions_Getter","python27","python38","openjdk","putty","winscp","nmap-portable","rclone","everything","VoidToolsCLI","notepadplusplus","googlechrome","firefox","foxit-reader","irfanview","grepwin","sysinternals","snmpget","wireshark")
+$utilities = @("dotnet-sdk","Net_Framework_Installed_Versions_Getter","python27","python39","openjdk","putty","winscp","nmap-portable","rclone","everything","VoidToolsCLI","notepadplusplus","googlechrome","firefox","foxit-reader","irfanview","grepwin","sysinternals","snmpget","wireshark")
 $CollectorApps = @("ntdsaudit","RemoteExecutionEnablerforPowerShell","PingCastle","goddi","SharpHound","Red-Team-Scripts","Scuba-Windows","azscan3","LGPO","grouper2","Outflank-Dumpert","lantopolog","nessus","NetScanner64","AdvancedPortScanner","skyboxwmicollector","skyboxwmiparser","skyboxwsuscollector","PDQDeploy")
 $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
 $AnalyzerApps = @("PolicyAnalyzer","SetObjectSecurity","LGPO","BloodHoundAD","neo4j","ophcrack","hashcat","rockyou","vista_proba_free","AppInspector")
@@ -411,6 +411,7 @@ switch ($input)
         [Environment]::SetEnvironmentVariable("SCOOP_GLOBAL", $env:SCOOP_GLOBAL, "Machine")
         $env:SCOOP = $scoopDir
         [Environment]::SetEnvironmentVariable("SCOOP", $env:SCOOP, "MACHINE")
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         iex (new-object net.webclient).downloadstring("https://get.scoop.sh")
         $Reg = "Registry::HKLM\System\CurrentControlSet\Control\Session Manager\Environment"
         $OldPath = (Get-ItemProperty -Path $Reg -Name PATH).Path
