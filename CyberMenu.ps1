@@ -10,7 +10,8 @@
 		Cyber Audit Tool - Menu
 #>
 
-. $PSScriptRoot\CyberFunctions.psm1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
 ShowLogo
 read-host “Press ENTER to continue”
 cls

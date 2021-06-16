@@ -12,7 +12,8 @@
 
 CLS
 
-. $PSScriptRoot\CyberFunctions.psm1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 ShowIncd

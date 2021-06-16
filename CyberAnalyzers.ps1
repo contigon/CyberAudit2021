@@ -10,7 +10,8 @@
 		Cyber Audit Tool - Aduti Data Analyzers tools 
 #>
 
-. $PSScriptRoot\CyberFunctions.psm1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
 ShowIncd
 DisableFirewall
 DisableAntimalware

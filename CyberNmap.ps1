@@ -10,7 +10,8 @@
 		Cyber Audit Tool - Namp scripts
 #>
 
-. $PSScriptRoot\CyberFunctions.psm1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
 ShowIncd
 CyberBginfo
 $runningScriptName = $MyInvocation.MyCommand.Name
