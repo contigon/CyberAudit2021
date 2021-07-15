@@ -74,24 +74,7 @@ function isInternetConnected {
 }
 
 function InitializeVariables {
-    #Create or Set the Script directory tree
-    $scoopDir = New-Item -Path $Tools -Name "\Scoop" -ItemType "directory" -Force
-    $SVNDir = New-Item -Path $Tools -Name "\SVN" -ItemType "directory" -Force
-    $PowerShellsDir = New-Item -Path $Tools -Name "\PowerShells" -ItemType "directory" -Force
-    $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -Force
 
-    #Powershell Modules, Utilities and Applications that needs to be installed
-    #$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
-    $PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
-    $PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
-    $utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "openjdk", "putty", "winscp", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
-    $CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy")
-    $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
-    $AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
-    $AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
-    $pips = @("colorama", "pysnmp", "win_unicode_console")
-    $pythonScripts = @("colorama", "pysnmp", "win_unicode_console")
-    $Licenses = @("AZScanKey.enc")
     
 }
 
@@ -1048,7 +1031,26 @@ Invoke-Expression $cmd
 
 #Checkpoint-Computer -Description 'before installing CyberAuditTool'
 
-InitializeVariables
+#InitializeVariables
+#Create or Set the Script directory tree
+$scoopDir = New-Item -Path $Tools -Name "\Scoop" -ItemType "directory" -Force
+$SVNDir = New-Item -Path $Tools -Name "\SVN" -ItemType "directory" -Force
+$PowerShellsDir = New-Item -Path $Tools -Name "\PowerShells" -ItemType "directory" -Force
+$DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -Force
+
+#Powershell Modules, Utilities and Applications that needs to be installed
+#$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
+$PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
+$PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
+$utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "openjdk", "putty", "winscp", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
+$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy")
+$GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
+$AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
+$AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
+$pips = @("colorama", "pysnmp", "win_unicode_console")
+$pythonScripts = @("colorama", "pysnmp", "win_unicode_console")
+$Licenses = @("AZScanKey.enc")
+
 CreateDesktopShortcuts
 
 read-host "Press ENTER to continue (or Ctrl+C to quit)"
