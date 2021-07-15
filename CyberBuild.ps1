@@ -114,6 +114,105 @@ function CreateDesktopShortcuts {
     }
 }
 
+function ShowMenu {
+    $menuColor = New-Object System.Collections.ArrayList
+    for ($i = 0; $i -lt 100; $i++) {
+        $null = $menuColor.Add("White")
+    }
+    
+    do {
+        #Create the main menu
+        Write-Host ""
+        Write-Host "************************************************************************          " -ForegroundColor White
+        Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***          " -ForegroundColor White
+        Write-Host "************************************************************************          " -ForegroundColor White
+        Write-Host ""
+        Write-Host "     install OS minimal requirements and Applications:                            " -ForegroundColor White
+        Write-Host ""
+        Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
+        Write-Host ""
+        Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
+        Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
+        Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
+        Write-Host "     4. PSGallery	| Install PowerShell Modules from Powershell gallery          " -ForegroundColor $menuColor[4]
+        Write-Host "     5. Scoop		| Install Scoop framework                                     " -ForegroundColor $menuColor[5]
+        Write-Host "     6. Utilities	| Install Buckets and utilities Applications                  " -ForegroundColor $menuColor[6]
+        Write-Host "     7. Collectors	| Install Collector Applications                              " -ForegroundColor $menuColor[7]
+        Write-Host "     8. Analyzers	| Install Analyzers and Reporting tools                       " -ForegroundColor $menuColor[8]
+        Write-Host "     9. Attack!  	| Install attacking and Exploiting Scripts and tools          " -ForegroundColor $menuColor[9]
+        Write-Host "    10. Update   	| Update scoop applications and powershell modules            " -ForegroundColor $menuColor[10]
+        Write-Host "    11. Licenses   	| Install or Create Licenses to/from license files            " -ForegroundColor $menuColor[11]
+        Write-Host "    12. Uninstall  	| Uninstall scoop applications and powershell modules         " -ForegroundColor $menuColor[12]
+        Write-Host "    13. Backup  	| Compress and Backup all Audit folders and Files             " -ForegroundColor $menuColor[13]
+        Write-Host "    14. Linux   	| Install Windows Subsystem for Linux                         " -ForegroundColor $menuColor[14]
+        Write-Host "    15. RAM     	| Schedule Trimming of processes working sets and release RAM " -ForegroundColor $menuColor[15]
+        Write-Host "    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine" -ForegroundColor $menuColor[16]
+        Write-Host ""
+        Write-Host "    99. Quit                                                                      " -ForegroundColor White
+        Write-Host ""
+        $input = Read-Host "Select Script Number"
+    
+        [boolean]$WaitForInput = $True
+    
+        switch ($input) {
+            #Check Windows OS and build versions and if needed it can help upgrade an update latest build
+            1 { OSCheck; $WaitForInput = $false }
+    
+            #Check Powershell and .Net versions and install if needed and add turn on more features
+            2 { PSCheck; break }
+    
+            #Install RSAT
+            3 { RSATInstall; break }
+    
+            #Install PowerShell Modules from PSGallery Online
+            4 { PSGalleryInstall; break }
+    
+            #Install scoop
+            5 { ScoopInstall; break }
+    
+            #Add buckets and isntall global utilities
+            6 { UtilitiesInstall; break }
+    
+            #Install audit applications from cyberauditbucket
+            7 { InstallCollectors; break }
+    
+            #Install Analyzers and Reporting applications from cyberauditbucket
+            8 { InstallAnalyzers; break }
+    
+            #Install Attacking scripts and tools
+            9 { InstallAttacks; break }
+    
+            #Update scoop, Powershell and applications
+            10 { UpdateScoop; break }
+    
+            #Licenses
+            11 { Licenses; break }
+    
+            #Uninstal scoop utilities, applications and scoop itself
+            12 { Uninstall; break }
+    
+            #Backup
+            13 { BackupAudits; break }
+    
+            #Windows Subsystem for Linux
+            14 { WindowsSubsystem; break }
+            
+            #RAM
+            15 { RAM; break }
+            #Shrink VM
+            
+            16 { ShrinkVM; break }
+            
+            #Menu End
+        }
+        if ($WaitForInput) {
+            read-host "Press ENTER to continue" 
+        }
+        Clear-Host
+        $WaitForInput = $True
+    } while ($input -ne '99')    
+}
+
 function OSCheck() {
     <#
     .SYNOPSIS
@@ -958,100 +1057,6 @@ start-Transcript -path $PSScriptRoot\CyberBuildPhase.Log -Force -append
 
 Clear-Host
 
-$menuColor = New-Object System.Collections.ArrayList
-for ($i = 0; $i -lt 100; $i++) {
-    $null = $menuColor.Add("White")
-}
+ShowMenu
 
-do {
-    #Create the main menu
-    Write-Host ""
-    Write-Host "************************************************************************          " -ForegroundColor White
-    Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***          " -ForegroundColor White
-    Write-Host "************************************************************************          " -ForegroundColor White
-    Write-Host ""
-    Write-Host "     install OS minimal requirements and Applications:                            " -ForegroundColor White
-    Write-Host ""
-    Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
-    Write-Host ""
-    Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
-    Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
-    Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
-    Write-Host "     4. PSGallery	| Install PowerShell Modules from Powershell gallery          " -ForegroundColor $menuColor[4]
-    Write-Host "     5. Scoop		| Install Scoop framework                                     " -ForegroundColor $menuColor[5]
-    Write-Host "     6. Utilities	| Install Buckets and utilities Applications                  " -ForegroundColor $menuColor[6]
-    Write-Host "     7. Collectors	| Install Collector Applications                              " -ForegroundColor $menuColor[7]
-    Write-Host "     8. Analyzers	| Install Analyzers and Reporting tools                       " -ForegroundColor $menuColor[8]
-    Write-Host "     9. Attack!  	| Install attacking and Exploiting Scripts and tools          " -ForegroundColor $menuColor[9]
-    Write-Host "    10. Update   	| Update scoop applications and powershell modules            " -ForegroundColor $menuColor[10]
-    Write-Host "    11. Licenses   	| Install or Create Licenses to/from license files            " -ForegroundColor $menuColor[11]
-    Write-Host "    12. Uninstall  	| Uninstall scoop applications and powershell modules         " -ForegroundColor $menuColor[12]
-    Write-Host "    13. Backup  	| Compress and Backup all Audit folders and Files             " -ForegroundColor $menuColor[13]
-    Write-Host "    14. Linux   	| Install Windows Subsystem for Linux                         " -ForegroundColor $menuColor[14]
-    Write-Host "    15. RAM     	| Schedule Trimming of processes working sets and release RAM " -ForegroundColor $menuColor[15]
-    Write-Host "    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine" -ForegroundColor $menuColor[16]
-    Write-Host ""
-    Write-Host "    99. Quit                                                                      " -ForegroundColor White
-    Write-Host ""
-    $input = Read-Host "Select Script Number"
-
-    [boolean]$WaitForInput = $True
-
-    switch ($input) {
-        #Check Windows OS and build versions and if needed it can help upgrade an update latest build
-        1 { OSCheck; $WaitForInput = $false }
-
-        #Check Powershell and .Net versions and install if needed and add turn on more features
-        2 { PSCheck; break }
-
-        #Install RSAT
-        3 { RSATInstall; break }
-
-        #Install PowerShell Modules from PSGallery Online
-        4 { PSGalleryInstall; break }
-
-        #Install scoop
-        5 { ScoopInstall; break }
-
-        #Add buckets and isntall global utilities
-        6 { UtilitiesInstall; break }
-
-        #Install audit applications from cyberauditbucket
-        7 { InstallCollectors; break }
-
-        #Install Analyzers and Reporting applications from cyberauditbucket
-        8 { InstallAnalyzers; break }
-
-        #Install Attacking scripts and tools
-        9 { InstallAttacks; break }
-
-        #Update scoop, Powershell and applications
-        10 { UpdateScoop; break }
-
-        #Licenses
-        11 { Licenses; break }
-
-        #Uninstal scoop utilities, applications and scoop itself
-        12 { Uninstall; break }
-
-        #Backup
-        13 { BackupAudits; break }
-
-        #Windows Subsystem for Linux
-        14 { WindowsSubsystem; break }
-        
-        #RAM
-        15 { RAM; break }
-        #Shrink VM
-        
-        16 { ShrinkVM; break }
-        
-        #Menu End
-    }
-    if ($WaitForInput) {
-        read-host "Press ENTER to continue" 
-    }
-    Clear-Host
-    $WaitForInput = $True
-} while ($input -ne '99')
 stop-Transcript | out-null
