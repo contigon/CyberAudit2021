@@ -1142,7 +1142,7 @@ CyberBginfo
 
 $menuColor = "White"
 
-$ACQ = ACQ("")
+$ACQ = ACQ("Creds")
 
 #Set the credentials for this Audit (it will be stored in a file) and retrieve if exists
 $credPath = "$ACQ\${env:USERNAME}_${env:COMPUTERNAME}.xml"
