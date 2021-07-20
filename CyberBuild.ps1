@@ -45,32 +45,13 @@ function copy-ModuleToDirectory {
     Write-Host "finished the dev environment build.`n"
 }
 function isInternetConnected {
-    <#
-        checks if the machine is connected to the internet
-        returns true in case of connectivity, otherwise return false
-    #>
-    $origCurLocation = Get-Location
-    # test connection to the internet by downloading a file from github
-    $zipurlA = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
-
-    if (!(Test-Path -Path ".\CATDownloads")) {
-        New-Item -ItemType "directory" -Path ".\CATDownloads"
-    }
-
-
-    Set-Location ".\CATDownloads\"
     try {
-        # Trying to Download a file from $zipurlA to $BasePath"
-        dl $zipurlA .
+        Invoke-RestMethod -Uri ('https://ipinfo.io/')
+        return $true
     }
     catch {
-        Set-Location $origCurLocation
-        Remove-Item -LiteralPath ".\CATDownloads" -Force -Recurse
         return $false
     }
-    Set-Location $origCurLocation
-    Remove-Item -LiteralPath ".\CATDownloads" -Force -Recurse
-    return $true
 }
 
 function InitializeVariables {
@@ -214,6 +195,7 @@ function OSCheck() {
 "@
     Write-Host $help
     $menuColor[1] = "Yellow"
+    Write-Host "Checking internet connection..."
     if (!(isInternetConnected)) {
         # internet is down or corporation Firewall is blocking ICMP protocol
         Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
