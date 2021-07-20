@@ -40,13 +40,21 @@ $Host.UI.RawUI.BufferSize = $BufferSize
 $AcqBaseFolder = New-Item -Path $PSScriptRoot -Name $env:computername -ItemType "directory" -Force
 
 Function ACQ{
+    <#
+    .SYNOPSIS
+        Set Acquisition folder for the tool sent in parameter
+    
+    
+    .PARAMETER dir
+    The tool that we return its acqusition folder's path
+    #>
      Param (
         [Parameter(Mandatory=$false)]
         [ValidateSet('NTDS', 'AppInspect','InfectionMonkey','Vulmap','cmdkey','ncat','Nirsoft','metasploit',
                     'Network','PingCastle','Testimo','goddi','GPO','Sharphound','HostEnum','Scuba','azscan',
                     'grouper2','Dumpert','Runecast','Misc','IpconfigNetstat','Nessuus','Printers','Sensitive',
                     'Netscanner','Skybox-WMI','Skybox-WSUS','Skybox-CheckPointcollector','Hamster','netstat',
-                    'arp','PathPing')]
+                    'arp','PathPing','Creds')]
         $dir
         )
     $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force
