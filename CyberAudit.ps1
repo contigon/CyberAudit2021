@@ -10,7 +10,7 @@
 		Cyber Audit Tool - Audit
 #>
 
-CLS
+Clear-Host
 
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 
@@ -50,7 +50,7 @@ $i = 0
 $DC = ($env:LOGONSERVER).TrimStart("\\")
 Write-Host "Please wait, searching for a domain controller..."
 try {
-    if ($DClist = Get-ADDomainController -filter * | select hostname, operatingsystem) {
+    if ($DClist = Get-ADDomainController -filter * | Select-Object hostname, operatingsystem) {
         foreach ($dcontroller in $DClist) { $i++; $a = $dcontroller.hostname; $os = $dcontroller.operatingsystem ; if (($OS -match "2003") -or $OS -match "2008") { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor red } else { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor green } }
         if ($i -gt 1) {
             Write-Host "You are currently logged on to domain controller $DC"
@@ -84,7 +84,7 @@ function ShowAuditMenu {
 
 Read-Host "Press Enter to start the audit collection phase (or Ctrl+C to quit)"
 
-cls
+Clear-Host
 
 do {
     #Create the main menu
@@ -129,7 +129,7 @@ do {
     $input = Read-Host "Select Script Number"
 
     function Domain {
-        Cls
+        Clear-Host
         $help = @"
 
     Join/Disconnect machine to/from a Domain
@@ -218,7 +218,7 @@ do {
     }
 
     function NTDSAquire {
-        cls
+        Clear-Host
         $help = @"
 
     NTDS and SYSTEM hive remote aquisition
@@ -268,7 +268,7 @@ do {
     }
 
     function CollectNetworkConfig {
-        Cls
+        Clear-Host
         $help = @"
 
         Collect configuration and routing tables from network devices
@@ -319,7 +319,7 @@ do {
     }
 
     function PingCastle {
-        Cls
+        Clear-Host
         $help = @"
 
         PIngCastle
@@ -343,7 +343,7 @@ do {
     }
 
     function Testimo {
-        Cls
+        Clear-Host
         $help = @"
 
         Testimo
@@ -364,7 +364,7 @@ do {
         Write-Host $help
         $ACQ = ACQ("Testimo")
         if (checkRsat) {
-            import-module activedirectory ; Get-ADDomainController -Filter * | Select Name, ipv4Address, OperatingSystem, site | Sort-Object -Property Name
+            import-module activedirectory ; Get-ADDomainController -Filter * | Select-Object Name, ipv4Address, OperatingSystem, site | Sort-Object -Property Name
             Invoke-Testimo  -ExcludeSources DCDiagnostics -ReportPath $ACQ\Testimo.html
             $null = start-Process -PassThru explorer $ACQ
         }
@@ -373,7 +373,7 @@ do {
     }
 
     function Goddi {
-        Cls
+        Clear-Host
         $help = @"
 
     goddi
@@ -417,7 +417,7 @@ do {
         
     }
     function BackupGPO {
-        cls
+        Clear-Host
         $help = @"
 
     GPO
@@ -460,7 +460,7 @@ do {
     }
 
     function Sharphound {
-        cls
+        Clear-Host
         $help = @"
 
         Sharphound
@@ -502,7 +502,7 @@ do {
         
     }
     function HostEnum {
-        cls
+        Clear-Host
         $help = @"
 
     HostEnum
@@ -541,7 +541,7 @@ do {
     }
 
     function Scuba {
-        cls
+        Clear-Host
         $ACQ = ACQ("Scuba")
         $help = @"
 
@@ -614,7 +614,7 @@ do {
     }
 
     function Grouper2 {
-        cls
+        Clear-Host
         $help = @"
 
         Grouper2
@@ -638,7 +638,7 @@ do {
     }
 
     function Dumpert {
-        cls
+        Clear-Host
         $help = @"
 
     Dumpert
@@ -665,7 +665,7 @@ do {
         
     }
     function Runecast {
-        cls
+        Clear-Host
         $ACQ = ACQ("Runecast")
         $help = @"
 
@@ -713,7 +713,7 @@ do {
         
     }
     function Misc {
-        Cls
+        Clear-Host
         $help = @"
 
     Misc
@@ -737,7 +737,7 @@ do {
         
     }
     function Skybox-win {
-        Cls
+        Clear-Host
         $help = @"
 
     skybox interface and routing collector
@@ -781,7 +781,7 @@ do {
         
     }
     function Nessus {
-        Cls
+        Clear-Host
         $nessusPath = GetAppInstallPath("nessus")
         Push-Location $nessusPath
         $help = @"
@@ -862,9 +862,9 @@ do {
         
     }
     function Printers {
-        Cls
-            $PretPath = scoop prefix PRET
-            $help = @"
+        Clear-Host
+        $PretPath = scoop prefix PRET
+        $help = @"
 
         Printers
         --------
@@ -917,67 +917,67 @@ do {
         https://www.bard-security.com/index.php/2019/01/25/the-problem-with-protecting-against-pret/
                 
 "@
-            Write-Host $help
-            $ACQ = ACQ("Printers")
-            Write-Host "Getting list of print servers from domain server"
-            $printservers = (Get-ADObject -LDAPFilter "(&(uncName=*)(objectCategory=printQueue))" -properties * | Sort-Object -Unique -Property servername).servername
-            if ($printservers) {
-                $printservers | Export-Csv $ACQ\PrintServers.csv
-            }
+        Write-Host $help
+        $ACQ = ACQ("Printers")
+        Write-Host "Getting list of print servers from domain server"
+        $printservers = (Get-ADObject -LDAPFilter "(&(uncName=*)(objectCategory=printQueue))" -properties * | Sort-Object -Unique -Property servername).servername
+        if ($printservers) {
+            $printservers | Export-Csv $ACQ\PrintServers.csv
+        }
 
-            Write-Host "Getting list of installed printers from all registered domain computers"
-            $computers = (Get-ADComputer -Filter *).name
-            # Get printer information
-            ForEach ($Printserver in $computers) { 
-                $Printers = Get-WmiObject Win32_Printer -ComputerName $Printserver
-                ForEach ($Printer in $Printers) {
-                    $Ports = Get-WmiObject Win32_TcpIpPrinterPort -Filter "name = '$($Printer.Portname)'" -ComputerName $Printserver
-                    if (($Printer.Name -notmatch "Microsoft") -and ($Printer.Name -notmatch "Adobe") -and ($Printer.Name -notlike "Fax*") -and ($Printer.Name -notmatch "FOXIT") -and ($Printer.Name -notmatch "OneNote")) {
+        Write-Host "Getting list of installed printers from all registered domain computers"
+        $computers = (Get-ADComputer -Filter *).name
+        # Get printer information
+        ForEach ($Printserver in $computers) { 
+            $Printers = Get-WmiObject Win32_Printer -ComputerName $Printserver
+            ForEach ($Printer in $Printers) {
+                $Ports = Get-WmiObject Win32_TcpIpPrinterPort -Filter "name = '$($Printer.Portname)'" -ComputerName $Printserver
+                if (($Printer.Name -notmatch "Microsoft") -and ($Printer.Name -notmatch "Adobe") -and ($Printer.Name -notlike "Fax*") -and ($Printer.Name -notmatch "FOXIT") -and ($Printer.Name -notmatch "OneNote")) {
 
-                        Write-Host  "Server: $Printserver | IP: $Ports | Printer:" $Printer.Name | Export-Csv $ACQ\DomainPrinters.csv -NoTypeInformation -Append
-                    }
+                    Write-Host  "Server: $Printserver | IP: $Ports | Printer:" $Printer.Name | Export-Csv $ACQ\DomainPrinters.csv -NoTypeInformation -Append
                 }
             }
+        }
 
-            $NetworkSegments = (Get-NetNeighbor -State "Reachable").ipaddress | foreach { [IPAddress] (([IPAddress] $_).Address -band ([IPAddress] "255.255.255.0").Address) | Select-Object IPAddressToString } | Get-Unique
-            $segmentIp = $NetworkSegments.IPAddressToString
-            Write-Host "Network segements found: $segmentIp"
-            $input = Read-Host "Input a network subnet or [Enter] to scan $segmentIp/24 segment for printers"
-            if ($input -eq "") {
-                $input = "$segmentIp/24"
-            }
-            Write-Host "TCP Scanning for Printers... "
-            nmap -p 515, 631, 9100 $input -oG $ACQ\PrintersTCPscan.txt
-            $null = start-Process -PassThru explorer $ACQ
+        $NetworkSegments = (Get-NetNeighbor -State "Reachable").ipaddress | ForEach-Object { [IPAddress] (([IPAddress] $_).Address -band ([IPAddress] "255.255.255.0").Address) | Select-Object IPAddressToString } | Get-Unique
+        $segmentIp = $NetworkSegments.IPAddressToString
+        Write-Host "Network segements found: $segmentIp"
+        $input = Read-Host "Input a network subnet or [Enter] to scan $segmentIp/24 segment for printers"
+        if ($input -eq "") {
+            $input = "$segmentIp/24"
+        }
+        Write-Host "TCP Scanning for Printers... "
+        nmap -p 515, 631, 9100 $input -oG $ACQ\PrintersTCPscan.txt
+        $null = start-Process -PassThru explorer $ACQ
 
-            Write-Host "UDP Scanning for Printers... "
-            nmap -sU -p 161 $input -oG $ACQ\PrintersUDPscan.txt
+        Write-Host "UDP Scanning for Printers... "
+        nmap -sU -p 161 $input -oG $ACQ\PrintersUDPscan.txt
 
-            #snmpget -v 1 -O v -c public $ipaddress system.sysDescr.0
+        #snmpget -v 1 -O v -c public $ipaddress system.sysDescr.0
 
-            SetPythonVersion "2"
-            Push-Location $PretPath
-            Write-Host "SMNP scanning for printers..."
-            python .\pret.py
-            $loop = {
-                $input = Read-Host "Input ip address of a printer to try and hack or [Enter] to skip" 
-                if ($input -ne "") {
-                    python .\pret.py $input pjl
-                    Start-Process powershell -ArgumentList ls
-                    $input = Read-Host "Press [T] to test More printers or [Enter] to finish"
-                    if ($input -eq "T") {
-                        &$loop
-                    }
+        SetPythonVersion "2"
+        Push-Location $PretPath
+        Write-Host "SMNP scanning for printers..."
+        python .\pret.py
+        $loop = {
+            $input = Read-Host "Input ip address of a printer to try and hack or [Enter] to skip" 
+            if ($input -ne "") {
+                python .\pret.py $input pjl
+                Start-Process powershell -ArgumentList ls
+                $input = Read-Host "Press [T] to test More printers or [Enter] to finish"
+                if ($input -eq "T") {
+                    &$loop
                 }
             }
-            &$loop
-            Pop-Location
-            read-host "Press ENTER to continue"
-            $null = start-Process -PassThru explorer $ACQ
+        }
+        &$loop
+        Pop-Location
+        read-host "Press ENTER to continue"
+        $null = start-Process -PassThru explorer $ACQ
         
     }
     function Sensitive {
-        Cls
+        Clear-Host
         $help = @"
 
     Sensitive
@@ -1009,7 +1009,7 @@ do {
         
     }
     function NetworkScan {
-        Cls
+        Clear-Host
         $help = @"
 
     PortScanner
@@ -1064,6 +1064,191 @@ do {
         
     }
 
+    function skyboxWMIScanner {
+        Clear-Host
+        $help = @"
+
+    Skybox WMI collect and parse
+    ----------------------------
+
+    Collect information from domain controlled windows machines such as:
+    - OS 
+    - installed Software
+    - hotfixes
+
+    After getting all machines listed in the domain ou=computers, the script connects to
+    each machine and collects the relevant information using wmi protocol.
+
+    Needs user with domain administration permissions on all machines.
+    
+    The script can be downloaded from:
+    https://drive.google.com/open?id=1E-1ibwElj_JK2oRc6QbS5bwl5Aj0cs1F
+
+    wmi_collector.exe -s URI -b BASEDN -u USERNAME -p PASSWORD -o
+    -s URI >>> example : ldap://dc01.myorg.dom
+    -b BASEDN >>> example : dc=myorg,dc=dom
+    -u USERNAME >>> example : myuser@myorg.com
+    -p PASSWORD
+    -o >>> Output folder
+
+"@
+        Write-Host $help
+        $ldapServer = (Get-ADDomain).pdcemulator
+        $basedn = (Get-ADDomain).distinguishedname
+        $domain = (Get-ADDomain).dnsroot
+        $ACQ = ACQ("Skybox-WMI")
+        $userName = Read-Host "Input user name with domain admin permissions"
+        $userPassword = Read-Host "Input password for this user"
+        $cmd = "wmi_collector -s 'ldap://$ldapServer' -b '$basedn' -u $username@$domain -p $userPassword -o $ACQ"
+        success "Starting the collection phase"
+        Invoke-Expression $cmd
+        $null = New-Item -Path $ACQ -Name "parsedFiles" -ItemType Directory -Force
+        $cmd = "wmi_parser -i $ACQ -o $ACQ\parsedFiles"
+        success "Starting the parsing phase"
+        Invoke-Expression $cmd
+        read-host "Press ENTER to continue"
+        $null = start-Process -PassThru explorer $ACQ
+        
+    }
+    function SkyboxWsusCollection {
+        Clear-Host
+        $help = @"
+
+        Skybox WSUS collection
+        ----------------------
+
+        Creates an XML file with a list of computers, patches, vulnerabilities and groups structure.
+
+        Needs user with domain administration permissions on WSUS.
+
+        Version depends on the DotNet version installed on the runnig machine:
+          SkyboxWsusCollection4  | .Net 4
+          SkyboxWsusCollection35 | .Net35
+          SkyboxWsusCollection2  | .Net 2
+
+       USAGE : SkyboxWsusCollection4.exe -t [local|remote] -h servername -s [true|false] -p portnumber -m [full|HostsOnly|MSxml]
+        
+        -t [local|remote]: run the collection from remote client or on the server localy
+        -h servername:  in the case of remote collection the wsus server hostname or ip
+        -s [true|false]: in the case of remote collection if to use SSL connection to the wsus server
+        -l [full path file name] : filter by names
+        -f [computername]: for debug only filter by computer name
+        -r [true|false] : true - name full fqdn false hostname only
+        -p port: in the case of remote collection if to use port number
+        -o dir: output dir
+        -q capacity: number of maximum hosts to collect
+        -m [all|HostsOnly|MSxml|Debug] : output type all - computers,patch,vunrabilities and group in skybox IXML format.
+        -n treeRootname: an option in the case of renaming the default wsus tree name - All computers
+        
+       Example:
+        Remote collection: SkyboxWsusCollection.exe -t remote -h wsus.skybox.com -s false  -p 80 -q 30 -m all
+        Local collection on the wsus server: SkyboxWsusCollection.exe -t local -m all -o c:\temp
+
+"@
+        Write-Host $help
+        $WsusServer = Read-Host "Input the name of the WSUS Server"
+        $ACQ = ACQ("Skybox-WSUS")
+        $cmd = "SkyboxWsusCollection4 -t remote -h $WsusServer -s true -m all -o $ACQ"
+        success "Starting the collection phase over SSL protocol"
+        Invoke-Expression $cmd
+        read-host "Press ENTER to continue"
+        $null = start-Process -PassThru explorer $ACQ
+    
+    }
+
+    function SkyboxCheckpintCollector {
+        Clear-Host
+        $help = @"
+
+Skybox CheckPoint collector
+----------------------------
+
+Retrieval of Check Point R80.10 and lower management configuration data and convert it to Skybox import format.
+
+Steps that will be executed:
+1.Updating the collection_settings.xml file with relevant details:
+    user - User name for collection
+    pwd  - Password in clear text
+    url  - Management IP, e.g. 172.10.100.21
+
+    Optional field:
+        output_file_prefix: A prefix can be added to the configuration filename
+                            In the current example, the output filename will be offline_config_172.20.100.21.json
+                            If left empty, the Tool creates 172.20.100.21.json.
+2.running the Collect.bat script
+
+"@
+        Write-Host $help
+        $ACQ = ACQ("Skybox-CheckPointcollector")
+        $path = scoop prefix skyboxcheckpointcollector
+        $path = $path + "\SkyboxCheckPointCollector"
+        $userName = Read-Host "Input user name with firewall admin permissions"
+        $userPassword = Read-Host "Input password for this user"
+        $FwURL = Read-Host "Input the firewall Management IP address (e.g. 172.10.100.21)"
+        $xmlFile = "$path\$FwURL" + "collection_settings.xml"
+        Push-Location $path
+        Write-Host "Updating the collection_settings.xml file"
+        (Get-Content "$path\collection_settings.xml") | ForEach-Object { $_ -replace "user"">", "user"">$username" -replace "pwd"">", "pwd"">$userPassword" -replace "url"">", "url"">$FwURL" } | Set-Content $xmlFile
+        success "Starting the collection phase"
+        CheckPointOfflineCollector $xmlFile
+        Pop-Location
+        read-host "Press ENTER to continue"
+        Copy-Item -Path "$FwURL\offline_config_$FwURL.json" -Destination $ACQ
+        $null = start-Process -PassThru explorer $ACQ
+    }
+function HamsterBuildDeploy {
+    Clear-Host
+    $help = @"
+
+Hamster build and deploy
+------------------------
+
+This will run the HamsterBuilder application in order to configure an create the deployment pack,
+and later on execute the deployment phase.
+
+Steps that will be executed:
+1.Choose the path to Hamsterbuilder.exe file
+2.Create a shared directory on the file server with permission to copy files from all computers on the network
+3.Run the HamsterBuilder application, Configure and Create a deployment pack for the organization
+4.Deploy the executable created using PDQDeply application
+5.Wait until running is finished and all .zip files for each computer is created
+6.Copy all zip files to the audit directory
+7.Dont forget to Upload the files to the Hamster server when you go back to the office
+
+"@
+    Write-Host $help
+    $ACQ = ACQ("Hamster")
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $OpenFileDialog.filter = "HamsterBuilder.exe | HamsterBuilder.exe"
+    $OpenFileDialog.Title = "Locate and choose the HamsterBuilder.exe file to run !!!"
+    $OpenFileDialog.ShowDialog() | Out-Null
+    $HamsterBuilderPath = $OpenFileDialog.filename
+    if ($HamsterBuilderPath -notlike "") {
+        & $HamsterBuilderPath
+        PDQDeployConsole
+        $sharedPath = Read-Host "Input the shared path where all data is collected to"
+        $numOfcomputers = Read-Host "Input the nuber of computer that you have collected data from"
+        $numOfZip = (Get-ChildItem $sharedPath\*.zip).count
+        if ($numOfZip -lt $numOfcomputers) {
+            failed "Found only $numOfZip zip files, this is less than $numOfcomputers!!!"
+        }
+        else {
+            success "Found $numOfZip zip files"
+        }
+        $input = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
+        if ($input -eq "C") {
+            Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
+        }
+    }
+    else {
+        failed "Hamster.exe was not located so script will not execute, Please try again"
+    }
+    read-host "Press ENTER to continue"
+    $null = start-Process -PassThru explorer $ACQ
+    
+}
+
     switch ($input) { 
         #Domain
         1 { Domain }
@@ -1108,218 +1293,42 @@ do {
         25 { Dumpert }
 
         #runecast
-        13 {Runecast}
+        13 { Runecast }
     
         #Misc
-        15 {Misc}
+        15 { Misc }
     
         #skybox-win
-        23 {Skybox-win}
+        23 { Skybox-win }
 
         #Nessus
-        14 {Nessus}
+        14 { Nessus }
               
         #Printers
-        16 {Printers}
+        16 { Printers }
 
         #Sensitive
-        17 {Sensitive}
+        17 { Sensitive }
 
         #Network and Port Scanners
         18 {
             NetworkScan
         }
         #Skybox-WMI scanner and parser
-        20 {
-            Cls
-            $help = @"
-
-        Skybox WMI collect and parse
-        ----------------------------
-
-        Collect information from domain controlled windows machines such as:
-        - OS 
-        - installed Software
-        - hotfixes
-
-        After getting all machines listed in the domain ou=computers, the script connects to
-        each machine and collects the relevant information using wmi protocol.
-
-        Needs user with domain administration permissions on all machines.
-        
-        The script can be downloaded from:
-        https://drive.google.com/open?id=1E-1ibwElj_JK2oRc6QbS5bwl5Aj0cs1F
-
-        wmi_collector.exe -s URI -b BASEDN -u USERNAME -p PASSWORD -o
-        -s URI >>> example : ldap://dc01.myorg.dom
-        -b BASEDN >>> example : dc=myorg,dc=dom
-        -u USERNAME >>> example : myuser@myorg.com
-        -p PASSWORD
-        -o >>> Output folder
-
-"@
-            Write-Host $help
-            $ldapServer = (Get-ADDomain).pdcemulator
-            $basedn = (Get-ADDomain).distinguishedname
-            $domain = (Get-ADDomain).dnsroot
-            $ACQ = ACQ("Skybox-WMI")
-            $userName = Read-Host "Input user name with domain admin permissions"
-            $userPassword = Read-Host "Input password for this user"
-            $cmd = "wmi_collector -s 'ldap://$ldapServer' -b '$basedn' -u $username@$domain -p $userPassword -o $ACQ"
-            success "Starting the collection phase"
-            Invoke-Expression $cmd
-            $null = New-Item -Path $ACQ -Name "parsedFiles" -ItemType Directory -Force
-            $cmd = "wmi_parser -i $ACQ -o $ACQ\parsedFiles"
-            success "Starting the parsing phase"
-            Invoke-Expression $cmd
-            read-host "Press ENTER to continue"
-            $null = start-Process -PassThru explorer $ACQ
-        }
+        20 { skyboxWMIScanner }
 
         #Skybox-WSUS collection
-        21 {
-            Cls
-            $help = @"
-
-        Skybox WSUS collection
-        ----------------------
-
-        Creates an XML file with a list of computers, patches, vulnerabilities and groups structure.
-
-        Needs user with domain administration permissions on WSUS.
-
-        Version depends on the DotNet version installed on the runnig machine:
-          SkyboxWsusCollection4  | .Net 4
-          SkyboxWsusCollection35 | .Net35
-          SkyboxWsusCollection2  | .Net 2
-
-       USAGE : SkyboxWsusCollection4.exe -t [local|remote] -h servername -s [true|false] -p portnumber -m [full|HostsOnly|MSxml]
-        
-        -t [local|remote]: run the collection from remote client or on the server localy
-        -h servername:  in the case of remote collection the wsus server hostname or ip
-        -s [true|false]: in the case of remote collection if to use SSL connection to the wsus server
-        -l [full path file name] : filter by names
-        -f [computername]: for debug only filter by computer name
-        -r [true|false] : true - name full fqdn false hostname only
-        -p port: in the case of remote collection if to use port number
-        -o dir: output dir
-        -q capacity: number of maximum hosts to collect
-        -m [all|HostsOnly|MSxml|Debug] : output type all - computers,patch,vunrabilities and group in skybox IXML format.
-        -n treeRootname: an option in the case of renaming the default wsus tree name - All computers
-        
-       Example:
-        Remote collection: SkyboxWsusCollection.exe -t remote -h wsus.skybox.com -s false  -p 80 -q 30 -m all
-        Local collection on the wsus server: SkyboxWsusCollection.exe -t local -m all -o c:\temp
-
-"@
-            Write-Host $help
-            $WsusServer = Read-Host "Input the name of the WSUS Server"
-            $ACQ = ACQ("Skybox-WSUS")
-            $cmd = "SkyboxWsusCollection4 -t remote -h $WsusServer -s true -m all -o $ACQ"
-            success "Starting the collection phase over SSL protocol"
-            Invoke-Expression $cmd
-            read-host "Press ENTER to continue"
-            $null = start-Process -PassThru explorer $ACQ
-        }
+        21 { SkyboxWsusCollection }
  
         #Skybox-CP CheckPoint collector
-        22 {
-            Cls
-            $help = @"
-
-        Skybox CheckPoint collector
-        ----------------------------
-
-        Retrieval of Check Point R80.10 and lower management configuration data and convert it to Skybox import format.
-
-        Steps that will be executed:
-        1.Updating the collection_settings.xml file with relevant details:
-            user - User name for collection
-            pwd  - Password in clear text
-            url  - Management IP, e.g. 172.10.100.21
-    
-            Optional field:
-                output_file_prefix: A prefix can be added to the configuration filename
-                                    In the current example, the output filename will be offline_config_172.20.100.21.json
-                                    If left empty, the Tool creates 172.20.100.21.json.
-        2.running the Collect.bat script
-
-"@
-            Write-Host $help
-            $ACQ = ACQ("Skybox-CheckPointcollector")
-            $path = scoop prefix skyboxcheckpointcollector
-            $path = $path + "\SkyboxCheckPointCollector"
-            $userName = Read-Host "Input user name with firewall admin permissions"
-            $userPassword = Read-Host "Input password for this user"
-            $FwURL = Read-Host "Input the firewall Management IP address (e.g. 172.10.100.21)"
-            $xmlFile = "$path\$FwURL" + "collection_settings.xml"
-            Push-Location $path
-            Write-Host "Updating the collection_settings.xml file"
-            (Get-Content "$path\collection_settings.xml") | ForEach-Object { $_ -replace "user"">", "user"">$username" -replace "pwd"">", "pwd"">$userPassword" -replace "url"">", "url"">$FwURL" } | Set-Content $xmlFile
-            success "Starting the collection phase"
-            CheckPointOfflineCollector $xmlFile
-            Pop-Location
-            read-host "Press ENTER to continue"
-            Copy-Item -Path "$FwURL\offline_config_$FwURL.json" -Destination $ACQ
-            $null = start-Process -PassThru explorer $ACQ
-        }
+        22 { SkyboxCheckpintCollector }
  
         #Hamster
-        24 {
-            Cls
-            $help = @"
-
-        Hamster build and deploy
-        ------------------------
-
-        This will run the HamsterBuilder application in order to configure an create the deployment pack,
-        and later on execute the deployment phase.
-
-        Steps that will be executed:
-        1.Choose the path to Hamsterbuilder.exe file
-        2.Create a shared directory on the file server with permission to copy files from all computers on the network
-        3.Run the HamsterBuilder application, Configure and Create a deployment pack for the organization
-        4.Deploy the executable created using PDQDeply application
-        5.Wait until running is finished and all .zip files for each computer is created
-        6.Copy all zip files to the audit directory
-        7.Dont forget to Upload the files to the Hamster server when you go back to the office
-
-"@
-            Write-Host $help
-            $ACQ = ACQ("Hamster")
-            [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
-            $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-            $OpenFileDialog.filter = "HamsterBuilder.exe | HamsterBuilder.exe"
-            $OpenFileDialog.Title = "Locate and choose the HamsterBuilder.exe file to run !!!"
-            $OpenFileDialog.ShowDialog() | Out-Null
-            $HamsterBuilderPath = $OpenFileDialog.filename
-            if ($HamsterBuilderPath -notlike "") {
-                & $HamsterBuilderPath
-                PDQDeployConsole
-                $sharedPath = Read-Host "Input the shared path where all data is collected to"
-                $numOfcomputers = Read-Host "Input the nuber of computer that you have collected data from"
-                $numOfZip = (Get-ChildItem $sharedPath\*.zip).count
-                if ($numOfZip -lt $numOfcomputers) {
-                    failed "Found only $numOfZip zip files, this is less than $numOfcomputers!!!"
-                }
-                else {
-                    success "Found $numOfZip zip files"
-                }
-                $input = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
-                if ($input -eq "C") {
-                    Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
-                }
-            }
-            else {
-                failed "Hamster.exe was not located so script will not execute, Please try again"
-            }
-            read-host "Press ENTER to continue"
-            $null = start-Process -PassThru explorer $ACQ
-        }
+        24 {HamsterBuildDeploy}
 
         #Menu End
     } 
-    cls
+    Clear-Host
 }
 while ($input -ne '99')
 stop-Transcript | out-null
