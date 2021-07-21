@@ -291,8 +291,8 @@ Domain Admin permissions.
     $ACQ = ACQ("goddi")        
     Write-Host "You are running as user: $env:USERDNSDOMAIN\$env:USERNAME"
     $securePwd = Read-Host "Input a Domain Admin password" -AsSecureString
-    $Pwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePwd))
-    goddi-windows-amd64.exe -username="$env:USERNAME" -password="$Pwd" -domain="$env:USERDNSDOMAIN" -dc="$DC" -unsafe
+    $Password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePwd))
+    goddi-windows-amd64.exe -username="$env:USERNAME" -password="$Password" -domain="$env:USERDNSDOMAIN" -dc="$DC" -unsafe
     Move-Item -Path $appsDir\goddi\current\csv\* -Destination $ACQ -Force
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ
@@ -324,8 +324,8 @@ Domain Admin permissions
     $ScriptToRun = $PSScriptRoot + "\CyberGPLinkReport.ps1"
     &$ScriptToRun | Export-Csv -Path $ACQ\GPLinkReport.csv -NoTypeInformation
     $ADcomputers = Get-ADComputer -Filter * | Select-Object name
-    $input = Read-Host "Press G to get all gpresults from all computers in the domain"
-    if ($input -eq "G") {
+    $userInput = Read-Host "Press G to get all gpresults from all computers in the domain"
+    if ($userInput -eq "G") {
         foreach ($comp in $ADcomputers) {
             if (Test-Connection -ComputerName $comp.name -Count 1 -TimeToLive 20 -ErrorAction Continue) {
                 $compname = $comp.name
@@ -442,7 +442,7 @@ Note: Fix timezone issues when auditing mysql server,
     write-host $help 
     $cmd = "Scuba"
     Invoke-Expression $cmd
-    $input = read-host "Wait untill auditing finished and Press [Enter] to save report"
+    read-host "Wait untill auditing finished and Press [Enter] to save report"
     $ScubaDir = scoop prefix scuba-windows
     if (Get-Item -Path "$ScubaDir\Scuba App\production\AssessmentResults.js" -ErrorAction SilentlyContinue) {
         $serverAddress = Select-String -Path "$ScubaDir\Scuba App\production\AssessmentResults.js"  -pattern "serverAddress"
@@ -476,13 +476,13 @@ will run the tests and prepare a report with the results of the audit
 
 "@
     Write-Host $help
-    $input = Read-Host "Input [O] in order to audit ORACLE database (Or Enter to continue with other Platforms)"
-    if ($input -eq "O") {
+    $userInput = Read-Host "Input [O] in order to audit ORACLE database (Or Enter to continue with other Platforms)"
+    if ($userInput -eq "O") {
         $CopyToPath = Read-Host "Choose Path to Copy AZOracle.sql script to (eg. \\$DC\c$\Temp)"  
         if (Test-Path -Path $CopyToPath -PathType Any) {
             Copy-Item -Path $appsDir\azscan3\current\AZOracle.sql -Destination $CopyToPath
             $null = start-Process -PassThru explorer $CopyToPath
-            $copyResult = Read-Host "Press [Enter] to copy OScan.fil from $CopyToPath to $ACQ"            
+            Read-Host "Press [Enter] to copy OScan.fil from $CopyToPath to $ACQ"            
             Copy-Item -Path $CopyToPath\OScan.fil -Destination $ACQ
             $null = start-Process -PassThru explorer $ACQ
         }
@@ -585,8 +585,8 @@ the PowerCLI script and Execute the script using PowerCLI
 
 "@
     Write-Host $help
-    $input = Read-Host "Press [R] to run the Create Role Powershell script (or Enter to contine)"
-    if ($input -eq "R") {
+    $userInput = Read-Host "Press [R] to run the Create Role Powershell script (or Enter to contine)"
+    if ($userInput -eq "R") {
         $ScriptToRun = $PSScriptRoot + "\CyberCreateRunecastRole.ps1"
         &$ScriptToRuns
     }
@@ -618,7 +618,7 @@ Checks:
     $null = start-Process -PassThru explorer $ACQ
     
 }
-function Skybox-win {
+function SkyboxWin {
     Clear-Host
     $help = @"
 
@@ -824,16 +824,16 @@ function Printers {
     $NetworkSegments = (Get-NetNeighbor -State "Reachable").ipaddress | ForEach-Object { [IPAddress] (([IPAddress] $_).Address -band ([IPAddress] "255.255.255.0").Address) | Select-Object IPAddressToString } | Get-Unique
     $segmentIp = $NetworkSegments.IPAddressToString
     Write-Host "Network segements found: $segmentIp"
-    $input = Read-Host "Input a network subnet or [Enter] to scan $segmentIp/24 segment for printers"
-    if ($input -eq "") {
-        $input = "$segmentIp/24"
+    $userInput = Read-Host "Input a network subnet or [Enter] to scan $segmentIp/24 segment for printers"
+    if ($userInput -eq "") {
+        $userInput = "$segmentIp/24"
     }
     Write-Host "TCP Scanning for Printers... "
-    nmap -p 515, 631, 9100 $input -oG $ACQ\PrintersTCPscan.txt
+    nmap -p 515, 631, 9100 $userInput -oG $ACQ\PrintersTCPscan.txt
     $null = start-Process -PassThru explorer $ACQ
 
     Write-Host "UDP Scanning for Printers... "
-    nmap -sU -p 161 $input -oG $ACQ\PrintersUDPscan.txt
+    nmap -sU -p 161 $userInput -oG $ACQ\PrintersUDPscan.txt
 
     #snmpget -v 1 -O v -c public $ipaddress system.sysDescr.0
 
@@ -842,12 +842,12 @@ function Printers {
     Write-Host "SMNP scanning for printers..."
     python .\pret.py
     $loop = {
-        $input = Read-Host "Input ip address of a printer to try and hack or [Enter] to skip" 
-        if ($input -ne "") {
-            python .\pret.py $input pjl
+        $userInput = Read-Host "Input ip address of a printer to try and hack or [Enter] to skip" 
+        if ($userInput -ne "") {
+            python .\pret.py $userInput pjl
             Start-Process powershell -ArgumentList ls
-            $input = Read-Host "Press [T] to test More printers or [Enter] to finish"
-            if ($input -eq "T") {
+            $userInput = Read-Host "Press [T] to test More printers or [Enter] to finish"
+            if ($userInput -eq "T") {
                 &$loop
             }
         }
@@ -878,8 +878,8 @@ Checks:
     Write-Host $help
     $ACQ = ACQ("Sensitive")
     $iniPath = scoop prefix everything
-    $input = Read-Host "Input network share to scan for files (eg. \\FileServer\c$\Users)"
-    $null = (Get-Content $iniPath\Everything.ini -Raw) -replace "\bfolders=(.*)", "folders=$input" | Set-Content -Path $iniPath\Everything.ini -Force
+    $userInput = Read-Host "Input network share to scan for files (eg. \\FileServer\c$\Users)"
+    $null = (Get-Content $iniPath\Everything.ini -Raw) -replace "\bfolders=(.*)", "folders=$userInput" | Set-Content -Path $iniPath\Everything.ini -Force
     $null = (Get-Content $iniPath\Everything.ini -Raw) -replace "\bntfs_volume_includes=1", "ntfs_volume_includes=0" | Set-Content -Path $iniPath\Everything.ini -Force
     $heb = "רשימה|סיסמה|סודי|סיסמאות|לקוחות|מסווג|רשימת|זהות|מטופלים|לקוחות|משכורות|חשבונות|כתובות|הנהלה"
     $eng = "secret|password|customer|patient|accounting|confidential"
@@ -1118,8 +1118,8 @@ Steps that will be executed:
         else {
             success "Found $numOfZip zip files"
         }
-        $input = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
-        if ($input -eq "C") {
+        $userInput = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
+        if ($userInput -eq "C") {
             Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
         }
     }
@@ -1142,6 +1142,7 @@ CyberBginfo
 
 $menuColor = "White"
 
+$BaseFolder = AcqBaseFolder
 $ACQ = ACQ("Creds")
 
 #Set the credentials for this Audit (it will be stored in a file) and retrieve if exists
@@ -1213,7 +1214,7 @@ function ShowAuditMenu {
     Write-Host "     Audit Data Collection:                                                        " -ForegroundColor White
     Write-Host ""
     Write-Host "     Domain Controller: $DC                                                        " -ForegroundColor $menuColor
-    Write-Host "     Aquisition folder: $AcqBaseFolder                                             " -ForegroundColor yellow
+    Write-Host "     Aquisition folder: $BaseFolder                                             " -ForegroundColor yellow
     Write-Host ""
     Write-Host "     1. Domain		| Join/Disconnect machine to/from a Domain                     " -ForegroundColor White
     Write-Host "     2. Test		| Test Domain Connections and Configurations for audit         " -ForegroundColor White
@@ -1248,9 +1249,9 @@ function ShowAuditMenu {
 do {
     ShowAuditMenu
    
-    $input = Read-Host "Select Script Number"
+    $userInput = Read-Host "Select Script Number"
 
-    switch ($input) { 
+    switch ($userInput) { 
         #Domain
         1 { Domain }
 
@@ -1318,7 +1319,7 @@ do {
         22 { SkyboxCheckpintCollector }
  
         #skybox-win
-        23 { Skybox-win }
+        23 { SkyboxWin }
         
         #Hamster
         24 { HamsterBuildDeploy }
@@ -1329,7 +1330,7 @@ do {
         #Menu End
     } 
     Clear-Host
-} while ($input -ne '99')
+} while ($userInput -ne '99')
 
 stop-Transcript | out-null
 $cmd = "everything -exit"
