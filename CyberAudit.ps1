@@ -824,7 +824,7 @@ function Printers {
     $NetworkSegments = (Get-NetNeighbor -State "Reachable").ipaddress | ForEach-Object { [IPAddress] (([IPAddress] $_).Address -band ([IPAddress] "255.255.255.0").Address) | Select-Object IPAddressToString } | Get-Unique
     $segmentIp = $NetworkSegments.IPAddressToString
     Write-Host "Network segements found: $segmentIp"
-    $userInput = Read-Host "Input a network subnet or [Enter] to scan $segmentIp/24 segment for printers"
+    $userInput = Read-Host "Input a network subnet (without IP mask) or [Enter] to scan $segmentIp/24 segment for printers"
     if ($userInput -eq "") {
         $userInput = "$segmentIp/24"
     }
@@ -1129,6 +1129,52 @@ Steps that will be executed:
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ
 
+}
+
+function CalculateSubnetPrefix {
+    param (
+        $subnetMask
+    )
+    [String]$formatted = [COnvert]::ToString(([ipaddress]$subnetMask).Address, 2)
+    $counter = 0
+    foreach ($var in $formatted.ToCharArray()) {
+        if ($var -eq '1') {
+            $counter++
+        }   
+    }
+    return $counter    
+}
+
+function GetIPObject {
+    #TODO: figure out how to choose the right network adapter
+    $adapterConf = (Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "index=1" )
+    $ipaddress = $adapterConf.IPAddress[0]
+    $subnetmask = $adapterConf.IPSubnet[0]
+
+    $subnetIP = ([IPAddress] (([IPAddress] $ipaddress).Address -band ([IPAddress] $subnetmask).Address)).IPAddressToString    
+
+    $IPObject = [PSCustomObject]@{
+        IP           = $ipaddress
+        SubnetIP     = $subnetIP
+        SubnetMask   = $subnetmask
+        SubnetPrefix = CalculateSubnetPrefix -subnetMask $subnetmask
+    }
+    return $IPObject
+       
+}
+function DiscoverDomainControllers {
+    # $NetworkSegments = (Get-NetNeighbor -State "Reachable").ipaddress | ForEach-Object { [IPAddress] (([IPAddress] $_).Address -band ([IPAddress] "255.255.255.0").Address) | Select-Object IPAddressToString } | Get-Unique
+    # $segmentIp = $NetworkSegments.IPAddressToString
+    
+    #TODO: figure out how to filter the results of nmap
+
+
+    $currentIP = GetIPObject
+    $subnetIP = $currentIP | select -ExpandProperty SubnetIP
+    $subnetPrefix = $currentIP | select -ExpandProperty SubnetPrefix
+    
+    $cmd =  "nmap.exe -oG C:\\Users\\Me\\Desktop\\aa.txt -Pn -p 389,88 --open $subnetIP/$subnetPrefix -vvv"
+    Invoke-Expression $cmd
 }
 
 Clear-Host
