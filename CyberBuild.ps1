@@ -54,10 +54,6 @@ function isInternetConnected {
     }
 }
 
-function InitializeVariables {
-
-    
-}
 
 function CreateDesktopShortcuts {
     Write-Host "Adding GodMode shortcut to desktop"
@@ -69,12 +65,12 @@ function CreateDesktopShortcuts {
     $null = New-Item @godmodeSplat -Force
 
     #Creating desktop shortcuts
-    if ((Test-Path -Path "C:\Users\Public\Desktop\Build.lnk", "C:\Users\Public\Desktop\Audit.lnk", "C:\Users\Public\Desktop\Analyze.lnk") -match "False") {
+    if ((Test-Path -Path "$env:USERPROFILE\Desktop\Build.lnk", "$env:USERPROFILE\Desktop\Audit.lnk", "$env:USERPROFILE\Desktop\Analyze.lnk", "$env:USERPROFILE\Desktop\Attack.lnk") -match "False") {
         Write-Host "[Success] Creating desktop shorcuts for cyberAuditTool modules" -ForegroundColor Green
-        $null = CreateShortcut -name "Build" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberBuild.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberBlackIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
-        $null = CreateShortcut -name "Audit" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\CyberAudit.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberRedIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
-        $null = CreateShortcut -name "Analyze" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAnalyzers.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberGreenIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
-        $null = CreateShortcut -name "Attack" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAttack.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberYellowIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
+        $null = CreateShortcut -name "Build" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberBuild.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberBlackIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
+        $null = CreateShortcut -name "Audit" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\CyberAudit.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberRedIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
+        $null = CreateShortcut -name "Analyze" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAnalyzers.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberGreenIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
+        $null = CreateShortcut -name "Attack" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAttack.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberYellowIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
     }
 }
 
@@ -95,7 +91,7 @@ function ShowMenu {
         Write-Host ""
         Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
         Write-Host ""
-        Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
+        Write-Host "     1. OS	    	| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
         Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
         Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
         Write-Host "     4. PSGallery	| Install PowerShell Modules from Powershell gallery          " -ForegroundColor $menuColor[4]
@@ -153,7 +149,7 @@ function ShowMenu {
             11 { Licenses; break }
     
             #Uninstal scoop utilities, applications and scoop itself
-            12 { Uninstall; break }
+            12 { Uninstall; $WaitForInput = $false }
     
             #Backup
             13 { BackupAudits; break }
@@ -792,54 +788,106 @@ function Uninstall {
     .SYNOPSIS
         Uninstall scoop applications and powershell modules
     #>
+
+    
     $help = @"
 
     Uninstall
     --------
 
-    This script will Uninstall:
-    - Scoop utilities
-    - Audit, Analyzer and Attack applications
-    - Scoop itself
-    - Powershell Modules
-    - neo4j service
+    You are leaving us? o_O
 
-    You will also be able to use restore point to remove all installations
-    and changes to the operating system and registry keys.
+    Ok, Choose script to Uninstall:
+    1. Scoop utilities
+    2. Scoop itself
+    3. Audit, Analyzer and Attack applications
+    4. Powershell Modules
+    5. neo4j service
+    6. use restore point to remove all installations
+         and changes to the operating system and registry keys.
+
+    99. nothing
 
 "@
     Write-Host $help
+    $userInput = Read-Host "Select Script Number (you can combine scripts numbers and they all will be run continously)" 
     $menuColor[12] = "Yellow"
-    $cmd = "neo4j uninstall-service"
-    Invoke-Expression $cmd
-    $a = appdir("appinspector")
-    Set-Location $a
-    $cmd = "dotnet.exe tool Uninstall --global Microsoft.CST.ApplicationInspector.CLI"
-    Invoke-Expression $cmd
-    Pop-Location
+    $UninstallDoWhileFlag = $true
+    do {
+        switch -Wildcard ($userInput) {
+            '*1*' {
+                (Get-ChildItem $bucketsDir\CyberAuditBucket -Filter *.json).BaseName | ForEach-Object { scoop Uninstall $_ -g }
+                foreach ($utility in $utilities) {
+                    scoop Uninstall $utility -g
+                }
+            }
+            '*2*' {
+                scoop Uninstall scoop
+                Remove-Item $scoopDir -Recurse -ErrorAction Ignore
+            }
+            '*3*' {
+                $AtLeastOneLinkRemoved = $false
+                # Delete desktop shorcuts
+                if (Test-Path -Path "$env:USERPROFILE\Desktop\GodMode.'{ED7BA470-8E54-465E-825C-99712043E01C}'") {
+                    $cmd = "Remove-Item $env:USERPROFILE\Desktop\GodMode.'{ED7BA470-8E54-465E-825C-99712043E01C}'"
+                    Invoke-Expression $cmd
+                    $AtLeastOneLinkRemoved = $true
+                }
+                foreach ($link in $DesktopLinks) {                
+                    if (Test-Path -Path "$env:USERPROFILE\Desktop\$link.lnk") {
+                        $cmd = "Remove-Item $env:USERPROFILE\Desktop\$link.lnk -Force"
+                        Invoke-Expression $cmd
+                        $AtLeastOneLinkRemoved = $true
+                    }
+                }
+                if ( $AtLeastOneLinkRemoved) {
+                    Write-Host "Links removed seccessfuly" -ForegroundColor Green
+                }
+                else {
+                    Write-Host "No links found to remove ¯\_(ツ)_/¯" -ForegroundColor DarkYellow
+                }
+            }
+            '*4*' {
 
-    $TestimoModules = @('Testimo', 'PSWinDocumentation.AD', 'PSWinDocumentation.DNS', 'ADEssentials', 'PSSharedGoods', 'PSWriteColor', 'Connectimo', 'DSInternals', 'Emailimo', 'PSWriteHTML' )
-    foreach ($Module in $TestimoModules) {
-        Uninstall-Module $Module -Force -AllVersions
-    }
-
-    (Get-ChildItem $bucketsDir\CyberAuditBucket -Filter *.json).BaseName | ForEach-Object { scoop Uninstall $_ -g }
-    foreach ($utility in $utilities) {
-        scoop Uninstall $utility -g
-    }
-    scoop Uninstall scoop
-    Remove-Item $scoopDir -Recurse -ErrorAction Ignore
-    Remove-Module Microsoft.ActiveDirectory.Management -Verbose
-    if (Test-Path $PSScriptRoot\HKEY_CURRENT_USER.reg) {
-        reg import $PSScriptRoot\HKEY_CURRENT_USER.reg
-        reg import $PSScriptRoot\HKEY_LOCAL_MACHINE.reg
-    }
-    Get-ComputerRestorePoint
-    $resPoint = Read-Host "Input the Sequence Number of the restore point you want to revert to (or Enter to continue)"
-    if ($resPoint -gt 0) {
-        Restore-Computer -RestorePoint $resPoint -Confirm -ErrorAction SilentlyContinue
-    }
-    Get-ComputerRestorePoint -LastStatus    
+                $TestimoModules = @('Testimo', 'PSWinDocumentation.AD', 'PSWinDocumentation.DNS', 'ADEssentials', 'PSSharedGoods', 'PSWriteColor', 'Connectimo', 'DSInternals', 'Emailimo', 'PSWriteHTML' )
+                foreach ($Module in $TestimoModules) {
+                    Uninstall-Module $Module -Force -AllVersions
+                }
+                Remove-Module Microsoft.ActiveDirectory.Management -Verbose
+                if (Test-Path $PSScriptRoot\HKEY_CURRENT_USER.reg) {
+                    reg import $PSScriptRoot\HKEY_CURRENT_USER.reg
+                    reg import $PSScriptRoot\HKEY_LOCAL_MACHINE.reg
+                }
+                $a = appdir("appinspector")
+                Set-Location $a
+                $cmd = "dotnet.exe tool Uninstall --global Microsoft.CST.ApplicationInspector.CLI"
+                Invoke-Expression $cmd
+                Pop-Location
+            }
+            '*5*' {
+                $cmd = "neo4j uninstall-service"
+                Invoke-Expression $cmd
+            }
+            '*6*' {
+                Get-ComputerRestorePoint
+                $resPoint = Read-Host "Input the Sequence Number of the restore point you want to revert to (or Enter to continue)"
+                if ($resPoint -gt 0) {
+                    Restore-Computer -RestorePoint $resPoint -Confirm -ErrorAction SilentlyContinue
+                }
+                Get-ComputerRestorePoint -LastStatus   
+            }
+            Default {
+                Write-Host "OK, we are glad to see you are stiil like us"
+            }
+        }
+        $userInput = Read-Host "
+Want to delete another things?
+Enter the scripts numbers to continue
+Or leave it blank for exit to main menu"
+        if ($userInput -notlike "") {
+            $UninstallDoWhileFlag = $false
+        }
+    }while ($UninstallDoWhileFlag)     
 }
 
 function BackupAudits {
@@ -936,8 +984,8 @@ function RAM {
 "@
     Write-Host $help
     $menuColor[15] = "Yellow"
-    $input = read-host "Input [T] to Trim RAM (Enter to continue doing nothing)"
-    if ($input -eq "T") {
+    $userInput = read-host "Input [T] to Trim RAM (Enter to continue doing nothing)"
+    if ($userInput -eq "T") {
         $scripttorun = $PSScriptRoot + "\CyberRamTrimmer.ps1"
         &$scripttorun
     }    
@@ -1032,6 +1080,7 @@ $AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
 $pips = @("colorama", "pysnmp", "win_unicode_console")
 $pythonScripts = @("colorama", "pysnmp", "win_unicode_console")
 $Licenses = @("AZScanKey.enc")
+$DesktopLinks = @("Build", "Audit", "Analyze", "Attack")
 
 CreateDesktopShortcuts
 
