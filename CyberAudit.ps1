@@ -139,13 +139,17 @@ when finished please copy the c:\ntdsdump directory to the Aquisition folder (NT
         Write-Host $block -ForegroundColor Red
     }
     else {
+        $cmd = 'Get-Date -Format "yyyyMMdd-HHmm"'
+        $currentTime = Invoke-Expression $cmd
         Write-Host "Please wait untill the backup process is completed" -ForegroundColor Green
         remove-item $env:LOGONSERVER\c$\ntdsdump -Recurse -ErrorAction SilentlyContinue
-        winrs -r:$DC ntdsutil "ac i ntds" "ifm" "create sysvol full c:\ntdsdump" q q
-        Copy-Item -Path $env:LOGONSERVER\c$\ntdsdump\* -Destination $ACQ -Recurse -Force
+        winrs -r:$DC ntdsutil "ac i ntds" "ifm" "create sysvol full c:\ntdsdump\$currentTime" q q
+        Copy-Item -Path $env:LOGONSERVER\c$\ntdsdump\$currentTime -Destination $ACQ\$currentTime -Recurse -Force
     }
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
+    $userInput = read-host "Press ENTER to continue, or type any latter to open aquisition folder"
+    if ($userInput -match '\w'){
+        $null = start-Process -PassThru explorer $ACQ\$currentTime
+    }
     
 }
 
@@ -288,12 +292,14 @@ Domain Admin permissions.
         
 "@
     Write-Host $help
-    $ACQ = ACQ("goddi")        
+    $cmd = "scoop prefix goddi"
+    $goddiPath = Invoke-Expression $cmd
+    $ACQ = ACQ("goddi")
     Write-Host "You are running as user: $env:USERDNSDOMAIN\$env:USERNAME"
     $securePwd = Read-Host "Input a Domain Admin password" -AsSecureString
     $Password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePwd))
     goddi-windows-amd64.exe -username="$env:USERNAME" -password="$Password" -domain="$env:USERDNSDOMAIN" -dc="$DC" -unsafe
-    Move-Item -Path $appsDir\goddi\current\csv\* -Destination $ACQ -Force
+    Move-Item -Path $goddiPath\csv\* -Destination $ACQ -Force
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ
     
@@ -1170,15 +1176,14 @@ function DiscoverDomainControllers {
 
 
     $currentIP = GetIPObject
-    $subnetIP = $currentIP | select -ExpandProperty SubnetIP
-    $subnetPrefix = $currentIP | select -ExpandProperty SubnetPrefix
+    $subnetIP = $currentIP | Select-Object -ExpandProperty SubnetIP
+    $subnetPrefix = $currentIP | Select-Object -ExpandProperty SubnetPrefix
     
     $cmd =  "nmap.exe -oG C:\\Users\\Me\\Desktop\\aa.txt -Pn -p 389,88 --open $subnetIP/$subnetPrefix -vvv"
     Invoke-Expression $cmd
 }
 
 Clear-Host
-
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 
 $runningScriptName = $MyInvocation.MyCommand.Name
@@ -1207,7 +1212,7 @@ else {
     Get-Credential $env:userdomain\$env:USERNAME | Export-Clixml -Path $credPath
 }
 
-start-Transcript -path $AcqBaseFolder\CyberAuditPhase.Log -Force -append
+start-Transcript -path $PSScriptRoot\CyberAuditPhase.Log -Force -append
 
 #get external ip information includin ISP
 $externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
