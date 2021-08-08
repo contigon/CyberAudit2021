@@ -41,59 +41,18 @@ function copy-ModuleToDirectory {
     Update-ModuleManifest -Path "$modulRealPath\$leafName.psd1"  -RootModule $PSScriptRoot\$leafName.psm1 -FunctionsToExport "*" -CmdletsToExport "*" -VariablesToExport "*" -AliasesToExport "*" -Verbose
     # Import the module from the custom directory.
     Import-Module -Force $modulRealPath
-    Write-Host " and... imported! `n"
+    Write-Host " and... imported! `n" -ForegroundColor Green
     Write-Host "finished the dev environment build.`n"
 }
 function isInternetConnected {
-    <#
-        checks if the machine is connected to the internet
-        returns true in case of connectivity, otherwise return false
-    #>
-    $origCurLocation = Get-Location
-    # test connection to the internet by downloading a file from github
-    $zipurlA = "https://raw.githubusercontent.com/contigon/$CatInstallRepository/master/go.pdf"
-
-    if (!(Test-Path -Path ".\CATDownloads")) {
-        New-Item -ItemType "directory" -Path ".\CATDownloads"
-    }
-
-
-    Set-Location ".\CATDownloads\"
     try {
-        # Trying to Download a file from $zipurlA to $BasePath"
-        dl $zipurlA .
-    }
-    catch {
-        Set-Location $origCurLocation
-        Remove-Item -LiteralPath ".\CATDownloads" -Force -Recurse
+        Invoke-RestMethod -Uri ('https://ipinfo.io/')
+        return $true
+    } catch {
         return $false
     }
-    Set-Location $origCurLocation
-    Remove-Item -LiteralPath ".\CATDownloads" -Force -Recurse
-    return $true
 }
 
-function InitializeVariables {
-    #Create or Set the Script directory tree
-    $scoopDir = New-Item -Path $Tools -Name "\Scoop" -ItemType "directory" -Force
-    $SVNDir = New-Item -Path $Tools -Name "\SVN" -ItemType "directory" -Force
-    $PowerShellsDir = New-Item -Path $Tools -Name "\PowerShells" -ItemType "directory" -Force
-    $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -Force
-
-    #Powershell Modules, Utilities and Applications that needs to be installed
-    #$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
-    $PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
-    $PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
-    $utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "openjdk", "putty", "winscp", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
-    $CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy")
-    $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
-    $AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
-    $AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
-    $pips = @("colorama", "pysnmp", "win_unicode_console")
-    $pythonScripts = @("colorama", "pysnmp", "win_unicode_console")
-    $Licenses = @("AZScanKey.enc")
-    
-}
 
 function CreateDesktopShortcuts {
     Write-Host "Adding GodMode shortcut to desktop"
@@ -105,12 +64,12 @@ function CreateDesktopShortcuts {
     $null = New-Item @godmodeSplat -Force
 
     #Creating desktop shortcuts
-    if ((Test-Path -Path "C:\Users\Public\Desktop\Build.lnk", "C:\Users\Public\Desktop\Audit.lnk", "C:\Users\Public\Desktop\Analyze.lnk") -match "False") {
+    if ((Test-Path -Path "$env:USERPROFILE\Desktop\Build.lnk", "$env:USERPROFILE\Desktop\Audit.lnk", "$env:USERPROFILE\Desktop\Analyze.lnk", "$env:USERPROFILE\Desktop\Attack.lnk") -match "False") {
         Write-Host "[Success] Creating desktop shorcuts for cyberAuditTool modules" -ForegroundColor Green
-        $null = CreateShortcut -name "Build" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberBuild.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberBlackIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
-        $null = CreateShortcut -name "Audit" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\CyberAudit.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberRedIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
-        $null = CreateShortcut -name "Analyze" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAnalyzers.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberGreenIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
-        $null = CreateShortcut -name "Attack" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAttack.ps1`"" -OutputDirectory "C:\Users\Public\Desktop" -IconLocation "$PSScriptroot\CyberYellowIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated True
+        $null = CreateShortcut -name "Build" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberBuild.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberBlackIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
+        $null = CreateShortcut -name "Audit" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\CyberAudit.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberRedIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
+        $null = CreateShortcut -name "Analyze" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAnalyzers.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberGreenIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
+        $null = CreateShortcut -name "Attack" -Target "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -Arguments "-ExecutionPolicy Unrestricted -File `"$PSScriptroot\cyberAttack.ps1`"" -OutputDirectory "$env:USERPROFILE\Desktop" -IconLocation "$PSScriptroot\CyberYellowIcon.ico" -Description "CyberAuditTool Powershell Edition" -Elevated
     }
 }
 
@@ -131,7 +90,7 @@ function ShowMenu {
         Write-Host ""
         Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
         Write-Host ""
-        Write-Host "     1. OS		| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
+        Write-Host "     1. OS	    	| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
         Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
         Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
         Write-Host "     4. PSGallery	| Install PowerShell Modules from Powershell gallery          " -ForegroundColor $menuColor[4]
@@ -150,11 +109,11 @@ function ShowMenu {
         Write-Host ""
         Write-Host "    99. Quit                                                                      " -ForegroundColor White
         Write-Host ""
-        $input = Read-Host "Select Script Number"
+        $userInput = Read-Host "Select Script Number"
     
         [boolean]$WaitForInput = $True
     
-        switch ($input) {
+        switch ($userInput) {
             #Check Windows OS and build versions and if needed it can help upgrade an update latest build
             1 { OSCheck; $WaitForInput = $false }
     
@@ -189,7 +148,7 @@ function ShowMenu {
             11 { Licenses; break }
     
             #Uninstal scoop utilities, applications and scoop itself
-            12 { Uninstall; break }
+            12 { Uninstall; $WaitForInput = $false }
     
             #Backup
             13 { BackupAudits; break }
@@ -210,7 +169,7 @@ function ShowMenu {
         }
         Clear-Host
         $WaitForInput = $True
-    } while ($input -ne '99')    
+    } while ($userInput -ne '99')    
 }
 
 function OSCheck() {
@@ -231,23 +190,21 @@ function OSCheck() {
 "@
     Write-Host $help
     $menuColor[1] = "Yellow"
+    Write-Host "Checking internet connection..."
     if (!(isInternetConnected)) {
         # internet is down or corporation Firewall is blocking ICMP protocol
         Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
-    }
-    else {
+    } else {
         Write-Host "Internet is up, you can continue with installation" -ForegroundColor Green
     }
     if (([System.Environment]::OSVersion.Version.Major -lt 10)) {
         write-host "CyberAuditTool requires Windows 10 or later Operating systems, your system does not qualify with that, please upgrade the OS before continuing" -ForegroundColor Red
-    }
-    else {
+    } else {
         write-host "Operating System Version is OK so we now test Build number" -ForegroundColor Green
     }
     if (((Get-WmiObject -class Win32_OperatingSystem).Version -lt "10.0.17763")) {
         write-host "Minimal Windows 10 build version was not detected, please upgrade the OS before continuing" -ForegroundColor Red
-    }
-    else {
+    } else {
         write-host "OS build version is OK, you can continue installation without upgrade" -ForegroundColor Green
     }
     $update = Read-Host "Press [R] to Upgrade or [U] to update windows (Enter to continue doing nothing)"
@@ -291,12 +248,10 @@ function OSCheck() {
             if (Test-Path $UpdaterBinary) {
                 Start-Process -FilePath $UpdaterBinary -ArgumentList $UpdaterArguments -Wait
                 Write-Log "Fired and forgotten?"
-            }
-            else {
+            } else {
                 Write-Log -Message ([string]::Format("ERROR: File {0} does not exist!", $UpdaterBinary))
             }
-        }
-        catch {
+        } catch {
             Write-Log -Message $_.Exception.Message
             Write-Error $_.Exception.Message
         }
@@ -344,18 +299,16 @@ function RSATInstall {
     Write-Host $help
     $menuColor[3] = "Yellow"
 
-    $input = Read-Host "Press [A] to install RSAT automatically or [Enter] to skip and manually install it"
-    if ($input -eq "A") {
+    $userInput = Read-Host "Press [A] to install RSAT automatically or [Enter] to skip and manually install it"
+    if ($userInput -eq "A") {
 
         $ScriptToRun = $PSScriptRoot + "\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1"
         &$ScriptToRun -ALL
         $testPendingReboot = Test-PendingRebootRegistry
         if ($testPendingReboot -eq $true) {
-
             Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
         }
-    }
-    else {
+    } else {
         failed "You have decided to manually install RSAT, please note that if you will not install is C.A.T will not operate properly"
     }
 }
@@ -377,13 +330,13 @@ function PSGalleryInstall {
 "@
     Write-Host $help
     foreach ($psm in $PSGModules) {
-        write-host "- $psm"
+        write-host "        - $psm"
     }
     $menuColor[4] = "Yellow"
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
     Install-PackageProvider Nuget
     Install-Module -Name PowerShellGet -Force -AllowClobber
-
+    
     foreach ($PSGModule in $PSGModules) {
         if ($PSGModule -eq "7Zip4PowerShell") {
             Write-Host "installing standard lib package"
@@ -392,8 +345,7 @@ function PSGalleryInstall {
             Install-Module -Name 7Zip4Powershell -AllowClobber -Force
             Import-Module "$PSGModule"
             Write-Host "Imported module: $PSGModule"
-        }
-        else {
+        } else {
             Write-Host "Installing module $PSGModule"
             Install-Module -Name $PSGModule -AllowClobber -Force
             Import-Module "$PSGModule"
@@ -547,8 +499,7 @@ function InstallCollectors() {
                 Write-Host $c[$i - 4].ToString() "--> global app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 4].ToString() -g
                 scoop install $c[$i - 4].ToString() -g
-            }
-            else {
+            } else {
                 Write-Host $c[$i - 3].ToString() "--> app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 3].ToString()
                 scoop install $c[$i - 3].ToString()
@@ -582,17 +533,15 @@ function InstallAnalyzers {
     #(Get-ChildItem $scoopDir\buckets\CyberAuditBucket -Filter *.json).BaseName|ForEach-Object {scoop install $_ -g}
     foreach ($AnalyzerApp in $AnalyzerApps) {
         if ($AnalyzerApp -eq "vista_proba_free") {
-            $input = Read-Host "Press [Y] to download $AnalyzerApp rainbow table for Ophcrack (or Enter to continue and download it later)"
-            if ($input -eq "Y") {
+            $userInput = Read-Host "Press [Y] to download $AnalyzerApp rainbow table for Ophcrack (or Enter to continue and download it later)"
+            if ($userInput -eq "Y") {
                 scoop install $AnalyzerApp -g
                 scoop update $AnalyzerApp -g
-            }
-            else {
+            } else {
                 Write-Host "You can download any rainbow table for Ophcrack manually from:" -ForegroundColor Yellow
                 Write-Host "https://ophcrack.sourceforge.io/tables.php" -ForegroundColor Yellow
             }
-        }
-        else {
+        } else {
             scoop install $AnalyzerApp -g
             scoop update $AnalyzerApp -g
         }
@@ -607,8 +556,7 @@ function InstallAnalyzers {
         if ($( $foreach.current ) -match 'failed') {
             if ($c[$i - 2].ToString() -match "global") {
                 Write-Host $c[$i - 4].ToString() "--> global app installation failed, we will try to Uninstall and reinstall"
-            }
-            else {
+            } else {
                 Write-Host $c[$i - 3].ToString() "--> app installation failed, we will try to Uninstall and reinstall"
             }
         }
@@ -620,8 +568,7 @@ function InstallAnalyzers {
             if ($c[$i - 2].ToString() -match "global") {
                 scoop Uninstall $c[$i - 4].ToString() -g
                 scoop install $c[$i - 4].ToString() -g
-            }
-            else {
+            } else {
                 scoop Uninstall $c[$i - 3].ToString()
                 scoop install $c[$i - 3].ToString()
             }
@@ -636,8 +583,7 @@ function InstallAnalyzers {
         $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI"
         Invoke-Expression $cmd
         Pop-Location
-    }
-    else {
+    } else {
         Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
     }
 }
@@ -661,8 +607,7 @@ function InstallAttacks {
                 Write-Host $c[$i - 4].ToString() "--> global app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 4].ToString() -g
                 scoop install $c[$i - 4].ToString() -g
-            }
-            else {
+            } else {
                 Write-Host $c[$i - 3].ToString() "--> app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 3].ToString()
                 scoop install $c[$i - 3].ToString()
@@ -733,8 +678,7 @@ function UpdateScoop {
         $zipfile = "$PSScriptRoot\$FileName"
         Write-Host "Trying to Download Cyber Audit Tool Updates from $zipurlA to $PSScriptRoot"
         dl $zipurlA $zipfile
-    }
-    catch {
+    } catch {
         Write-Host "[Failed] Error connecting to 1st download site, trying 2nd download option"
         $zipfile = "$PSScriptRoot\$FileName"
         Write-Host "Trying to Download Cyber Audit Tool Updates from $zipurlB to $PSScriptRoot"
@@ -749,8 +693,7 @@ function UpdateScoop {
     $FilesToUpdate | ForEach-Object {
         if ((Get-Item $psscriptroot\$_).LastWriteTime -lt (Get-Item $psscriptroot\update\$_).LastWriteTime) {
             Write-host "[Update Available] $_" -ForegroundColor Red; Copy-Item "$psscriptroot\update\$_" -Destination "$psscriptroot\$_" -Force
-        }
-        else {
+        } else {
             Write-host "[No Updates] $_" -ForegroundColor Green
         }
     }
@@ -766,8 +709,7 @@ function UpdateScoop {
     Get-InstalledModule | ForEach-Object {
         $PSModule = (find-module $_.name).version; if ($PSModule -ne $_.version) {
             Write-host "Module:$( $_.name ) Installed Version:$( $_.version ) Last Version:$PSModule" -ForegroundColor Yellow; Update-Module $_.name -Force
-        }
-        else {
+        } else {
             Write-Host "$( $_.name ) $( $_.version ) is the latest" -ForegroundColor Green
         }
     }
@@ -782,12 +724,11 @@ function UpdateScoop {
 
     #update metasploit
     Write-Host "In order to update Metasploit framework please make sure you disable any AntiMalware protection" -ForegroundColor Yellow
-    $input = Read-Host "Press [M] if you want to update Metasploit framework or [Enter] to skip"
-    if ($input -eq "M") {
+    $userInput = Read-Host "Press [M] if you want to update Metasploit framework or [Enter] to skip"
+    if ($userInput -eq "M") {
         try {
             msfupdate
-        }
-        catch {
+        } catch {
             failed "Metasploit is not installed so we can not update it"
         }
     }    
@@ -827,54 +768,105 @@ function Uninstall {
     .SYNOPSIS
         Uninstall scoop applications and powershell modules
     #>
+
+    
     $help = @"
 
     Uninstall
     --------
 
-    This script will Uninstall:
-    - Scoop utilities
-    - Audit, Analyzer and Attack applications
-    - Scoop itself
-    - Powershell Modules
-    - neo4j service
+    You are leaving us? o_O
 
-    You will also be able to use restore point to remove all installations
-    and changes to the operating system and registry keys.
+    Ok, Choose script to Uninstall:
+    1. Scoop utilities
+    2. Scoop itself
+    3. Audit, Analyzer and Attack applications
+    4. Powershell Modules
+    5. neo4j service
+    6. use restore point to remove all installations
+       and changes to the operating system and registry keys.
+
+    99. nothing
 
 "@
     Write-Host $help
+    $userInput = Read-Host "Select Script Number (you can combine scripts numbers and they all will be run continously)" 
     $menuColor[12] = "Yellow"
-    $cmd = "neo4j uninstall-service"
-    Invoke-Expression $cmd
-    $a = appdir("appinspector")
-    Set-Location $a
-    $cmd = "dotnet.exe tool Uninstall --global Microsoft.CST.ApplicationInspector.CLI"
-    Invoke-Expression $cmd
-    Pop-Location
+    $UninstallDoWhileFlag = $true
+    do {
+        switch -Wildcard ($userInput) {
+            '*1*' {
+                (Get-ChildItem $bucketsDir\CyberAuditBucket -Filter *.json).BaseName | ForEach-Object { scoop Uninstall $_ -g }
+                foreach ($utility in $utilities) {
+                    scoop Uninstall $utility -g
+                }
+            }
+            '*2*' {
+                scoop Uninstall scoop
+                Remove-Item $scoopDir -Recurse -ErrorAction Ignore
+            }
+            '*3*' {
+                $AtLeastOneLinkRemoved = $false
+                # Delete desktop shorcuts
+                if (Test-Path -Path "$env:USERPROFILE\Desktop\GodMode.'{ED7BA470-8E54-465E-825C-99712043E01C}'") {
+                    $cmd = "Remove-Item $env:USERPROFILE\Desktop\GodMode.'{ED7BA470-8E54-465E-825C-99712043E01C}'"
+                    Invoke-Expression $cmd
+                    $AtLeastOneLinkRemoved = $true
+                }
+                foreach ($link in $DesktopLinks) {                
+                    if (Test-Path -Path "$env:USERPROFILE\Desktop\$link.lnk") {
+                        $cmd = "Remove-Item $env:USERPROFILE\Desktop\$link.lnk -Force"
+                        Invoke-Expression $cmd
+                        $AtLeastOneLinkRemoved = $true
+                    }
+                }
+                if ( $AtLeastOneLinkRemoved) {
+                    Write-Host '`nLinks removed seccessfuly' -ForegroundColor Green
+                } else {
+                    Write-Host 'No links found to remove ¯\_(ツ)_/¯' -ForegroundColor DarkYellow
+                }
+            }
+            '*4*' {
 
-    $TestimoModules = @('Testimo', 'PSWinDocumentation.AD', 'PSWinDocumentation.DNS', 'ADEssentials', 'PSSharedGoods', 'PSWriteColor', 'Connectimo', 'DSInternals', 'Emailimo', 'PSWriteHTML' )
-    foreach ($Module in $TestimoModules) {
-        Uninstall-Module $Module -Force -AllVersions
-    }
-
-    (Get-ChildItem $bucketsDir\CyberAuditBucket -Filter *.json).BaseName | ForEach-Object { scoop Uninstall $_ -g }
-    foreach ($utility in $utilities) {
-        scoop Uninstall $utility -g
-    }
-    scoop Uninstall scoop
-    Remove-Item $scoopDir -Recurse -ErrorAction Ignore
-    Remove-Module Microsoft.ActiveDirectory.Management -Verbose
-    if (Test-Path $PSScriptRoot\HKEY_CURRENT_USER.reg) {
-        reg import $PSScriptRoot\HKEY_CURRENT_USER.reg
-        reg import $PSScriptRoot\HKEY_LOCAL_MACHINE.reg
-    }
-    Get-ComputerRestorePoint
-    $resPoint = Read-Host "Input the Sequence Number of the restore point you want to revert to (or Enter to continue)"
-    if ($resPoint -gt 0) {
-        Restore-Computer -RestorePoint $resPoint -Confirm -ErrorAction SilentlyContinue
-    }
-    Get-ComputerRestorePoint -LastStatus    
+                $TestimoModules = @('Testimo', 'PSWinDocumentation.AD', 'PSWinDocumentation.DNS', 'ADEssentials', 'PSSharedGoods', 'PSWriteColor', 'Connectimo', 'DSInternals', 'Emailimo', 'PSWriteHTML' )
+                foreach ($Module in $TestimoModules) {
+                    Uninstall-Module $Module -Force -AllVersions
+                }
+                Remove-Module Microsoft.ActiveDirectory.Management -Verbose
+                if (Test-Path $PSScriptRoot\HKEY_CURRENT_USER.reg) {
+                    reg import $PSScriptRoot\HKEY_CURRENT_USER.reg
+                    reg import $PSScriptRoot\HKEY_LOCAL_MACHINE.reg
+                }
+                $a = appdir("appinspector")
+                Set-Location $a
+                $cmd = "dotnet.exe tool Uninstall --global Microsoft.CST.ApplicationInspector.CLI"
+                Invoke-Expression $cmd
+                Pop-Location
+            }
+            '*5*' {
+                $cmd = "neo4j uninstall-service"
+                Invoke-Expression $cmd
+            }
+            '*6*' {
+                Get-ComputerRestorePoint
+                $resPoint = Read-Host "Input the Sequence Number of the restore point you want to revert to (or Enter to continue)"
+                if ($resPoint -gt 0) {
+                    Restore-Computer -RestorePoint $resPoint -Confirm -ErrorAction SilentlyContinue
+                }
+                Get-ComputerRestorePoint -LastStatus   
+            }
+            Default {
+                Write-Host "`nOK, we are glad to see you are stiil like us"
+            }
+        }
+        $userInput = Read-Host "
+Want to delete another things?
+Enter the scripts numbers to continue
+Or leave it blank for exit to main menu"
+        if ($userInput -notlike "") {
+            $UninstallDoWhileFlag = $false
+        }
+    }while ($UninstallDoWhileFlag)     
 }
 
 function BackupAudits {
@@ -971,8 +963,8 @@ function RAM {
 "@
     Write-Host $help
     $menuColor[15] = "Yellow"
-    $input = read-host "Input [T] to Trim RAM (Enter to continue doing nothing)"
-    if ($input -eq "T") {
+    $userInput = read-host "Input [T] to Trim RAM (Enter to continue doing nothing)"
+    if ($userInput -eq "T") {
         $scripttorun = $PSScriptRoot + "\CyberRamTrimmer.ps1"
         &$scripttorun
     }    
@@ -1008,19 +1000,17 @@ function ShrinkVM {
     Write-Host "Clearing all windows event logs"
     Wevtutil el | ForEach-Object { wevtutil cl �$_� }
     write-host "Running the windows Disk Cleanup tool and removing files from the previous Windows installations/upgrades"
-    $input = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
-    if ($input -eq "A") {
+    $userInput = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
+    if ($userInput -eq "A") {
         cleanmgr.exe /autoclean
-    }
-    else {
+    } else {
         cleanmgr.exe
     }
     write-host "Running ccleaner tool to clean registry and Temp files"
-    $input = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
-    if ($input -eq "A") {
+    $userInput = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
+    if ($userInput -eq "A") {
         ccleaner /audo
-    }
-    else {
+    } else {
         ccleaner
     }
     Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow    
@@ -1048,7 +1038,27 @@ Invoke-Expression $cmd
 
 #Checkpoint-Computer -Description 'before installing CyberAuditTool'
 
-InitializeVariables
+#InitializeVariables
+#Create or Set the Script directory tree
+$scoopDir = New-Item -Path $Tools -Name "\Scoop" -ItemType "directory" -Force
+$SVNDir = New-Item -Path $Tools -Name "\SVN" -ItemType "directory" -Force
+$PowerShellsDir = New-Item -Path $Tools -Name "\PowerShells" -ItemType "directory" -Force
+$DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -Force
+
+#Powershell Modules, Utilities and Applications that needs to be installed
+#$PSGModules = @("Testimo","ImportExcel","Posh-SSH","7Zip4PowerShell","FileSplitter","PSWindowsUpdate","VMware.PowerCLI")
+$PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
+$PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
+$utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "openjdk", "putty", "winscp", "vcredist2013", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
+$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy")
+$GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
+$AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
+$AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
+$pips = @("colorama", "pysnmp", "win_unicode_console")
+$pythonScripts = @("colorama", "pysnmp", "win_unicode_console")
+$Licenses = @("AZScanKey.enc")
+$DesktopLinks = @("Build", "Audit", "Analyze", "Attack")
+
 CreateDesktopShortcuts
 
 read-host "Press ENTER to continue (or Ctrl+C to quit)"
