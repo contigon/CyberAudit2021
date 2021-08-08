@@ -17,7 +17,9 @@
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
 #Set Script directory tree variables
-$global:Tools = "$PSScriptRoot\Tools"
+if ($null -like $global:Tools) {
+    $global:Tools = "$PSScriptRoot\Tools"
+}
 $global:scoopDir = "$Tools\Scoop"
 $global:scoopGlobalDir = "$Tools\GlobalScoopApps"
 $global:SVNDir = "$Tools\SVN"
@@ -72,8 +74,7 @@ function Test-PendingRebootRegistry {
     $wuRebootKey = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired" -ErrorAction Ignore
     if (($cbsRebootKey -ne $null) -OR ($wuRebootKey -ne $null)) {
         $true
-    }
-    else {
+    } else {
         $false
     }
 }
@@ -137,8 +138,7 @@ function killApp {
                 kill $a.Id
             }
         }
-    }
-    catch {
+    } catch {
         throw
         return
     }
@@ -150,8 +150,7 @@ function checkRsat {
     If ((Get-Module -Name ActiveDirectory -ListAvailable) -ne $null) {
         Write-Host "[Success] Rsat in installed" -ForegroundColor Green
         Return $true
-    } 
-    else {
+    } else {
         Write-Host "[Failures] Rsat in  not installed" -ForegroundColor red
         return $false
     }
@@ -184,8 +183,7 @@ function CheckMachineRole {
     if ($systemRoleID -eq 0) {   
         write-host "[Failure] some features need access to a domain, connect this machine to the organization domain" -ForegroundColor Red
         return $false
-    }
-    else {
+    } else {
         write-host "[Success] This machine role is: " $systemRoles[[int]$systemRoleID] -ForegroundColor Green
         return $true
     }
@@ -222,8 +220,7 @@ function YesNo ($FirstName, $LastName) {
     $d = [Windows.Forms.MessageBox]::show($FirstName, $LastName, [Windows.Forms.MessageBoxButtons]::YesNo, [Windows.Forms.MessageBoxIcon]::Question)
     If ($d -eq [Windows.Forms.DialogResult]::Yes) {
         return $true
-    }
-    else {
+    } else {
         return $false
     }
 }
@@ -332,21 +329,17 @@ function get-installedAVProducts {
         $verNum = [int]$verNum
         if ($verNum -lt 10) {
             Write-Host "Antivirus detection does not support windows versions older than 10"
-        }
-        else {
+        } else {
             $AVProduct = Get-WmiObject -Namespace root\SecurityCenter2 -Class AntiVirusProduct
         }
-    }
-    else {
+    } else {
         #Windows Server version
         $verNum = [int]$winEditionSplitted[3]
         if ($verNum -eq 2016) {
             $AVProduct = (ls HKLM:\SOFTWARE\Microsoft -Name) | Where-Object { $_.Contains("Defender") }
-        }
-        elseif ($verNum -eq 2008) {
+        } elseif ($verNum -eq 2008) {
             $AVProduct = Get-WmiObject -Namespace root\SecurityCenter2 -Class AntiVirusProduct
-        }
-        else {
+        } else {
             # "Couldn\'t find Antivirus product: please disable any AV manually if exist."
             $AVProduct = ""
         }
@@ -371,12 +364,10 @@ function DisableAntimalware() {
             Set-MpPreference -DisableRealtimeMonitoring $true
             Write-Host "Windows Defender is now disabled." -ForegroundColor green
             Write-Host "Please check for existance of other AVs and disable them manually." -ForegroundColor red
-        }
-        else {
+        } else {
             Write-Host "Couldn\'t find Antivirus products: please disable any AV manually if exist."
         }
-    }
-    else {
+    } else {
         # we are running on windows client OS
         Write-Host ("You are running [" + ($AntiVirusProduct | measure).Count + "] antivirus realtime protection solutions:") -ForegroundColor green
         write-host ($AntiVirusProduct | % $_ { write-host "-->" $_.displayname  -ForegroundColor Green })
@@ -386,8 +377,7 @@ function DisableAntimalware() {
             if ($AntiVirusName -match "Windows Defender" -AND (Get-Service -name "sense").Status -cnotmatch "Stopped") {
                 Write-Host ("We will try to disable Windows Defender real time protection") -ForegroundColor red
                 Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -Force -MAPSReporting Disabled -SubmitSamplesConsent NeverSend
-            }
-            elseif ($AntiVirusName -notmatch "Windows Defender") {
+            } elseif ($AntiVirusName -notmatch "Windows Defender") {
                 $note = @"
             *****************************************************************
             Read this before continuing with using this software:
@@ -401,8 +391,7 @@ function DisableAntimalware() {
                 Write-Host $note -ForegroundColor Yellow
                 write-host ($AntiVirusName + "--> Real time scanning should be stopped") -ForegroundColor Red                
             }
-        }
-        else {
+        } else {
             $note = @"
      ********************************************************************
         Read this before continuing with using this software:
@@ -447,13 +436,11 @@ function checkPowerCLI () {
         if (Get-Module -Name VMware.PowerCLI -ListAvailable) {
             Write-Host ""
             Write-Host "*** VMWARE Power CLI is installed, Great you can continue now ***" -ForegroundColor Green
-        }
-        else {
+        } else {
             Write-Host ""
             Write-Host "*** VMWARE Power CLI is not installed, Please try again ***" -ForegroundColor Red
         }
-    }
-    catch {
+    } catch {
         Write-Host "There was a problem importing VMWARE Power CLI, please try again" -ForegroundColor Red
     }
 }
@@ -463,8 +450,7 @@ function CheckPowershell() {
     $psver = (get-host).Version.Major.ToString() + "." + (Get-Host).Version.Minor.ToString()
     if ($psver -ge 5.1) {
         write-host "Powershell version is OK" -ForegroundColor Green
-    }
-    else {
+    } else {
         write-host "Powershell version is less than 5.1, please upgrade manually" -ForegroundColor Red
         Write-Host "https://www.microsoft.com/en-us/download/details.aspx?id=54616"
         start-process "https://www.microsoft.com/en-us/download/details.aspx?id=54616"
@@ -477,8 +463,7 @@ function CheckDotNet() {
         $ScoopInstalled = $null
         $ScoopInstalled = scoop
         $dotNet = detect.ps1
-    }
-    catch {
+    } catch {
         if (-not (test-path "C:\Temp")) { mkdir "C:\Temp" }
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
@@ -488,8 +473,7 @@ function CheckDotNet() {
     foreach ($dotnetVer in $dotNet) {
         if ($dotnetVer -ne "=> Installed .Net Framework 3.5") {
             Write-Host $dotnetVer
-        }
-        else {
+        } else {
             Write-Host "Great, You have DotNet 3.5 which is needed for some of the tools" -ForegroundColor Gree
             $DotNet35Installed = "true"
         }
@@ -559,8 +543,7 @@ function ScoopCleanEnv() {
     if (Get-ChildItem env: |  ? value -Match "scoop") {
         Write-Host ""
         Write-Host "Cleaning the Environment Variables failed, Please try manually" -ForegroundColor Red
-    }
-    else {
+    } else {
         Write-Host ""
         Write-Host "Cleaning the Environment Variables was successfull" -ForegroundColor Green
     }
@@ -602,15 +585,13 @@ Function CreateShortcut {
         #region Create Shortcut
         if ($Name) {
             [System.IO.FileInfo] $LinkFileName = [System.IO.Path]::ChangeExtension($Name, "lnk")
-        }
-        else {
+        } else {
             [System.IO.FileInfo] $LinkFileName = [System.IO.Path]::ChangeExtension($Target.Name.ToString(), "lnk")
         }
 	
         if ($OutputDirectory) {
             [System.IO.FileInfo] $LinkFile = [IO.Path]::Combine($OutputDirectory, $LinkFileName)
-        }
-        else {
+        } else {
             [System.IO.FileInfo] $LinkFile = [IO.Path]::Combine($Target.Directory.ToString(), $LinkFileName)
         }
        
@@ -652,8 +633,7 @@ Function CreateShortcut {
             Rename-Item -Path $tempFile -NewName $LinkFile.Name
         }
         #endregion
-    }
-    catch {
+    } catch {
         Write-Error "Failed to create shortcut. The error was '$_'."
         return $null
     }
@@ -681,16 +661,14 @@ function proxydetect {
             Write-Host -ForegroundColor Yellow 'Setting up Powershell-Session Proxy Credentials...'
             $Wcl = new-object System.Net.WebClient
             $Wcl.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
-        }
-        else {
+        } else {
             Write-Host -ForegroundColor Yellow 'Please enter valid credentials, or the script will fail!'
             #Proxy Integration manual user
             $webclient = New-Object System.Net.WebClient
             $creds = Get-Credential
             $webclient.Proxy.Credentials = $creds
         }
-    }
-    else { Write-Host -ForegroundColor Yellow 'No proxy detected, continuing... ' }
+    } else { Write-Host -ForegroundColor Yellow 'No proxy detected, continuing... ' }
 }
 
 function TempDir {
@@ -729,17 +707,14 @@ function SetPythonVersion ($version) {
         if ($version -eq "2") {
             scoop reset python27
             success "Python version 3.x changed to 2.x"
-        }
-        else {
+        } else {
             success "Current python version is 3.x"
         }
-    }
-    else {
+    } else {
         if ($version -eq "3") {
             scoop reset python37
             success "Python version 2.x changed to 3.x"
-        }
-        else {
+        } else {
             success "Current python version is 2.x"
         }
     }
@@ -788,8 +763,7 @@ function Get-IPrange {
     if ($ip) { 
         $startaddr = IP-toINT64 -ip $networkaddr.ipaddresstostring 
         $endaddr = IP-toINT64 -ip $broadcastaddr.ipaddresstostring 
-    }
-    else { 
+    } else { 
         $startaddr = IP-toINT64 -ip $start 
         $endaddr = IP-toINT64 -ip $end 
     } 
@@ -837,8 +811,7 @@ function fAESEncrypt() {
     try {
         $oCryptoStream.Write($aBytesToBeEncrypted, 0, $aBytesToBeEncrypted.Length);
         $oCryptoStream.Close();
-    }
-    catch [Exception] {
+    } catch [Exception] {
         $raEncryptedBytes.Value = [system.text.encoding]::ASCII.GetBytes("Error occured while encoding string. Salt or Password incorrect?")
         return $false
     }   
@@ -873,8 +846,7 @@ function fAESDecrypt() {
     try {
         $oCryptoStream.Write($aBytesToDecrypt, 0, $aBytesToDecrypt.Length)
         $oCryptoStream.Close()
-    }
-    catch [Exception] {
+    } catch [Exception] {
         $raDecryptedBytes.Value = [system.text.encoding]::ASCII.GetBytes("Error occured while decoding string. Salt or Password incorrect?")
         return $false
     }

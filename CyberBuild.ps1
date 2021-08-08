@@ -41,15 +41,14 @@ function copy-ModuleToDirectory {
     Update-ModuleManifest -Path "$modulRealPath\$leafName.psd1"  -RootModule $PSScriptRoot\$leafName.psm1 -FunctionsToExport "*" -CmdletsToExport "*" -VariablesToExport "*" -AliasesToExport "*" -Verbose
     # Import the module from the custom directory.
     Import-Module -Force $modulRealPath
-    Write-Host " and... imported! `n"
+    Write-Host " and... imported! `n" -ForegroundColor Green
     Write-Host "finished the dev environment build.`n"
 }
 function isInternetConnected {
     try {
         Invoke-RestMethod -Uri ('https://ipinfo.io/')
         return $true
-    }
-    catch {
+    } catch {
         return $false
     }
 }
@@ -110,11 +109,11 @@ function ShowMenu {
         Write-Host ""
         Write-Host "    99. Quit                                                                      " -ForegroundColor White
         Write-Host ""
-        $input = Read-Host "Select Script Number"
+        $userInput = Read-Host "Select Script Number"
     
         [boolean]$WaitForInput = $True
     
-        switch ($input) {
+        switch ($userInput) {
             #Check Windows OS and build versions and if needed it can help upgrade an update latest build
             1 { OSCheck; $WaitForInput = $false }
     
@@ -170,7 +169,7 @@ function ShowMenu {
         }
         Clear-Host
         $WaitForInput = $True
-    } while ($input -ne '99')    
+    } while ($userInput -ne '99')    
 }
 
 function OSCheck() {
@@ -195,20 +194,17 @@ function OSCheck() {
     if (!(isInternetConnected)) {
         # internet is down or corporation Firewall is blocking ICMP protocol
         Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
-    }
-    else {
+    } else {
         Write-Host "Internet is up, you can continue with installation" -ForegroundColor Green
     }
     if (([System.Environment]::OSVersion.Version.Major -lt 10)) {
         write-host "CyberAuditTool requires Windows 10 or later Operating systems, your system does not qualify with that, please upgrade the OS before continuing" -ForegroundColor Red
-    }
-    else {
+    } else {
         write-host "Operating System Version is OK so we now test Build number" -ForegroundColor Green
     }
     if (((Get-WmiObject -class Win32_OperatingSystem).Version -lt "10.0.17763")) {
         write-host "Minimal Windows 10 build version was not detected, please upgrade the OS before continuing" -ForegroundColor Red
-    }
-    else {
+    } else {
         write-host "OS build version is OK, you can continue installation without upgrade" -ForegroundColor Green
     }
     $update = Read-Host "Press [R] to Upgrade or [U] to update windows (Enter to continue doing nothing)"
@@ -252,12 +248,10 @@ function OSCheck() {
             if (Test-Path $UpdaterBinary) {
                 Start-Process -FilePath $UpdaterBinary -ArgumentList $UpdaterArguments -Wait
                 Write-Log "Fired and forgotten?"
-            }
-            else {
+            } else {
                 Write-Log -Message ([string]::Format("ERROR: File {0} does not exist!", $UpdaterBinary))
             }
-        }
-        catch {
+        } catch {
             Write-Log -Message $_.Exception.Message
             Write-Error $_.Exception.Message
         }
@@ -305,18 +299,16 @@ function RSATInstall {
     Write-Host $help
     $menuColor[3] = "Yellow"
 
-    $input = Read-Host "Press [A] to install RSAT automatically or [Enter] to skip and manually install it"
-    if ($input -eq "A") {
+    $userInput = Read-Host "Press [A] to install RSAT automatically or [Enter] to skip and manually install it"
+    if ($userInput -eq "A") {
 
         $ScriptToRun = $PSScriptRoot + "\CyberInstall-RSATv1809v1903v1909v2004v20H2.ps1"
         &$ScriptToRun -ALL
         $testPendingReboot = Test-PendingRebootRegistry
         if ($testPendingReboot -eq $true) {
-
             Write-Host "Reboots are pending after RSAT was installed, Please restart the computer and continue with C.A.T next build phase " -ForegroundColor Yellow
         }
-    }
-    else {
+    } else {
         failed "You have decided to manually install RSAT, please note that if you will not install is C.A.T will not operate properly"
     }
 }
@@ -338,7 +330,7 @@ function PSGalleryInstall {
 "@
     Write-Host $help
     foreach ($psm in $PSGModules) {
-        write-host "- $psm"
+        write-host "        - $psm"
     }
     $menuColor[4] = "Yellow"
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
@@ -353,8 +345,7 @@ function PSGalleryInstall {
             Install-Module -Name 7Zip4Powershell -AllowClobber -Force
             Import-Module "$PSGModule"
             Write-Host "Imported module: $PSGModule"
-        }
-        else {
+        } else {
             Write-Host "Installing module $PSGModule"
             Install-Module -Name $PSGModule -AllowClobber -Force
             Import-Module "$PSGModule"
@@ -508,8 +499,7 @@ function InstallCollectors() {
                 Write-Host $c[$i - 4].ToString() "--> global app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 4].ToString() -g
                 scoop install $c[$i - 4].ToString() -g
-            }
-            else {
+            } else {
                 Write-Host $c[$i - 3].ToString() "--> app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 3].ToString()
                 scoop install $c[$i - 3].ToString()
@@ -543,17 +533,15 @@ function InstallAnalyzers {
     #(Get-ChildItem $scoopDir\buckets\CyberAuditBucket -Filter *.json).BaseName|ForEach-Object {scoop install $_ -g}
     foreach ($AnalyzerApp in $AnalyzerApps) {
         if ($AnalyzerApp -eq "vista_proba_free") {
-            $input = Read-Host "Press [Y] to download $AnalyzerApp rainbow table for Ophcrack (or Enter to continue and download it later)"
-            if ($input -eq "Y") {
+            $userInput = Read-Host "Press [Y] to download $AnalyzerApp rainbow table for Ophcrack (or Enter to continue and download it later)"
+            if ($userInput -eq "Y") {
                 scoop install $AnalyzerApp -g
                 scoop update $AnalyzerApp -g
-            }
-            else {
+            } else {
                 Write-Host "You can download any rainbow table for Ophcrack manually from:" -ForegroundColor Yellow
                 Write-Host "https://ophcrack.sourceforge.io/tables.php" -ForegroundColor Yellow
             }
-        }
-        else {
+        } else {
             scoop install $AnalyzerApp -g
             scoop update $AnalyzerApp -g
         }
@@ -568,8 +556,7 @@ function InstallAnalyzers {
         if ($( $foreach.current ) -match 'failed') {
             if ($c[$i - 2].ToString() -match "global") {
                 Write-Host $c[$i - 4].ToString() "--> global app installation failed, we will try to Uninstall and reinstall"
-            }
-            else {
+            } else {
                 Write-Host $c[$i - 3].ToString() "--> app installation failed, we will try to Uninstall and reinstall"
             }
         }
@@ -581,8 +568,7 @@ function InstallAnalyzers {
             if ($c[$i - 2].ToString() -match "global") {
                 scoop Uninstall $c[$i - 4].ToString() -g
                 scoop install $c[$i - 4].ToString() -g
-            }
-            else {
+            } else {
                 scoop Uninstall $c[$i - 3].ToString()
                 scoop install $c[$i - 3].ToString()
             }
@@ -597,8 +583,7 @@ function InstallAnalyzers {
         $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI"
         Invoke-Expression $cmd
         Pop-Location
-    }
-    else {
+    } else {
         Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
     }
 }
@@ -622,8 +607,7 @@ function InstallAttacks {
                 Write-Host $c[$i - 4].ToString() "--> global app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 4].ToString() -g
                 scoop install $c[$i - 4].ToString() -g
-            }
-            else {
+            } else {
                 Write-Host $c[$i - 3].ToString() "--> app installation failed, we will try to Uninstall and reinstall"
                 scoop Uninstall $c[$i - 3].ToString()
                 scoop install $c[$i - 3].ToString()
@@ -694,8 +678,7 @@ function UpdateScoop {
         $zipfile = "$PSScriptRoot\$FileName"
         Write-Host "Trying to Download Cyber Audit Tool Updates from $zipurlA to $PSScriptRoot"
         dl $zipurlA $zipfile
-    }
-    catch {
+    } catch {
         Write-Host "[Failed] Error connecting to 1st download site, trying 2nd download option"
         $zipfile = "$PSScriptRoot\$FileName"
         Write-Host "Trying to Download Cyber Audit Tool Updates from $zipurlB to $PSScriptRoot"
@@ -710,8 +693,7 @@ function UpdateScoop {
     $FilesToUpdate | ForEach-Object {
         if ((Get-Item $psscriptroot\$_).LastWriteTime -lt (Get-Item $psscriptroot\update\$_).LastWriteTime) {
             Write-host "[Update Available] $_" -ForegroundColor Red; Copy-Item "$psscriptroot\update\$_" -Destination "$psscriptroot\$_" -Force
-        }
-        else {
+        } else {
             Write-host "[No Updates] $_" -ForegroundColor Green
         }
     }
@@ -727,8 +709,7 @@ function UpdateScoop {
     Get-InstalledModule | ForEach-Object {
         $PSModule = (find-module $_.name).version; if ($PSModule -ne $_.version) {
             Write-host "Module:$( $_.name ) Installed Version:$( $_.version ) Last Version:$PSModule" -ForegroundColor Yellow; Update-Module $_.name -Force
-        }
-        else {
+        } else {
             Write-Host "$( $_.name ) $( $_.version ) is the latest" -ForegroundColor Green
         }
     }
@@ -743,12 +724,11 @@ function UpdateScoop {
 
     #update metasploit
     Write-Host "In order to update Metasploit framework please make sure you disable any AntiMalware protection" -ForegroundColor Yellow
-    $input = Read-Host "Press [M] if you want to update Metasploit framework or [Enter] to skip"
-    if ($input -eq "M") {
+    $userInput = Read-Host "Press [M] if you want to update Metasploit framework or [Enter] to skip"
+    if ($userInput -eq "M") {
         try {
             msfupdate
-        }
-        catch {
+        } catch {
             failed "Metasploit is not installed so we can not update it"
         }
     }    
@@ -804,7 +784,7 @@ function Uninstall {
     4. Powershell Modules
     5. neo4j service
     6. use restore point to remove all installations
-         and changes to the operating system and registry keys.
+       and changes to the operating system and registry keys.
 
     99. nothing
 
@@ -841,10 +821,9 @@ function Uninstall {
                     }
                 }
                 if ( $AtLeastOneLinkRemoved) {
-                    Write-Host "Links removed seccessfuly" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "No links found to remove ¯\_(ツ)_/¯" -ForegroundColor DarkYellow
+                    Write-Host '`nLinks removed seccessfuly' -ForegroundColor Green
+                } else {
+                    Write-Host 'No links found to remove ¯\_(ツ)_/¯' -ForegroundColor DarkYellow
                 }
             }
             '*4*' {
@@ -877,7 +856,7 @@ function Uninstall {
                 Get-ComputerRestorePoint -LastStatus   
             }
             Default {
-                Write-Host "OK, we are glad to see you are stiil like us"
+                Write-Host "`nOK, we are glad to see you are stiil like us"
             }
         }
         $userInput = Read-Host "
@@ -1021,19 +1000,17 @@ function ShrinkVM {
     Write-Host "Clearing all windows event logs"
     Wevtutil el | ForEach-Object { wevtutil cl �$_� }
     write-host "Running the windows Disk Cleanup tool and removing files from the previous Windows installations/upgrades"
-    $input = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
-    if ($input -eq "A") {
+    $userInput = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
+    if ($userInput -eq "A") {
         cleanmgr.exe /autoclean
-    }
-    else {
+    } else {
         cleanmgr.exe
     }
     write-host "Running ccleaner tool to clean registry and Temp files"
-    $input = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
-    if ($input -eq "A") {
+    $userInput = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
+    if ($userInput -eq "A") {
         ccleaner /audo
-    }
-    else {
+    } else {
         ccleaner
     }
     Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow    
