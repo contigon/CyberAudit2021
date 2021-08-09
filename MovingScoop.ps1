@@ -22,7 +22,8 @@ function updateShims {
         if ($shimsToUpdate.Length -eq 0) {
             Write-Host "No $whatShims sihms found" -ForegroundColor Red
         } else {            
-            Write-Host "Updating $whatShims shims:"
+            Write-Host "Updating $whatShims shims with this path:" -ForegroundColor Yellow
+            Write-Host "$tools$appsRelativePath" -ForegroundColor Yellow
             foreach ($item in $shimsToUpdate) {
                 if (($item.Name -like '*.shim') -or ($item.Name -like '*.cmd')) {
                     write-host $item.FullName -ForegroundColor DarkMagenta
@@ -69,7 +70,7 @@ while ($userinput -ne 99) {
         2. Shims            | Update all shims to the current absolute address of Tool
         3. Ensure in PATH   | ensure scoop and scoop_global in PATH
         
-        - it's recommended to all commands one by one by order
+        - it's recommended to run all commands one by one by order
 
 "@
     Write-Host $help -ForegroundColor Yellow
