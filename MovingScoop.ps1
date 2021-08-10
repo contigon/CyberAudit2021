@@ -80,6 +80,32 @@ while ($userinput -ne 99) {
         2 { updateShims }
         3 { ensureInPath }
     }
+        #TODO: add an option to compress all of the apps, and option to extract them to the right place
+    <#
+    #$7z = "C:\Users\Me\Desktop\7z\7za.exe"
+$7z = "7z"
+$desktop = "$env:USERPROFILE\Desktop"
+
+$cmd = "$7z a -ttar -snl $desktop\test\archive.tar $desktop\CyberAudit2021\Tools\*"
+Invoke-Expression $cmd
+$cmd = "$7z a -txz $desktop\test\archive.tar.xz $desktop\test\archive.tar"
+Invoke-Expression $cmd
+
+#cmd1 = "$7z a -so 'C:\Users\Me\Desktop\localshim'"
+#$cmd2 = "$7z a -txz -si 'C:\Users\Me\desktop\f\c\archive.tgz'"
+#Invoke-Expression $cmd1 | Invoke-Expression $cmd2
+
+#$cmd1 = "$7z x -txz -so C:\Users\Me\Desktop\a\archive.tar.xz" 
+#$cmd2 = "$7z x -ttar -si -oC:\Users\Me\Desktop\a\"
+#Invoke-Expression $cmd1 | Invoke-Expression $cmd2
+
+#$cmd = "$7z x $desktop\test\archive.tar.xz  -o$desktop\test\1\ -txz"
+#iex $cmd
+#$cmd = "$7z x $desktop\test\1\archive.tar -o$desktop\test\1\ -ttar"
+#iex $cmd
+  
     
+    
+    #>
 } 
     
