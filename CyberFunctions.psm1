@@ -238,13 +238,27 @@ Function Get-Folder($initialDirectory) {
 }
 
 
-function Get-FileName {  
-    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
-    Out-Null
+function Get-FileName {
+    # $Extensions param is a strings array of requested extensions
+    # The function take this extensions list and set it in the filter of the file chooser
+    # If this paramter is empty, the file chooser set the filter to "All files"
+    param (
+        [string[]]
+        $Extensions
+    )
+    $FileFilter = "All files (*.*)| *.*"
+    if ($Extensions.Count -gt 0) {
+        [string]$extsString = ($Extensions -join ";*.")
+        $extsString =  $extsString.Insert(0, '*.')
+        $FileFilter = $FileFilter.Insert(0, "| $extsString|")
+        $FileFilter = $FileFilter.Insert(0, "($extsString)")
+    } 
+
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-    $OpenFileDialog.filter = "All files (*.*)| *.*"
+    $OpenFileDialog.filter = $FileFilter
     $OpenFileDialog.ShowDialog() | Out-Null
-    $OpenFileDialog.filename
+    $OpenFileDialog.filename   
 }
 
 
