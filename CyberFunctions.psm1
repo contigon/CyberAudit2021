@@ -244,21 +244,28 @@ function Get-FileName {
     # If this paramter is empty, the file chooser set the filter to "All files"
     param (
         [string[]]
-        $Extensions
+        $Extensions,
+
+        [string]
+        $ExtensionsExplain
     )
     $FileFilter = "All files (*.*)| *.*"
     if ($Extensions.Count -gt 0) {
         [string]$extsString = ($Extensions -join ";*.")
-        $extsString =  $extsString.Insert(0, '*.')
-        $FileFilter = $FileFilter.Insert(0, "| $extsString|")
-        $FileFilter = $FileFilter.Insert(0, "($extsString)")
+        $extsString = $extsString.Insert(0, '*.')
+        $FileFilter = $FileFilter.Insert(0, "$extsString|")
+        $FileFilter = $FileFilter.Insert(0, "$ExtensionsExplain|")
     } 
 
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
     $OpenFileDialog.filter = $FileFilter
-    $OpenFileDialog.ShowDialog() | Out-Null
-    $OpenFileDialog.filename   
+    $cancel = $OpenFileDialog.ShowDialog()
+    if ( $cancel -ne "Cancel") {
+        return $OpenFileDialog.filename   
+    } else {
+        return $cancel 
+    } 
 }
 
 
