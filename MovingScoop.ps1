@@ -51,7 +51,7 @@ function Set-Vars {
     $env:SCOOP = $scoopDir
     [Environment]::SetEnvironmentVariable("SCOOP", $env:SCOOP, "MACHINE")    
 
-    Write-Host "Done. All veriables are set to the current absolute path:" -ForegroundColor Yellow
+    Write-Host "Done. All global veriables are set to the current absolute path:" -ForegroundColor Yellow
     Write-Host "$PSScriptRoot" -ForegroundColor DarkYellow
     read-host "Press ENTER to continue" 
     Clear-Host
@@ -63,34 +63,81 @@ function Register-Path {
     Clear-Host
 }
 function Import-Scoop {
-    #Expand-Archive -Path "$PSScriptRoot\7z.zip" -DestinationPath "$PSScriptRoot"
-    $compressedFilePath = Get-FileName "tar.xz"
-    $compressedFileParentPath = Split-Path $compressedFilePath
-    try {
-        if (!(Test-Path $compressedFilePath) ) {
-            throw "ERROR: File path is not vaild"
-        }
-    } catch {
-        write-host "EEERRRROOORR"
-        return
+    # Check if 7z is already deployed in the main directory
+    # If not, extract it from the 7z.zip file
+    if (!(Test-Path "$PSScriptRoot\7z\x64\7za.exe")) {
+        Expand-Archive -Path "$PSScriptRoot\7z.zip" -DestinationPath "$PSScriptRoot" 
     }
     $7z = "$PSScriptRoot\7z\x64\7za.exe"
 
-    $cmd = "$7z x $compressedFilePath  -o$compressedFileParentPath -txz"
-    Invoke-Expression $cmd
-    $cmd = "$7z x $compressedFileParentPath\Tools.tar -o$psscriptroot\YaaniTools -ttar -aos"
-    Invoke-Expression $cmd
+    # Show a GUI to choose the compressed file that supposed to contain the Tools
+    $compressedFilePath = Get-FileName  -Extensions "tar.xz" -ExtensionsExplain "tar.xz archived files"
+    $compressedFileParentPath = Split-Path $compressedFilePath
+    $compressedFileName = (Split-Path $compressedFilePath -Leaf)
+    $compressedFileName = $compressedFileName.Substring(0,$compressedFileName.LastIndexOf(".tar.xz"))
+    # If user pressed to cancel button in the choose-GUI, cancel the action
+    if ($compressedFilePath -eq "Cancel" ) {
+        read-host "Press ENTER to continue" 
+        Clear-Host
+    }
+    # Check if the Path is not empty and it's valid
+    if ([string]::IsNullOrEmpty($compressedFilePath) -or !(Test-Path $compressedFilePath) ) {
+        failed "File path is not vaild"
+        read-host "Press ENTER to return to menu" 
+        Clear-Host
+    }
 
-    <#TODO: Finish the function :
-    - Add more bdikot mikrei katze
-    - Change from YaaniTools to Tools after the tests
-    - Check if the chosen compressed file is realy contains a Tool Directory
-    #>
-    #TODO: Test the function with a real Tools directory
+    # Check if the file is really a "tar.xz" archive
+    $ErrorActionPreference = "SilentlyContinue"
+    $itemCheck = Invoke-Expression "$7z l `"$compressedFilePath`" "| select-string "Type = "
+    $ErrorActionPreference = "Continue"
+    if ([string]::IsNullOrEmpty($itemCheck) -or (( $itemCheck -replace "Type = ").Trim() -ne "xz")) {
+        failed "The file isn't a tar.xz file"
+        read-host "Press ENTER to return to menu" 
+        Clear-Host
+        return
+    }
+    # Check if archive contains a .tar file
+    $7zOutput = Invoke-Expression "$7z l `"$compressedFilePath`""
+    if (!((select-string " *.tar" -InputObject $7zOutput -Quiet) -and (select-string " 1 files" -InputObject $7zOutput -Quiet))) {
+        failed "The file doesn't contain Tools.tar file inside it"         
+        read-host "Press ENTER to return to menu" 
+        Clear-Host
+        return
+    }
+
+    # Extract the Tools.tar from the tar.xz file, and then extract the Tools directory from thar Tools.tar file
+    $cmd = "$7z x `"$compressedFilePath`"  -o$compressedFileParentPath -txz -aoa"
+    Invoke-Expression $cmd
+    # Check that Tools.tar contains a directory named "Tools"
+    $7zOutput = Invoke-Expression "$7z l `"$compressedFileParentPath\$compressedFileName.tar`"" | select-string "D\.\..*Tools`$" -Quiet
+    if (!$7zOutput) {    
+        write-host "The tar file doesn't contain Tools directory inside it"  -ForegroundColor Red
+        read-host "Press ENTER to return to menu" 
+        Clear-Host
+        return
+    }
+    
+    # Extract the files from the *.tar file Tools directory to Tool directory of CAT
+    $cmd = "$7z x $compressedFileParentPath\Tools.tar -o$psscriptroot\Tools -ttar -aos" 
+    Invoke-Expression $cmd
+    
+
+    Write-Host "Folders from compressed file extracted successfuly to the Tools directory" -ForegroundColor Green
+    read-host "Press ENTER to continue"
+    Clear-Host
+}
+function Export-Scoop {
     #TODO: Add a function to compress the Tools directory of an existing CAT and scoop with installed programs
     
-    read-host "Press ENTER to continue" 
-    Clear-Host
+    
+}
+function CheckCompressedFileExt {
+    param (
+        $Path
+    )
+    $item = (7z l $path | select-string "Type = ")
+    return $item -replace "Type = "
 }
 
 [Int] $userInput = 0
@@ -118,6 +165,7 @@ while ($userinput -ne 99) {
         2 { Update-Shims }
         3 { Register-Path }
         4 { Import-Scoop }
+        5 { Export-Scoop }
     }
     #TODO: Improve the ugly menu
     #TODO: Implement an Export-Scoop function
