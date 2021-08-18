@@ -225,10 +225,19 @@ function YesNo ($FirstName, $LastName) {
     }
 }
 
-Function Get-Folder($initialDirectory) {
+Function Get-Folder {
+    param (
+        $initialDirectory,        
+        # An option to disable the "Add new folder button"
+        [switch] $DisableNewFolder,
+        # You can add a description to the folder choose window
+        $Description
+    ) 
     [void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
     $FolderBrowserDialog = New-Object System.Windows.Forms.FolderBrowserDialog
     $FolderBrowserDialog.RootFolder = 'MyComputer'
+    $FolderBrowserDialog.ShowNewFolderButton = !$DisableNewFolder
+    if (![string]::IsNullOrEmpty($Description)) { $FolderBrowserDialog.Description = $Description }
     if ($initialDirectory) { $FolderBrowserDialog.SelectedPath = $initialDirectory }
     $Topmost = New-Object System.Windows.Forms.Form
     $Topmost.TopMost = $True
@@ -236,6 +245,7 @@ Function Get-Folder($initialDirectory) {
     [void] $FolderBrowserDialog.ShowDialog($Topmost) 
     return $FolderBrowserDialog.SelectedPath
 }
+
 
 
 function Get-FileName {
