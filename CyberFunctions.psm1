@@ -228,10 +228,12 @@ function YesNo ($FirstName, $LastName) {
 Function Get-Folder {
     param (
         $initialDirectory,        
+        # You can add a description to the folder choose window
+        $Description,
         # An option to disable the "Add new folder button"
         [switch] $DisableNewFolder,
-        # You can add a description to the folder choose window
-        $Description
+        # If paramter is present, return "Cancel" if user pressed the Cancel or "X" buttons
+        [switch] $ReturnCancelIfCanceled
     ) 
     [void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
     $FolderBrowserDialog = New-Object System.Windows.Forms.FolderBrowserDialog
@@ -242,7 +244,8 @@ Function Get-Folder {
     $Topmost = New-Object System.Windows.Forms.Form
     $Topmost.TopMost = $True
     $Topmost.MinimizeBox = $True
-    [void] $FolderBrowserDialog.ShowDialog($Topmost) 
+    $ButtonPressed =  $FolderBrowserDialog.ShowDialog($Topmost) 
+    if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) {return "Cancel"}
     return $FolderBrowserDialog.SelectedPath
 }
 
