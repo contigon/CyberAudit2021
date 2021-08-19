@@ -2,7 +2,7 @@ start-Transcript -path $PSScriptRoot\CyberAuditFDPhase.Log -Force -append
 
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 
-function Goddi {
+function Start-Goddi {
     # Clear-Host
     $help = @"
 
@@ -91,7 +91,7 @@ function Sharphound {
 "@
     Write-Host $help
     $ACQ = ACQ("Sharphound")
-    $SharpHoundModulePath =  Get-ToolsFolder SharpHound.ps1
+    $SharpHoundModulePath = Get-ToolsFolder SharpHound.ps1
     Import-Module "$SharpHoundModulePath\SharpHound.ps1"
     Invoke-BloodHound -CollectionMethod All, GPOLocalGroup, LoggedOn -OutputDirectory $ACQ
     $MaXLoop = read-host "Choose Maximum loop time for session collecting task (eg. 30m)"
@@ -102,7 +102,7 @@ function Sharphound {
 }
 
 
-function NTDSAquire {
+function Get-NTDS {
     Clear-Host
     $help = @"
 
@@ -152,10 +152,10 @@ when finished please copy the c:\ntdsdump directory to the Aquisition folder (NT
     if ($userInput -match '\w') {
         $null = start-Process -PassThru explorer $ACQ\$currentTime
     }
-    NTDSAuditTool "$ACQ\$currentTime"
+    Start-NTDSAuditTool "$ACQ\$currentTime"
 }
 
-function NTDSAuditTool {
+function Start-NTDSAuditTool {
     param (
         [Parameter(Mandatory = $true)]
         [string]
@@ -250,9 +250,49 @@ function Install-DSInternalsModule {
     Expand-Archive -Path "$ZIPFilePath" -DestinationPath "$ModuleDestination\" -Force -Verbose
     Import-Module DSInternals -Verbose
 }
+function Start-PingCastle {
+    Clear-Host
+    $help = @"
+
+    PIngCastle
+    ----------
+    
+    Active Directory Security Maturity Self-Assessment, based on CMMI 
+    (Carnegie Mellon university 5 maturity steps) where each step has 
+    been adapted to the specificity of Active Directory. 
+
+    In order for this script to succeed you need to have a user with 
+    Domain Admin permissions.
+            
+"@
+    Write-Host $help
+    $ACQ = ACQ("PingCastle")
+
+    Invoke-Command -ScriptBlock {
+        push-Location $ACQ
+        $PingCastleFolder = Get-ToolsFolder "Pingcastle.exe"
+        Copy-Item "$PingCastleFolder\*.*" $ACQ -Recurse -Force
+
+        Start-Job -Name "full" -ScriptBlock { Push-Location $using:ACQ; cmd /c start .\PingCastle  --server * --no-enum-limit --carto --healthcheck; Pop-Location }
+        Wait-Job -Name "full"
+        Start-Job -Name "conso" -ScriptBlock { Push-Location $using:ACQ; cmd /c start .\PingCastle --hc-conso; Pop-Location }
+        Wait-Job -Name "conso"
+        $checks = @("antivirus", "corruptADDatabase", "laps_bitlocker", "localadmin", "nullsession", "nullsession-trust", "share", "smb", "spooler", "startup")
+        foreach ($check in $checks) {
+            Start-Job -Name "scan" -ScriptBlock { Push-Location $using:ACQ; cmd /c start .\PingCastle --scanner $check; Pop-Location }
+            Wait-Job -Name "scan"      
+        }
+        
+        Pop-Location
+    }
+    
+    read-host "Press ENTER to continue"
+    $null = start-Process -PassThru explorer $ACQ    
+}
 
 $DC = ($env:LOGONSERVER).TrimStart("\\")
 
-Goddi
-NTDSAquire
+Start-Goddi
+Get-NTDS
+Start-PingCastle
 stop-Transcript | out-null
