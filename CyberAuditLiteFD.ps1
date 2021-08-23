@@ -1,5 +1,17 @@
-start-Transcript -path $PSScriptRoot\CyberAuditFDPhase.Log -Force -append
+<#
+    .Description
+    An automation tool for getting an information of the domain
 
+ .Dependencies
+    - Goddi
+    - NTDAAudit
+    - PingCastle
+    - Testimo modules and all its dependent modules
+    - CyberFunctions module
+    - RSAT
+#>
+
+start-Transcript -path $PSScriptRoot\CyberAuditFDPhase.Log -Force -append
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 
 function Start-Goddi {
@@ -57,19 +69,19 @@ Domain Admin permissions.
     $null = start-Process -PassThru explorer $ACQ    
 }
 
-
+<#
 function Sharphound {
     Clear-Host
     $help = @"
-
+    
     Sharphound
     ----------
     
     Data Collector for the BloodHound Project
-
+    
     Sharphound must be run from the context of a domain user, either directly 
     through a logon or through another method such as RUNAS.
-
+    
     CollectionMethod :
     - Default - group membership, domain trust, local group, session, ACL, object property and SPN target collection
     - Group - group membership collection
@@ -84,11 +96,11 @@ function Sharphound {
     - Trusts - domain trust enumeration
     - ACL - collection of ACLs
     - Container - collection of Containers
-
+    
     In order for this script to succeed you need to have a user with 
     Domain Admin permissions.
-            
-"@
+    
+    "@
     Write-Host $help
     $ACQ = ACQ("Sharphound")
     $SharpHoundModulePath = Get-ToolsFolder SharpHound.ps1
@@ -100,12 +112,13 @@ function Sharphound {
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ    
 }
+#>
 
 
 function Get-NTDS {
     Clear-Host
     $help = @"
-
+    
 NTDS and SYSTEM hive remote aquisition
 --------------------------------------
 
@@ -187,7 +200,7 @@ function Start-NTDSAuditTool {
     $NTDSDirectory = Get-ToolsFolder -ToolEXEName "NtdsAudit.exe"
     $NTDSAuditEXE = "$NTDSDirectory\NtdsAudit.exe"
     # Move all the files from the dump to the main directory
-    Get-ChildItem -Path $ACQ -Recurse -File | Move-Item -Destination $ACQ
+    Get-ChildItem -Path $ACQ -Recurse -File | Move-Item -Destination $ACQ -Force
     #NtdsAudit $ACQ\ntds.dit -s $ACQ\SYSTEM  -p  $ACQ\pwdump-with-history.txt -u  $ACQ\user-dump.csv --debug --history-hashes
     $cmd = "$NTDSAuditEXE $ACQ\ntds.dit -s $ACQ\SYSTEM  -p  $ACQ\pwdump.txt -u  $ACQ\user-dump.csv --debug"
     Invoke-Expression $cmd
@@ -208,6 +221,7 @@ function Start-NTDSAuditTool {
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ
 }
+<#
 Function ACQA {
     Param ($dir)
     $ACQdir = ("$AcqBaseFolder\$dir").Replace("//", "/")
@@ -219,6 +233,7 @@ Function ACQA {
     }
     Return $ACQdir
 }
+#>
     
 function Get-ToolsFolder {
     param (
@@ -243,13 +258,15 @@ function Install-DSInternalsModule {
     $ZIPFilePath = "$PSScriptRoot\DSInternals.zip"
     if (! (Test-Path "$ZIPFilePath")) {
         Write-Host "[Failed] Cannot find DSInternals.zip" -ForegroundColor Red
-        Write-Error -Exception [System.IO.FileNotFoundException]::new("Could not find p") -ErrorAction Stop
+        $ZIPFilePath = Get-FileName -Extensions "*.exe"
     }
     $ModuleDestination = ($env:PSModulePath -split ";" | Select-String "$env:USERPROFILE" -SimpleMatch).ToString()
     Unblock-File -Path "$ZIPFilePath"
     Expand-Archive -Path "$ZIPFilePath" -DestinationPath "$ModuleDestination\" -Force -Verbose
     Import-Module DSInternals -Verbose
 }
+
+
 function Start-PingCastle {
     Clear-Host
     $help = @"
@@ -289,10 +306,73 @@ function Start-PingCastle {
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ    
 }
+function Start-Testimo {
+    Clear-Host
+    $help = @"
+
+    Testimo
+    -------
+    
+    PowerShell module for running health checks for Active Directory 
+    (and later on any other server type) against a bunch of different tests.
+
+    Tests are based on:
+    - Active Directory CheckList
+    - AD Health & Checkup
+    - Best Practices
+
+    In order for this script to succeed you need to have a user with 
+    Domain Admin permissions.
+            
+"@
+    Write-Host $help 
+    Install-TestimoModules
+  
+    $ACQ = ACQ("Testimo")
+    if (checkRsat) {
+        import-module activedirectory ; Get-ADDomainController -Filter * | Select-Object Name, ipv4Address, OperatingSystem, site | Sort-Object -Property Name
+        Invoke-Testimo  -ExcludeSources DCDiagnostics -ReportPath $ACQ\Testimo.html
+        $null = start-Process -PassThru explorer $ACQ
+    }
+    read-host "Press ENTER to continue"
+}
+function Install-TestimoModules{
+    write-host "A windows will open to choose a file, Please select the ZIP file contains Testimo-Modules.zip"
+    Read-Host "Press ENTER to continue"
+    $ModulesZip = get-filename -Extensions "zip"
+    $ModuleDestination = ($env:PSModulePath -split ";" | Select-String "$env:USERPROFILE" -SimpleMatch).ToString()
+    Expand-Archive -Path $ModulesZip -DestinationPath $ModuleDestination -Force
+
+    $Modules = @(
+        "PSWriteHTML"
+        "PSEventViewer"
+        "Connectimo"
+        "PSWriteColor"
+        "GPOZaurr"
+        "ADEssentials"
+        "PSWinDocumentation.DNS"
+        "PSSharedGoods"
+        "testimo"
+    )
+    foreach ($_ in $Modules) {
+        Import-Module $_  -Force -Verbose
+    }
+}
+function Download-Tool {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]
+        $ToolName
+    )
+    
+    
+}
 
 $DC = ($env:LOGONSERVER).TrimStart("\\")
 
 Start-Goddi
 Get-NTDS
 Start-PingCastle
+Start-Testimo
+
 stop-Transcript | out-null
