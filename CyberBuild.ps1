@@ -224,7 +224,7 @@ switch ($input)
             Import-Module -Name PSWindowsUpdate
             Add-WUServiceManager -ServiceID "7971f918-a847-4430-9279-4a52d1efe18d" -AddServiceFlag 7
             Get-WindowsUpdate
-            Get-WUInstall -AcceptAll "IgnoreReboot"
+            Get-WUInstall -AcceptAll -IgnoreReboot
         }
         if ($update -eq "R")
         {
