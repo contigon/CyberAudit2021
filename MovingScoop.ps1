@@ -1,10 +1,11 @@
 
 <#
-    Configures scoop and its installed apps to be known by Windows, if they not installed in regular way
-    Scoop directory needs to be placed in ".\Tools\Scoop\apps\scoop"
-    If you want more tools to be known they and their shims have to be in ".\Tools\Scoop\apps\scoop"
-        or in ".\Tools\GlobalScoopApps" if they are global
+    Configures scoop and its installed apps to be known by Windows, if they not installed in regular way,
+    Scoop directory needs to be placed in ".\Tools\Scoop\apps\scoop".
+    If you want more tools to be known, they and their shims have to be in ".\Tools\Scoop\"
+    or in ".\Tools\GlobalScoopApps\" if they are global
 #>
+#requires -RunAsAdministrator
 $tools = "$PSScriptRoot\Tools"
 try {
     . "$psscriptroot\Tools\Scoop\apps\scoop\current\lib\core.ps1"
@@ -74,7 +75,7 @@ function Import-Scoop {
     $compressedFilePath = Get-FileName  -Extensions "tar.xz" -ExtensionsExplain "tar.xz archived files"
     $compressedFileParentPath = Split-Path $compressedFilePath
     $compressedFileName = (Split-Path $compressedFilePath -Leaf)
-    $compressedFileName = $compressedFileName.Substring(0,$compressedFileName.LastIndexOf(".tar.xz"))
+    $compressedFileName = $compressedFileName.Substring(0, $compressedFileName.LastIndexOf(".tar.xz"))
     # If user pressed to cancel button in the choose-GUI, cancel the action
     if ($compressedFilePath -eq "Cancel" ) {
         read-host "Press ENTER to continue" 
@@ -89,7 +90,7 @@ function Import-Scoop {
 
     # Check if the file is really a "tar.xz" archive
     $ErrorActionPreference = "SilentlyContinue"
-    $itemCheck = Invoke-Expression "$7z l `"$compressedFilePath`" "| select-string "Type = "
+    $itemCheck = Invoke-Expression "$7z l `"$compressedFilePath`" " | select-string "Type = "
     $ErrorActionPreference = "Continue"
     if ([string]::IsNullOrEmpty($itemCheck) -or (( $itemCheck -replace "Type = ").Trim() -ne "xz")) {
         failed "The file isn't a tar.xz file"
@@ -129,7 +130,22 @@ function Import-Scoop {
 }
 function Export-Scoop {
     #TODO: Add a function to compress the Tools directory of an existing CAT and scoop with installed programs
-    
+    <#
+   # Check if 7z is already deployed in the main directory
+   # If not, extract it from the 7z.zip file
+   if (!(Test-Path "$PSScriptRoot\7z\x64\7za.exe")) {
+       Expand-Archive -Path "$PSScriptRoot\7z.zip" -DestinationPath "$PSScriptRoot" 
+    }
+    $7z = "$PSScriptRoot\7z\x64\7za.exe"
+    #> 
+
+    $7z = Get-7z
+    if ($null -ne $7z) {
+        $cmd = "$7z a -ttar -snl -bsp2 $PSScriptRoot\Compressed\CAT.tar $PSScriptRoot\*"
+        Invoke-Expression $cmd
+        $cmd = "$7z a -txz -bsp2 $PSScriptRoot\Compressed\CAT.tar.gz $PSScriptRoot\Compressed\CAT.tar"
+        Invoke-Expression $cmd
+    }
     
 }
 function CheckCompressedFileExt {
@@ -138,6 +154,50 @@ function CheckCompressedFileExt {
     )
     $item = (7z l $path | select-string "Type = ")
     return $item -replace "Type = "
+}
+<#
+.description
+    Retrun 7z.exe file
+    if it doesnt exist, get it by browsing or by download it
+    
+#>
+function Get-7z {
+    # Checks if 7z is installed as a cmdlet
+    if (Get-Command "7z" -ErrorAction SilentlyContinue) {
+        return "7z"
+    }
+
+    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7z*" -File -Recurse | Where-Object { $_.name -match "7za?\.exe" }
+    $7zExeFile = $null
+    if ($null -eq $7zexeResults) {
+        write-host "Cannot find 7z, if you have it, type [H]. If not, type [D] and it will be downloaded automatically"
+        $userInput = Read-Host
+        if ($userInput -eq "D") {
+            dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\7z.zip"
+            Expand-Archive -Path "$PSScriptroot\7z.zip" -DestinationPath "$psscriptroot\7z\"
+            if ($?) {
+                $7zExeFile = "$PSScriptroot\7z\x64\7za.exe"
+            }
+        } elseif ($userInput -eq "H") {
+            $7zExeFile = Get-FileName "exe"            
+            if (!((Get-ItemProperty $7zExeFile).VersionInfo.internalname -match "7za?")) {
+                Write-Host "ERROR: File is not a 7z exe file" -ForegroundColor Red
+                return $null
+            }
+        } else {
+        }
+    }
+    # If array is returned, means there is more than one result. So we need to search for the one of 64 version
+    elseif (($7zexeResults.GetType().BaseType -eq "System.Array").BaseType.Name -eq "Array") {
+        $7zExeFile = $7zexeResults
+        foreach ($file in $7zexeResults) {
+            if ($file.Directory.Name -match ".?64") {
+                $7zExeFile = $file
+                return $7zExeFile
+            }
+        }
+    } else { $7zExeFile = $7zexeResults }
+    return $7zExeFile
 }
 
 [Int] $userInput = 0
@@ -149,11 +209,12 @@ while ($userinput -ne 99) {
 
         Baseline folder is $PSScriptroot 
 
-        1. Variables        | Set environments variables
-        2. Shims            | Update all shims to the current absolute address of Tool
-        3. Ensure in PATH   | ensure scoop and scoop_global in PATH
-        4. Import Scoop     | Import an existing Tools.tar.xz that contains scoop with programs
-        5. Export Scoop     | Export the installed programs to a tar.xz file in order to import them in another computer
+        1. Variables            | Set environments variables
+        2. Shims                | Update all shims to the current absolute address of Tool
+        3. Ensure in PATH       | ensure scoop and scoop_global in PATH
+        4. Import Scoop Tools   | Import an existing Tools.tar.xz that contains scoop with programs
+        5. Export Scoop Tools   | Export the installed programs to a tar.xz file in order to import them in another computer
+        6. Import Scoop itself  | Import the scoop itself from Scoop.zip
         
         - it's recommended to run all commands one by one by order
 
