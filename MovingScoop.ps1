@@ -140,11 +140,23 @@ function Export-Scoop {
     #> 
 
     $7z = Get-7z
+    $userInput = Read-Host "Type [ALL] to export CAT, scoop and all the tools, or type [Tools] to exprt only scoop and tools"
+    if ($userInput -eq "all") {
+        $FolderToArchive = "$psscriptroot\*"
+    } elseif ($userInput -eq "Tools") {
+        $FolderToArchive = "$PSScriptRoot\Tools"
+    }
+    Write-Host "A window will open to choose a folder to place the compressed file"
+    Read-Host "Press [ENTER] to continue"
+    $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled
     if ($null -ne $7z) {
-        $cmd = "$7z a -ttar -snl -bsp2 $PSScriptRoot\Compressed\CAT.tar $PSScriptRoot\*"
+        $cmd = "$7z a -ttar -snl -bsp2 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -x!*\cache\*"
         Invoke-Expression $cmd
-        $cmd = "$7z a -txz -bsp2 $PSScriptRoot\Compressed\CAT.tar.gz $PSScriptRoot\Compressed\CAT.tar"
-        Invoke-Expression $cmd
+        if ($LASTEXITCODE -ge 2) { Write-Host "An error occured" -ForegroundColor Red }
+        else {
+            $cmd = "$7z a -txz -bsp2 -sdel $ArchiveDestinationFolder\CAT.tar.gz $ArchiveDestinationFolder\CAT.tar"
+            Invoke-Expression $cmd
+        }
     }
     
 }
