@@ -1,4 +1,3 @@
-
 <#
     Configures scoop and its installed apps to be known by Windows, if they not installed in regular way,
     Scoop directory needs to be placed in ".\Tools\Scoop\apps\scoop".
@@ -7,15 +6,17 @@
 #>
 #requires -RunAsAdministrator
 $tools = "$PSScriptRoot\Tools"
-try {
-    . "$psscriptroot\Tools\Scoop\apps\scoop\current\lib\core.ps1"
-    . "$psscriptroot\Tools\Scoop\apps\scoop\current\lib\install.ps1"
-} catch {
-    Write-Host "Scoop was not found where it supposed to be" -ForegroundColor Red
-    Write-Host "Please place scoop folder in " -ForegroundColor Red -NoNewline
-    Write-Host "$psscriptroot\Tools\Scoop\apps\" -ForegroundColor Yellow
-}
 Import-Module $PSScriptRoot\CyberFunctions.psm1
+function Import-ScoopModules {
+    try {
+        . "$psscriptroot\Tools\Scoop\apps\scoop\current\lib\core.ps1"
+        . "$psscriptroot\Tools\Scoop\apps\scoop\current\lib\install.ps1"
+    } catch {
+        Write-Host "Scoop was not found where it supposed to be" -ForegroundColor Red
+        Write-Host "Please place scoop folder in " -ForegroundColor Red -NoNewline
+        Write-Host "$psscriptroot\Tools\Scoop\apps\" -ForegroundColor Yellow
+    }
+}
 function Update-Shims {
     for ($i = 0; $i -lt 2; $i++) {
         if ($i -eq 0) {
@@ -64,36 +65,32 @@ function Register-Path {
     Clear-Host
 }
 function Import-Scoop {
-    # Check if 7z is already deployed in the main directory
-    # If not, extract it from the 7z.zip file
-    if (!(Test-Path "$PSScriptRoot\7z\x64\7za.exe")) {
-        Expand-Archive -Path "$PSScriptRoot\7z.zip" -DestinationPath "$PSScriptRoot" 
-    }
-    $7z = "$PSScriptRoot\7z\x64\7za.exe"
+    $userInput = Read-Host "Enter [All] if your extracted file contains whole cat and scoop, or enter [Scoop] if it contains only scoop"
+    [boolean]$OnlyScoop = ($userInput -eq "Scoop") 
+    $7z = Get-7z
 
     # Show a GUI to choose the compressed file that supposed to contain the Tools
     $compressedFilePath = Get-FileName  -Extensions "tar.xz" -ExtensionsExplain "tar.xz archived files"
     $compressedFileParentPath = Split-Path $compressedFilePath
     $compressedFileName = (Split-Path $compressedFilePath -Leaf)
     $compressedFileName = $compressedFileName.Substring(0, $compressedFileName.LastIndexOf(".tar.xz"))
-    # If user pressed to cancel button in the choose-GUI, cancel the action
+    
+    # If user pressed the cancel button in the choose-GUI, cancel the action
     if ($compressedFilePath -eq "Cancel" ) {
-        read-host "Press ENTER to continue" 
-        Clear-Host
+        return        
     }
     # Check if the Path is not empty and it's valid
     if ([string]::IsNullOrEmpty($compressedFilePath) -or !(Test-Path $compressedFilePath) ) {
         failed "File path is not vaild"
-        read-host "Press ENTER to return to menu" 
-        Clear-Host
+        return
     }
 
     # Check if the file is really a "tar.xz" archive
     $ErrorActionPreference = "SilentlyContinue"
-    $itemCheck = Invoke-Expression "$7z l `"$compressedFilePath`" " | select-string "Type = "
+    $itemExt = Get-CompressedFileExt
     $ErrorActionPreference = "Continue"
-    if ([string]::IsNullOrEmpty($itemCheck) -or (( $itemCheck -replace "Type = ").Trim() -ne "xz")) {
-        failed "The file isn't a tar.xz file"
+    if ($itemExt -ne "xz") {
+        failed "The file isn't a .xz file"
         read-host "Press ENTER to return to menu" 
         Clear-Host
         return
@@ -101,15 +98,23 @@ function Import-Scoop {
     # Check if archive contains a .tar file
     $7zOutput = Invoke-Expression "$7z l `"$compressedFilePath`""
     if (!((select-string " *.tar" -InputObject $7zOutput -Quiet) -and (select-string " 1 files" -InputObject $7zOutput -Quiet))) {
-        failed "The file doesn't contain Tools.tar file inside it"         
+        failed "The file doesn't contain .tar file inside it"         
         read-host "Press ENTER to return to menu" 
         Clear-Host
         return
     }
+    $Description = "Choose a folder to the extracted files. Note that the files will be extracted directly to this folder, without additional root folder"
+    $ExtractionDestination = Get-Folder -Description $Description -initialDirectory "$env:USERPROFILE\Desktop"
 
     # Extract the Tools.tar from the tar.xz file, and then extract the Tools directory from thar Tools.tar file
-    $cmd = "$7z x `"$compressedFilePath`"  -o$compressedFileParentPath -txz -aoa"
+    $cmd = "$7z x `"$compressedFilePath`"  -o$ExtractionDestination -txz -aoa"
     Invoke-Expression $cmd
+    # Check the exit code of the 7z execution
+    if ($LASTEXITCODE -ge 2) {
+        Write-Host "Error occured" -ForegroundColor Red
+        return
+    }
+    <# LO tzarih et habdika hazot ki yahol lihit kama efsharutiot
     # Check that Tools.tar contains a directory named "Tools"
     $7zOutput = Invoke-Expression "$7z l `"$compressedFileParentPath\$compressedFileName.tar`"" | select-string "D\.\..*Tools`$" -Quiet
     if (!$7zOutput) {    
@@ -118,13 +123,17 @@ function Import-Scoop {
         Clear-Host
         return
     }
+    #>
     
     # Extract the files from the *.tar file Tools directory to Tool directory of CAT
     $cmd = "$7z x $compressedFileParentPath\Tools.tar -o$psscriptroot\Tools -ttar -aos" 
     Invoke-Expression $cmd
-    
+    if ($LASTEXITCODE -ge 2) {
+        Write-Host "Error occured" -ForegroundColor Red
+        return
+    }
 
-    Write-Host "Folders from compressed file extracted successfuly to the Tools directory" -ForegroundColor Green
+    Write-Host "Folders from compressed file extracted successfuly" -ForegroundColor Green
     read-host "Press ENTER to continue"
     Clear-Host
 }
@@ -140,7 +149,7 @@ function Export-Scoop {
     #> 
 
     $7z = Get-7z
-    $userInput = Read-Host "Type [ALL] to export CAT, scoop and all the tools, or type [Tools] to exprt only scoop and tools"
+    $userInput = Read-Host "Type [ALL] to export CAT, scoop and all the tools, or type [Tools] to export only scoop and tools"
     if ($userInput -eq "all") {
         $FolderToArchive = "$psscriptroot\*"
     } elseif ($userInput -eq "Tools") {
@@ -160,18 +169,15 @@ function Export-Scoop {
     }
     
 }
-function CheckCompressedFileExt {
-    param (
-        $Path
-    )
-    $item = (7z l $path | select-string "Type = ")
+function Get-CompressedFileExt {
+    param ($Path)
+    $item = (Invoke-Expression "$7z l $path" | select-string "Type = ")
     return $item -replace "Type = "
 }
 <#
 .description
     Retrun 7z.exe file
-    if it doesnt exist, get it by browsing or by download it
-    
+    if it doesnt exist, get it by browsing or by download it    
 #>
 function Get-7z {
     # Checks if 7z is installed as a cmdlet
@@ -188,7 +194,7 @@ function Get-7z {
             dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\7z.zip"
             Expand-Archive -Path "$PSScriptroot\7z.zip" -DestinationPath "$psscriptroot\7z\"
             if ($?) {
-                $7zExeFile = "$PSScriptroot\7z\x64\7za.exe"
+                return "$PSScriptroot\7z\x64\7za.exe"
             }
         } elseif ($userInput -eq "H") {
             $7zExeFile = Get-FileName "exe"            
@@ -211,7 +217,7 @@ function Get-7z {
     } else { $7zExeFile = $7zexeResults }
     return $7zExeFile
 }
-
+$7z = ""
 [Int] $userInput = 0
 while ($userinput -ne 99) {
     $help = @"
