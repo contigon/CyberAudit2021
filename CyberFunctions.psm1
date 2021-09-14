@@ -225,26 +225,60 @@ function YesNo ($FirstName, $LastName) {
     }
 }
 
-Function Get-Folder($initialDirectory) {
+Function Get-Folder {
+    param (
+        $initialDirectory,        
+        # You can add a description to the folder choose window
+        $Description,
+        # An option to disable the "Add new folder button"
+        [switch] $DisableNewFolder,
+        # If paramter is present, return "Cancel" if user pressed the Cancel or "X" buttons
+        [switch] $ReturnCancelIfCanceled
+    ) 
     [void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
     $FolderBrowserDialog = New-Object System.Windows.Forms.FolderBrowserDialog
     $FolderBrowserDialog.RootFolder = 'MyComputer'
+    $FolderBrowserDialog.ShowNewFolderButton = !$DisableNewFolder
+    if (![string]::IsNullOrEmpty($Description)) { $FolderBrowserDialog.Description = $Description }
     if ($initialDirectory) { $FolderBrowserDialog.SelectedPath = $initialDirectory }
     $Topmost = New-Object System.Windows.Forms.Form
     $Topmost.TopMost = $True
     $Topmost.MinimizeBox = $True
-    [void] $FolderBrowserDialog.ShowDialog($Topmost) 
+    $ButtonPressed =  $FolderBrowserDialog.ShowDialog($Topmost) 
+    if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) {return "Cancel"}
     return $FolderBrowserDialog.SelectedPath
 }
 
 
-function Get-FileName {  
-    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
-    Out-Null
+
+function Get-FileName {
+    # $Extensions param is a strings array of requested extensions
+    # The function take this extensions list and set it in the filter of the file chooser
+    # If this paramter is empty, the file chooser set the filter to "All files"
+    param (
+        [string[]]
+        $Extensions,
+
+        [string]
+        $ExtensionsExplain
+    )
+    $FileFilter = "All files (*.*)| *.*"
+    if ($Extensions.Count -gt 0) {
+        [string]$extsString = ($Extensions -join ";*.")
+        $extsString = $extsString.Insert(0, '*.')
+        $FileFilter = $FileFilter.Insert(0, "$extsString|")
+        $FileFilter = $FileFilter.Insert(0, "$ExtensionsExplain|")
+    } 
+
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-    $OpenFileDialog.filter = "All files (*.*)| *.*"
-    $OpenFileDialog.ShowDialog() | Out-Null
-    $OpenFileDialog.filename
+    $OpenFileDialog.filter = $FileFilter
+    $cancel = $OpenFileDialog.ShowDialog()
+    if ( $cancel -ne "Cancel") {
+        return $OpenFileDialog.filename   
+    } else {
+        return $cancel 
+    } 
 }
 
 
