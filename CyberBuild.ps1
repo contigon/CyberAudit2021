@@ -596,8 +596,9 @@ function InstallAnalyzers {
     } else {
         Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
     }
+    }
 }
-
+}
 function InstallAttacks {
     <# 
     .SYNOPSIS
