@@ -615,7 +615,7 @@ switch ($input)
         {
             $a = appdir("appinspector")
             push-Location $a
-            $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI"
+            $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
             Invoke-Expression $cmd
             Pop-Location            
         }
