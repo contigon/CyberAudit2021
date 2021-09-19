@@ -589,8 +589,10 @@ function InstallAnalyzers {
         {
             $a = appdir("appinspector")
             push-Location $a
-            $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
-            Invoke-Expression $cmd
+            $cmd1 = "dotnet build"
+            $cmd2 = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
+            Invoke-Expression $cmd1
+            Invoke-Expression $cmd2
             Pop-Location            
 
     } else {
@@ -1075,6 +1077,8 @@ CreateDesktopShortcuts
 read-host "Press ENTER to continue (or Ctrl+C to quit)"
 
 start-Transcript -path $PSScriptRoot\CyberBuildPhase.Log -Force -append
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 Clear-Host
 
