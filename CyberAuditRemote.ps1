@@ -12,7 +12,8 @@
 
 CLS
 
-. $PSScriptRoot\CyberFunctions.ps1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
 ShowIncd
 CyberBginfo
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2020 - Remote Audit Not Joined To Domain"

@@ -28,7 +28,8 @@ mkdir "c:\$CatInstallRepository" -Force
 Copy-Item -Path "$PSScriptRoot\go.ps1" -Destination "c:\$CatInstallRepository\go.ps1" -Force
 
 $compress = @{
-  Path = "$PSScriptRoot\cyberAnalyzers.ps1",
+  Path =  "$PSScriptRoot\CyberFunctions",
+          "$PSScriptRoot\cyberAnalyzers.ps1",
           "$PSScriptRoot\cyberAudit.ps1",
           "$PSScriptRoot\cyberAuditRemote.ps1",
           "$PSScriptRoot\cyberBuild.ps1",
@@ -37,7 +38,7 @@ $compress = @{
           "$PSScriptRoot\CyberCollectNetworkConfigV2.ps1",
           "$PSScriptRoot\CyberCompressGo.ps1",
           "$PSScriptRoot\CyberCreateRunecastRole.ps1",
-          "$PSScriptRoot\CyberFunctions.ps1",
+          "$PSScriptRoot\CyberFunctions.psm1",
           "$PSScriptRoot\CyberLicenses.ps1",
           "$PSScriptRoot\CyberPasswordStatistics.ps1",
           "$PSScriptRoot\CyberUserDumpStatistics.ps1",

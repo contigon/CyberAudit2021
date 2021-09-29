@@ -10,7 +10,8 @@
 		Cyber Audit Tool - Misc scripts
 #>
 
-. $PSScriptRoot\CyberFunctions.ps1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 

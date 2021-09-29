@@ -10,38 +10,42 @@
 		Cyber Audit Tool - Licenses
 #>
 
-. $PSScriptRoot\CyberFunctions.ps1
+Import-Module $PSScriptRoot\CyberFunctions.psm1
+
+<#
+    Returns file content encripted to base64
+    $infile - the file we want to convert its content
+#>
+function encFile ($infile) {
+    $Content = Get-Content -Path $infile -Encoding Byte
+    $Base64 = [System.Convert]::ToBase64String($Content)
+    $Base64 
+}
+
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
-$CATLicensesFolder = scoop prefix CATLicenses
+$CATLicensesFolder = scoop prefix CATLicenses                       # Holds the path to the directory that includes the CATLicenses app
 
-Write-Host "These are the key files you have:"
-$keyFiles = Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"
-for ($i=0;$i -lt $keyFiles.Count;$i++){Write-Host ($i+1) - $keyFiles[$i].basename}
+$keyFiles = Get-ChildItem -Path $CATLicensesFolder -Filter "*.enc"  # Get the encripted files which contains the licenses
 
 if ($keyFiles.count -gt 0) {
+    Write-Host "These are the key files you have:"
+    for ($i=0;$i -lt $keyFiles.Count;$i++){Write-Host ($i+1) - $keyFiles[$i].basename}
     $input = Read-Host "Press [I] to install all key files or [C] to create the protected key file"
 }
 else {
+    Write-Host "There are no key files in $CATLicensesFolder"
     $input = Read-Host "[C] to create a protected key file or [Enter] to skip installing licenses"
 }
 
-
-
 if ($input -eq "C") {
-    #Encrypt the license file to base64
-    function encFile ($infile) {
-        $Content = Get-Content -Path $infile -Encoding Byte
-        $Base64 = [System.Convert]::ToBase64String($Content)
-        $Base64 
-        }
      Write-Host "Select the key file you want to encrypt"
      $filePath = Get-FileName
      $fileName = Split-Path $filePath -Leaf
      $fileNoExtension =  (Split-Path $filePath -Leaf).Split(".")[0]
      $fileParent = Split-Path $filePath
-     $key = encFile($filePath)
+     $key = encFile($filePath)                                     # Encrypt the license file to base64
      success "$filePath was encoded to base64 successfully"
      Write-Host "--------------------------------------------"
      Write-Host $key
