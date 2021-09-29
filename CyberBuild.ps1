@@ -13,6 +13,8 @@
 # Imports
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 . $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
+# Hide status bar of installing progress to reduce I/O calls for better performance
+$global:progressPreference = 'SilentlyContinue'
 # The following function set the modules environment in the PC (copy module -> update rootModule path, functions and vars  to  export -> import the module )
 function copy-ModuleToDirectory {
     [CmdletBinding()]
@@ -90,6 +92,7 @@ function ShowMenu {
         Write-Host ""
         Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
         Write-Host ""
+        Write-Host "     0. Dev options     | Enter developers menu includes implementation & debugging options" -ForegroundColor $menuColor[0]
         Write-Host "     1. OS	    	| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
         Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
         Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
@@ -114,6 +117,9 @@ function ShowMenu {
         [boolean]$WaitForInput = $True
     
         switch ($userInput) {
+            #Check Windows OS and build versions and if needed it can help upgrade an update latest build
+            0 { DevMenu; $WaitForInput = $false }
+
             #Check Windows OS and build versions and if needed it can help upgrade an update latest build
             1 { OSCheck; $WaitForInput = $false }
     
@@ -170,6 +176,43 @@ function ShowMenu {
         Clear-Host
         $WaitForInput = $True
     } while ($userInput -ne '99')    
+}
+
+function DevMenu {
+    $menuColor = New-Object System.Collections.ArrayList
+    for ($i = 0; $i -lt 100; $i++) {
+        $null = $menuColor.Add("White")
+    }
+    
+    do {
+        #Create the main menu
+        Write-Host ""
+        Write-Host "************************************************************************          " -ForegroundColor White
+        Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***          " -ForegroundColor White
+        Write-Host "************************************************************************          " -ForegroundColor White
+        Write-Host ""
+        Write-Host "     install Developer Features:                            " -ForegroundColor White
+        Write-Host ""
+        Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
+        Write-Host ""
+        Write-Host "     1. Export cyberFunctions | create all cyberFunctions methods global and readable by IDE." -ForegroundColor $menuColor[1]
+        Write-Host ""
+        Write-Host "    99. Quit                                                                      " -ForegroundColor White
+        Write-Host ""
+        $userInput = Read-Host "Select Script Number"
+    
+        [boolean]$WaitForInput = $True
+    
+        switch ($userInput) {
+            # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
+            1 { copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"; $WaitForInput = $false }
+        }
+        if ($WaitForInput) {
+            read-host "Press ENTER to continue" 
+        }
+        Clear-Host
+        $WaitForInput = $True
+    } while ($userInput -ne '99')        
 }
 
 function OSCheck() {
@@ -1036,9 +1079,6 @@ if (![Environment]::Is64BitProcess) {
     failed "OS architecture must be 64 bit, exiting ..."
     exit
 }
-
-# copy local cyber functions module into the PSModulePath, update the rootModule and import the module
-copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"
 
 CyberBginfo
 DisableFirewall
