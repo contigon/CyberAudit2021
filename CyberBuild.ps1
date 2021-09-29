@@ -11,10 +11,9 @@
 #>
 
 # Imports
+Set-ExecutionPolicy Bypass
 Import-Module $PSScriptRoot\CyberFunctions.psm1
-. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
-# Hide status bar of installing progress to reduce I/O calls for better performance
-$global:progressPreference = 'SilentlyContinue'
+
 # The following function set the modules environment in the PC (copy module -> update rootModule path, functions and vars  to  export -> import the module )
 function copy-ModuleToDirectory {
     [CmdletBinding()]
@@ -1083,6 +1082,10 @@ if (![Environment]::Is64BitProcess) {
 CyberBginfo
 DisableFirewall
 DisableAntimalware
+Set-ExecutionPolicy Bypass
+. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
+# Hide status bar of installing progress to reduce I/O calls for better performance
+$global:progressPreference = 'SilentlyContinue'
 proxydetect
 Write-Host "Setting power scheme to High performance"
 $cmd = "powercfg -s 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
