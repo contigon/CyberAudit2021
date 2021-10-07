@@ -35,10 +35,9 @@ function Update-Shims {
             }    
         }   
     }
-    read-host "Press ENTER to continue" 
-    # Clear-Host
 }
 function Set-Vars {
+    Write-Host "Configuring environment variables..."
     $global:scoopDir = "$tools\Scoop"
     $env:SCOOP_GLOBAL = "$tools\GlobalScoopApps"
     [Environment]::SetEnvironmentVariable("SCOOP_GLOBAL", $env:SCOOP_GLOBAL, "Machine")
@@ -46,11 +45,10 @@ function Set-Vars {
     [Environment]::SetEnvironmentVariable("SCOOP", $env:SCOOP, "MACHINE")    
 
     Write-Host "Done. All global veriables are set to the current absolute path:" -ForegroundColor Green
-    Write-Host "$PSScriptRoot" -ForegroundColor DarkYellow
-    read-host "Press ENTER to continue" 
-    # Clear-Host
+    Write-Host "$PSScriptRoot" -ForegroundColor Green
 }
 function Register-Path {    
+    Write-Host "Registering paths in PATH variable"
     try {
         . "$Tools\Scoop\apps\scoop\current\lib\core.ps1"
         . "$Tools\Scoop\apps\scoop\current\lib\install.ps1"
@@ -62,8 +60,8 @@ function Register-Path {
     }
     ensure_in_path $env:SCOOP_GLOBAL\shims $true
     ensure_in_path $env:SCOOP\shims
-    Read-Host "Press ENTER to continue" 
-    # Clear-Host
+
+    Write-Host "Done. PATH enironmental variable updated" -ForegroundColor Green
 }
 function Import-Scoop {
     $userInput = Read-Host "Press [ENTER] if your extracted file contains whole cat and scoop, or type [Scoop] if it contains only scoop's tools folder"
@@ -117,8 +115,10 @@ function Import-Scoop {
         $ExtractionDestination = Get-Folder -Description $Description -initialDirectory "$env:USERPROFILE\Desktop"
     }
 
+    Write-Host "Extracting files to $ExtractionDestination..."
+
     # Extract the tar from the tar.xz file, and then extract the files from that Tools.tar file
-    $cmd = "$7z x `"$compressedFilePath`"  -o$ExtractionDestination -txz -aoa"
+    $cmd = "$7z x `"$compressedFilePath`"  -o$ExtractionDestination -txz -aoa -bso0"
     Invoke-Expression $cmd
     # Check the exit code of the 7z execution
     if ($LASTEXITCODE -ge 2) {
@@ -135,7 +135,7 @@ function Import-Scoop {
     }
     
     # Extract the files from the tar file to the destination
-    $cmd = "$7z x $ExtractionDestination\$compressedFileTarName.tar -o$ExtractionDestination -ttar -aos" 
+    $cmd = "$7z x $ExtractionDestination\$compressedFileTarName.tar -o$ExtractionDestination -ttar -aos -bso0" 
     Invoke-Expression $cmd
     if ($LASTEXITCODE -ge 2) {
         Write-Host "Error occured" -ForegroundColor Red
@@ -146,21 +146,19 @@ function Import-Scoop {
     Write-Host "Regitering the path of scoop to PATH environmental variable and updating the shims..." -ForegroundColor Green
     Remove-Item -Path "$ExtractionDestination\$compressedFileTarName.tar" -Force 
     $Tools = "$ExtractionDestination\Tools"
-    if ($OnlyScoop) {
+    if (!$OnlyScoop) {
         $Tools = "$ExtractionDestination\$CompressedRootFolderName\Tools"
     }
     
     Set-Vars
     Update-Shims 
     Register-Path
-    
 
     read-host "Press ENTER to continue"
-    #   Clear-Host
+    Clear-Host
 }
 
 function Export-Scoop {
-    #TODO: Add a function to compress the Tools directory of an existing CAT and scoop with installed programs
 
     $7z = Get-7z | ForEach-Object { $_.replace(' ', '` ') }
     write-host "7z path is: $7z"
@@ -176,12 +174,13 @@ function Export-Scoop {
     Write-Host "`nA window will open to choose a folder to place the compressed file"
     Read-Host "Press [ENTER] to continue"
     $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled | ForEach-Object { $_.replace(' ', '` ') }
+    Write-Host "Compressing..."
     if ($null -ne $7z) {
-        $cmd = "$7z a -ttar -snl -bsp2 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -x!*\cache\*"
+        $cmd = "$7z a -ttar -snl -bso0 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -x!*\cache\*"
         Invoke-Expression $cmd
         if ($LASTEXITCODE -ge 2) { Write-Host "An error occured" -ForegroundColor Red }
         else {
-            $cmd = "$7z a -txz -bsp2 -sdel $ArchiveDestinationFolder\CAT.tar.xz $ArchiveDestinationFolder\CAT.tar"
+            $cmd = "$7z a -txz -sdel -bso0 $ArchiveDestinationFolder\CAT.tar.xz $ArchiveDestinationFolder\CAT.tar"
             Invoke-Expression $cmd
             if ($LASTEXITCODE -le 1){
                 Write-Host "Exported successfuly to this file:" -ForegroundColor Green 
@@ -192,6 +191,8 @@ function Export-Scoop {
             }
         }
     }    
+    read-host "Press ENTER to continue"
+    Clear-Host
 }
 function Get-CompressedFileExt {
     param ($Path)
@@ -281,7 +282,7 @@ while ($userinput -ne 99) {
     Write-Host $help
     $userInput = read-host "Choose an action"
     switch ($userInput) {
-        1 { Import-Scoop }
-        2 { Export-Scoop }
+        1 { Export-Scoop }
+        2 { Import-Scoop }
     }
 } 
