@@ -21,7 +21,7 @@ function Update-Shims {
         $shimsPath = "$tools$appsRelativePath\shims"
         $shimsToUpdate = Get-ChildItem -Path $shimsPath\* -Include *.shim, *.cmd 
         if ($shimsToUpdate.Length -eq 0) {
-            Write-Host "No $whatShims sihms found" -ForegroundColor Red
+            Write-Host "Error: No $whatShims shims found" -ForegroundColor Red
         } else {            
             Write-Host "Updating $whatShims shims with this path:" -ForegroundColor Yellow
             Write-Host "$tools$appsRelativePath" -ForegroundColor Yellow
@@ -47,7 +47,16 @@ function Set-Vars {
     Write-Host "Done. All global veriables are set to the current absolute path:" -ForegroundColor Green
     Write-Host "$PSScriptRoot" -ForegroundColor Green
 }
-function Register-Path {    
+function Register-Path {
+    Write-Host "Removing previous scoop paths from PATH variable"
+    $NewUserPATH = ([System.Environment]::GetEnvironmentVariable("Path","user") -split ';' | Select-String -NotMatch "scoop") -join ';'
+    $NewMachinePATH = ([System.Environment]::GetEnvironmentVariable("Path","machine") -split ';' | Select-String -NotMatch "scoop") -join ';'
+    # For this session
+    $env:PATH = ($env:PATH -split ';' | Select-String -NotMatch "scoop") -join ';'
+    # Globaly
+    [environment]::setEnvironmentVariable("PATH",$NewMachinePATH,'Machine')
+    [environment]::setEnvironmentVariable("PATH",$NewUserPATH,'user')
+
     Write-Host "Registering paths in PATH variable"
     try {
         . "$Tools\Scoop\apps\scoop\current\lib\core.ps1"
@@ -61,7 +70,7 @@ function Register-Path {
     ensure_in_path $env:SCOOP_GLOBAL\shims $true
     ensure_in_path $env:SCOOP\shims
 
-    Write-Host "Done. PATH enironmental variable updated" -ForegroundColor Green
+    Write-Host "Done. PATH environmental variable updated" -ForegroundColor Green
 }
 function Import-Scoop {
     $userInput = Read-Host "Press [ENTER] if your extracted file contains whole cat and scoop, or type [Scoop] if it contains only scoop's tools folder"
@@ -74,7 +83,7 @@ function Import-Scoop {
     $compressedFilePath = Get-FileName  -Extensions "tar.xz" -ExtensionsExplain "tar.xz compressed files"
     
     
-    # If user pressed the cancel button in the choose-GUI, cancel the action
+    # If user pressed the cancel button in the choosing-GUI, cancel the action
     if ($compressedFilePath -eq "Cancel" ) {
         return        
     }
@@ -128,10 +137,8 @@ function Import-Scoop {
     # If the tar contains whole CAT, it supposed to include the root folder. We will need the name of this folder later
     if (!$OnlyScoop) {
         $7zOutput = Invoke-Expression "$7z l `"$ExtractionDestination\$compressedFileTarName.tar`""
-        if (select-string " 1 files" -InputObject $7zOutput -Quiet) {
-            $regex = '\d{4}.*D\.\..*0\ \ +0\ \ +'
-            $CompressedRootFolderName = ($7zOutput | Select-String -Pattern $regex)[0] -replace $regex
-        }
+        $regex = '\d{4}.*D\.\..*0\ \ +0\ \ +'
+        $CompressedRootFolderName = ($7zOutput | Select-String -Pattern $regex)[0] -replace $regex
     }
     
     # Extract the files from the tar file to the destination
@@ -149,7 +156,7 @@ function Import-Scoop {
     if (!$OnlyScoop) {
         $Tools = "$ExtractionDestination\$CompressedRootFolderName\Tools"
     }
-    
+    Write-Host "Tools path is: $tools" -BackgroundColor Cyan
     Set-Vars
     Update-Shims 
     Register-Path
@@ -182,11 +189,10 @@ function Export-Scoop {
         else {
             $cmd = "$7z a -txz -sdel -bso0 $ArchiveDestinationFolder\CAT.tar.xz $ArchiveDestinationFolder\CAT.tar"
             Invoke-Expression $cmd
-            if ($LASTEXITCODE -le 1){
+            if ($LASTEXITCODE -le 1) {
                 Write-Host "Exported successfuly to this file:" -ForegroundColor Green 
                 Write-Host "$ArchiveDestinationFolder\CAT.tar.xz" -ForegroundColor Green 
-            }
-            else {
+            } else {
                 Write-Host "An error occured" -ForegroundColor Red
             }
         }
@@ -220,7 +226,6 @@ function Get-7z {
         foreach ($file in $7zexeResults) {
             # Searching in the results array for exe file who is indeed a 7zip exe file and add it to the array
             if ($file.VersionInfo.InternalName -match "7za?") {
-                Write-Host $file.FullName -BackgroundColor DarkCyan
                 $ResultFilteredList.Add($file) | Out-Null
             }
         }
@@ -267,6 +272,28 @@ function Get-7zEXEManually {
         # Consider to delete this else, or adding here something for the option of the user havnt typed one of the listed options
     }    
 }
+function Update-ScoopPath {
+
+    $Description = "Choose the folder of the tools, where scoop and GlobalScoopApps are located"    
+    $ToolsFolder = Get-Folder -Description $Description -initialDirectory "$PSScriptRoot"
+
+    if (!(Test-Path -Path "$ToolsFolder\GlobalScoopApps")){
+        Write-Host "Error, folder `"GlobalScoopApps`" wanst found in directory $ToolsFolder"  -ForegroundColor Red
+        read-host "Press ENTER to continue"
+        Clear-Host
+        return
+    }
+
+    $Tools = $ToolsFolder
+    Set-Vars
+    Update-Shims 
+    Register-Path
+
+    read-host "Press ENTER to continue"
+    Clear-Host
+    
+}
+
 [Int] $userInput = 0
 while ($userinput -ne 99) {
     $help = @"
@@ -277,6 +304,8 @@ while ($userinput -ne 99) {
     1. Export CAT with Scoop Tools  | Export CAT with all its installed programs to a *.tar.xz file
                                       in order to import them on another computer
     2. Import CAT with Scoop Tools  | Import an existing *.tar.xz that contains CAT with scoop and its programs
+    3. Update Scoop path            | Update the path of scoop in the shims, in the PATH variable and in the environmets variables.
+                                      Choose this action if you have changed Scoop path
         
 "@
     Write-Host $help
@@ -284,5 +313,6 @@ while ($userinput -ne 99) {
     switch ($userInput) {
         1 { Export-Scoop }
         2 { Import-Scoop }
+        3 { Update-ScoopPath }
     }
 } 
