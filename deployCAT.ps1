@@ -23,10 +23,49 @@ Function Get-Folder {
     return $FolderBrowserDialog.SelectedPath
 }
 
+function ReplaceGoPDFFile {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $BasePath
+    )
+    try{
+        $src = "$BasePath\go.pdf"
+        $dest = "$BasePath\CATInstall\go.pdf"
+        # copy and replace new pdf file into th catinstall repo
+        [System.IO.File]::Copy($src, $dest, $true);
+        Write-Host "The updated go.pdf file is in local repository."
+    } catch {
+        "[failed] error occured while trying to copy and overwite the go.pdf file."
+    }
+}
 
+function UploadCATInstallToGit {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $BasePath
+    )
+    try{
+        $commands = @("cd $BasePath\CATInstall","git add go.pdf","git commit -m `"new version of CAT deployed`"","git push -u")
+        Foreach ($cmd in $commands) {
+            Invoke-Expression $cmd
+        }
+    } catch {
+        Write-Host "[failed] error while uploading to github..."
+    }
+    
+}
 
-Write-Host "Browse and Create a new path for the last version installation..."
-$BasePath = Get-Folder
+$dirName = 'C:\CATDeploy'
+If (Test-Path $dirName){
+    rmdir $dirName -Force -Recurse
+}
+Write-Host "Creating temporary folders in $dirName"
+New-Item -Path "c:\" -Name "CATDeploy" -ItemType "directory"
+$BasePath = $dirName
 While([bool](Get-ChildItem $BasePath)){
     if ([string]::IsNullOrEmpty($BasePath)) {
         exit
@@ -46,7 +85,6 @@ While([bool](Get-ChildItem $BasePath)){
         $BasePath = Get-Folder
     }
 }
-write-host "[Success] The folder $BasePath is empty" -ForegroundColor Green
 Set-Location $BasePath
 
 # download CyberAuditTool from main (cloning)
@@ -66,4 +104,20 @@ catch {
  }catch {
      Write-Host "[Failed] error in compression to PDF process"
  }
- 
+ # download CATInstall from main (cloning)
+try {
+    
+    $cloneCmd = "git clone https://github.com/contigon/CATInstall.git"
+    Invoke-Expression $cloneCmd
+    Write-Host "Last version of CATInstall repository is cloned"
+    ReplaceGoPDFFile $BasePath
+    UploadCATInstallToGit $BasePath
+    }
+catch {
+    Write-Host "[Failed] Error connecting to download site."
+    }
+# deployment finished so deletes temporary folder.
+Set-Location "c:\"
+If (Test-Path $dirName){
+    rmdir $dirName -Force -Recurse
+}
