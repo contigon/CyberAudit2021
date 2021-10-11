@@ -1,0 +1,24 @@
+# This is a workflow file whisch is responsible for automation process of the continuos deployment
+# of CAT after every push into main branch
+# This process includes running a script which creates go.pdf from the cyberAudit repo and upload it
+# into CATInstall repo.
+
+name: Deploy CAT
+
+on:
+    push:
+        branches:
+            - main
+            
+jobs:
+    deploy:
+        runs-on: windows-2019
+        
+        steps:
+            
+            - uses: actions/checkout@main
+            
+            # running the PS script 
+            - name: deployCAT now
+              run: .\deployCAT.ps1
+    
