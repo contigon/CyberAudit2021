@@ -89,6 +89,10 @@ Set-Location $BasePath
 
 # download CyberAuditTool from main (cloning)
 try {
+    $authcmd1 = "git config --global user.email `"barper@post.bgu.ac.il`""
+    $authcmd2 = "git config --global user.name `"barPerlman`""
+    Invoke-Expression $authcmd1
+    Invoke-Expression $authcmd2
     $cloneCmd = "git clone https://github.com/contigon/CyberAudit2021.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CAT repository is cloned"
