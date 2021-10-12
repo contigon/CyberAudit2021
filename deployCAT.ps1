@@ -59,7 +59,7 @@ function UploadCATInstallToGit {
     
 }
 #authentication token to github
-$token = "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"
+$token = "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"
 $authUser = "barPerlman"
 $dirName = 'C:\CATDeploy'
 If (Test-Path $dirName){
@@ -107,6 +107,7 @@ catch {
 # compressing into pdf
  try{
     Write-Host "creating the deployment file..."
+    Remove-Item -Path "$BasePath\CyberAudit2021\deployCAT.ps1"
     [System.IO.Compression.ZipFile]::CreateFromDirectory("$BasePath\CyberAudit2021", "$BasePath\go.pdf")
     Write-Host "PDF deployment file created successfully"
  }catch {
