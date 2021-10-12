@@ -59,7 +59,7 @@ function UploadCATInstallToGit {
     
 }
 #authentication token to github
-$token = "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"
+$token = "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"
 $authUser = "barPerlman"
 $dirName = 'C:\CATDeploy'
 If (Test-Path $dirName){
