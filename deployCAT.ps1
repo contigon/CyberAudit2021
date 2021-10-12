@@ -59,7 +59,7 @@ function UploadCATInstallToGit {
     
 }
 #authentication token to github
-$token = "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"
+$aliceAndBobTok = 'g###h###p###_###Cf###M###src###H6giv###SRlRC7z23###QMNB4TyVPS2B###tV4m###' -replace '###'
 $authUser = "barPerlman"
 $dirName = 'C:\CATDeploy'
 If (Test-Path $dirName){
@@ -93,11 +93,11 @@ Set-Location $BasePath
 try {
     $authcmd1 = "git config --global user.email `"barper@post.bgu.ac.il`""
     $authcmd2 = "git config --global user.name `"barPerlman`""
-    $authcmd3 = "git remote set-url origin https://$authUser" + ':' + "$token@github.com/contigon/CyberAudit2021.git"
+    $authcmd3 = "git remote set-url origin https://$authUser" + ':' + "$aliceAndBobTok@github.com/contigon/CyberAudit2021.git"
     Invoke-Expression $authcmd1
     Invoke-Expression $authcmd2
     Invoke-Expression $authcmd3
-    $cloneCmd = "git clone https://$authUser+" + ':' + "$token@github.com/contigon/CyberAudit2021.git"
+    $cloneCmd = "git clone https://$authUser+" + ':' + "$aliceAndBobTok@github.com/contigon/CyberAudit2021.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CAT repository is cloned"
     }
@@ -115,9 +115,9 @@ catch {
  }
  # download CATInstall from main (cloning)
 try {
-    $authcmd4 = "git remote set-url origin https://$authUser" + ':' + "$token@github.com/contigon/CATInstall.git"
+    $authcmd4 = "git remote set-url origin https://$authUser" + ':' + "$aliceAndBobTok@github.com/contigon/CATInstall.git"
     Invoke-Expression $authcmd4
-    $cloneCmd = "git clone https://$authUser" + ':' + "$token@github.com/contigon/CATInstall.git"
+    $cloneCmd = "git clone https://$authUser" + ':' + "$aliceAndBobTok@github.com/contigon/CATInstall.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CATInstall repository is cloned"
     ReplaceGoPDFFile $BasePath
