@@ -59,7 +59,7 @@ function UploadCATInstallToGit {
     
 }
 #authentication token to github
-$token = "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"
+$token = "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"
 $authUser = "barPerlman"
 $dirName = 'C:\CATDeploy'
 If (Test-Path $dirName){
@@ -114,7 +114,8 @@ catch {
  }
  # download CATInstall from main (cloning)
 try {
-    
+    $authcmd4 = "git remote set-url origin https://$authUser" + ':' + "$token@github.com/contigon/CATInstall.git"
+    Invoke-Expression $authcmd4
     $cloneCmd = "git clone https://$authUser" + ':' + "$token@github.com/contigon/CATInstall.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CATInstall repository is cloned"
