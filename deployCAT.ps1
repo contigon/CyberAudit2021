@@ -59,7 +59,7 @@ function UploadCATInstallToGit {
     
 }
 #authentication token to github
-$aliceAndBobTok = 'g###h###p###_###Cf###M###src###H6giv###SRlRC7z23###QMNB4TyVPS2B###tV4m###' -replace '###'
+$aliceAndBobTok = '###g###h###p###_###q###v###V###J###g###Q###L###p###e###R###9###V###e###6###S###W###j###u###UH6HUP###k###D###d###n###gB4cwZyD###' -replace '###'
 $authUser = "barPerlman"
 $dirName = 'C:\CATDeploy'
 If (Test-Path $dirName){
