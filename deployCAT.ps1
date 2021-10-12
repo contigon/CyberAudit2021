@@ -93,11 +93,11 @@ Set-Location $BasePath
 try {
     $authcmd1 = "git config --global user.email `"barper@post.bgu.ac.il`""
     $authcmd2 = "git config --global user.name `"barPerlman`""
-    $authcmd3 = "git remote add origin https://$authUser:$token@github.com/contigon/CyberAudit2021.git"
+    $authcmd3 = "git remote add origin https://$authUser" + ':' + "$token@github.com/contigon/CyberAudit2021.git"
     Invoke-Expression $authcmd1
     Invoke-Expression $authcmd2
     Invoke-Expression $authcmd3
-    $cloneCmd = "git clone https://$authUser:$token@github.com/contigon/CyberAudit2021.git"
+    $cloneCmd = "git clone https://$authUser+" + ':' + "$token@github.com/contigon/CyberAudit2021.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CAT repository is cloned"
     }
@@ -115,7 +115,7 @@ catch {
  # download CATInstall from main (cloning)
 try {
     
-    $cloneCmd = "git clone https://$authUser:$token@github.com/contigon/CATInstall.git"
+    $cloneCmd = "git clone https://$authUser" + ':' + "$token@github.com/contigon/CATInstall.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CATInstall repository is cloned"
     ReplaceGoPDFFile $BasePath
