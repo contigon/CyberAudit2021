@@ -95,7 +95,7 @@ try {
     Invoke-Expression $authcmd1
     Invoke-Expression $authcmd2
     Invoke-Expression $authcmd3
-    $cloneCmd = "git clone https://github.com/contigon/CyberAudit2021.git"
+    $cloneCmd = "git clone https://contigon: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@github.com/contigon/CyberAudit2021.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CAT repository is cloned"
     }
@@ -113,7 +113,7 @@ catch {
  # download CATInstall from main (cloning)
 try {
     
-    $cloneCmd = "git clone https://github.com/contigon/CATInstall.git"
+    $cloneCmd = "git clone https://contigon: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@github.com/contigon/CATInstall.git"
     Invoke-Expression $cloneCmd
     Write-Host "Last version of CATInstall repository is cloned"
     ReplaceGoPDFFile $BasePath
