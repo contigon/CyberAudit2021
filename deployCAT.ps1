@@ -1,4 +1,4 @@
-
+# The following script creates go.pdf to update CATInstall repo from the CyberAuditBuild Repo
 Function Get-Folder {
     param (
         $initialDirectory,        
