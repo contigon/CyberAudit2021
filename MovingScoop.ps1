@@ -6,7 +6,6 @@
 #>
 #requires -RunAsAdministrator
 #Requires -Version 5.1
-Import-Module $PSScriptRoot\CyberFunctions.psm1
 $Tools = "$PSScriptRoot\Tools"
 $7z = $null
 
@@ -28,7 +27,7 @@ function Update-Shims {
             Write-Host "$tools$appsRelativePath" -ForegroundColor Yellow
             foreach ($item in $shimsToUpdate) {
                 if (($item.Name -like '*.shim') -or ($item.Name -like '*.cmd')) {
-                    write-host $item.FullName -ForegroundColor DarkMagenta
+                    write-host $item.FullName -ForegroundColor Cyan
                     $file = $item.FullName
                     $regex = '.:\\.*Tools\\(GlobalScoopApps|Scoop)'
                     (Get-Content $file) -replace $regex, "$tools$appsRelativePath" | Set-Content $file
@@ -57,7 +56,6 @@ function Register-Path {
     # Globaly
     [environment]::setEnvironmentVariable("PATH", $NewMachinePATH, 'Machine')
     [environment]::setEnvironmentVariable("PATH", $NewUserPATH, 'user')
-    $env:PATH
 
     Write-Host "Registering paths in PATH variable"
     try {
@@ -75,10 +73,12 @@ function Register-Path {
     Write-Host "Done. PATH environmental variable updated" -ForegroundColor Green
 }
 function Import-Scoop {
-    $userInput = Read-Host "Press [ENTER] if your extracted file contains whole cat and scoop, or type [Scoop] if it contains only scoop's tools folder"
-    [boolean]$OnlyScoop = ($userInput -eq "Scoop")
+    Write-Host "`n"
+    Write-Host "This will import CAT from a tar.xz file, and will register all scoop's dependencies"
+    Write-Host "------------------------------------------------------------------------------------"
+    Write-Host ""
+
     $7z = Get-7z | ForEach-Object { $_.replace(' ', '` ') }
-    
     # Show a GUI to choose the compressed file that supposed to contain the Tools
     Write-Host "A file selection window will be opened. Select the tar.xz compressed file"
     Read-Host "Press [ENTER] to continue"
@@ -87,6 +87,7 @@ function Import-Scoop {
     
     # If user pressed the cancel button in the choosing-GUI, cancel the action
     if ($compressedFilePath -eq "Cancel" ) {
+        Clear-Host
         return        
     }
     # Check if the Path is not empty and it's valid
@@ -94,54 +95,55 @@ function Import-Scoop {
         failed "File path is not vaild"
         return
     }
+    if (!(Test-DriveStorage $compressedFilePath) ) {
+        Read-Host "Press [ENTER] to continue"
+        Clear-Host
+        return
+    }
     
     $compressedFileTarName = ((Split-Path $compressedFilePath -Leaf) -split "\.")[0]
-    
-    
+        
     # Check if the file is really a "tar.xz" archive
     $ErrorActionPreference = "SilentlyContinue"
     $itemExt = Get-CompressedFileExt $compressedFilePath
     $ErrorActionPreference = "Continue"
     if ($itemExt -ne "xz") {
-        failed "The file isn't a .xz file"
+        Write-Host "Error: The file isn't a .xz file" -ForegroundColor Red
         read-host "Press ENTER to return to menu" 
-        #   Clear-Host
+        Clear-Host
         return
     }
     # Check if archive contains a .tar file
     $7zOutput = Invoke-Expression "$7z l `"$compressedFilePath`""
     if (!((select-string " *.tar" -InputObject $7zOutput -Quiet) -and (select-string " 1 files" -InputObject $7zOutput -Quiet))) {
-        failed "The file doesn't contain .tar file inside it"         
+        Write-Host "Error: The file doesn't contain .tar file inside it" -ForegroundColor Red
         read-host "Press ENTER to return to menu" 
-        #    Clear-Host
+        Clear-Host
+        return
+    }   
+
+    $Description = "Choose a folder to put the extracted CAT folder. Note: The extracted output will include root folder for CAT"    
+    $ExtractionDestination = Get-Folder -Description $Description -initialDirectory "$env:USERPROFILE\Desktop" -ReturnCancelIfCanceled
+    if ($ExtractionDestination -eq "Cancel") {
+        Clear-Host
         return
     }
-    
-    if ($OnlyScoop) { 
-        $Description = "Choose a folder to the extracted files. Note: a new folder named `"Tools`" will be created at this directory"    
-        $ExtractionDestination = Get-Folder -Description $Description -initialDirectory "$env:USERPROFILE\Desktop"
-        $ExtractionDestination = New-Item -ItemType Directory -Path $ExtractionDestination -Name "Tools" -Force
-    } else {
-        $Description = "Choose a folder to put the extracted CAT folder. Note: The extracted output will include root folder for CAT"    
-        $ExtractionDestination = Get-Folder -Description $Description -initialDirectory "$env:USERPROFILE\Desktop"
-    }
-
     Write-Host "Extracting files to $ExtractionDestination..."
 
-    # Extract the tar from the tar.xz file, and then extract the files from that Tools.tar file
+    # Extract the tar from the tar.xz file, and then extract the files from that tar file
     $cmd = "$7z x `"$compressedFilePath`"  -o$ExtractionDestination -txz -aoa -bso0"
     Invoke-Expression $cmd
     # Check the exit code of the 7z execution
     if ($LASTEXITCODE -ge 2) {
         Write-Host "Error occurred" -ForegroundColor Red
+        read-host "Press ENTER to continue"
+        Clear-Host
         return
     }
-    # If the tar contains whole CAT, it supposed to include the root folder. We will need the name of this folder later
-    if (!$OnlyScoop) {
-        $7zOutput = Invoke-Expression "$7z l `"$ExtractionDestination\$compressedFileTarName.tar`""
-        $regex = '\d{4}.*D\.\..*0\ \ +0\ \ +'
-        $CompressedRootFolderName = ($7zOutput | Select-String -Pattern $regex)[0] -replace $regex
-    }
+    # If the tar contains whole CAT, it supposed to include the root folder. We need the name of this folder later
+    $7zOutput = Invoke-Expression "$7z l `"$ExtractionDestination\$compressedFileTarName.tar`""
+    $regex = '\d{4}.*D\.\..*0\ \ +0\ \ +'
+    $CompressedRootFolderName = ($7zOutput | Select-String -Pattern $regex)[0] -replace $regex
     
     # Extract the files from the tar file to the destination
     $cmd = "$7z x $ExtractionDestination\$compressedFileTarName.tar -o$ExtractionDestination -ttar -aos -bso0" 
@@ -154,19 +156,24 @@ function Import-Scoop {
     Write-Host "Folders from compressed file extracted successfully" -ForegroundColor Green
     Write-Host "Regitering the path of scoop to PATH environmental variable and updating the shims..." -ForegroundColor Green
     Remove-Item -Path "$ExtractionDestination\$compressedFileTarName.tar" -Force 
-    $Tools = "$ExtractionDestination\Tools"
-    if (!$OnlyScoop) {
-        $Tools = "$ExtractionDestination\$CompressedRootFolderName\Tools"
-    }
+
+    $Tools = "$ExtractionDestination\$CompressedRootFolderName\Tools"
     Set-Vars
     Update-Shims 
     Register-Path
 
+    write-host "" -BackgroundColor Yellow -ForegroundColor Black
+    write-host "Note: Any other sessions of Powershell needs to be closed and reopen to apply the changes" -BackgroundColor Yellow -ForegroundColor Black
+    write-host "" -BackgroundColor Yellow -ForegroundColor Black
     read-host "Press ENTER to continue"
     Clear-Host
 }
 
 function Export-Scoop {
+    Write-Host "`n"
+    Write-Host "This will export CAT from to tar.xz file with all scoop's tools"
+    Write-Host "------------------------------------------------------------------------------------"
+    Write-Host ""
 
     $7z = Get-7z | ForEach-Object { $_.replace(' ', '` ') }
     write-host "7z path is: $7z"
@@ -174,28 +181,30 @@ function Export-Scoop {
     Write-Host "Cleaning Scoop cache..."
     try { Invoke-Expression "Scoop cache rm *" }
     catch { write-host "Warning: Scoop Not installed properly" -ForegroundColor Yellow }
+    $FolderToArchive = "$psscriptroot".Replace(' ', '` ')
 
-    $userInput = Read-Host "Press [ENTER] to export CAT, scoop and all the tools, or type [Tools] to export only scoop and tools"
-    if ($userInput -ne "Tools") {
-        $FolderToArchive = "$psscriptroot".Replace(' ', '` ')
-    } else {
-        $FolderToArchive = "$PSScriptRoot\Tools".Replace(' ', '` ')
-    }
     Write-Host "`nA window will open to choose a folder to place the compressed file"
     Read-Host "Press [ENTER] to continue"
     $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled | ForEach-Object { $_.replace(' ', '` ') }
-    Write-Host "Compressing..."
+    Write-Host "Storing in tar..."
     if ($null -ne $7z) {
         $cmd = "$7z a -ttar -snl -bso0 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -x!*\cache\*"
         Invoke-Expression $cmd
-        if ($LASTEXITCODE -ge 2) { Write-Host "An Error occurred" -ForegroundColor Red }
-        else {
+        if ($LASTEXITCODE -ge 2) {
+            Write-Host "An Error occurred" -ForegroundColor Red 
+            Read-Host "Press [ENTER] to continue"
+            Clear-Host
+            return
+        } else {
+            Write-Host "Compressing to tar.xz..."
             $cmd = "$7z a -txz -sdel -bso0 $ArchiveDestinationFolder\CAT.tar.xz $ArchiveDestinationFolder\CAT.tar"
             Invoke-Expression $cmd
             if ($LASTEXITCODE -le 1) {
                 if (Compress-ToSFX -TarXzDirectory $ArchiveDestinationFolder) {
-                    Write-Host "Exported successfully to this file:" -ForegroundColor Green 
-                    Write-Host "$ArchiveDestinationFolder\CAT.exe" -ForegroundColor Green 
+                    Write-Host ""
+                    Write-Host "Exported successfully to a file in this folder:" -ForegroundColor Green 
+                    Write-Host "$ArchiveDestinationFolder" -ForegroundColor Green                     
+                    Write-Host ""  
                 }
             } else {
                 Write-Host "An Error occurred" -ForegroundColor Red
@@ -212,11 +221,12 @@ function Get-CompressedFileExt {
 }
 <#
 .description
-    Retrun 7z.exe file
+    Retrun 7za.exe file
     if it doesnt exist, get it by browsing or by download it    
 #>
 function Get-7z {
     Write-Host "Searching for 7zip..."
+    Write-Host ""
     $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse | Where-Object { $_.name -match "7za\.exe`$" } 
     # If 7za.exe is not found, extract it from the zip
     if ($null -eq $7zexeResults ) {
@@ -270,10 +280,11 @@ function Get-7zEXEManually {
     } elseif ($userInput -eq "S") {
         do {
             $7zExeFile = Get-FileName "exe"
-            if ($7zExeFile -eq "Cancel") { exit }
+            if ($7zExeFile -eq "Cancel") { Clear-Host; exit }
             elseif (!((Get-ItemProperty $7zExeFile).VersionInfo.internalname -match "7za?")) {
                 Write-Host "File is not a 7z exe file! Press [ENTER] to select again" -ForegroundColor Red
-                Read-Host
+                Clear-Host
+                return
             }
         }while (!((Get-ItemProperty $7zExeFile).VersionInfo.internalname -match "7za?"))
         return $7zExeFile 
@@ -282,7 +293,10 @@ function Get-7zEXEManually {
     }    
 }
 function Update-ScoopPath {
-
+    Write-Host "`n"
+    Write-Host "This will update Scoop path in all necessary environmental things"
+    Write-Host "------------------------------------------------------------------------------------"
+    Write-Host ""
     $Description = "Choose the folder of the tools, where scoop and GlobalScoopApps are located"    
     $ToolsFolder = Get-Folder -Description $Description -initialDirectory "$PSScriptRoot"
 
@@ -297,7 +311,10 @@ function Update-ScoopPath {
     Set-Vars
     Update-Shims 
     Register-Path
-
+    
+    write-host "" -BackgroundColor Yellow -ForegroundColor Black
+    write-host "Note: Any other sessions of Powershell needs to be closed and reopen to apply the changes" -BackgroundColor Yellow -ForegroundColor Black
+    write-host "" -BackgroundColor Yellow -ForegroundColor Black
     read-host "Press ENTER to continue"
     Clear-Host    
 }
@@ -308,9 +325,22 @@ function Compress-ToSFX {
         [string]
         $TarXzDirectory
     )
-    $cmd = "$7z a -sfx -bso0 -sdel $TarXzDirectory\CAT.exe $TarXzDirectory\CAT.tar.xz"
+    $SFXName = "CAT"
+    if (Test-Path -Path $TarXzDirectory\CAT.exe) {
+        Write-Host "Warning: A file named CAT.exe is already exists in the directory you have chose"
+        Write-Host "Do you want to overwrite it?"
+        $UserInput = Read-Host "Enter [Y] to overwrite, or [O] to enter a name manually"
+        if ($UserInput -eq "O") {
+            $SFXName = Read-Host "Enter a name for the file"
+        }
+    }
+    Write-Host "Storing in a SFX file..."
+    $cmd = "$7z a -sfx -bso0 -sdel $TarXzDirectory\$SFXName.exe $TarXzDirectory\CAT.tar.xz"
     Invoke-Expression $cmd
-    $cmd = "$7z u -bso0 $TarXzDirectory\CAT.exe $PSScriptRoot\7z.zip" #TODO: Add here the CyberImportCAT file
+    if ($LASTEXITCODE -ge 2) {
+        return $false
+    }
+    $cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\7z.zip" #TODO: Add here the CyberImportCAT file
     Invoke-Expression $cmd
  
     return ($LASTEXITCODE -le 1)
@@ -322,7 +352,6 @@ function Test-DriveStorage {
         $TarXzPath
     )
     $DestinationDrive = ($TarXzPath -split '\\')[0]
-    #TODO: Get the drive of the destination that user chose
     $Drive = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DeviceID -eq $DestinationDrive }
     $DriveFreeSpace = [Math]::Round($Drive.FreeSpace / 1MB)
 
@@ -336,14 +365,68 @@ function Test-DriveStorage {
         Write-Host "Error occurred" -ForegroundColor Red
         Read-Host "Press [ENTER] to continue"
         Clear-Host
-        return
+        return $false
     }
     if (($DriveFreeSpace - ($DecompressedSize) * 3) -lt 0) {
         Write-Host "Error: Not enough space left in drive" -ForegroundColor Red
         Read-Host "Press [ENTER] to continue"
         Clear-Host
-        return
+        return $false
     }
+    Write-Host "It's OK, there is enough space for the imported CAT and its tools" -ForegroundColor Green
+    return $true
+}
+function Get-FileName {
+    # $Extensions param is a strings array of requested extensions
+    # The function take this extensions list and set it in the filter of the file chooser
+    # If this paramter is empty, the file chooser set the filter to "All files"
+    param (
+        [string[]]
+        $Extensions,
+
+        [string]
+        $ExtensionsExplain
+    )
+    $FileFilter = "All files (*.*)| *.*"
+    if ($Extensions.Count -gt 0) {
+        [string]$extsString = ($Extensions -join ";*.")
+        $extsString = $extsString.Insert(0, '*.')
+        $FileFilter = $FileFilter.Insert(0, "$extsString|")
+        $FileFilter = $FileFilter.Insert(0, "$ExtensionsExplain|")
+    } 
+
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+    $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $OpenFileDialog.filter = $FileFilter
+    $cancel = $OpenFileDialog.ShowDialog()
+    if ( $cancel -ne "Cancel") {
+        return $OpenFileDialog.filename   
+    } else {
+        return $cancel 
+    } 
+}
+Function Get-Folder {
+    param (
+        $initialDirectory,        
+        # You can add a description to the folder choose window
+        $Description,
+        # An option to disable the "Add new folder button"
+        [switch] $DisableNewFolder,
+        # If paramter is present, return "Cancel" if user pressed the Cancel or "X" buttons
+        [switch] $ReturnCancelIfCanceled
+    ) 
+    [void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
+    $FolderBrowserDialog = New-Object System.Windows.Forms.FolderBrowserDialog
+    $FolderBrowserDialog.RootFolder = 'MyComputer'
+    $FolderBrowserDialog.ShowNewFolderButton = !$DisableNewFolder
+    if (![string]::IsNullOrEmpty($Description)) { $FolderBrowserDialog.Description = $Description }
+    if ($initialDirectory) { $FolderBrowserDialog.SelectedPath = $initialDirectory }
+    $Topmost = New-Object System.Windows.Forms.Form
+    $Topmost.TopMost = $True
+    $Topmost.MinimizeBox = $True
+    $ButtonPressed = $FolderBrowserDialog.ShowDialog($Topmost) 
+    if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) { return "Cancel" }
+    return $FolderBrowserDialog.SelectedPath
 }
 
 
@@ -357,6 +440,7 @@ while ($userinput -ne 99) {
     1. Export CAT with Scoop Tools  | Export CAT with all its installed programs to a *.tar.xz file
                                       in order to import them on another computer
     2. Import CAT with Scoop Tools  | Import an existing *.tar.xz that contains CAT with scoop and its programs
+    
     3. Update Scoop path            | Updates the registration of Scoop if you changed Scoop path
         
 "@
