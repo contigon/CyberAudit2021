@@ -59,7 +59,7 @@ function UploadCATInstallToGit {
     
 }
 #authentication token to github
-$aliceAndBobTok = '###g###h###p###_###q###v###V###J###g###Q###L###p###e###R###9###V###e###6###S###W###j###u###UH6HUP###k###D###d###n###gB4cwZyD###' -replace '###'
+$aliceAndBobTok = 'g###h###p###_###J###K###HCso###KGj9###D8Z8###7Cd9###iJdm###RX2q###lo9L###0eLfQy###' -replace '###'
 $authUser = "barPerlman"
 $dirName = 'C:\CATDeploy'
 If (Test-Path $dirName){
@@ -108,6 +108,7 @@ catch {
  try{
     Write-Host "creating the deployment file..."
     Remove-Item -Path "$BasePath\CyberAudit2021\deployCAT.ps1"
+    Remove-Item -Path "$BasePath\CyberAudit2021\.git" -Recurse -Force
     [System.IO.Compression.ZipFile]::CreateFromDirectory("$BasePath\CyberAudit2021", "$BasePath\go.pdf")
     Write-Host "PDF deployment file created successfully"
  }catch {
