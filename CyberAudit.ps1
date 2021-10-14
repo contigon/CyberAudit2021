@@ -10,6 +10,10 @@
 		Cyber Audit Tool - Audit
 #>
 
+function DNSTests {
+    .\CyberMaliciousDNSTest.ps1
+}
+
 function Domain {
     Clear-Host
     $help = @"
@@ -1292,6 +1296,7 @@ function ShowAuditMenu {
     Write-Host "    23. Skybox-Win	| All windows machines interface and routing config collector  " -ForegroundColor White
     Write-Host "    24. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
     Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
+    Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
     Write-Host ""
     Write-Host "    99. Quit                                                                       " -ForegroundColor White
     Write-Host ""
@@ -1377,6 +1382,9 @@ do {
 
         #Dumpert
         25 { Dumpert }
+        
+        #DNS tests
+        26 { DNSTests }
 
         #Menu End
     } 
