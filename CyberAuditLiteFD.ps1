@@ -48,8 +48,23 @@ Domain Admin permissions.
         
 "@
     Write-Host $help
-    $goddiDirectory = Get-ToolsFolder -ToolEXEName "goddi-windows-amd64.exe"
-    $goddiEXE = "$goddiDirectory\goddi-windows-amd64.exe"
+    if ((Get-ChildItem -Filter "goddi-windows-amd64.exe" -Path $PSScriptRoot  -Recurse) ) {
+        $goddiEXE = (Get-ChildItem -Filter "goddi-windows-amd64.exe" -Path $PSScriptRoot  -Recurse)[0].FullName
+        $goddiDirectory = Split-Path $goddiEXE -Parent
+    } else {
+        write-Host "If you already have the program, type [Y] to choose its location 
+        If you dont have the program, press ENTER to Download it automaticly: " -ForegroundColor Yellow -NoNewline 
+        $userInput = Read-Host
+        if ($userInput -ieq "y") {
+            $goddiDirectory = Get-ToolsFolder -ToolEXEName "goddi-windows-amd64.exe"
+            $goddiEXE = "$goddiDirectory\goddi-windows-amd64.exe"
+            
+        } else {
+            $goddiEXE = Download-Tool "goddi-windows-amd64.exe"
+            $goddiDirectory = Split-Path $goddiEXE -Parent
+        }
+    }
+    
     $ACQ = ACQ("goddi")
     Write-Host "You are running as user: $env:USERDNSDOMAIN\$env:USERNAME"
     $securePwd = Read-Host "Input a Domain Admin password" -AsSecureString
@@ -195,10 +210,23 @@ function Start-NTDSAuditTool {
 
 "@
     write-host $help
-    #  $ACQ = ACQA("NTDS")
     $ACQ = $NTDS_ACQ_Path
-    $NTDSDirectory = Get-ToolsFolder -ToolEXEName "NtdsAudit.exe"
-    $NTDSAuditEXE = "$NTDSDirectory\NtdsAudit.exe"
+    if ((Get-ChildItem -Filter "NTDSAudit.exe" -Path $PSScriptRoot  -Recurse) ) {
+        $NTDSAuditEXE = (Get-ChildItem -Filter "NTDSAudit.exe" -Path $PSScriptRoot  -Recurse)[0].FullName
+        $NTDSDirectory = Split-Path $NTDSAuditEXE -Parent
+    } else {
+        write-Host "If you already have the program, type [Y] to choose its location 
+        If you dont have the program, press ENTER to Download it automaticly: " -ForegroundColor Yellow -NoNewline 
+        $userInput = Read-Host
+        if ($userInput -ieq "y") {
+            $NTDSDirectory = Get-ToolsFolder -ToolEXEName "NtdsAudit.exe"
+            $NTDSAuditEXE = "$NTDSDirectory\NtdsAudit.exe"
+            
+        } else {
+            $NTDSAuditEXE = Download-Tool "NTDSAudit.exe"
+            $NTDSDirectory = Split-Path $NTDSAuditEXE -Parent
+        }
+    }
     # Move all the files from the dump to the main directory
     Get-ChildItem -Path $ACQ -Recurse -File | Move-Item -Destination $ACQ -Force
     #NtdsAudit $ACQ\ntds.dit -s $ACQ\SYSTEM  -p  $ACQ\pwdump-with-history.txt -u  $ACQ\user-dump.csv --debug --history-hashes
@@ -239,7 +267,7 @@ function Get-ToolsFolder {
     param (
         # The name of the exe file *with* the ".exe" postfix (or any extension)
         $ToolEXEName
-    )
+    )    
     write-host "A GUI window will be open to choose a folder" -foregroundcolor Yellow
     $Path = Get-Folder -Description "Choose the folder that contains $ToolEXEName files" -DisableNewFolder -ReturnCancelIfCanceled
     while (($Path -ne "Cancel") -and (-not (Test-Path "$Path\$ToolEXEName"))) {
@@ -284,11 +312,28 @@ function Start-PingCastle {
 "@
     Write-Host $help
     $ACQ = ACQ("PingCastle")
+    if ((Get-ChildItem -Filter "pingcastle.exe" -Path $PSScriptRoot  -Recurse) ) {
+        $PingCastleFolder = (Get-ChildItem -Filter "pingcastle.exe" -Path $PSScriptRoot  -Recurse)[0].DirectoryName
+    } else {
+        write-Host "If you already have the program, type [Y] to choose its location 
+If you dont have the program, press ENTER to Download it automaticly: " -ForegroundColor Yellow -NoNewline 
+        $userInput = Read-Host
+        if ($userInput -ieq "y") {
+            $PingCastleFolder = Get-ToolsFolder "Pingcastle.exe"
+        } else {
+            $PingCastleZIP = Download-Tool "PingCastle"
+            $PingCastleZIPParent = Split-Path $PingCastleZIP -Parent
+            Expand-Archive -Path $PingCastleZIP -DestinationPath $PingCastleZIPParent -Force
+            $PingCastleFolder = $PingCastleZIPParent
+        }
+        
+    }
 
     Invoke-Command -ScriptBlock {
         push-Location $ACQ
-        $PingCastleFolder = Get-ToolsFolder "Pingcastle.exe"
-        Copy-Item "$PingCastleFolder\*.*" $ACQ -Recurse -Force
+        $cmd = "robocopy $PingCastleFolder $ACQ /e /njh"
+        Invoke-Expression $cmd
+        # Copy-Item "$PingCastleFolder\*.*" $ACQ -Recurse -Force
 
         Start-Job -Name "full" -ScriptBlock { Push-Location $using:ACQ; cmd /c start .\PingCastle  --server * --no-enum-limit --carto --healthcheck; Pop-Location }
         Wait-Job -Name "full"
@@ -336,7 +381,7 @@ function Start-Testimo {
     }
     read-host "Press ENTER to continue"
 }
-function Install-TestimoModules{
+function Install-TestimoModules {
     write-host "A windows will open to choose a file, Please select the ZIP file contains Testimo-Modules.zip"
     Read-Host "Press ENTER to continue"
     $ModulesZip = get-filename -Extensions "zip"
@@ -360,15 +405,35 @@ function Install-TestimoModules{
 }
 function Download-Tool {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $ToolName
     )
+    switch ($ToolName) {
+        "Goddi" { $ToolURL = "https://github.com/NetSPI/goddi/releases/download/v1.2/goddi-windows-amd64.exe" }
+        "NTDSAudit" { $ToolURL = "https://github.com/Dionach/NtdsAudit/releases/download/v2.0.7/NtdsAudit.exe" }
+        "PingCastle" { $ToolURL = "https://github.com/vletoux/pingcastle/releases/download/2.10.0.0/PingCastle_2.10.0.0.zip" }
+        Default {}
+    }
     
+    $ToolEXEName = fname $ToolURL
+    New-Item  -Path "$PSScriptRoot\$ToolName"  -ItemType "Directory" -Force | out-null
+    dl $ToolURL "$PSScriptRoot\$ToolName\$ToolEXEName"
+    return "$PSScriptRoot\$ToolName\$ToolEXEName"
     
+    $InventoryList.Add($ToolName) | Out-Null
 }
+<#
+function dl($url, $to) {
+    $wc = New-Object Net.Webclient
+    $wc.headers.add('Referer', (strip_filename $url))
+    $wc.Headers.Add('User-Agent', (Get-UserAgent))
+    $wc.downloadFile($url, $to)
+}
+#>
 
 $DC = ($env:LOGONSERVER).TrimStart("\\")
+[System.Collections.ArrayList] $global:InventoryList = New-Object System.Collections.ArrayList
 
 Start-Goddi
 Get-NTDS

@@ -169,52 +169,6 @@ function Import-Scoop {
     read-host "Press ENTER to continue"
     Clear-Host
 }
-
-function Export-Scoop {
-    Write-Host "`n"
-    Write-Host "This will export CAT to tar.xz file with all scoop's tools"
-    Write-Host "------------------------------------------------------------------------------------"
-    Write-Host ""
-
-    $7z = Get-7z | ForEach-Object { $_.replace(' ', '` ') }
-    write-host "7z path is: $7z"
-    Write-Host ""
-    Write-Host "Cleaning Scoop cache..."
-    try { Invoke-Expression "Scoop cache rm *" }
-    catch { write-host "Warning: Scoop Not installed properly" -ForegroundColor Yellow }
-    $FolderToArchive = "$psscriptroot".Replace(' ', '` ')
-
-    Write-Host "`nA window will open to choose a folder to place the compressed file"
-    Read-Host "Press [ENTER] to continue"
-    $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled | ForEach-Object { $_.replace(' ', '` ') }
-    Write-Host "Storing in tar..."
-    if ($null -ne $7z) {
-        $cmd = "$7z a -ttar -snl -bso0 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -x!*\cache\*"
-        Invoke-Expression $cmd
-        if ($LASTEXITCODE -ge 2) {
-            Write-Host "An Error occurred" -ForegroundColor Red 
-            Read-Host "Press [ENTER] to continue"
-            Clear-Host
-            return
-        } else {
-            Write-Host "Compressing to tar.xz..."
-            $cmd = "$7z a -txz -sdel -bso0 $ArchiveDestinationFolder\CAT.tar.xz $ArchiveDestinationFolder\CAT.tar"
-            Invoke-Expression $cmd
-            if ($LASTEXITCODE -le 1) {
-                if (Compress-ToSFX -TarXzDirectory $ArchiveDestinationFolder) {
-                    Write-Host ""
-                    Write-Host "Exported successfully to a file in this folder:" -ForegroundColor Green 
-                    Write-Host "$ArchiveDestinationFolder" -ForegroundColor Green                     
-                    Write-Host ""  
-                }
-            } else {
-                Write-Host "An Error occurred" -ForegroundColor Red
-            }
-        }
-    }    
-    read-host "Press ENTER to continue"
-    Clear-Host
-}
 function Get-CompressedFileExt {
     param ($Path)
     $item = (Invoke-Expression "$7z l $path" | select-string "Type = ")
@@ -226,12 +180,12 @@ function Get-CompressedFileExt {
     if it doesnt exist, get it by browsing or by download it    
 #>
 function Get-7z {
-    if (Test-Path $7z) {
+    if (($null -ne $7z) -and ( Test-Path $7z)){
         return $7z
     }
     Write-Host "Searching for 7zip..."
     Write-Host ""
-    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse | Where-Object { $_.name -match "7za\.exe`$" } 
+    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10| Where-Object { $_.name -match "7za\.exe`$" } 
     # If 7za.exe is not found, extract it from the zip
     if ($null -eq $7zexeResults ) {
         if (Test-Path -Path ".\7z.zip") {
@@ -429,84 +383,6 @@ Function Get-Folder {
     if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) { return "Cancel" }
     return $FolderBrowserDialog.SelectedPath
 }
-function Install-NonPortableApps {
 
 
-    
-}
-function Export-NonPortableApps {
-    Import-ScoopCustomExts
-    $CacheFolder = "$Tools\scoop\cache"
-    $CacheFilesExist = Get-ChildItem -Path "$tools\scoop\cache"
-    $ToolsNeedInstall = @("PDQDeploy", "Nessus", "azscan3", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector")
-    [System.Collections.ArrayList]$InstalledTools = [System.Collections.ArrayList]::new()
-    scoop export | ForEach-Object {
-        $name = ($_ -split " ")[0]
-
-        <# $line = $_ -split " "
-         $InstalledTools.Add(@{
-                Name = $line[0]
-                Version  = $line[1]
-                Global   = $line[2]
-                Bucket   = $line[3]
-            })
-            #>
-        if ($ToolsNeedInstall.Contains($name)) {
-            $null = $InstalledTools.Add($name)
-        }
-
-    }
-    # If there are not tools that need installation, we dont need to do anything here
-    if ($InstalledTools.Count -eq 0) {
-        return
-    }
-    $TempCache = New-Item -Path "$tools\scoop" -Name "TempCache" -ItemType Directory -Force
-    $InstalledTools.ForEach({
-            foreach ($CacheFile in $CacheFilesExist) {
-                $CacheFileName = ($CacheFile -split '#')[0]
-                if ($_ -eq $CacheFileName) {
-                    # Copy the installation file to somewhere
-                    Copy-Item -Path $CacheFile.FullName -Destination $TempCache -Force
-                    
-                } else {
-                    # The installation file is not in the cache, we need to download it and then move it to somewhere
-                    Invoke-Expression "scoop download $_"
-                    if ($LASTEXITCODE -le 1){
-                        Get-ChildItem $CacheFolder -Filter "*$_*" | Copy-Item -Destination $TempCache
-                    }
-                }
-
-            }
-        })
-}
-function Import-ScoopCustomExts {
-    Get-ChildItem "$PSScriptRoot\ScoopAddOns" -Recurse -File | ForEach-Object { 
-        if ($_.Name -eq "DlToCache.ps1") {
-            Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\lib" -Force  
-        } elseif (($_.Name -eq "scoop-DlToCache.ps1")) {
-            Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\libexec" -Force
-        } 
-    }    
-}
-[Int] $userInput = 0
-while ($userinput -ne 99) {
-    $help = @"
-  
-    CAT with scoop - Import and Export
-    ----------------------------------
-
-    1. Export CAT with Scoop Tools  | Export CAT with all its installed programs to a *.tar.xz file
-                                      in order to import them on another computer
-    2. Import CAT with Scoop Tools  | Import an existing *.tar.xz that contains CAT with scoop and its programs
-    
-    3. Update Scoop path            | Updates the registration of Scoop if you changed Scoop path
-        
-"@
-    Write-Host $help
-    $userInput = read-host "Choose an action"
-    switch ($userInput) {
-        1 { Export-Scoop }
-        2 { Import-Scoop }
-        3 { Update-ScoopPath }
-    }
-} 
+Import-Scoop

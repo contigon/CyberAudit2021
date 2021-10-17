@@ -106,6 +106,7 @@ function ShowMenu {
         Write-Host "    14. Linux   	| Install Windows Subsystem for Linux                         " -ForegroundColor $menuColor[14]
         Write-Host "    15. RAM     	| Schedule Trimming of processes working sets and release RAM " -ForegroundColor $menuColor[15]
         Write-Host "    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine" -ForegroundColor $menuColor[16]
+        Write-Host "    17. Offline CAT | Export/Import CAT and fix Scoop paths                       " -ForegroundColor $menuColor[17]
         Write-Host ""
         Write-Host "    99. Quit                                                                      " -ForegroundColor White
         Write-Host ""
@@ -158,9 +159,12 @@ function ShowMenu {
             
             #RAM
             15 { RAM; break }
-            #Shrink VM
             
+            #Shrink VM
             16 { ShrinkVM; break }
+
+            # Export and import CAT
+            17 { OfflineScoop }
             
             #Menu End
         }
@@ -189,44 +193,33 @@ function OSCheck() {
                 
 "@
 
-        Write-Host $help
-        $menuColor[1] = "Yellow"
-        if (!(isInternetConnected)) # internet is down or corporation Firewall is blocking ICMP protocol
-            {
-                 Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
-            } 
-        else 
-            {
-            Write-Host "Internet is up, you can continue with installation" -ForegroundColor Green
-            }
-        if (([System.Environment]::OSVersion.Version.Major -lt 10))
-            {
-            write-host "CyberAuditTool requires Windows 10 or later Operating systems, your system does not qualify with that, please upgrade the OS before continuing" -ForegroundColor Red
-            } 
-        else 
-            {
-            write-host "Operating System Version is OK so we now test Build number" -ForegroundColor Green
-            }
-        if (((Get-WmiObject -class Win32_OperatingSystem).Version -lt "10.0.17763"))
-            {
-            write-host "Minimal Windows 10 build version was not detected, please upgrade the OS before continuing" -ForegroundColor Red
-            } 
-            else
-            {
-            write-host "OS build version is OK, you can continue installation without upgrade" -ForegroundColor Green
-            }
-        $update = Read-Host "Press [R] to Upgrade or [U] to update windows (Enter to continue doing nothing)"
-        if ($update -eq "U")
-        {
-            Install-Module -Name PSWindowsUpdate
-            Import-Module -Name PSWindowsUpdate
-            Add-WUServiceManager -ServiceID "7971f918-a847-4430-9279-4a52d1efe18d" -AddServiceFlag 7
-            Get-WindowsUpdate
-            Get-WUInstall -AcceptAll -IgnoreReboot
-        }
-        if ($update -eq "R")
-        {
-            try {
+    Write-Host $help
+    $menuColor[1] = "Yellow"
+    if (!(isInternetConnected)) { # internet is down or corporation Firewall is blocking ICMP protocol
+        Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
+    } else {
+        Write-Host "Internet is up, you can continue with installation" -ForegroundColor Green
+    }
+    if (([System.Environment]::OSVersion.Version.Major -lt 10)) {
+        write-host "CyberAuditTool requires Windows 10 or later Operating systems, your system does not qualify with that, please upgrade the OS before continuing" -ForegroundColor Red
+    } else {
+        write-host "Operating System Version is OK so we now test Build number" -ForegroundColor Green
+    }
+    if (((Get-WmiObject -class Win32_OperatingSystem).Version -lt "10.0.17763")) {
+        write-host "Minimal Windows 10 build version was not detected, please upgrade the OS before continuing" -ForegroundColor Red
+    } else {
+        write-host "OS build version is OK, you can continue installation without upgrade" -ForegroundColor Green
+    }
+    $update = Read-Host "Press [R] to Upgrade or [U] to update windows (Enter to continue doing nothing)"
+    if ($update -eq "U") {
+        Install-Module -Name PSWindowsUpdate
+        Import-Module -Name PSWindowsUpdate
+        Add-WUServiceManager -ServiceID "7971f918-a847-4430-9279-4a52d1efe18d" -AddServiceFlag 7
+        Get-WindowsUpdate
+        Get-WUInstall -AcceptAll -IgnoreReboot
+    }
+    if ($update -eq "R") {
+        try {
 
             # Declarations
             [string]$DownloadDir = 'C:\Temp\Windows_FU\packages'
@@ -584,20 +577,19 @@ function InstallAnalyzers {
                 scoop install $c[$i - 3].ToString()
             }
 
-        Write-Host "Installing Microtosft AppInspector tool"
-        if ((dotnet --version) -ge "3.1.200")
-        {
-            $a = appdir("appinspector")
-            push-Location $a
-            $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
-            Invoke-Expression $cmd
-            Pop-Location            
+            Write-Host "Installing Microtosft AppInspector tool"
+            if ((dotnet --version) -ge "3.1.200") {
+                $a = appdir("appinspector")
+                push-Location $a
+                $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
+                Invoke-Expression $cmd
+                Pop-Location            
 
-    } else {
-        Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
+            } else {
+                Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
+            }
+        }
     }
-    }
-}
 }
 function InstallAttacks {
     <# 
@@ -1026,7 +1018,9 @@ function ShrinkVM {
     }
     Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow    
 }
-
+function OfflineScoop {
+    & .\MovingScoop.ps1    
+}
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 
@@ -1034,6 +1028,7 @@ if (![Environment]::Is64BitProcess) {
     failed "OS architecture must be 64 bit, exiting ..."
     exit
 }
+
 
 # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
 copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"
