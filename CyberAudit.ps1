@@ -11,7 +11,60 @@
 #>
 
 function DNSTests {
+    Clear-Host
     .\CyberMaliciousDNSTest.ps1
+}
+
+function Masscan {
+    Clear-Host
+    $help = @"
+MASSCAN: Mass IP port scanner
+-----------------------------
+This is an Internet-scale port scanner.
+Its usage (parameters, output) is similar to nmap, the most famous port scanner.
+Internally, it uses asynchronous transmission.
+Its flexible and allowing arbitrary port and address ranges.
+
+The following questions is about to guide you in the process of constructing the scanning plan:
+"@
+$masscanPath = Invoke-Expression ("scoop prefix masscan")
+$currentPWDObj = Get-Location
+$currPWDString = $currentPWDObj.path 
+$cdcmd = "cd $masscanPath"
+Invoke-Expression $cdcmd
+# The next process of asking the user for inputs for the tool
+# Those inpuuts will be concatenated into masscan apply command
+$targets = Read-Host "Type target IPs or subnets to scan:"
+$ports = Read-Host "Please type ports or range of ports you wish to scan:"
+$rate = Read-Host "Specify the desired packet sending rate (packets/seconds):"
+$isExcludeFile = Read-Host "Do you want to use an excluding file? [y/n]:"
+$excludeFile = $null
+if($isExcludeFile -eq 'y'){
+    $excludeFile = Read-Host "Insert the file path: "
+    $excludeFile = "‐‐excludefile "+$excludeFile
+}else{
+    $excludeFile = ''
+}
+$confFileName = $null
+$isWishSave = Read-Host "would you like to save your constructed scanning plan? [y/n]"
+if($isWishSave -eq "y"){
+    $confFileName = Read-Host "Give your config file a name: "
+}
+# saving the scan configuration for future run
+if ($confFileName){
+    Write-Host "Saving configuration to $PSScriptRoot/$confFileName"
+    $massCommand = "masscan.exe "+$targets+" -p"+$ports+" --rate "+$rate +" "+$excludeFile+ " --echo > $confFileName"
+    Invoke-Expression $massCommand
+    
+}
+# running scan bygathered arguments
+Write-Host "Running the scan..."
+$massCommand = "masscan.exe "+$targets+" -p"+$ports+" --rate "+$rate +" "+$excludeFile+ " > results.txt"
+Invoke-Expression $massCommand
+
+#restore location before the application run
+$cmd = "cd "+$currPWDString
+Invoke-Expression $cmd
 }
 
 function Domain {
@@ -1297,6 +1350,7 @@ function ShowAuditMenu {
     Write-Host "    24. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
     Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
     Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
+    Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
     Write-Host ""
     Write-Host "    99. Quit                                                                       " -ForegroundColor White
     Write-Host ""
@@ -1385,6 +1439,9 @@ do {
         
         #DNS tests
         26 { DNSTests }
+
+        #Speed port scanning
+        27 { Masscan }
 
         #Menu End
     } 
