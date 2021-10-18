@@ -34,7 +34,7 @@ function install_app($app, $architecture, $global, $suggested, $use_cache = $tru
         return
     }
 
-    write-output "Installing '$app' ($version) [$architecture]"
+    write-output "Downloading '$app' ($version) [$architecture]"
 
    # $dir = ensure (versiondir $app $version $global)
     $original_dir = $dir # keep reference to real (not linked) directory

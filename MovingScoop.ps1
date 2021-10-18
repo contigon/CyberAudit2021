@@ -163,6 +163,8 @@ function Import-Scoop {
     Update-Shims 
     Register-Path
 
+    Install-NonPortableApps
+
     write-host "" -BackgroundColor Yellow -ForegroundColor Black
     write-host "Note: Any other sessions of Powershell needs to be closed and reopen to apply the changes" -BackgroundColor Yellow -ForegroundColor Black
     write-host "" -BackgroundColor Yellow -ForegroundColor Black
@@ -175,21 +177,24 @@ function Export-Scoop {
     Write-Host "This will export CAT to tar.xz file with all scoop's tools"
     Write-Host "------------------------------------------------------------------------------------"
     Write-Host ""
-
+    Export-NonPortableApps
     $7z = Get-7z | ForEach-Object { $_.replace(' ', '` ') }
     write-host "7z path is: $7z"
     Write-Host ""
+    <# 
     Write-Host "Cleaning Scoop cache..."
     try { Invoke-Expression "Scoop cache rm *" }
     catch { write-host "Warning: Scoop Not installed properly" -ForegroundColor Yellow }
+    #>
     $FolderToArchive = "$psscriptroot".Replace(' ', '` ')
 
-    Write-Host "`nA window will open to choose a folder to place the compressed file"
+    # We are notifying to user that window gonna be opened because sometimes the windows is opened but not getting the focus, and user sees nothing but stuck console
+    Write-Host "`nA window will be opened to choose a folder to place the compressed file"
     Read-Host "Press [ENTER] to continue"
     $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled | ForEach-Object { $_.replace(' ', '` ') }
     Write-Host "Storing in tar..."
     if ($null -ne $7z) {
-        $cmd = "$7z a -ttar -snl -bso0 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -x!*\cache\*"
+        $cmd = "$7z a -ttar -snl -bso0 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -xr!*scoop\cache\*"
         Invoke-Expression $cmd
         if ($LASTEXITCODE -ge 2) {
             Write-Host "An Error occurred" -ForegroundColor Red 
@@ -226,16 +231,16 @@ function Get-CompressedFileExt {
     if it doesnt exist, get it by browsing or by download it    
 #>
 function Get-7z {
-    if (Test-Path $7z) {
+    if (($null -ne $7z) -and ( Test-Path $7z)) {
         return $7z
     }
     Write-Host "Searching for 7zip..."
     Write-Host ""
-    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse | Where-Object { $_.name -match "7za\.exe`$" } 
+    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10 | Where-Object { $_.name -match "7za\.exe`$" } 
     # If 7za.exe is not found, extract it from the zip
     if ($null -eq $7zexeResults ) {
-        if (Test-Path -Path ".\7z.zip") {
-            Expand-Archive .\7z.zip -Force
+        if (Test-Path -Path "$PSScriptroot\7z.zip") {
+            Expand-Archive "$PSScriptroot\7z.zip" -DestinationPath $PSScriptroot\7z\ -Force
             return "$PSScriptroot\7z\x64\7za.exe"
         } else {
             return Get-7zEXEManually 
@@ -430,27 +435,27 @@ Function Get-Folder {
     return $FolderBrowserDialog.SelectedPath
 }
 function Install-NonPortableApps {
-
-
+    Remove-Item "$Tools\scoop\Cache" -Force
+    Rename-Item "$Tools\scoop\TempCache" -NewName 'cache' -Force
+    if (Test-Path -Path "$Tools\scoop\InstalledApps.txt") {
+        $InstalledTools = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
+        $InstalledTools.foreach({
+            Invoke-Expression "scoop uninstall $_ -g"    
+            Invoke-Expression "scoop uninstall $_ "    
+            Invoke-Expression "scoop install $_ -g"    
+        })
+    }
     
 }
 function Export-NonPortableApps {
-    Import-ScoopCustomExts
+    Add-ScoopCustomExts
+    Write-Host "Exporting installation files for non-portable apps..."
     $CacheFolder = "$Tools\scoop\cache"
-    $CacheFilesExist = Get-ChildItem -Path "$tools\scoop\cache"
-    $ToolsNeedInstall = @("PDQDeploy", "Nessus", "azscan3", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector")
+    $FilesInCache = Get-ChildItem -Path "$tools\scoop\cache"
+    $ToolsNeedInstall = @("pdqdeploy", "nessus", "azscan3", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector")
     [System.Collections.ArrayList]$InstalledTools = [System.Collections.ArrayList]::new()
     scoop export | ForEach-Object {
-        $name = ($_ -split " ")[0]
-
-        <# $line = $_ -split " "
-         $InstalledTools.Add(@{
-                Name = $line[0]
-                Version  = $line[1]
-                Global   = $line[2]
-                Bucket   = $line[3]
-            })
-            #>
+        $name = ($_ -split " ")[0].ToLower()
         if ($ToolsNeedInstall.Contains($name)) {
             $null = $InstalledTools.Add($name)
         }
@@ -462,28 +467,33 @@ function Export-NonPortableApps {
     }
     $TempCache = New-Item -Path "$tools\scoop" -Name "TempCache" -ItemType Directory -Force
     $InstalledTools.ForEach({
-            foreach ($CacheFile in $CacheFilesExist) {
+            $IsCacheExistsForApp = $false
+            foreach ($CacheFile in $FilesInCache) {
                 $CacheFileName = ($CacheFile -split '#')[0]
                 if ($_ -eq $CacheFileName) {
                     # Copy the installation file to somewhere
                     Copy-Item -Path $CacheFile.FullName -Destination $TempCache -Force
-                    
-                } else {
-                    # The installation file is not in the cache, we need to download it and then move it to somewhere
-                    Invoke-Expression "scoop download $_"
-                    if ($LASTEXITCODE -le 1){
-                        Get-ChildItem $CacheFolder -Filter "*$_*" | Copy-Item -Destination $TempCache
-                    }
+                    $IsCacheExistsForApp = $true
                 }
-
+            }
+            # If the installation file is not in the cache, we need to download it and then move it to somewhere
+            if (!$IsCacheExistsForApp) {
+                Write-Host "The installation files of $_ are not in cache, so we will download them..."
+                Invoke-Expression "scoop download $_"
+                # Checks if download succeded
+                if ($LASTEXITCODE -le 1) {
+                    Get-ChildItem $CacheFolder -Filter "*$_*" | Copy-Item -Destination $TempCache
+                }
             }
         })
+    $InstalledTools | Out-File -FilePath "$Tools\scoop\InstalledApps.txt" -Force
 }
-function Import-ScoopCustomExts {
+function Add-ScoopCustomExts {
+    Write-Host "Inserting customed files into Scoop..."
     Get-ChildItem "$PSScriptRoot\ScoopAddOns" -Recurse -File | ForEach-Object { 
-        if ($_.Name -eq "DlToCache.ps1") {
+        if ($_.Name -eq "download.ps1") {
             Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\lib" -Force  
-        } elseif (($_.Name -eq "scoop-DlToCache.ps1")) {
+        } elseif (($_.Name -eq "scoop-download.ps1")) {
             Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\libexec" -Force
         } 
     }    
