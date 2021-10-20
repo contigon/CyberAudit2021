@@ -162,7 +162,7 @@ function Import-Scoop {
     Set-Vars
     Update-Shims 
     Register-Path
-
+    Install-ExternalModules
     Install-NonPortableApps
 
     write-host "" -BackgroundColor Yellow -ForegroundColor Black
@@ -192,6 +192,7 @@ function Export-Scoop {
     Write-Host "`nA window will be opened to choose a folder to place the compressed file"
     Read-Host "Press [ENTER] to continue"
     $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled | ForEach-Object { $_.replace(' ', '` ') }
+    Export-ExternalModules
     Write-Host "Storing in tar..."
     if ($null -ne $7z) {
         $cmd = "$7z a -ttar -snl -bso0 $ArchiveDestinationFolder\CAT.tar $FolderToArchive -xr!*scoop\cache\*"
@@ -379,7 +380,7 @@ function Test-DriveStorage {
         Write-Host "Error: Not enough space left in drive" -ForegroundColor Red
         return $false
     }
-    Write-Host "It's OK, there is enough space for the imported CAT and its tools" -ForegroundColor Green
+    Write-Host "It's OK, there is enough space for the imported CAT and its tools in drive $Drive" -ForegroundColor Green
     return $true
 }
 function Get-FileName {
@@ -435,15 +436,20 @@ Function Get-Folder {
     return $FolderBrowserDialog.SelectedPath
 }
 function Install-NonPortableApps {
-    Remove-Item "$Tools\scoop\Cache" -Force
+    Import-Module "FileSplitter"
+    Rename-Item "$Tools\scoop\Cache" -NewName 'OldCache' -Force
     Rename-Item "$Tools\scoop\TempCache" -NewName 'cache' -Force
     if (Test-Path -Path "$Tools\scoop\InstalledApps.txt") {
-        $InstalledTools = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
-        $InstalledTools.foreach({
-            Invoke-Expression "scoop uninstall $_ -g"    
-            Invoke-Expression "scoop uninstall $_ "    
-            Invoke-Expression "scoop install $_ -g"    
-        })
+        $ToolsNeedsInstall = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
+        $ScoopExport = Invoke-Expression "Scoop export" -join "`n"
+        $ToolsNeedsInstall.foreach({
+                if ($ScoopExport -match "$_.*\*global\*") {
+                    Invoke-Expression "scoop uninstall $_ -g"    
+                } elseif ($ScoopExport -match "$_") {
+                    Invoke-Expression "scoop uninstall $_ " 
+                }                 
+                Invoke-Expression "scoop install $_ -g"    
+            })
     }
     
 }
@@ -453,22 +459,23 @@ function Export-NonPortableApps {
     $CacheFolder = "$Tools\scoop\cache"
     $FilesInCache = Get-ChildItem -Path "$tools\scoop\cache"
     $ToolsNeedInstall = @("pdqdeploy", "nessus", "azscan3", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector")
-    [System.Collections.ArrayList]$InstalledTools = [System.Collections.ArrayList]::new()
+    [System.Collections.ArrayList]$ToolsNeedsInstall = [System.Collections.ArrayList]::new()
     scoop export | ForEach-Object {
         $name = ($_ -split " ")[0].ToLower()
         if ($ToolsNeedInstall.Contains($name)) {
-            $null = $InstalledTools.Add($name)
+            $null = $ToolsNeedsInstall.Add($name)
         }
 
     }
     # If there are not tools that need installation, we dont need to do anything here
-    if ($InstalledTools.Count -eq 0) {
+    if ($ToolsNeedsInstall.Count -eq 0) {
         return
     }
     $TempCache = New-Item -Path "$tools\scoop" -Name "TempCache" -ItemType Directory -Force
-    $InstalledTools.ForEach({
+    $ToolsNeedsInstall.ForEach({
             $IsCacheExistsForApp = $false
             foreach ($CacheFile in $FilesInCache) {
+                #TODO: Change the checking here and use "scoop cache show ##"
                 $CacheFileName = ($CacheFile -split '#')[0]
                 if ($_ -eq $CacheFileName) {
                     # Copy the installation file to somewhere
@@ -486,7 +493,7 @@ function Export-NonPortableApps {
                 }
             }
         })
-    $InstalledTools | Out-File -FilePath "$Tools\scoop\InstalledApps.txt" -Force
+    $ToolsNeedsInstall | Out-File -FilePath "$Tools\scoop\InstalledApps.txt" -Force
 }
 function Add-ScoopCustomExts {
     Write-Host "Inserting customed files into Scoop..."
@@ -496,6 +503,34 @@ function Add-ScoopCustomExts {
         } elseif (($_.Name -eq "scoop-download.ps1")) {
             Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\libexec" -Force
         } 
+    }    
+}
+function Export-ExternalModules {
+    if (!(Get-PackageProvider -Name NuGet -ListAvailable)) {
+        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    }
+    try {
+        Import-Module "PSSharedGoods"
+    } catch {
+        Install-Module "PSSharedGoods" -Force -SkipPublisherCheck
+    }    
+    $ExternalModulesNames = Get-Module -ListAvailable | Where-Object { $_.Author -notmatch "Microsoft" } | Select-Object -ExpandProperty "name"
+
+    $ModulesDir = (New-Item -Path $Tools -Name "ExternalModules" -ItemType Directory -Force).FullName
+    foreach ($Module in $ExternalModulesNames) {
+        Initialize-ModulePortable -Name $Module -Path "$ModulesDir" -Download -Verbose
+    }    
+}
+function Install-ExternalModules {
+    if (Test-Path "$tools\ExternalModules") {
+        Write-Host "Copying modules to user's modules path..."
+        $dest = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules"
+        Invoke-Expression "robocopy $tools\ExternalModules $dest /mir /copyall /nfl /ndl /njh /njs"
+        if ($LASTEXITCODE -le 1) {
+            Write-Host "Copied successfully" -ForegroundColor Green
+        } else {
+            Write-Host "Error occurred in modules copying" -ForegroundColor Red            
+        }
     }    
 }
 [Int] $userInput = 0

@@ -1,13 +1,13 @@
-﻿# Usage: scoop install <app> [options]
-# Summary: Install apps
+﻿# Usage: scoop download <app> [options]
+# Summary: Download apps installation files to cache and not install them
 # Help: e.g. The usual way to install an app (uses your local 'buckets'):
-#      scoop install git
+#      scoop download git
 #
 # To install an app from a manifest at a URL:
-#      scoop install https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/runat.json
+#      scoop download https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/runat.json
 #
 # To install an app from a manifest on your computer
-#      scoop install \path\to\app.json
+#      scoop download \path\to\app.json
 #
 # Options:
 #   -g, --global              Install the app globally
