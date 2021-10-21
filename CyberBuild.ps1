@@ -1064,8 +1064,9 @@ function ShrinkVM {
     Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow    
 }
 function OfflineScoop {
-    & .\MovingScoop.ps1    
+    & .\CyberExportCAT.ps1    
 }
+
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
 

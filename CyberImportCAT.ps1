@@ -162,6 +162,8 @@ function Import-Scoop {
     Set-Vars
     Update-Shims 
     Register-Path
+    Install-ExternalModules
+    Install-NonPortableApps
 
     write-host "" -BackgroundColor Yellow -ForegroundColor Black
     write-host "Note: Any other sessions of Powershell needs to be closed and reopen to apply the changes" -BackgroundColor Yellow -ForegroundColor Black
@@ -169,6 +171,8 @@ function Import-Scoop {
     read-host "Press ENTER to continue"
     Clear-Host
 }
+
+
 function Get-CompressedFileExt {
     param ($Path)
     $item = (Invoke-Expression "$7z l $path" | select-string "Type = ")
@@ -180,16 +184,16 @@ function Get-CompressedFileExt {
     if it doesnt exist, get it by browsing or by download it    
 #>
 function Get-7z {
-    if (($null -ne $7z) -and ( Test-Path $7z)){
+    if (($null -ne $7z) -and ( Test-Path $7z)) {
         return $7z
     }
     Write-Host "Searching for 7zip..."
     Write-Host ""
-    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10| Where-Object { $_.name -match "7za\.exe`$" } 
+    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10 | Where-Object { $_.name -match "7za\.exe`$" } 
     # If 7za.exe is not found, extract it from the zip
     if ($null -eq $7zexeResults ) {
-        if (Test-Path -Path ".\7z.zip") {
-            Expand-Archive .\7z.zip -Force
+        if (Test-Path -Path "$PSScriptroot\7z.zip") {
+            Expand-Archive "$PSScriptroot\7z.zip" -DestinationPath $PSScriptroot\7z\ -Force
             return "$PSScriptroot\7z\x64\7za.exe"
         } else {
             return Get-7zEXEManually 
@@ -276,33 +280,6 @@ function Update-ScoopPath {
     read-host "Press ENTER to continue"
     Clear-Host    
 }
-function Compress-ToSFX {
-    param (
-        # Parameter help description
-        [Parameter(mandatory = $true)]
-        [string]
-        $TarXzDirectory
-    )
-    $SFXName = "CAT"
-    if (Test-Path -Path $TarXzDirectory\CAT.exe) {
-        Write-Host "Warning: A file named CAT.exe is already exists in the directory you have chose"
-        Write-Host "Do you want to overwrite it?"
-        $UserInput = Read-Host "Enter [Y] to overwrite, or [O] to enter a name manually"
-        if ($UserInput -eq "O") {
-            $SFXName = Read-Host "Enter a name for the file"
-        }
-    }
-    Write-Host "Storing in a SFX file..."
-    $cmd = "$7z a -sfx -bso0 -sdel $TarXzDirectory\$SFXName.exe $TarXzDirectory\CAT.tar.xz"
-    Invoke-Expression $cmd
-    if ($LASTEXITCODE -ge 2) {
-        return $false
-    }
-    $cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\7z.zip" #TODO: Add here the CyberImportCAT file
-    Invoke-Expression $cmd
- 
-    return ($LASTEXITCODE -le 1)
-}
 function Test-DriveStorage {
     param (
         [Parameter(Mandatory = $true)]
@@ -312,7 +289,7 @@ function Test-DriveStorage {
     $DestinationDrive = ($TarXzPath -split '\\')[0]
     $Drive = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DeviceID -eq $DestinationDrive }
     $DriveFreeSpace = [Math]::Round($Drive.FreeSpace / 1MB)
-
+    
     $7z = Get-7z
     Write-Host "Checking file size..."
     $cmd = "$7z l $TarXzPath"
@@ -328,7 +305,8 @@ function Test-DriveStorage {
         Write-Host "Error: Not enough space left in drive" -ForegroundColor Red
         return $false
     }
-    Write-Host "It's OK, there is enough space for the imported CAT and its tools" -ForegroundColor Green
+    $Output = "It's OK, there is enough space for the imported CAT and its tools in drive " + $Drive.DeviceID
+    Write-Host $Output -ForegroundColor Green
     return $true
 }
 function Get-FileName {
@@ -383,6 +361,47 @@ Function Get-Folder {
     if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) { return "Cancel" }
     return $FolderBrowserDialog.SelectedPath
 }
+function Install-NonPortableApps {
+    Import-Module "FileSplitter"
+    Rename-Item "$Tools\scoop\Cache" -NewName 'OldCache' -Force
+    Rename-Item "$Tools\scoop\TempCache" -NewName 'cache' -Force
+    if (Test-Path -Path "$Tools\scoop\InstalledApps.txt") {
+        $ToolsNeedsInstall = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
+        $ScoopExport = (Invoke-Expression "Scoop export") -join "`n"
+        $ToolsNeedsInstall.foreach({
+                if ($ScoopExport -match "$_.*\*global\*") {
+                    Invoke-Expression "scoop uninstall $_ -g"    
+                } elseif ($ScoopExport -match "$_") {
+                    Invoke-Expression "scoop uninstall $_ " 
+                }                 
+                Invoke-Expression "scoop install $_ -g"    
+            })
+    }
+    
+}
 
+function Add-ScoopCustomExts {
+    Write-Host "Inserting customed files into Scoop..."
+    Get-ChildItem "$PSScriptRoot\ScoopAddOns" -Recurse -File | ForEach-Object { 
+        if ($_.Name -eq "download.ps1") {
+            Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\lib" -Force  
+        } elseif (($_.Name -eq "scoop-download.ps1")) {
+            Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\libexec" -Force
+        } 
+    }    
+}
+
+function Install-ExternalModules {
+    if (Test-Path "$tools\ExternalModules") {
+        Write-Host "Copying modules to user's modules path..."
+        $dest = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules"
+        Invoke-Expression "robocopy $tools\ExternalModules $dest /mir /copyall /nfl /ndl /njh /njs"
+        if ($LASTEXITCODE -le 1) {
+            Write-Host "Copied successfully" -ForegroundColor Green
+        } else {
+            Write-Host "Error occurred in modules copying" -ForegroundColor Red            
+        }
+    }    
+}
 
 Import-Scoop

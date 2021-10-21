@@ -244,8 +244,8 @@ Function Get-Folder {
     $Topmost = New-Object System.Windows.Forms.Form
     $Topmost.TopMost = $True
     $Topmost.MinimizeBox = $True
-    $ButtonPressed =  $FolderBrowserDialog.ShowDialog($Topmost) 
-    if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) {return "Cancel"}
+    $ButtonPressed = $FolderBrowserDialog.ShowDialog($Topmost) 
+    if ($ReturnCancelIfCanceled -and ($ButtonPressed -eq "Cancel")) { return "Cancel" }
     return $FolderBrowserDialog.SelectedPath
 }
 
@@ -498,7 +498,7 @@ function CheckDotNet() {
         $ScoopInstalled = scoop
         $dotNet = detect.ps1
     } catch {
-        if (-not (test-path "C:\Temp")) { mkdir "C:\Temp" }
+        if (-not (test-path "C:\Temp")) { $null = mkdir "C:\Temp" }
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
         Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force
@@ -520,7 +520,7 @@ function CheckDotNet() {
     }
     $update = Read-Host "Press [I] if you want to Install .Net version 4.8 (Or Enter to continue)"
     if ($update -eq "I") {
-        if (-not (test-path "C:\Temp")) { mkdir "C:\Temp" }
+        if (-not (test-path "C:\Temp")) { $null = mkdir "C:\Temp" }
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest "https://github.com/peterM/Net_Framework_Installed_Versions_Getter/archive/master.zip" -OutFile "C:\Temp\DotNetDetect.zip"
         Expand-Archive c:\Temp\dotnetdetect.zip -DestinationPath C:\Temp -Force

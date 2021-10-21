@@ -177,7 +177,6 @@ function Export-Scoop {
     Write-Host "This will export CAT to tar.xz file with all scoop's tools"
     Write-Host "------------------------------------------------------------------------------------"
     Write-Host ""
-    Export-NonPortableApps
     $7z = Get-7z | ForEach-Object { $_.replace(' ', '` ') }
     write-host "7z path is: $7z"
     Write-Host ""
@@ -187,11 +186,13 @@ function Export-Scoop {
     catch { write-host "Warning: Scoop Not installed properly" -ForegroundColor Yellow }
     #>
     $FolderToArchive = "$psscriptroot".Replace(' ', '` ')
+    Export-NonPortableApps
 
     # We are notifying to user that window gonna be opened because sometimes the windows is opened but not getting the focus, and user sees nothing but stuck console
-    Write-Host "`nA window will be opened to choose a folder to place the compressed file"
+    Write-Host "A window will be opened to choose a folder to place the compressed file"
     Read-Host "Press [ENTER] to continue"
     $ArchiveDestinationFolder = Get-Folder -Description "Select a folder for the exported archive" -ReturnCancelIfCanceled | ForEach-Object { $_.replace(' ', '` ') }
+    Write-Host "The path for export is: $ArchiveDestinationFolder"
     Export-ExternalModules
     Write-Host "Storing in tar..."
     if ($null -ne $7z) {
@@ -350,8 +351,11 @@ function Compress-ToSFX {
     if ($LASTEXITCODE -ge 2) {
         return $false
     }
-    $cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\7z.zip" #TODO: Add here the CyberImportCAT file
+    $cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\7z.zip"
     Invoke-Expression $cmd
+    $cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\CyberImportCAT.ps1"
+    Invoke-Expression $cmd
+    
  
     return ($LASTEXITCODE -le 1)
 }
@@ -364,7 +368,7 @@ function Test-DriveStorage {
     $DestinationDrive = ($TarXzPath -split '\\')[0]
     $Drive = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DeviceID -eq $DestinationDrive }
     $DriveFreeSpace = [Math]::Round($Drive.FreeSpace / 1MB)
-
+    
     $7z = Get-7z
     Write-Host "Checking file size..."
     $cmd = "$7z l $TarXzPath"
@@ -380,7 +384,8 @@ function Test-DriveStorage {
         Write-Host "Error: Not enough space left in drive" -ForegroundColor Red
         return $false
     }
-    Write-Host "It's OK, there is enough space for the imported CAT and its tools in drive $Drive" -ForegroundColor Green
+    $Output = "It's OK, there is enough space for the imported CAT and its tools in drive " + $Drive.DeviceID
+    Write-Host $Output -ForegroundColor Green
     return $true
 }
 function Get-FileName {
@@ -440,9 +445,9 @@ function Install-NonPortableApps {
     Rename-Item "$Tools\scoop\Cache" -NewName 'OldCache' -Force
     Rename-Item "$Tools\scoop\TempCache" -NewName 'cache' -Force
     if (Test-Path -Path "$Tools\scoop\InstalledApps.txt") {
-        $ToolsNeedsInstall = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
-        $ScoopExport = Invoke-Expression "Scoop export" -join "`n"
-        $ToolsNeedsInstall.foreach({
+        $ToolsToExport = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
+        $ScoopExport = (Invoke-Expression "Scoop export") -join "`n"
+        $ToolsToExport.foreach({
                 if ($ScoopExport -match "$_.*\*global\*") {
                     Invoke-Expression "scoop uninstall $_ -g"    
                 } elseif ($ScoopExport -match "$_") {
@@ -459,20 +464,20 @@ function Export-NonPortableApps {
     $CacheFolder = "$Tools\scoop\cache"
     $FilesInCache = Get-ChildItem -Path "$tools\scoop\cache"
     $ToolsNeedInstall = @("pdqdeploy", "nessus", "azscan3", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector")
-    [System.Collections.ArrayList]$ToolsNeedsInstall = [System.Collections.ArrayList]::new()
+    [System.Collections.ArrayList]$ToolsToExport = [System.Collections.ArrayList]::new()
     scoop export | ForEach-Object {
         $name = ($_ -split " ")[0].ToLower()
-        if ($ToolsNeedInstall.Contains($name)) {
-            $null = $ToolsNeedsInstall.Add($name)
+        if (($ToolsNeedInstall.Contains($name)) -and (!($ToolsToExport.Contains($name)))) {
+            $null = $ToolsToExport.Add($name)
         }
 
     }
     # If there are not tools that need installation, we dont need to do anything here
-    if ($ToolsNeedsInstall.Count -eq 0) {
+    if ($ToolsToExport.Count -eq 0) {
         return
     }
     $TempCache = New-Item -Path "$tools\scoop" -Name "TempCache" -ItemType Directory -Force
-    $ToolsNeedsInstall.ForEach({
+    $ToolsToExport.ForEach({
             $IsCacheExistsForApp = $false
             foreach ($CacheFile in $FilesInCache) {
                 #TODO: Change the checking here and use "scoop cache show ##"
@@ -493,7 +498,7 @@ function Export-NonPortableApps {
                 }
             }
         })
-    $ToolsNeedsInstall | Out-File -FilePath "$Tools\scoop\InstalledApps.txt" -Force
+    $ToolsToExport | Out-File -FilePath "$Tools\scoop\InstalledApps.txt" -Force
 }
 function Add-ScoopCustomExts {
     Write-Host "Inserting customed files into Scoop..."
@@ -506,6 +511,7 @@ function Add-ScoopCustomExts {
     }    
 }
 function Export-ExternalModules {
+    Write-Host "Making external modules portable..."
     if (!(Get-PackageProvider -Name NuGet -ListAvailable)) {
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
     }
