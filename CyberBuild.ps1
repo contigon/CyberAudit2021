@@ -11,8 +11,9 @@
 #>
 
 # Imports
+Set-ExecutionPolicy Bypass
 Import-Module $PSScriptRoot\CyberFunctions.psm1
-. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
+
 # The following function set the modules environment in the PC (copy module -> update rootModule path, functions and vars  to  export -> import the module )
 function copy-ModuleToDirectory {
     [CmdletBinding()]
@@ -90,6 +91,7 @@ function ShowMenu {
         Write-Host ""
         Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
         Write-Host ""
+        Write-Host "     0. Dev options     | Enter developers menu includes implementation & debugging options" -ForegroundColor $menuColor[0]
         Write-Host "     1. OS	    	| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
         Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
         Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
@@ -115,6 +117,9 @@ function ShowMenu {
         [boolean]$WaitForInput = $True
     
         switch ($userInput) {
+            #Check Windows OS and build versions and if needed it can help upgrade an update latest build
+            0 { DevMenu; $WaitForInput = $false }
+
             #Check Windows OS and build versions and if needed it can help upgrade an update latest build
             1 { OSCheck; $WaitForInput = $false }
     
@@ -174,6 +179,43 @@ function ShowMenu {
         Clear-Host
         $WaitForInput = $True
     } while ($userInput -ne '99')    
+}
+
+function DevMenu {
+    $menuColor = New-Object System.Collections.ArrayList
+    for ($i = 0; $i -lt 100; $i++) {
+        $null = $menuColor.Add("White")
+    }
+    
+    do {
+        #Create the main menu
+        Write-Host ""
+        Write-Host "************************************************************************          " -ForegroundColor White
+        Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***          " -ForegroundColor White
+        Write-Host "************************************************************************          " -ForegroundColor White
+        Write-Host ""
+        Write-Host "     install Developer Features:                            " -ForegroundColor White
+        Write-Host ""
+        Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
+        Write-Host ""
+        Write-Host "     1. Export cyberFunctions | create all cyberFunctions methods global and readable by IDE." -ForegroundColor $menuColor[1]
+        Write-Host ""
+        Write-Host "    99. Quit                                                                      " -ForegroundColor White
+        Write-Host ""
+        $userInput = Read-Host "Select Script Number"
+    
+        [boolean]$WaitForInput = $True
+    
+        switch ($userInput) {
+            # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
+            1 { copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"; $WaitForInput = $false }
+        }
+        if ($WaitForInput) {
+            read-host "Press ENTER to continue" 
+        }
+        Clear-Host
+        $WaitForInput = $True
+    } while ($userInput -ne '99')        
 }
 
 function OSCheck() {
@@ -577,13 +619,16 @@ function InstallAnalyzers {
                 scoop install $c[$i - 3].ToString()
             }
 
-            Write-Host "Installing Microtosft AppInspector tool"
-            if ((dotnet --version) -ge "3.1.200") {
-                $a = appdir("appinspector")
-                push-Location $a
-                $cmd = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
-                Invoke-Expression $cmd
-                Pop-Location            
+        Write-Host "Installing Microtosft AppInspector tool"
+        if ((dotnet --version) -ge "3.1.200")
+        {
+            $a = appdir("appinspector")
+            push-Location $a
+            $cmd1 = "dotnet build"
+            $cmd2 = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
+            Invoke-Expression $cmd1
+            Invoke-Expression $cmd2
+            Pop-Location            
 
             } else {
                 Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
@@ -1029,13 +1074,13 @@ if (![Environment]::Is64BitProcess) {
     exit
 }
 
-
-# copy local cyber functions module into the PSModulePath, update the rootModule and import the module
-copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"
-
 CyberBginfo
 DisableFirewall
 DisableAntimalware
+Set-ExecutionPolicy Bypass
+. $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
+# Hide status bar of installing progress to reduce I/O calls for better performance
+$global:progressPreference = 'SilentlyContinue'
 proxydetect
 Write-Host "Setting power scheme to High performance"
 $cmd = "powercfg -s 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
@@ -1056,7 +1101,7 @@ $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -
 $PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
 $PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
 $utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "openjdk", "putty", "winscp", "vcredist2013", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
-$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy")
+$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy","masscan")
 $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
 $AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
 $AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
@@ -1070,6 +1115,8 @@ CreateDesktopShortcuts
 read-host "Press ENTER to continue (or Ctrl+C to quit)"
 
 start-Transcript -path $PSScriptRoot\CyberBuildPhase.Log -Force -append
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 Clear-Host
 
