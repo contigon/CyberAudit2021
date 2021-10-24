@@ -147,10 +147,10 @@ switch ($input) {
         else
         {
              Write-Host "[Failure] Please install Microsoft Excel before continuing running this analysis" -ForegroundColor Red
-             read-host "�Press [Enter] if you installed Excel (or Ctrl + c to quit)"�
+             read-host "Press [Enter] if you installed Excel (or Ctrl + c to quit)"
         }
         
-        read-host "�Press ENTER to continue"�
+        read-host "Press ENTER to continue"
         $null = start-Process -PassThru explorer $ACQ
      }
 
@@ -190,7 +190,7 @@ switch ($input) {
         {
             Write-Host "[Failed] The file $ACQ\hashes-Ophcrack.txt was not found, please check and try again" -ForegroundColor Red
         }
-        read-host "�Press ENTER to continue"�
+        read-host "Press ENTER to continue"
      }
        #hashcat
      3 {
@@ -305,7 +305,7 @@ switch ($input) {
             }
         }
      Pop-Location
-     read-host "�Press ENTER to continue"�
+     read-host "Press ENTER to continue"
      }
      #BloodHound
      4 {
@@ -385,14 +385,14 @@ switch ($input) {
 	            write-host "User:     neo4j" 
 	            write-host "Password: neo4j"
 	            write-host "Please change default password to: BloodHound" -ForegroundColor Red
-                read-host  "�After password is changed, Press ENTER to continue"�
+                read-host  "After password is changed, Press ENTER to continue"
                 write-host "Login to the BloodHound application using:"
                 write-host "User:     neo4j" -ForegroundColor Yello
                 write-host "Password: BloodHound" -ForegroundColor Yello
                 invoke-expression "BloodHound"
         }
         Start-Process iexplore $ACQ
-        read-host "�Press ENTER to continue"�
+        read-host "Press ENTER to continue"
      }
      #PolicyAnalizer
      5 {
@@ -496,9 +496,9 @@ switch ($input) {
         else
         {
              Write-Host "[Failure] Please install Microsoft Excel before continuing running this analysis" -ForegroundColor Red
-             read-host "�Press [Enter] if you installed Excel (or Ctrl + c to quit)"�
+             read-host "Press [Enter] if you installed Excel (or Ctrl + c to quit)"
         }
-        read-host "�Press ENTER to continue"�
+        read-host "Press ENTER to continue"
      }
 
     #DSInternals
@@ -530,7 +530,7 @@ switch ($input) {
             $pwndfile = Get-FileName
             Get-ADDBAccount -All -DatabasePath $ACQ\ntds.dit -BootKey $bk | Test-PasswordQuality -WeakPasswordHashesSortedFile $pwndfile
          }
-        read-host "�Press ENTER to continue"�     
+        read-host "Press ENTER to continue"     
      }
      #appInspector
      8 {
@@ -567,7 +567,7 @@ switch ($input) {
         Invoke-Expression $cmd
         Start-Process iexplore $ACQ
         Pop-Location    
-        read-host "�Press ENTER to continue"�     
+        read-host "Press ENTER to continue"   
      }
      #Remediation Efforts and Risk Charts
      9 {
@@ -609,7 +609,7 @@ switch ($input) {
         {
              failed " Please install Microsoft Excel before running this analysis"
         }
-        read-host "�Press ENTER to continue"�
+        read-host "Press ENTER to continue"
      }
      #Offline NTDS
      10 {
@@ -666,7 +666,7 @@ switch ($input) {
         write-host $help
         $ScriptToRun = $PSScriptRoot+"\CyberOfflineNTDS.ps1"
         &$ScriptToRun
-        read-host "�Press ENTER to continue"�     
+        read-host "Press ENTER to continue"     
      }
 
 #End Menu
