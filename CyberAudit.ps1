@@ -309,7 +309,7 @@ function TestDomain {
     Write-Host This Domain Controller name is: $DC
     Write-Host DNS root is: (Get-ADDomain).DNSRoot
     Test-ComputerSecureChannel -v
-    Enable-PSRemoting -Force; Get-Item WSMan:\localhost\Client\TrustedHosts
+    Enable-PSRemoting -SkipNetworkProfileCheck -Force; Get-Item WSMan:\localhost\Client\TrustedHosts
     Test-WsMan $DC
     Invoke-Command -ComputerName $DC -ScriptBlock { Get-WmiObject -Class Win32_ComputerSystem } -credential $cred
     $inpYesNo = Read-Host "Press [Enter] if test was successfull or [N] to try a different way"
