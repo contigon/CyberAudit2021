@@ -1,4 +1,6 @@
 <#
+    Import CAT and its Scoop, Scoop's tools, modules, and non-portable apps from a pre-made archive
+
     Configures scoop and its installed apps to be known by Windows, if they not installed in regular way,
     Scoop directory needs to be placed in ".\Tools\Scoop\apps\scoop".
     If you want more tools to be known, they and their shims have to be in ".\Tools\Scoop\"
@@ -9,6 +11,10 @@
 $Tools = "$PSScriptRoot\Tools"
 $7z = $null
 
+<#
+.SYNOPSIS
+Updates all shims in Tools\scoop and Tools\GlobalScoopApps path to the current absolute path
+#>
 function Update-Shims {
     for ($i = 0; $i -lt 2; $i++) {
         if ($i -eq 0) {
@@ -36,6 +42,10 @@ function Update-Shims {
         }   
     }
 }
+<#
+.SYNOPSIS
+Sets environmental variables $env:SCOOP_GLOBAL and $env:SCOOP to current absolute path
+#>
 function Set-Vars {
     Write-Host "Configuring environment variables..."
     $global:scoopDir = "$tools\Scoop"
@@ -44,9 +54,13 @@ function Set-Vars {
     $env:SCOOP = $scoopDir
     [Environment]::SetEnvironmentVariable("SCOOP", $env:SCOOP, "MACHINE")    
 
-    Write-Host "Done. All global veriables are set to the current absolute path:" -ForegroundColor Green
-    Write-Host "$PSScriptRoot" -ForegroundColor Green
+    Write-Host "Done. All global veriables are set to current absolute path:" -ForegroundColor Green
+    Write-Host "$Tools" -ForegroundColor Green
 }
+<#
+.SYNOPSIS
+Update the PATH environmental variable to current scoop path
+#>
 function Register-Path {
     Write-Host "Removing previous scoop paths from PATH variable"
     $NewUserPATH = ([System.Environment]::GetEnvironmentVariable("Path", "user") -split ';' | Select-String -NotMatch "scoop") -join ';'
@@ -72,6 +86,10 @@ function Register-Path {
 
     Write-Host "Done. PATH environmental variable updated" -ForegroundColor Green
 }
+<#
+.SYNOPSIS
+The main function manages all importation proccess
+#>
 function Import-Scoop {
     Write-Host "`n"
     Write-Host "This will import CAT from a tar.xz file, and will register all Scoop's dependencies"
@@ -132,6 +150,8 @@ function Import-Scoop {
     Write-Host "Extracting files to $ExtractionDestination..."
 
     # Extract the tar from the tar.xz file, and then extract the files from that tar file
+    # -bs0 hide all output for the proccess
+    # -aoa means overwrite All existing files without prompt
     $cmd = "$7z x `"$compressedFilePath`"  -o$ExtractionDestination -txz -aoa -bso0"
     Invoke-Expression $cmd
     # Check the exit code of the 7z execution
@@ -141,12 +161,16 @@ function Import-Scoop {
         Clear-Host
         return
     }
-    # If the tar contains whole CAT, it supposed to include the root folder. We need the name of this folder later
+    # After we extracted the tar file from the tar.xz, we dont need the tar.xz anyomre
+    Remove-Item -Path "$compressedFilePath" -Force 
+
+    # The tar supposed to include the root folder. We need the name of this folder for further use of $Tools parametr
     $7zOutput = Invoke-Expression "$7z l `"$ExtractionDestination\$compressedFileTarName.tar`""
     $regex = '\d{4}.*D\.\..*0\ \ +0\ \ +'
     $CompressedRootFolderName = ($7zOutput | Select-String -Pattern $regex)[0] -replace $regex
     
     # Extract the files from the tar file to the destination
+    # -aos skips extracting of existing files
     $cmd = "$7z x $ExtractionDestination\$compressedFileTarName.tar -o$ExtractionDestination -ttar -aos -bso0" 
     Invoke-Expression $cmd
     if ($LASTEXITCODE -ge 2) {
@@ -172,9 +196,14 @@ function Import-Scoop {
     Clear-Host
 }
 
-
+<#
+.SYNOPSIS
+Returns the extension of an archive file
+#>
 function Get-CompressedFileExt {
-    param ($Path)
+    param ([Parameter(Mandatory = $true)]
+        $Path
+    )
     $item = (Invoke-Expression "$7z l $path" | select-string "Type = ")
     return $item -replace "Type = "
 }
@@ -228,6 +257,11 @@ function Get-7z {
         return Get-7zEXEManually
     }
 }
+<#
+.DESCRIPTION
+If 7z cannot be found automatically in root or subfolders, then user can provide it manually
+Or it can be downloaded automatically from the internet
+#>
 function Get-7zEXEManually {
     write-host "Cannot find 7z, if you have it, type [S] to select it. If not, type [D] and it will be downloaded automatically"
     $userInput = Read-Host
@@ -280,6 +314,15 @@ function Update-ScoopPath {
     read-host "Press ENTER to continue"
     Clear-Host    
 }
+
+<#
+.SYNOPSIS
+The function make sure that the drive which the archive file in, has enough space to contain the exported data
+
+.DESCRIPTION
+The needed space calculation is made by the inner (tar) file size (real uncompressed size) 2 times,
+because first the tar file needs to be extracted, and then all its data extracted from it.
+#>
 function Test-DriveStorage {
     param (
         [Parameter(Mandatory = $true)]
@@ -366,9 +409,9 @@ function Install-NonPortableApps {
     Rename-Item "$Tools\scoop\Cache" -NewName 'OldCache' -Force
     Rename-Item "$Tools\scoop\TempCache" -NewName 'cache' -Force
     if (Test-Path -Path "$Tools\scoop\InstalledApps.txt") {
-        $ToolsNeedsInstall = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
+        $ToolsToExport = Get-Content -Path "$Tools\scoop\InstalledApps.txt" -Encoding String
         $ScoopExport = (Invoke-Expression "Scoop export") -join "`n"
-        $ToolsNeedsInstall.foreach({
+        $ToolsToExport.foreach({
                 if ($ScoopExport -match "$_.*\*global\*") {
                     Invoke-Expression "scoop uninstall $_ -g"    
                 } elseif ($ScoopExport -match "$_") {
@@ -380,6 +423,14 @@ function Install-NonPortableApps {
     
 }
 
+<#
+.SYNOPSIS
+Add Scoop customed extensions of download to cache
+
+.DESCRIPTION
+These extension add scoop the feature of download an app's installation files to the cache only,
+without the installation procees that supposed to come after that in normal scoop's "install" feature
+#>
 function Add-ScoopCustomExts {
     Write-Host "Inserting customed files into Scoop..."
     Get-ChildItem "$PSScriptRoot\ScoopAddOns" -Recurse -File | ForEach-Object { 
@@ -390,7 +441,6 @@ function Add-ScoopCustomExts {
         } 
     }    
 }
-
 function Install-ExternalModules {
     if (Test-Path "$tools\ExternalModules") {
         Write-Host "Copying modules to user's modules path..."
