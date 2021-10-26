@@ -11,7 +11,7 @@
 #>
 
 # Imports
-Set-ExecutionPolicy Bypass
+Set-ExecutionPolicy Unrestricted
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 
 # The following function set the modules environment in the PC (copy module -> update rootModule path, functions and vars  to  export -> import the module )
@@ -1078,7 +1078,7 @@ if (![Environment]::Is64BitProcess) {
 CyberBginfo
 DisableFirewall
 DisableAntimalware
-Set-ExecutionPolicy Bypass
+Set-ExecutionPolicy Unrestricted
 . $PSScriptRoot\CyberInstall-RSATv1809v1903v1909v2004v20H2  # For Write-Log function
 # Hide status bar of installing progress to reduce I/O calls for better performance
 $global:progressPreference = 'SilentlyContinue'
