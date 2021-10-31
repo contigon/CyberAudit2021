@@ -91,7 +91,7 @@ function ShowMenu {
         Write-Host ""
         Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
         Write-Host ""
-        Write-Host "     0. Dev options     | Enter developers menu includes implementation & debugging options" -ForegroundColor $menuColor[0]
+        Write-Host "     0. Dev options	| Enter developers menu includes implementation & debugging options" -ForegroundColor $menuColor[0]
         Write-Host "     1. OS	    	| Check Windows version and upgrade it to latest build and update " -ForegroundColor $menuColor[1]
         Write-Host "     2. PS and .Net	| Check and Update Powershell and .Net framework versions     " -ForegroundColor $menuColor[2]
         Write-Host "     3. RSAT		| Install Microsoft Remote Server Administration Tool         " -ForegroundColor $menuColor[3]
@@ -108,7 +108,7 @@ function ShowMenu {
         Write-Host "    14. Linux   	| Install Windows Subsystem for Linux                         " -ForegroundColor $menuColor[14]
         Write-Host "    15. RAM     	| Schedule Trimming of processes working sets and release RAM " -ForegroundColor $menuColor[15]
         Write-Host "    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine" -ForegroundColor $menuColor[16]
-        Write-Host "    17. Offline CAT | Export/Import CAT and fix Scoop paths                       " -ForegroundColor $menuColor[17]
+        Write-Host "    17. Offline CAT	| Export/Import CAT and fix Scoop paths                       " -ForegroundColor $menuColor[17]
         Write-Host ""
         Write-Host "    99. Quit                                                                      " -ForegroundColor White
         Write-Host ""
@@ -169,7 +169,7 @@ function ShowMenu {
             16 { ShrinkVM; break }
 
             # Export and import CAT
-            17 { OfflineScoop }
+            17 { OfflineCAT; $WaitForInput = $false}
             
             #Menu End
         }
@@ -965,7 +965,7 @@ function BackupAudits {
     Write-Host "Backup file Password is: $pass" -ForegroundColor Yellow
     Get-7ZipInformation "$dst\$file" -Password $pass
     Write-Host $verify
-    read-host "�Press ENTER to continue"
+    read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $dst
     
 }
@@ -1002,7 +1002,7 @@ function RAM {
     processes can grab memory but not necessarily actually need to use it.
 
     Memory trimming is where the OS forces processes to empty their working sets.
-    They don"�t just discard this memory, since the processes may need it at a later 
+    They don't just discard this memory, since the processes may need it at a later 
     juncture and it could already contain data,  instead the OS writes it to the page file
     for them such that it can be retrieved at a later time if required.
 
@@ -1046,7 +1046,7 @@ function ShrinkVM {
     scoop cache rm * -g
     scoop cache rm *
     Write-Host "Clearing all windows event logs"
-    Wevtutil el | ForEach-Object { wevtutil cl �$_� }
+    Wevtutil el | ForEach-Object { wevtutil cl $_ }
     write-host "Running the windows Disk Cleanup tool and removing files from the previous Windows installations/upgrades"
     $userInput = Read-Host "Press [M] for manually selecting what to clean or [A] for automatically cleaning"
     if ($userInput -eq "A") {
@@ -1063,8 +1063,8 @@ function ShrinkVM {
     }
     Write-Host "Shut Down the VM and then from the VMWARE menu select: VM-->Manage-->Clean Up Disks" -ForegroundColor Yellow    
 }
-function OfflineScoop {
-    & .\CyberExportCAT.ps1    
+function OfflineCAT {
+    & $PSScriptRoot\CyberExportCAT.ps1    
 }
 
 $runningScriptName = $MyInvocation.MyCommand.Name
