@@ -1440,9 +1440,16 @@ else {
 
 start-Transcript -path $PSScriptRoot\CyberAuditPhase.Log -Force -append
 
+
 #get external ip information includin ISP
-$externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
-$externalIP > $ACQ\externalIP.txt
+Write-Host "Getting external IP information..."
+try {
+	$externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
+	$externalIP > $ACQ\externalIP.txt
+}
+catch {
+	Write-Host "Internet connection is not available" -ForegroundColor Red
+}
 
 #SET Domain controller name
 $i = 0
