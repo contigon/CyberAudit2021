@@ -270,11 +270,17 @@ In order for this script to succeed you need to have domain administrative permi
             }
         }
     } else {
-        $domain = Read-Host -Prompt "Enter Domain name to join the machine to (eg. cyber.gov.il)"
+        # TODO: Add feature to get the domain from the creds provided
+        $domainFromCreds = split-path $cred.UserName
+        $domain = Read-Host -Prompt "Enter Domain name to join the machine to (eg. cyber.gov.il)
+If you want to use domain $domainFromCreds leave empty"
+        if ([string]::IsNullOrWhiteSpace($domain)) { 
+            $domain = $domainFromCreds
+        }
         $NeedRestart = (Add-Computer -DomainName $domain -Credential $cred -PassThru).HasSucceeded
     }
     if ($NeedRestart) {        
-        $restart = read-host "Press [R] to restart machine in order for settings to take effect (Enter to continue)"
+        $restart = read-host "Press [R] to restart machine for settings to take effect (Enter to continue)"
         if ($restart -eq "R") {
             shutdown /r /f /c "Rebooting computer after Domain joining or disconnecting"
         }
@@ -366,9 +372,11 @@ when finished please copy the c:\ntdsdump directory to the Aquisition folder (NT
         $cmd = 'Get-Date -Format "yyyyMMdd-HHmm"'
         $currentTime = Invoke-Expression $cmd
         Write-Host "Please wait untill the backup process is completed" -ForegroundColor Green
-        remove-item $env:LOGONSERVER\c$\ntdsdump -Recurse -ErrorAction SilentlyContinue
+        # remove-item $env:LOGONSERVER\c$\ntdsdump -Recurse -ErrorAction SilentlyContinue
         winrs -r:$DC ntdsutil "ac i ntds" "ifm" "create sysvol full c:\ntdsdump\$currentTime" q q
         Copy-Item -Path $env:LOGONSERVER\c$\ntdsdump\$currentTime -Destination $ACQ\$currentTime -Recurse -Force
+        Add-ACLForRemoteFolder -Path "$env:LOGONSERVER\c$\ntdsdump\$currentTime"
+        remove-item $env:LOGONSERVER\c$\ntdsdump\$currentTime -Recurse -ErrorAction SilentlyContinue
     }
     $userInput = read-host "Press ENTER to continue, or type any latter to open aquisition folder"
     if ($userInput -match '\w') {
