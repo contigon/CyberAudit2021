@@ -254,7 +254,7 @@ function OSCheck() {
     }
     $update = Read-Host "Press [R] to Upgrade or [U] to update windows (Enter to continue doing nothing)"
     if ($update -eq "U") {
-        Install-Module -Name PSWindowsUpdate
+        Install-Module -Name PSWindowsUpdate -Scope AllUsers
         Import-Module -Name PSWindowsUpdate
         Add-WUServiceManager -ServiceID "7971f918-a847-4430-9279-4a52d1efe18d" -AddServiceFlag 7
         Get-WindowsUpdate
@@ -380,20 +380,20 @@ function PSGalleryInstall {
     }
     $menuColor[4] = "Yellow"
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-    Install-PackageProvider Nuget
-    Install-Module -Name PowerShellGet -Force -AllowClobber
+    Install-PackageProvider Nuget -Force
+    Install-Module -Name PowerShellGet -Force -AllowClobber -Scope AllUsers
     
     foreach ($PSGModule in $PSGModules) {
         if ($PSGModule -eq "7Zip4PowerShell") {
             Write-Host "installing standard lib package"
             #Install-Package PowerShellStandard.Library -Version 5.1.0
             Write-Host "Installing module $PSGModule"
-            Install-Module -Name 7Zip4Powershell -AllowClobber -Force
+            Install-Module -Name 7Zip4Powershell -Scope AllUsers -AllowClobber -Force 
             Import-Module "$PSGModule"
             Write-Host "Imported module: $PSGModule"
         } else {
             Write-Host "Installing module $PSGModule"
-            Install-Module -Name $PSGModule -AllowClobber -Force
+            Install-Module -Name $PSGModule -AllowClobber -Force -Scope AllUsers
             Import-Module "$PSGModule"
             Write-Host "Imported module: $PSGModule"
         }
