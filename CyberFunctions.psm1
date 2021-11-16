@@ -990,3 +990,35 @@ function Test-DomainAdmin {
         return $false 
     }
 }
+
+<#
+.SYNOPSIS
+Sets a Full Control permissions on the folder to Administrators
+#>
+function Add-ACLForRemoteFolder {
+    param (
+        [parameter(Mandatory = $true)]
+        $Path,
+        [String]
+        $SecurityGroup
+    )
+    $NewAcl = Get-Acl -Path $Path
+    # Set properties
+    if (!$SecurityGroup) {
+        $SecurityGroup = (split-path $cred.UserName) + "\Domain Admins"
+    }    
+    $fileSystemRights = "FullControl"
+    $type = "Allow"
+    $inheritenceFlags = New-Object -TypeName System.Security.AccessControl.InheritanceFlags
+    $inheritenceFlags += "ContainerInherit"
+    $inheritenceFlags += "ObjectInherit"
+    $prop = New-Object -TypeName System.Security.AccessControl.PropagationFlags
+    $prop += "None"
+    # Create new rule
+    $fileSystemAccessRuleArgumentList = $SecurityGroup, $fileSystemRights, $inheritenceFlags, $prop, $type
+    $fileSystemAccessRule = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule -ArgumentList $fileSystemAccessRuleArgumentList
+    # Apply new rule
+    $NewAcl.SetAccessRuleProtection($false, $true)
+    $NewAcl.SetAccessRule($fileSystemAccessRule)
+    Get-ChildItem -Path $Path -Recurse -Directory -Force | Set-Acl -AclObject $NewAcl
+}
