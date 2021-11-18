@@ -1409,6 +1409,12 @@ function DiscoverDomainControllers {
     Invoke-Expression $cmd
 }
 
+function Lynis {
+    . $PSScriptRoot\CyberLynis.ps1
+    $ACQ = ("Lynis")
+    Start-Lynis -ACQ $ACQ -Lynis     
+}
+
 Clear-Host
 Import-Module $PSScriptRoot\CyberFunctions.psm1
 
@@ -1520,6 +1526,7 @@ function ShowAuditMenu {
     Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
     Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
     Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
+    Write-Host "    28. Lynis	 	| Check security of a linux server via ssh                     " -ForegroundColor White
     Write-Host ""
     Write-Host "    99. Quit                                                                       " -ForegroundColor White
     Write-Host ""
@@ -1611,7 +1618,10 @@ do {
 
         #Speed port scanning
         27 { Masscan }
-
+        
+        # Check linux server
+        27 { Lynis }
+        
         #Menu End
     } 
     Clear-Host

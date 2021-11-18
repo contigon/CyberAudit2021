@@ -169,7 +169,7 @@ function ShowMenu {
             16 { ShrinkVM; break }
 
             # Export and import CAT
-            17 { OfflineCAT; $WaitForInput = $false}
+            17 { OfflineCAT; $WaitForInput = $false }
             
             #Menu End
         }
@@ -237,7 +237,8 @@ function OSCheck() {
 
     Write-Host $help
     $menuColor[1] = "Yellow"
-    if (!(isInternetConnected)) { # internet is down or corporation Firewall is blocking ICMP protocol
+    if (!(isInternetConnected)) {
+        # internet is down or corporation Firewall is blocking ICMP protocol
         Write-Host "Internet is down, Please connect and try again" -ForegroundColor Red
     } else {
         Write-Host "Internet is up, you can continue with installation" -ForegroundColor Green
@@ -534,7 +535,17 @@ function InstallCollectors() {
     $menuColor[7] = "Yellow"
     #(Get-ChildItem $scoopDir\buckets\CyberAuditBucket -Filter *.json).BaseName|ForEach-Object {scoop install $_ -g}
     foreach ($CollectorApp in $CollectorApps) {
-        scoop install $CollectorApp -g
+        if ( $CollectorApp -ne "LynisPacked") {
+            scoop install $CollectorApp -g
+        } else {
+            try {
+                $LynisDownloadURL = "https://raw.githubusercontent.com/contigon/Downloads/master/lynis-remote.tgz"
+                dl $LynisDownloadURL "$psscriptroot\Tools\Lynis\lynis-remote.tgz"
+                Write-Host "Lynis downloaded successfully"
+            }catch{
+                Write-Host "Error at Lynis downloading" -ForegroundColor Red                
+            }
+        }
     }
     $c = scoop list 6>&1
     $i = 0
@@ -619,16 +630,15 @@ function InstallAnalyzers {
                 scoop install $c[$i - 3].ToString()
             }
 
-        Write-Host "Installing Microtosft AppInspector tool"
-        if ((dotnet --version) -ge "3.1.200")
-        {
-            $a = appdir("appinspector")
-            push-Location $a
-            $cmd1 = "dotnet build"
-            $cmd2 = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
-            Invoke-Expression $cmd1
-            Invoke-Expression $cmd2
-            Pop-Location            
+            Write-Host "Installing Microtosft AppInspector tool"
+            if ((dotnet --version) -ge "3.1.200") {
+                $a = appdir("appinspector")
+                push-Location $a
+                $cmd1 = "dotnet build"
+                $cmd2 = "dotnet.exe tool install --global Microsoft.CST.ApplicationInspector.CLI --version 1.4.7" 
+                Invoke-Expression $cmd1
+                Invoke-Expression $cmd2
+                Pop-Location            
 
             } else {
                 Write-Host "[Failed] You dont have .Net core SDK installed, Please install and try again" -ForegroundColor Red
@@ -1102,7 +1112,7 @@ $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -
 $PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
 $PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
 $utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "zulu11-jdk", "putty", "winscp", "vcredist2013", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
-$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy","masscan")
+$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy", "masscan", "LynisPacked")
 $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
 $AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
 $AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
