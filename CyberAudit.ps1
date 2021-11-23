@@ -9,19 +9,21 @@
 	.DESCRIPTION
 		Cyber Audit Tool - Audit
 #>
-
+#requires -RunAsAdministrator
+#Requires -Version 5.1
 #------------------- Executing a script which checks the filtering quuality of the configured DNS -------------------#
 function DNSTests {
     Clear-Host
     .\CyberMaliciousDNSTest.ps1
 }
 #--------------------------------------------------------------------------------------------------------------------#
+#region Masscan
 
 #-------------------                    Masscan related functions                    --------------------------------#
 
 function AskBanners {
     $ans = Read-Host "would you like to add banners check? [y/n]"
-    if($ans -eq 'y'){
+    if ($ans -eq 'y') {
         return $true
     }
     return $false
@@ -37,35 +39,34 @@ function planCustomScan {
     $optionalArgs = Read-Host "If you wish to insert more arguments for masscan command, do it now.`nTo `
     finish constructing and execute the inserted, hit [Enter] button: "
     $excludeFile = $null
-    if($isExcludeFile -eq 'y'){
+    if ($isExcludeFile -eq 'y') {
         $excludeFile = Read-Host "Insert the file path or hit [enter] to use the default file: "
-        if($excludeFile.Length -gt 2){
-            $excludeFile = "‐‐excludefile "+$excludeFile
-        }   
-        else {
+        if ($excludeFile.Length -gt 2) {
+            $excludeFile = "‐‐excludefile " + $excludeFile
+        } else {
             $excludeFile = "‐‐excludefile exclude.txt"
         }
-    }else{
+    } else {
         $excludeFile = ''
     }
     $confFileName = $null
     $isWishSave = Read-Host "would you like to save your constructed scanning plan? [y/n]"
-    if($isWishSave -eq "y"){
+    if ($isWishSave -eq "y") {
         $confFileName = Read-Host "Give your config file a name (without the extension type): "
     }
-    $massCommand = "masscan.exe "+$targets+" -p"+$ports+" --rate "+$rate +" "+$excludeFile
-        if($optionalArgs.Length -gt 2){
-            $massCommand = $massCommand +" "+ $optionalArgs
-        }
-        $isBanners = AskBanners
-        $sourceIP = $null
-        if($isBanners){
-            $sourceIP = Read-Host "Enter local subnet ubused IP address: "
-            $massCommand = $massCommand + "--banners --source-ip $sourceIP"
-        }
+    $massCommand = "masscan.exe " + $targets + " -p" + $ports + " --rate " + $rate + " " + $excludeFile
+    if ($optionalArgs.Length -gt 2) {
+        $massCommand = $massCommand + " " + $optionalArgs
+    }
+    $isBanners = AskBanners
+    $sourceIP = $null
+    if ($isBanners) {
+        $sourceIP = Read-Host "Enter local subnet ubused IP address: "
+        $massCommand = $massCommand + "--banners --source-ip $sourceIP"
+    }
     # saving the scan configuration for future run
-    if ($confFileName){
-        $concatConfName = "$confFileName"+"Conf.txt"
+    if ($confFileName) {
+        $concatConfName = "$confFileName" + "Conf.txt"
         Write-Host "Saving configuration to $PSScriptRoot/$confFileName"
         $massCommand = $massCommand + " --echo > $concatConfName"
         Invoke-Expression $massCommand
@@ -82,10 +83,10 @@ function scanWebServers {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query =  "masscan.exe $nets -p80,443,8080 ––rate $rate"
+    $query = "masscan.exe $nets -p80,443,8080 ––rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
-    if($isBanners){
+    if ($isBanners) {
         $sourceIP = Read-Host "Enter local subnet ubused IP address: "
         $query = $query + "--banners --source-ip $sourceIP"
     }
@@ -98,10 +99,10 @@ function scanTopN {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query =  "masscan.exe $nets ‐‐top-ports $N ––rate $rate"
+    $query = "masscan.exe $nets ‐‐top-ports $N ––rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
-    if($isBanners){
+    if ($isBanners) {
         $sourceIP = Read-Host "Enter local subnet ubused IP address: "
         $query = $query + "--banners --source-ip $sourceIP"
     }
@@ -113,10 +114,10 @@ function scanAllPorts {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query =  "masscan.exe $nets -p0-65535 ––rate $rate"
+    $query = "masscan.exe $nets -p0-65535 ––rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
-    if($isBanners){
+    if ($isBanners) {
         $sourceIP = Read-Host "Enter local subnet ubused IP address: "
         $query = $query + "--banners --source-ip $sourceIP"
     }
@@ -131,10 +132,10 @@ function scanBroadcast {
     $exludedFile = Read-Host "Type here a file contains nets to exclude your scan to avoid risky results:`nIf `
     your'e not sure what you're doing, please hit ctrl^C to exit and avoiding scan unwanted IPs over the INTERNET!!"
     $ports = Read-Host "Type the port(s) you would like to scan in the wide internet"
-    $query =  "masscan.exe $nets -p$ports ––rate $rate ‐‐excludefile $exludedFile"
+    $query = "masscan.exe $nets -p$ports ––rate $rate ‐‐excludefile $exludedFile"
     $isBanners = AskBanners
     $sourceIP = $null
-    if($isBanners){
+    if ($isBanners) {
         $sourceIP = Read-Host "Enter local subnet ubused IP address: "
         $query = $query + "--banners --source-ip $sourceIP"
     }
@@ -144,16 +145,16 @@ function scanBroadcast {
 function preconfigUserPlan {
     Write-Host "The following are the saved configuration files we found:"
     $confFiles = Get-ChildItem -Path $PSScriptRoot -Filter "*Conf.txt"  # Get the text files which contains preset configurations
-    for ($i=0;$i -lt $confFiles.Count;$i++){Write-Host ($i+1) - $confFiles[$i].basename}
+    for ($i = 0; $i -lt $confFiles.Count; $i++) { Write-Host ($i + 1) - $confFiles[$i].basename }
     $selectedConFile = Read-Host "Choose a file number: "
-    $selIndex = $selectedConFile-1
+    $selIndex = $selectedConFile - 1
     $conFileName = $confFiles[$selIndex].FullName
     $query = "masscan.exe -c $conFileName"
     return $query
 }
 
 function ScanPresetsMenu {
-        $help = @"
+    $help = @"
 Choose a preset plan from the following:
 ----------------------------------------
 1. Scan a network for Web Ports.
@@ -162,16 +163,16 @@ Choose a preset plan from the following:
 4. Scan everywhere (internet broadcast) for a specific port(s) - `nBe carefull and avoid scanning unwanted hosts by specifying excluded file!
 5. Choose a preconfigured plan of yours.
 "@
-Write-Host $help
-$selection = Read-Host "Type a number from the options above: "
-switch ($selection) {
-    1 { return scanWebServers }
-    2 { return scanTopN }
-    3 { return scanAllPorts }
-    4 { return scanBroadcast }
-    5 { return preconfigUserPlan }
-    Default {write-host "You typed invalid character. exit..."}
-}
+    Write-Host $help
+    $selection = Read-Host "Type a number from the options above: "
+    switch ($selection) {
+        1 { return scanWebServers }
+        2 { return scanTopN }
+        3 { return scanAllPorts }
+        4 { return scanBroadcast }
+        5 { return preconfigUserPlan }
+        Default { write-host "You typed invalid character. exit..." }
+    }
 }
 
 function createExcludedHostFile {
@@ -180,8 +181,8 @@ function createExcludedHostFile {
     $IPArray = $IPsStr.Split(" ")
     # read file name
     $excludeFileName = Read-Host "Name the new file (without type extension): "
-    $excFileNameToSave = $excludeFileName+"Exc.txt"
-    foreach($ip in $IPArray){
+    $excFileNameToSave = $excludeFileName + "Exc.txt"
+    foreach ($ip in $IPArray) {
         $ip | Out-File -Append -FilePath $excFileNameToSave
     }
     Write-Host "The new excluding file is saved as $excFileNameToSave"
@@ -199,43 +200,45 @@ Its flexible and allowing arbitrary port and address ranges.
 
 The following questions is about to guide you in the process of constructing the scanning plan:
 "@
-Write-Host $help
-$masscanPath = Invoke-Expression ("scoop prefix masscan")
-$currentPWDObj = Get-Location
-$currPWDString = $currentPWDObj.path 
-$cdcmd = "cd $masscanPath"
-Invoke-Expression $cdcmd
+    Write-Host $help
+    $masscanPath = Invoke-Expression ("scoop prefix masscan")
+    $currentPWDObj = Get-Location
+    $currPWDString = $currentPWDObj.path 
+    $cdcmd = "cd $masscanPath"
+    Invoke-Expression $cdcmd
 
-$mainMenu = @"
+    $mainMenu = @"
 Set your scanning plan:
 -----------------------
 1. Run pre-configured scanning plan.
 2. Construct a new scan.
 3. Create excluded host file.
 "@
-Write-Host $mainMenu
-$selection = Read-Host "Select your chosen plan from the above numbers: "
-# holds the constructed command to execute
-$queryCmd = $null
-switch ($selection) {
-    # Let the user choosing between run from a saved config file or a popular well known configuration
-    1 { $queryCmd = ScanPresetsMenu }
-    # Constructs a plan to scan from arguments received by the user
-    2 { $queryCmd = planCustomScan }
-    # creates a file with list of IP addresses the user would like to ignore during the scan
-    3 { $queryCmd = createExcludedHostFile }
-    Default {write-host "You typed invalid character. exit..."}
-}
-if($queryCmd){
-    Write-Host "Executing the command: $queryCmd"
-    Invoke-Expression $queryCmd
-}
-#restore location before the application run
-$cmd = "cd "+$currPWDString
-Invoke-Expression $cmd
-Write-Host "The results are now saved in 'results.txt'"
+    Write-Host $mainMenu
+    $selection = Read-Host "Select your chosen plan from the above numbers: "
+    # holds the constructed command to execute
+    $queryCmd = $null
+    switch ($selection) {
+        # Let the user choosing between run from a saved config file or a popular well known configuration
+        1 { $queryCmd = ScanPresetsMenu }
+        # Constructs a plan to scan from arguments received by the user
+        2 { $queryCmd = planCustomScan }
+        # creates a file with list of IP addresses the user would like to ignore during the scan
+        3 { $queryCmd = createExcludedHostFile }
+        Default { write-host "You typed invalid character. exit..." }
+    }
+    if ($queryCmd) {
+        Write-Host "Executing the command: $queryCmd"
+        Invoke-Expression $queryCmd
+    }
+    #restore location before the application run
+    $cmd = "cd " + $currPWDString
+    Invoke-Expression $cmd
+    Write-Host "The results are now saved in 'results.txt'"
 }
 #-------------------------------------------------------------------------------------------------------------------------------#
+#endregion Masscan
+
 function Domain {
     Clear-Host
     $help = @"
@@ -254,33 +257,35 @@ In order for this script to succeed you need to have domain administrative permi
     Write-Host $help
     Write-Host "Checking if there are any network connections open, and deleting them"
     net use * /delete
+    $CurrentDomain = (Get-WmiObject -Namespace root\cimv2 -Class Win32_ComputerSystem).Domain
     if (CheckMachineRole) {
-        Write-Host "Your machine is part of $env:USERDNSDOMAIN"
+        Write-Host "Your machine is part of $CurrentDomain"
         if (Test-ComputerSecureChannel -Server $DC) {
             Write-Host "[Success] Connected to domain server $DC using secure channel" -ForegroundColor Green
-        }
-        else {
+        } else {
             Write-Host "[Failure] Domain could not be contacted" -ForegroundColor Red
-            $choose = Write-Host "Press [D] to disconnect from $env:USERDNSDOMAIN domain"
+            $choose = Read-Host "Press [D] to disconnect from $CurrentDomain domain"
             if ($choose -eq "D") {
-                Remove-Computer -PassThru -Verbose
+                $NeedRestart = (Remove-Computer -PassThru -Verbose -LocalCredential $cred).HasSucceeded
             }
         }
+    } else {
+        # TODO: Add feature to get the domain from the creds provided
+        $domainFromCreds = split-path $cred.UserName
+        $domain = Read-Host -Prompt "Enter Domain name to join the machine to (eg. cyber.gov.il)
+If you want to use domain $domainFromCreds leave empty"
+        if ([string]::IsNullOrWhiteSpace($domain)) { 
+            $domain = $domainFromCreds
+        }
+        $NeedRestart = (Add-Computer -DomainName $domain -Credential $cred -PassThru).HasSucceeded
     }
-    else {
-        $domain = Read-Host -Prompt "Enter Domain name to join the machine to (eg. cyber.gov.il)"
-        $username = read-host -Prompt "Enter an admin user name which have enough permissions"
-        $password = Read-Host -Prompt "Enter password for $user" -AsSecureString
-        $username = $domain + "\" + $username
-        $credential = New-Object System.Management.Automation.PSCredential($username, $password)
-        Add-Computer -DomainName $domain -Credential $credential
+    if ($NeedRestart) {        
+        $restart = read-host "Press [R] to restart machine for settings to take effect (Enter to continue)"
+        if ($restart -eq "R") {
+            shutdown /r /f /c "Rebooting computer after Domain joining or disconnecting"
+        }
     }
-
-    $restart = read-host "Press [R] to restart machine in order for settings to take effect (Enter to continue)"
-    if ($restart -eq "R") {
-        shutdown /r /f /c "Rebooting computer afer Domain joining or disconnecting"
-    }
-
+    read-host "Press ENTER to continue"
 }
 
 function TestDomain {
@@ -363,17 +368,18 @@ when finished please copy the c:\ntdsdump directory to the Aquisition folder (NT
 
 "@
         Write-Host $block -ForegroundColor Red
-    }
-    else {
+    } else {
         $cmd = 'Get-Date -Format "yyyyMMdd-HHmm"'
         $currentTime = Invoke-Expression $cmd
         Write-Host "Please wait untill the backup process is completed" -ForegroundColor Green
-        remove-item $env:LOGONSERVER\c$\ntdsdump -Recurse -ErrorAction SilentlyContinue
+        # remove-item $env:LOGONSERVER\c$\ntdsdump -Recurse -ErrorAction SilentlyContinue
         winrs -r:$DC ntdsutil "ac i ntds" "ifm" "create sysvol full c:\ntdsdump\$currentTime" q q
         Copy-Item -Path $env:LOGONSERVER\c$\ntdsdump\$currentTime -Destination $ACQ\$currentTime -Recurse -Force
+        Add-ACLForRemoteFolder -Path "$env:LOGONSERVER\c$\ntdsdump\$currentTime"
+        remove-item $env:LOGONSERVER\c$\ntdsdump\$currentTime -Recurse -ErrorAction SilentlyContinue
     }
     $userInput = read-host "Press ENTER to continue, or type any latter to open aquisition folder"
-    if ($userInput -match '\w'){
+    if ($userInput -match '\w') {
         $null = start-Process -PassThru explorer $ACQ\$currentTime
     }
     
@@ -477,7 +483,7 @@ function Testimo {
     $ACQ = ACQ("Testimo")
     if (checkRsat) {
         import-module activedirectory ; Get-ADDomainController -Filter * | Select-Object Name, ipv4Address, OperatingSystem, site | Sort-Object -Property Name
-        Invoke-Testimo  -ExcludeSources DCDiagnostics -ReportPath $ACQ\Testimo.html
+        Invoke-Testimo  -ExcludeSources DCDiagnostics -ReportPath $ACQ\Testimo.html 
         $null = start-Process -PassThru explorer $ACQ
     }
     read-host "Press ENTER to continue"
@@ -522,8 +528,7 @@ Domain Admin permissions.
     $goddiPath = Invoke-Expression $cmd
     $ACQ = ACQ("goddi")
     Write-Host "You are running as user: $env:USERDNSDOMAIN\$env:USERNAME"
-    $securePwd = Read-Host "Input a Domain Admin password" -AsSecureString
-    $Password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePwd))
+    $Password = $cred.GetNetworkCredential().Password
     goddi-windows-amd64.exe -username="$env:USERNAME" -password="$Password" -domain="$env:USERDNSDOMAIN" -dc="$DC" -unsafe
     Move-Item -Path $goddiPath\csv\* -Destination $ACQ -Force
     read-host "Press ENTER to continue"
@@ -688,8 +693,7 @@ Note: Fix timezone issues when auditing mysql server,
         python .\Scuba2CSV.py "$ScubaDir\Scuba App\production\AssessmentResults.js"
         Rename-Item -Path "$ACQ\ScubaCSV.csv" -NewName "$ACQ\ScubaCSV-$fname.csv"
         $null = start-Process -PassThru explorer $ACQ
-    }
-    else {
+    } else {
         Write-Host "Could not find any Report, please check why and try again"
     }            
     read-host "Press ENTER to continue"
@@ -717,8 +721,7 @@ will run the tests and prepare a report with the results of the audit
             Read-Host "Press [Enter] to copy OScan.fil from $CopyToPath to $ACQ"            
             Copy-Item -Path $CopyToPath\OScan.fil -Destination $ACQ
             $null = start-Process -PassThru explorer $ACQ
-        }
-        else {
+        } else {
             Write-Host "Could not connect to path $CopyToPath, Please check and try again" -ForegroundColor Red
         }
     }
@@ -1346,16 +1349,14 @@ Steps that will be executed:
         $numOfZip = (Get-ChildItem $sharedPath\*.zip).count
         if ($numOfZip -lt $numOfcomputers) {
             failed "Found only $numOfZip zip files, this is less than $numOfcomputers!!!"
-        }
-        else {
+        } else {
             success "Found $numOfZip zip files"
         }
         $userInput = Read-Host "Input [C] to copy all zip files to audit folder or [Enter] to continet"
         if ($userInput -eq "C") {
             Copy-Item -Path $sharedPath\*.zip -Destination $ACQ -Force
         }
-    }
-    else {
+    } else {
         failed "Hamster.exe was not located so script will not execute, Please try again"
     }
     read-host "Press ENTER to continue"
@@ -1405,7 +1406,7 @@ function DiscoverDomainControllers {
     $subnetIP = $currentIP | Select-Object -ExpandProperty SubnetIP
     $subnetPrefix = $currentIP | Select-Object -ExpandProperty SubnetPrefix
     
-    $cmd =  "nmap.exe -oG C:\\Users\\Me\\Desktop\\aa.txt -Pn -p 389,88 --open $subnetIP/$subnetPrefix -vvv"
+    $cmd = "nmap.exe -oG C:\\Users\\Me\\Desktop\\aa.txt -Pn -p 389,88 --open $subnetIP/$subnetPrefix -vvv"
     Invoke-Expression $cmd
 }
 
@@ -1416,7 +1417,7 @@ function Lynis {
 }
 
 Clear-Host
-Import-Module $PSScriptRoot\CyberFunctions.psm1
+Import-Module $PSScriptRoot\CyberFunctions.psm1 -Force
 
 $runningScriptName = $MyInvocation.MyCommand.Name
 $Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
@@ -1427,7 +1428,7 @@ $menuColor = "White"
 
 $BaseFolder = AcqBaseFolder
 $ACQ = ACQ("Creds")
-
+<#
 #Set the credentials for this Audit (it will be stored in a file) and retrieve if exists
 $credPath = "$ACQ\${env:USERNAME}_${env:COMPUTERNAME}.xml"
 
@@ -1437,25 +1438,34 @@ if ( Test-Path $credPath ) {
     success "You have credentials stored for:  $credUserName"
 }
 else {
-    $parent = split-path $credpath -parent
+	$parent = split-path $credpath -parent
     if ( -not ( test-Path $parent ) ) {
-        New-Item -ItemType Directory -Force -Path $parent
+		New-Item -ItemType Directory -Force -Path $parent
     }
     Get-Credential $env:userdomain\$env:USERNAME | Export-Clixml -Path $credPath
 }
+#>
+$cred = set-creds
+Test-DomainAdmin $cred | Out-Null
 
 start-Transcript -path $PSScriptRoot\CyberAuditPhase.Log -Force -append
 
+
 #get external ip information includin ISP
-$externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
-$externalIP > $ACQ\externalIP.txt
+Write-Host "Getting external IP information..."
+try {
+    $externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
+    $externalIP > $ACQ\externalIP.txt
+} catch {
+    Write-Host "Internet connection is not available" -ForegroundColor Red
+}
 
 #SET Domain controller name
 $i = 0
 $DC = ($env:LOGONSERVER).TrimStart("\\")
 Write-Host "Please wait, searching for a domain controller..."
 try {
-    if ($DClist = Get-ADDomainController -filter * | Select-Object hostname, operatingsystem) {
+    if ($DClist = Get-ADDomainController -filter * -Credential $cred | Select-Object hostname, operatingsystem) {
         foreach ($dcontroller in $DClist) { $i++; $a = $dcontroller.hostname; $os = $dcontroller.operatingsystem ; if (($OS -match "2003") -or $OS -match "2008") { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor red } else { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor green } }
         if ($i -gt 1) {
             Write-Host "You are currently logged on to domain controller $DC"
@@ -1470,14 +1480,12 @@ try {
                 }
             }
         }
-    }
-    else {
+    } else {
         failed "No domain server was found, please connect this machine to a domain"
         $DC = "YOU ARE CURRENTLY NOT CONNECTED TO ANY DOMAIN !!!"
         $menuColor = "red"
     }
-}
-catch {
+} catch {
     failed "No domain server was found, please connect this machine to a domain"
     $DC = "YOU ARE CURRENTLY NOT CONNECTED TO ANY DOMAIN !!!"
     $menuColor = "red"
