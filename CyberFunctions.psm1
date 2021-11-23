@@ -147,11 +147,20 @@ function killApp {
 
 #check if RSAT is installed
 function checkRsat {
-    If ((Get-Module -Name ActiveDirectory -ListAvailable) -ne $null) {
-        Write-Host "[Success] Rsat in installed" -ForegroundColor Green
+    $RSAT_Modules = @("ActiveDirectory", "DnsServer", "GroupPolicy", "ServerManager")
+    $Missing = [System.Collections.ArrayList]::new()
+    foreach ($Module in $RSAT_Modules) {
+        if ($null -eq (Get-Module -Name "$Module" -ListAvailable)) {
+            $Missing.Add($Module) | Out-Null
+        }     
+    }
+    If ($Missing.Count -eq 0) {
+        Write-Host "[Success] Rsat is installed" -ForegroundColor Green
         Return $true
     } else {
-        Write-Host "[Failures] Rsat in  not installed" -ForegroundColor red
+        Write-Host "[Failure] Rsat is not installed properly, these modules are missing: " -ForegroundColor red
+        $string = $Missing -join ', '
+        Write-Host $string -ForegroundColor Red
         return $false
     }
 }
@@ -906,3 +915,110 @@ function activateWinOptFeatures {
 }
 
 
+# Get credential detailes from user and validate them on the domain server
+function Set-Creds {    
+    $DomainName = (Get-WmiObject -Namespace root\cimv2 -Class Win32_ComputerSystem).Domain
+    $Credential = Get-Credential -Message "Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName "$DomainName\"
+    while (($null -ne $Credential) -and (-not(Test-Cred $Credential))) {
+        $Credential = Get-Credential  -Message "User or password are wrong
+Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName $Credential.UserName
+    }
+    if ($null -eq $Credential) {
+        Write-Warning "Cannot continue without credentials" 
+        exit
+    }
+    return $Credential
+}
+   
+# Validate the creds on the domain
+function Test-Cred {     
+    param (  
+        [pscredential]      
+        $CredToTest
+    )
+    Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+    $Domain = $CredToTest.GetNetworkCredential().Domain
+    $User = $CredToTest.GetNetworkCredential().UserName
+    $Password = $CredToTest.GetNetworkCredential().Password
+    $contextType = [System.DirectoryServices.AccountManagement.ContextType]::Domain
+    
+    $argumentList = New-Object -TypeName "System.Collections.ArrayList"
+    $null = $argumentList.Add($contextType)
+    $null = $argumentList.Add($Domain)
+    if ($null -ne $Server) {
+        $argumentList.Add($Server)
+    }
+    try {
+        $principalContext = New-Object System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList $argumentList -ErrorAction SilentlyContinue
+    } catch {}
+    if ($null -eq $principalContext) {
+        Write-Warning "[failure] $Domain\$User - AD Authentication failed"
+        return $false
+    }
+    
+    if ($principalContext.ValidateCredentials($User, $Password)) {
+        Write-Host -ForegroundColor green "[Success] $Domain\$User - AD Authentication OK"
+        return $true
+    } else {
+        Write-Warning "[failure] $Domain\$User - AD Authentication failed"
+        return $false
+    }
+}
+function Test-DomainAdmin {
+    param (
+        [pscredential]
+        $CredsToTest
+    )
+    $GivenUserName = Split-Path $CredsToTest.UserName -Leaf
+    # Check members of the "Domain Admins" Group
+    try {
+        [string[]]$DomainAdmins = Get-ADGroupMember -Identity "Domain Admins" -Recursive -Credential $CredsToTest| ForEach-Object { Get-ADUser -Identity $_.distinguishedName -Credential $CredsToTest}  | Where-Object { $_.Enabled -eq $True }  | Select-Object  -ExpandProperty SamAccountName
+        if ($DomainAdmins.ToLower().Contains($env:USERNAME.ToLower())) {
+            if ($DomainAdmins.ToLower().Contains($GivenUserName.ToLower())) {
+                Write-Host "[Success] You have Domain-Admin permissions" -ForegroundColor Green
+                return $true
+            } else {
+                Write-Host "The user `"$GivenUserName`" you provided its credentials, has no Domain-Admin permissions" -ForegroundColor Red
+                return $false
+            }
+        } else {
+            Write-Host "The user `"$env:USERNAME`" you are logged on with, has no Domain-Admin permissions" -ForegroundColor Red
+            return $false
+        }    
+    } catch {
+        Write-Host "You are logged on as `"$env:USERDOMAIN\$env:USERNAME`". Couldnt verify your privileges as a Domain-Admin" -ForegroundColor Red
+        return $false 
+    }
+}
+
+<#
+.SYNOPSIS
+Sets a Full Control permissions on the folder to Administrators
+#>
+function Add-ACLForRemoteFolder {
+    param (
+        [parameter(Mandatory = $true)]
+        $Path,
+        [String]
+        $SecurityGroup
+    )
+    $NewAcl = Get-Acl -Path $Path
+    # Set properties
+    if (!$SecurityGroup) {
+        $SecurityGroup = (split-path $cred.UserName) + "\Domain Admins"
+    }    
+    $fileSystemRights = "FullControl"
+    $type = "Allow"
+    $inheritenceFlags = New-Object -TypeName System.Security.AccessControl.InheritanceFlags
+    $inheritenceFlags += "ContainerInherit"
+    $inheritenceFlags += "ObjectInherit"
+    $prop = New-Object -TypeName System.Security.AccessControl.PropagationFlags
+    $prop += "None"
+    # Create new rule
+    $fileSystemAccessRuleArgumentList = $SecurityGroup, $fileSystemRights, $inheritenceFlags, $prop, $type
+    $fileSystemAccessRule = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule -ArgumentList $fileSystemAccessRuleArgumentList
+    # Apply new rule
+    $NewAcl.SetAccessRuleProtection($false, $true)
+    $NewAcl.SetAccessRule($fileSystemAccessRule)
+    Get-ChildItem -Path $Path -Recurse -Directory -Force | Set-Acl -AclObject $NewAcl
+}
