@@ -60,7 +60,7 @@ Function ACQ {
             'Network', 'PingCastle', 'Testimo', 'goddi', 'GPO', 'Sharphound', 'HostEnum', 'Scuba', 'azscan',
             'grouper2', 'Dumpert', 'Runecast', 'Misc', 'IpconfigNetstat', 'Nessuus', 'Printers', 'Sensitive',
             'Netscanner', 'Skybox-WMI', 'Skybox-WSUS', 'Skybox-CheckPointcollector', 'Hamster', 'netstat',
-            'arp', 'PathPing', 'Creds')]
+            'arp', 'PathPing', 'Creds', 'Lynis')]
         $dir
     )
     $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force

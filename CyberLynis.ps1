@@ -10,7 +10,8 @@ function Start-Lynis {
         [string]
         $LynisRemoteTarGz     
     )
-
+    
+    Write-Host ""
     $remoteMachine = Read-Host "Enter remote linux server address"
     $username = Read-Host "Enter remote linux server user"
     $password = Read-Host "Enter remote linux server password"
@@ -18,7 +19,9 @@ function Start-Lynis {
     $LogRemoteDest = "/home/$username/tmp/lynis-log.log"
     $RemoteOutput = "/home/$username/tmp/lynis-output.txt"
 
-    Write-Host "Lynis will run now, please ignore password requests"
+    Write-Host ""
+    Write-Host "Lynis will run now, please ignore password requests" -ForegroundColor Yellow
+    Write-Host ""
 
     $cmd = "plink -batch -ssh -l $username -pw $password $RemoteMachine `"mkdir -p /home/$username/tmp`""
     Invoke-Expression $cmd
@@ -31,7 +34,7 @@ function Start-Lynis {
     $cmd = "plink -batch -ssh -l $username -pw $password $RemoteMachine `"mkdir -p /home/$username/tmp/tmp-lynis && cd /home/$username/tmp/tmp-lynis && tar xzf ../lynis-remote.tgz && rm ../lynis-remote.tgz`""
     Invoke-Expression $cmd
     # Step 3.2: Execute audit command
-    $cmd = "plink -batch -ssh -l $username -pw $password $RemoteMachine `"cd /home/$username/tmp/tmp-lynis/lynis; echo $password | sudo -n -S ./lynis audit system --nocolors --report-file $ReportRemoteDest --log-file $LogRemoteDest  > $RemoteOutput`""
+    $cmd = "plink -batch -ssh -l $username -pw $password $RemoteMachine `"cd /home/$username/tmp/tmp-lynis/lynis; echo $password | sudo -S ./lynis audit system --nocolors --report-file $ReportRemoteDest --log-file $LogRemoteDest  > $RemoteOutput`""
     Invoke-Expression $cmd
 
     #Step 4: Clean up directory

@@ -294,9 +294,9 @@ function Get-7z {
 	$7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10 | Where-Object { $_.name -match "7za\.exe`$" } 
 	# If 7za.exe is not found, extract it from the zip
 	if ($null -eq $7zexeResults ) {
-		if (Test-Path -Path "$PSScriptroot\7z.zip") {
-			Expand-Archive "$PSScriptroot\7z.zip" -DestinationPath $PSScriptroot\7z\ -Force
-			return "$PSScriptroot\7z\x64\7za.exe"
+		if (Test-Path -Path "$PSScriptroot\Tools\7z.zip") {
+			Expand-Archive "$PSScriptroot\Tools\7z.zip" -DestinationPath $PSScriptroot\Tools\7z\ -Force
+			return "$PSScriptroot\Tools\7z\x64\7za.exe"
 		} else {
 			return Get-7zEXEManually 
 		}
@@ -339,11 +339,11 @@ function Get-7zEXEManually {
 	write-host "Cannot find 7z, if you have it, type [S] to select it. If not, type [D] and it will be downloaded automatically"
 	$userInput = Read-Host
 	if ($userInput -eq "D") {
-		dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\7z.zip"
-		Expand-Archive -Path "$PSScriptroot\7z.zip" -DestinationPath "$psscriptroot\7z\" -Force
-		if (($?) -and (Test-Path "$PSScriptroot\7z\x64\7za.exe")) {
-			Remove-Item "$PSScriptroot\7z.zip" -Force
-			return "$PSScriptroot\7z\x64\7za.exe"
+		dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\Tools\7z.zip"
+		Expand-Archive -Path "$PSScriptroot\Tools\7z.zip" -DestinationPath "$psscriptroot\Tools\7z\" -Force
+		if (($?) -and (Test-Path "$PSScriptroot\Tools\7z\x64\7za.exe")) {
+			Remove-Item "$PSScriptroot\Tools\7z.zip" -Force
+			return "$PSScriptroot\Tools\7z\x64\7za.exe"
 		}
 		# Manually search for 7zip.exe by user
 	} elseif ($userInput -eq "S") {
@@ -412,7 +412,7 @@ function Compress-ToSFX {
 	if ($LASTEXITCODE -ge 2) {
 		return $false
 	}
-	$cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\7z.zip"
+	$cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\Tools\7z.zip"
 	Invoke-Expression $cmd
 	$cmd = "$7z u -bso0 $TarXzDirectory\$SFXName.exe $PSScriptRoot\CyberImportCAT.ps1"
 	Invoke-Expression $cmd
@@ -579,7 +579,7 @@ without the installation procees that supposed to come after that in normal scoo
 #>
 function Add-ScoopCustomExts {
 	Write-Host "Inserting customed files into Scoop..."
-	Get-ChildItem "$PSScriptRoot\ScoopAddOns" -Recurse -File | ForEach-Object { 
+	Get-ChildItem "$PSScriptRoot\Tools\ScoopAddOns" -Recurse -File | ForEach-Object { 
 		if ($_.Name -eq "download.ps1") {
 			Copy-Item $_.FullName -Destination "$tools\scoop\apps\Scoop\current\lib" -Force  
 		} elseif (($_.Name -eq "scoop-download.ps1")) {
