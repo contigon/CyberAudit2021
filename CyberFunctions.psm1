@@ -999,13 +999,13 @@ function Add-ACLForRemoteFolder {
     param (
         [parameter(Mandatory = $true)]
         $Path,
-        [String]
+        [System.Security.Principal.SecurityIdentifier]
         $SecurityGroup
     )
     $NewAcl = Get-Acl -Path $Path
     # Set properties
     if (!$SecurityGroup) {
-        $SecurityGroup = (split-path $cred.UserName) + "\Domain Admins"
+        $SecurityGroup = (Get-ADGroup "Domain Admins").SID
     }    
     $fileSystemRights = "FullControl"
     $type = "Allow"
