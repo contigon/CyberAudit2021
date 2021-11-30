@@ -30,15 +30,15 @@ function AskBanners {
 function planCustomScan {
     # The next process of asking the user for inputs for the tool
     # Those inpuuts will be concatenated into masscan apply command
-    $targets = Read-Host "Type target IPs or subnets to scan:"
-    $ports = Read-Host "Please type ports or range of ports you wish to scan:"
-    $rate = Read-Host "Specify the desired packet sending rate (packets/second):"
-    $isExcludeFile = Read-Host "Do you want to use an excluding file? [y/n]:"
+    $targets = Read-Host "Type target IPs or subnets to scan"
+    $ports = Read-Host "Please type ports or range of ports you wish to scan"
+    $rate = Read-Host "Specify the desired packet sending rate (packets/second)"
+    $isExcludeFile = Read-Host "Do you want to use an excluding file? [y/n]"
     $optionalArgs = Read-Host "If you wish to insert more arguments for masscan command, do it now.`nTo `
     finish constructing and execute the inserted, hit [Enter] button: "
     $excludeFile = $null
     if($isExcludeFile -eq 'y'){
-        $excludeFile = Read-Host "Insert the file path or hit [enter] to use the default file: "
+        $excludeFile = Read-Host "Insert the file path or hit [enter] to use the default file "
         if($excludeFile.Length -gt 2){
             $excludeFile = "‐‐excludefile "+$excludeFile
         }   
@@ -51,7 +51,7 @@ function planCustomScan {
     $confFileName = $null
     $isWishSave = Read-Host "would you like to save your constructed scanning plan? [y/n]"
     if($isWishSave -eq "y"){
-        $confFileName = Read-Host "Give your config file a name (without the extension type): "
+        $confFileName = Read-Host "Give your config file a name (without the extension type) "
     }
     $massCommand = "masscan.exe "+$targets+" -p"+$ports+" --rate "+$rate +" "+$excludeFile
         if($optionalArgs.Length -gt 2){
@@ -60,7 +60,7 @@ function planCustomScan {
         $isBanners = AskBanners
         $sourceIP = $null
         if($isBanners){
-            $sourceIP = Read-Host "Enter local subnet ubused IP address: "
+            $sourceIP = Read-Host "Enter local subnet ubused IP address "
             $massCommand = $massCommand + "--banners --source-ip $sourceIP"
         }
     # saving the scan configuration for future run
@@ -81,12 +81,12 @@ function scanWebServers {
     # transmission rate - packets per second
     $rate = "1000000" 
     # holds the nets to scan
-    $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
+    $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them "
     $query =  "masscan.exe $nets -p80,443,8080 ––rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
-        $sourceIP = Read-Host "Enter local subnet ubused IP address: "
+        $sourceIP = Read-Host "Enter local subnet ubused IP address "
         $query = $query + "--banners --source-ip $sourceIP"
     }
     return $query
@@ -97,12 +97,12 @@ function scanTopN {
     # transmission rate - packets per second
     $rate = "1000000" 
     # holds the nets to scan
-    $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
+    $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them "
     $query =  "masscan.exe $nets ‐‐top-ports $N ––rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
-        $sourceIP = Read-Host "Enter local subnet ubused IP address: "
+        $sourceIP = Read-Host "Enter local subnet ubused IP address "
         $query = $query + "--banners --source-ip $sourceIP"
     }
     return $query
@@ -112,12 +112,12 @@ function scanAllPorts {
     # transmission rate - packets per second
     $rate = "1000000" 
     # holds the nets to scan
-    $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
+    $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them "
     $query =  "masscan.exe $nets -p0-65535 ––rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
-        $sourceIP = Read-Host "Enter local subnet ubused IP address: "
+        $sourceIP = Read-Host "Enter local subnet ubused IP address "
         $query = $query + "--banners --source-ip $sourceIP"
     }
     return $query
@@ -135,7 +135,7 @@ function scanBroadcast {
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
-        $sourceIP = Read-Host "Enter local subnet ubused IP address: "
+        $sourceIP = Read-Host "Enter local subnet ubused IP address "
         $query = $query + "--banners --source-ip $sourceIP"
     }
     return $query
@@ -143,7 +143,7 @@ function scanBroadcast {
 
 function preconfigUserPlan {
     Write-Host "The following are the saved configuration files we found:"
-    $confFiles = Get-ChildItem -Path $PSScriptRoot -Filter "*Conf.txt"  # Get the text files which contains preset configurations
+    $confFiles = Get-ChildItem -Filter "*Conf.txt"  # Get the text files which contains preset configurations
     for ($i=0;$i -lt $confFiles.Count;$i++){Write-Host ($i+1) - $confFiles[$i].basename}
     $selectedConFile = Read-Host "Choose a file number: "
     $selIndex = $selectedConFile-1
@@ -207,6 +207,7 @@ $cdcmd = "cd $masscanPath"
 Invoke-Expression $cdcmd
 
 $mainMenu = @"
+-----------------------
 Set your scanning plan:
 -----------------------
 1. Run pre-configured scanning plan.
@@ -214,7 +215,7 @@ Set your scanning plan:
 3. Create excluded host file.
 "@
 Write-Host $mainMenu
-$selection = Read-Host "Select your chosen plan from the above numbers: "
+$selection = Read-Host "Select your chosen plan from the above numbers "
 # holds the constructed command to execute
 $queryCmd = $null
 switch ($selection) {
@@ -1614,7 +1615,7 @@ do {
 
         #Menu End
     } 
-    Clear-Host
+    #Clear-Host
 } while ($userInput -ne '99')
 
 stop-Transcript | out-null
