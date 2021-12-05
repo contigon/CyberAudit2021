@@ -1395,19 +1395,13 @@ function GetIPObject {
     return $IPObject
        
 }
-function DiscoverDomainControllers {
-    # $NetworkSegments = (Get-NetNeighbor -State "Reachable").ipaddress | ForEach-Object { [IPAddress] (([IPAddress] $_).Address -band ([IPAddress] "255.255.255.0").Address) | Select-Object IPAddressToString } | Get-Unique
-    # $segmentIp = $NetworkSegments.IPAddressToString
-    
-    #TODO: figure out how to filter the results of nmap
 
-
-    $currentIP = GetIPObject
-    $subnetIP = $currentIP | Select-Object -ExpandProperty SubnetIP
-    $subnetPrefix = $currentIP | Select-Object -ExpandProperty SubnetPrefix
-    
-    $cmd = "nmap.exe -oG C:\\Users\\Me\\Desktop\\aa.txt -Pn -p 389,88 --open $subnetIP/$subnetPrefix -vvv"
-    Invoke-Expression $cmd
+function Lynis {
+    Clear-Host
+    . $PSScriptRoot\CyberLynis.ps1
+    $ACQ = ACQ("Lynis")
+    Start-Lynis -ACQ $ACQ -Lynis "$psscriptroot\Tools\Lynis\lynis-remote.tgz"
+    read-host "Press ENTER to continue"
 }
 
 Clear-Host
@@ -1422,23 +1416,6 @@ $menuColor = "White"
 
 $BaseFolder = AcqBaseFolder
 $ACQ = ACQ("Creds")
-<#
-#Set the credentials for this Audit (it will be stored in a file) and retrieve if exists
-$credPath = "$ACQ\${env:USERNAME}_${env:COMPUTERNAME}.xml"
-
-if ( Test-Path $credPath ) {
-    $cred = Import-Clixml -Path $credPath
-    $credUserName = $cred.username
-    success "You have credentials stored for:  $credUserName"
-}
-else {
-	$parent = split-path $credpath -parent
-    if ( -not ( test-Path $parent ) ) {
-		New-Item -ItemType Directory -Force -Path $parent
-    }
-    Get-Credential $env:userdomain\$env:USERNAME | Export-Clixml -Path $credPath
-}
-#>
 $cred = set-creds
 Test-DomainAdmin $cred | Out-Null
 
@@ -1528,6 +1505,7 @@ function ShowAuditMenu {
     Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
     Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
     Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
+    Write-Host "    28. Lynis	 	| Check security of a linux server via ssh                     " -ForegroundColor White
     Write-Host ""
     Write-Host "    99. Quit                                                                       " -ForegroundColor White
     Write-Host ""
@@ -1619,7 +1597,10 @@ do {
 
         #Speed port scanning
         27 { Masscan }
-
+        
+        # Check linux server
+        28 { Lynis }
+        
         #Menu End
     } 
     Clear-Host
