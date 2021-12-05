@@ -21,10 +21,10 @@ function planCustomScan {
     if($isExcludeFile -eq 'y'){
         $excludeFile = Read-Host "Insert the file path or hit [enter] to use the default file "
         if($excludeFile.Length -gt 2){
-            $excludeFile = "‐‐excludefile "+$excludeFile
+            $excludeFile = "--excludefile "+$excludeFile
         }   
         else {
-            $excludeFile = "‐‐excludefile exclude.txt"
+            $excludeFile = "--excludefile exclude.txt"
         }
     }else{
         $excludeFile = ''
@@ -63,7 +63,7 @@ function scanWebServers {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them "
-    $query =  "masscan.exe $nets -p80,443,8080 ––rate $rate"
+    $query =  "masscan.exe $nets -p80,443,8080 --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
@@ -79,7 +79,7 @@ function scanTopN {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them "
-    $query =  "masscan.exe $nets ‐‐top-ports $N ––rate $rate"
+    $query =  "masscan.exe $nets --top-ports $N --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
@@ -94,7 +94,7 @@ function scanAllPorts {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them "
-    $query =  "masscan.exe $nets -p0-65535 ––rate $rate"
+    $query =  "masscan.exe $nets -p0-65535 --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
@@ -112,7 +112,7 @@ function scanBroadcast {
     $exludedFile = Read-Host "Type here a file contains nets to exclude your scan to avoid risky results:`nIf `
     your'e not sure what you're doing, please hit ctrl^C to exit and avoiding scan unwanted IPs over the INTERNET!!"
     $ports = Read-Host "Type the port(s) you would like to scan in the wide internet"
-    $query =  "masscan.exe $nets -p$ports ––rate $rate ‐‐excludefile $exludedFile"
+    $query =  "masscan.exe $nets -p$ports --rate $rate --excludefile $exludedFile"
     $isBanners = AskBanners
     $sourceIP = $null
     if($isBanners){
