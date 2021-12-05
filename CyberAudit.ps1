@@ -1404,6 +1404,36 @@ function Lynis {
     read-host "Press ENTER to continue"
 }
 
+function zBang {
+    $help = @"
+
+zBang risk assessment tool
+------------------------
+Organizations and red teamers can utilize zBang to identify potential attack vectors and improve the security posture of the network.
+The results can be analyzed with the graphic interface or by reviewing the raw output files.
+
+The tool is built from five different scanning modules:
+
+    ACLight scan - discovers the most privileged accounts that must be protected, including suspicious Shadow Admins.
+    Skeleton Key scan - discovers Domain Controllers that might be infected by Skeleton Key malware.
+    SID History scan - discovers hidden privileges in domain accounts with secondary SID (SID History attribute).
+    RiskySPNs scan - discovers risky configuration of SPNs that might lead to credential theft of Domain Admins
+    Mystique scan - discovers risky Kerberos delegation configuration in the network.
+
+
+Choose one of the options:
+    1.  Show zBang GUI in order to audit your AD
+    2.  Export zBang's reports after auditing and move them to the ACQ folder 
+"@
+    $userInput = Read-Host
+    if ($userInput -eq 1){
+        Invoke-Expression "$PSScriptroot\Tools\GlobalScoopApps\apps\zbang\current\zBang.exe"
+    }elseif ($userInput -eq 2) {
+        #TODO: Continue implementing this function
+    }
+    
+}
+
 Clear-Host
 Import-Module $PSScriptRoot\CyberFunctions.psm1 -Force
 
@@ -1506,6 +1536,7 @@ function ShowAuditMenu {
     Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
     Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
     Write-Host "    28. Lynis	 	| Check security of a linux server via ssh                     " -ForegroundColor White
+    Write-Host "    29. zBang	 	| Detects potential privileged account threats in network      " -ForegroundColor White
     Write-Host ""
     Write-Host "    99. Quit                                                                       " -ForegroundColor White
     Write-Host ""
@@ -1600,6 +1631,9 @@ do {
         
         # Check linux server
         28 { Lynis }
+
+        # detects potential privileged account threats
+        29 { zBang }
         
         #Menu End
     } 
