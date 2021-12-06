@@ -60,11 +60,11 @@ Function ACQ {
             'Network', 'PingCastle', 'Testimo', 'goddi', 'GPO', 'Sharphound', 'HostEnum', 'Scuba', 'azscan',
             'grouper2', 'Dumpert', 'Runecast', 'Misc', 'IpconfigNetstat', 'Nessuus', 'Printers', 'Sensitive',
             'Netscanner', 'Skybox-WMI', 'Skybox-WSUS', 'Skybox-CheckPointcollector', 'Hamster', 'netstat',
-            'arp', 'PathPing', 'Creds', 'Lynis')]
+            'arp', 'PathPing', 'Creds', 'Lynis', "zBang")]
         $dir
     )
     $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force
-    Write-Host "$dir Aquisition folder is: $ACQdir" -ForegroundColor Yellow
+    Write-Host "$dir Acquisition folder is: $ACQdir" -ForegroundColor Yellow
     Return $ACQdir.FullName
 }
 
