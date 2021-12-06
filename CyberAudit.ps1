@@ -1420,18 +1420,19 @@ The tool is built from five different scanning modules:
     RiskySPNs scan - discovers risky configuration of SPNs that might lead to credential theft of Domain Admins
     Mystique scan - discovers risky Kerberos delegation configuration in the network.
 
-
-Choose one of the options:
-    1.  Show zBang GUI in order to audit your AD
-    2.  Export zBang's reports after auditing and move them to the ACQ folder 
 "@
-    $userInput = Read-Host
-    if ($userInput -eq 1){
-        Invoke-Expression "$PSScriptroot\Tools\GlobalScoopApps\apps\zbang\current\zBang.exe"
-    }elseif ($userInput -eq 2) {
-        #TODO: Continue implementing this function
-    }
-    
+    Write-Host $help
+    $zBangPath = Invoke-Expression "scoop prefix zBang"
+    $zBangPath = Join-Path -Path $zBangPath -ChildPath "zBang.exe"
+    $ACQ = ACQ("zBang")
+    Start-Process -FilePath $zBangPath -WorkingDirectory $ACQ
+    Write-Host ""
+    Write-Host "A separated window will open with zBang's GUI"
+    Write-Host "On the GUI, choose the scans you want and then `"Launch`""
+    Write-Host "Please note that pressing `"Reload`" will generate a demo data that has nothing to do with the actual network."
+    Write-Host ""
+    Write-Host "All reports will be saved at the designated acquisition folder"
+    read-host "Press ENTER to continue"
 }
 
 Clear-Host
