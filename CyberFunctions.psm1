@@ -1022,3 +1022,25 @@ function Add-ACLForRemoteFolder {
     $NewAcl.SetAccessRule($fileSystemAccessRule)
     Get-ChildItem -Path $Path -Recurse -Directory -Force | Set-Acl -AclObject $NewAcl
 }
+<#
+.SYNOPSIS
+Smart download from http/s URL by aria2
+#>
+function DownloadWithAria2 {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]
+        $URL,
+        [Parameter(Mandatory=$true)]
+        [string]
+        $destFolder
+    )
+    $ariaPath = Invoke-Expression "scoop prefix aria2"
+    $ariaPath = Join-Path -Path $ariaPath -ChildPath "aria2c.exe"
+    if (!(Test-Path $ariaPath)){
+        Write-Host = "Error: aria2 is not installed properly"
+        return
+    }
+    Start-Process -FilePath $ariaPath -ArgumentList "-x5 -d `"$destFolder`" `"$URL`""
+}
