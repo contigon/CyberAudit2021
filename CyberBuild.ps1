@@ -1086,12 +1086,14 @@ function DownloadHIBPDB {
         Write-Host "Get-bADPasswords is not installed. Please install it and come back after that" -ForegroundColor Red
         return
     }
-    Write-Host "To download by torrent press [T], or press [D] to download directly by https"
+    Write-Host "To download by torrent press [T], or press [H] to download by https"
     $userInput = Read-Host
     if ($userInput -eq "D"){
         $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z'
     }elseif ($userInput -eq "T") {
         $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z.torrent'
+    }else{
+        return
     }
     $dest = Join-Path -Path $GBPAppPath -ChildPath "Accessible\PasswordLists"
     DownloadWithAria2 -URL $DBURL -destFolder $dest
