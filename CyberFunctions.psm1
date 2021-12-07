@@ -60,7 +60,7 @@ Function ACQ {
             'Network', 'PingCastle', 'Testimo', 'goddi', 'GPO', 'Sharphound', 'HostEnum', 'Scuba', 'azscan',
             'grouper2', 'Dumpert', 'Runecast', 'Misc', 'IpconfigNetstat', 'Nessuus', 'Printers', 'Sensitive',
             'Netscanner', 'Skybox-WMI', 'Skybox-WSUS', 'Skybox-CheckPointcollector', 'Hamster', 'netstat',
-            'arp', 'PathPing', 'Creds', 'Lynis', "zBang")]
+            'arp', 'PathPing', 'Creds', 'Lynis', "zBang","GetBadPasswords")]
         $dir
     )
     $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force
@@ -1042,5 +1042,10 @@ function DownloadWithAria2 {
         Write-Host = "Error: aria2 is not installed properly"
         return
     }
-    Start-Process -FilePath $ariaPath -ArgumentList "-x5 -d `"$destFolder`" `"$URL`""
+    # Check if link is a torrent or direct link
+    if ([System.IO.Path]::GetExtension($URL) -match "torrent"){
+        Start-Process -FilePath $ariaPath -ArgumentList "-d `"$destFolder`" -l `"$ariaPath\arialog.txt`" `"$URL`""
+    }else {
+        Start-Process -FilePath $ariaPath -ArgumentList "-x5 -d `"$destFolder`" -l `"$ariaPath\arialog.txt`" `"$URL`""
+    }
 }

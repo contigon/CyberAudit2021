@@ -1434,6 +1434,50 @@ The tool is built from five different scanning modules:
     Write-Host "All reports will be saved at the designated acquisition folder"
     read-host "Press ENTER to continue"
 }
+<#
+.SYNOPSIS
+    Scan AD's password hashes and compare them to leaked passwords list
+    The script runs in background because of the time it can take
+#>
+function Get-BadPasswords {
+    # TODO: Lesader ma she'holeh po
+
+    $help = @"
+    Get-bADpasswords
+    ----------------------
+    This module is able to compare password hashes of enabled Active Directory users against bad/weak/non-compliant passwords (e.g. hackers first guess in brute-force attacks).
+
+    Performs comparison against one or multiple wordlist(s).
+        This script does not transform input from the wordlists (such as transforming between upper/lower case). Each input from the wordlist is used as-is. Use other tools to generate more specialized wordlists if necessary. A PoC-script has been included (New-bADpasswordLists_EN.ps1) for basic wordlist generation.
+    Performs additional comparison against publicly leaked passwords.
+    Performs password comparison against 'null' in the Active Directory (i.e. finds empty/null passwords).
+    Performs password comparison between users in the Active Directory (i.e. finds shared passwords).
+
+    The script will run in background so you would continue to work simultaneously
+
+"@
+    Write-Host $help
+    $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place. Press [ENTER] if the file is already in the right place"
+    if ($userInput -eq "M"){
+        $source = Get-FileName
+        $sourceDirectory = Split-Path $source -Parent
+        $sourceFileName = Split-Path $source -Leaf
+        $dest = Invoke-Expression "scoop prefix getbadpasswords"
+        $dest = Join-Path -Path $dest -ChildPath "Accessible\PasswordLists"
+        Invoke-Expression "robocopy $sourceDirectory $dest $sourceFileName /mov /mt /log+:$dest\log.txt /z"
+        if($LASTEXITCODE -eq 1){
+            if([System.IO.Path]::GetExtension($source) -eq "7z"){
+                #TODO: Check if the selected file is 7z. if does, extract it (try to learn about the 7z extra modules)
+            }
+        }
+        else {
+            Write-Host "Error occured" -ForegroundColor Red
+            return
+        }
+    }
+    Start-Process -FilePath "powershell" -Verb RunAs -ArgumentList "-file `"$PSScriptRoot\CyberGetBadPasswords.ps1`""
+    Read-Host "Press ENTER to continue"
+}
 
 Clear-Host
 Import-Module $PSScriptRoot\CyberFunctions.psm1 -Force
@@ -1538,6 +1582,7 @@ function ShowAuditMenu {
     Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
     Write-Host "    28. Lynis	 	| Check security of a linux server via ssh                     " -ForegroundColor White
     Write-Host "    29. zBang	 	| Detects potential privileged account threats in network      " -ForegroundColor White
+    Write-Host "    30. bADpasswords 	| Get insights into the actual strength and quality of passwords in AD" -ForegroundColor White
     Write-Host ""
     Write-Host "    99. Quit                                                                       " -ForegroundColor White
     Write-Host ""
@@ -1635,6 +1680,9 @@ do {
 
         # detects potential privileged account threats
         29 { zBang }
+
+        # Get insights into the actual strength and quality of passwords in Active Directory
+        30 {Get-BadPasswords}
         
         #Menu End
     } 

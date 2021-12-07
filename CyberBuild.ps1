@@ -109,6 +109,7 @@ function ShowMenu {
         Write-Host "    15. RAM     	| Schedule Trimming of processes working sets and release RAM " -ForegroundColor $menuColor[15]
         Write-Host "    16. ShrinkVM   	| Shrink the VM for easy cloning or copying to another machine" -ForegroundColor $menuColor[16]
         Write-Host "    17. Offline CAT	| Export/Import CAT and fix Scoop paths                       " -ForegroundColor $menuColor[17]
+        Write-Host "    18. HIBP DB    	| Download `"Have I Been Pwnd`" leaked passwords hashes DB      " -ForegroundColor $menuColor[17]
         Write-Host ""
         Write-Host "    99. Quit                                                                      " -ForegroundColor White
         Write-Host ""
@@ -171,6 +172,8 @@ function ShowMenu {
             # Export and import CAT
             17 { OfflineCAT; $WaitForInput = $false }
             
+            # Download `"Have I Been Pwnd`" leaked passwords hashes DB for Get-bADPasswords script
+            18 {DownloadHIBPDB}
             #Menu End
         }
         if ($WaitForInput) {
@@ -1075,6 +1078,24 @@ function ShrinkVM {
 }
 function OfflineCAT {
     & $PSScriptRoot\CyberExportCAT.ps1    
+}
+
+function DownloadHIBPDB {
+    $GBPAppPath = Invoke-Expression "scoop prefix getbadpasswords"
+    if(!(Test-Path $GBPAppPath)){
+        Write-Host "Get-bADPasswords is not installed. Please install it and come back after that" -ForegroundColor Red
+        return
+    }
+    Write-Host "To download by torrent press [T], or press [D] to download directly by https"
+    $userInput = Read-Host
+    if ($userInput -eq "D"){
+        $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z'
+    }elseif ($userInput -eq "T") {
+        $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z.torrent'
+    }
+    $dest = Join-Path -Path $GBPAppPath -ChildPath "Accessible\PasswordLists"
+    DownloadWithAria2 -URL $DBURL -destFolder $dest
+    read-host "Press ENTER to continue"
 }
 
 $runningScriptName = $MyInvocation.MyCommand.Name
