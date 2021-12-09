@@ -918,7 +918,7 @@ function activateWinOptFeatures {
 # Get credential detailes from user and validate them on the domain server
 function Set-Creds {    
     $DomainName = (Get-WmiObject -Namespace root\cimv2 -Class Win32_ComputerSystem).Domain
-    $Credential = Get-Credential -Message "Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName "$DomainName\"
+    $Credential = Get-Credential -Message "Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName "$DomainName\$env:USERNAME"
     while (($null -ne $Credential) -and (-not(Test-Cred $Credential))) {
         $Credential = Get-Credential  -Message "User or password are wrong
 Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName $Credential.UserName
@@ -1036,16 +1036,92 @@ function DownloadWithAria2 {
         [string]
         $destFolder
     )
-    $ariaPath = Invoke-Expression "scoop prefix aria2"
-    $ariaPath = Join-Path -Path $ariaPath -ChildPath "aria2c.exe"
-    if (!(Test-Path $ariaPath)){
+    $ariaParent = Invoke-Expression "scoop prefix aria2" 6>&1
+    $ariaEXEPath = Join-Path -Path $ariaParent -ChildPath "aria2c.exe"
+    if (!(Test-Path $ariaEXEPath)){
         Write-Host = "Error: aria2 is not installed properly"
         return
     }
     # Check if link is a torrent or direct link
     if ([System.IO.Path]::GetExtension($URL) -match "torrent"){
-        Start-Process -FilePath $ariaPath -ArgumentList "-d `"$destFolder`" -l `"$ariaPath\arialog.txt`" `"$URL`""
+        Start-Process -FilePath $ariaEXEPath -ArgumentList "-d `"$destFolder`" -l `"$ariaParent\arialog.txt`" `"$URL`""
     }else {
-        Start-Process -FilePath $ariaPath -ArgumentList "-x5 -d `"$destFolder`" -l `"$ariaPath\arialog.txt`" `"$URL`""
+        Start-Process -FilePath $ariaEXEPath -ArgumentList "-x5 -d `"$destFolder`" -l `"$ariaParent\arialog.txt`" `"$URL`""
     }
+}
+function Get-7z {
+    if (($null -ne $7z) -and ( Test-Path $7z)) {
+        return $7z
+    }
+    Write-Host "Searching for 7zip..."
+    Write-Host ""
+    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10 | Where-Object { $_.name -match "7za\.exe`$" } 
+    # If 7za.exe is not found, extract it from the zip
+    if ($null -eq $7zexeResults ) {
+        if (Test-Path -Path "$PSScriptroot\Tools\7z.zip") {
+            Expand-Archive "$PSScriptroot\Tools\7z.zip" -DestinationPath $PSScriptroot\Tools\7z\ -Force
+            return "$PSScriptroot\Tools\7z\x64\7za.exe"
+        } else {
+            return Get-7zEXEManually 
+        }
+    }
+
+    # If array is returned, means there is more than one result. So we need to search for the one that is a 7zip exe file
+    # After that, we will search if there is file that placed in a folder named 64, because its the only indication that the version is for 64bit
+    if ($7zexeResults.GetType().BaseType.Name -eq "Array") {
+        $ResultFilteredList = New-Object System.Collections.ArrayList
+        foreach ($file in $7zexeResults) {
+            # Searching in the results array for exe file who is indeed a 7zip exe file and add it to the array
+            if ($file.VersionInfo.InternalName -match "7za?") {
+                $ResultFilteredList.Add($file) | Out-Null
+            }
+        }
+        if ($ResultFilteredList.Count -gt 0) {
+            # Check if there is 64bit version, and if it does, return it
+            foreach ($file in $ResultFilteredList) {
+                if ($file.Directory.Name -match ".?64") {
+                    return $file.FullName
+                }   
+            }
+            return $ResultFilteredList[0].FullName
+        } else { return Get-7zEXEManually }
+    } 
+    
+    # If there is only one exe file called 7z or 7za
+    elseif ($7zexeResults.VersionInfo.InternalName -match "7za?") { 
+        return $7zexeResults.FullName
+    } else {
+        return Get-7zEXEManually
+    }
+}
+<#
+.DESCRIPTION
+If 7z cannot be found automatically in root or subfolders, then user can provide it manually
+Or it can be downloaded automatically from the internet
+#>
+function Get-7zEXEManually {
+    write-host "Cannot find 7z, if you have it, type [S] to select it. If not, type [D] and it will be downloaded automatically"
+    $userInput = Read-Host
+    if ($userInput -eq "D") {
+        dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\Tools\7z.zip"
+        Expand-Archive -Path "$PSScriptroot\Tools\7z.zip" -DestinationPath "$psscriptroot\Tools\7z\" -Force
+        if (($?) -and (Test-Path "$PSScriptroot\Tools\7z\x64\7za.exe")) {
+            Remove-Item "$PSScriptroot\Tools\7z.zip" -Force
+            return "$PSScriptroot\Tools\7z\x64\7za.exe"
+        }
+        # Manually search for 7zip.exe by user
+    } elseif ($userInput -eq "S") {
+        do {
+            $7zExeFile = Get-FileName "exe"
+            if ($7zExeFile -eq "Cancel") { Clear-Host; exit }
+            elseif (!((Get-ItemProperty $7zExeFile).VersionInfo.internalname -match "7za?")) {
+                Write-Host "File is not a 7z exe file! Press [ENTER] to select again" -ForegroundColor Red
+                Clear-Host
+                return
+            }
+        }while (!((Get-ItemProperty $7zExeFile).VersionInfo.internalname -match "7za?"))
+        return $7zExeFile 
+    } else {
+        # Consider to delete this else, or adding here something for the option of the user havnt typed one of the listed options
+    }    
 }

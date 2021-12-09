@@ -173,7 +173,7 @@ function ShowMenu {
             17 { OfflineCAT; $WaitForInput = $false }
             
             # Download `"Have I Been Pwnd`" leaked passwords hashes DB for Get-bADPasswords script
-            18 {DownloadHIBPDB}
+            18 { DownloadHIBPDB }
             #Menu End
         }
         if ($WaitForInput) {
@@ -545,7 +545,7 @@ function InstallCollectors() {
                 $LynisDownloadURL = "https://raw.githubusercontent.com/contigon/Downloads/master/lynis-remote.tgz"
                 dl $LynisDownloadURL "$psscriptroot\Tools\Lynis\lynis-remote.tgz"
                 Write-Host "Lynis downloaded successfully"
-            }catch{
+            } catch {
                 Write-Host "Error at Lynis downloading" -ForegroundColor Red                
             }
         }
@@ -1081,22 +1081,26 @@ function OfflineCAT {
 }
 
 function DownloadHIBPDB {
-    $GBPAppPath = Invoke-Expression "scoop prefix getbadpasswords"
-    if(!(Test-Path $GBPAppPath)){
-        Write-Host "Get-bADPasswords is not installed. Please install it and come back after that" -ForegroundColor Red
-        return
+    try {
+        $GBPAppPath = Invoke-Expression "scoop prefix getbadpasswords"
+        if (!(Test-Path $GBPAppPath)) {
+            Write-Host "Get-bADPasswords is not installed. Please install it and come back after that" -ForegroundColor Red
+            return
+        }
+        Write-Host "To download by torrent press [T], or press [H] to download by https"
+        $userInput = Read-Host
+        if ($userInput -eq "H") {
+            $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z'
+        } elseif ($userInput -eq "T") {
+            $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z.torrent'
+        } else {
+            return
+        }
+        $dest = Join-Path -Path $GBPAppPath -ChildPath "Accessible\PasswordLists"
+        DownloadWithAria2 -URL $DBURL -destFolder $dest
+    } catch {
+        Write-Host "error"
     }
-    Write-Host "To download by torrent press [T], or press [H] to download by https"
-    $userInput = Read-Host
-    if ($userInput -eq "D"){
-        $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z'
-    }elseif ($userInput -eq "T") {
-        $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z.torrent'
-    }else{
-        return
-    }
-    $dest = Join-Path -Path $GBPAppPath -ChildPath "Accessible\PasswordLists"
-    DownloadWithAria2 -URL $DBURL -destFolder $dest
     read-host "Press ENTER to continue"
 }
 

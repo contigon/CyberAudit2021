@@ -83,7 +83,7 @@ function scanWebServers {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query = "masscan.exe $nets -p80,443,8080 ––rate $rate"
+    $query = "masscan.exe $nets -p80,443,8080 --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -823,7 +823,7 @@ the PowerCLI script and Execute the script using PowerCLI
     $userInput = Read-Host "Press [R] to run the Create Role Powershell script (or Enter to contine)"
     if ($userInput -eq "R") {
         $ScriptToRun = $PSScriptRoot + "\CyberCreateRunecastRole.ps1"
-        &$ScriptToRuns
+        &$ScriptToRun
     }
     read-host "Press ENTER to continue"
     $null = start-Process -PassThru explorer $ACQ
@@ -1441,38 +1441,48 @@ The tool is built from five different scanning modules:
 #>
 function Get-BadPasswords {
     # TODO: Lesader ma she'holeh po
-
+    Clear-Host
     $help = @"
-    Get-bADpasswords
-    ----------------------
-    This module is able to compare password hashes of enabled Active Directory users against bad/weak/non-compliant passwords (e.g. hackers first guess in brute-force attacks).
 
-    Performs comparison against one or multiple wordlist(s).
-        This script does not transform input from the wordlists (such as transforming between upper/lower case). Each input from the wordlist is used as-is. Use other tools to generate more specialized wordlists if necessary. A PoC-script has been included (New-bADpasswordLists_EN.ps1) for basic wordlist generation.
-    Performs additional comparison against publicly leaked passwords.
-    Performs password comparison against 'null' in the Active Directory (i.e. finds empty/null passwords).
-    Performs password comparison between users in the Active Directory (i.e. finds shared passwords).
+Get-bADpasswords
+----------------------
+This module is able to compare password hashes of enabled Active Directory users against bad/weak/non-compliant passwords (e.g. hackers first guess in brute-force attacks).
 
-    The script will run in background so you would continue to work simultaneously
+* Performs comparison against one or multiple wordlist(s).
+* Performs additional comparison against publicly leaked passwords.
+* Performs password comparison against 'null' in the Active Directory (i.e. finds empty/null passwords).
+* Performs password comparison between users in the Active Directory (i.e. finds shared passwords).
+
+The script will run in background so you would continue to work simultaneously
+
 
 "@
     Write-Host $help
     $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place. Press [ENTER] if the file is already in the right place"
     if ($userInput -eq "M"){
         $source = Get-FileName
-        $sourceDirectory = Split-Path $source -Parent
-        $sourceFileName = Split-Path $source -Leaf
         $dest = Invoke-Expression "scoop prefix getbadpasswords"
+        if(!(Test-Path $dest)){
+            Write-Host "Error"
+            return
+        }
         $dest = Join-Path -Path $dest -ChildPath "Accessible\PasswordLists"
-        Invoke-Expression "robocopy $sourceDirectory $dest $sourceFileName /mov /mt /log+:$dest\log.txt /z"
-        if($LASTEXITCODE -eq 1){
-            if([System.IO.Path]::GetExtension($source) -eq "7z"){
+        Write-Host "Moving file and starting script..."
+        Move-Item -Path $source -Destination $dest -Force -Verbose
+      #  Invoke-Expression "robocopy $sourceDirectory $dest $sourceFileName /mov /mt /log+:$dest\log.txt /z"
+        if($?){
+            if([System.IO.Path]::GetExtension($source) -match "7z"){
                 #TODO: Check if the selected file is 7z. if does, extract it (try to learn about the 7z extra modules)
+                $7z = Get-7z
+                #TODO: Change to the path after the moving
+                Push-Location  $dest
+                $cmd = "$7z x -aou `"$source`""
+                Invoke-Expression $cmd
+                Pop-Location
             }
         }
         else {
             Write-Host "Error occured" -ForegroundColor Red
-            return
         }
     }
     Start-Process -FilePath "powershell" -Verb RunAs -ArgumentList "-file `"$PSScriptRoot\CyberGetBadPasswords.ps1`""
