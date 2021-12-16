@@ -1442,6 +1442,7 @@ The tool is built from five different scanning modules:
 function Get-BadPasswords {
     # TODO: Lesader ma she'holeh po
     Clear-Host
+    Import-Module "$PSScriptRoot\Cyber7zFunctions.psm1"
     $help = @"
 
 Get-bADpasswords
@@ -1458,30 +1459,32 @@ The script will run in background so you would continue to work simultaneously
 
 "@
     Write-Host $help
-    $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place. Press [ENTER] if the file is already in the right place"
-    if ($userInput -eq "M"){
+    $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place.
+Press [ENTER] if the file is already in the right place"
+    if ($userInput -eq "M") {
         $source = Get-FileName
         $dest = Invoke-Expression "scoop prefix getbadpasswords"
-        if(!(Test-Path $dest)){
+        if (!(Test-Path $dest)) {
             Write-Host "Error"
             return
         }
         $dest = Join-Path -Path $dest -ChildPath "Accessible\PasswordLists"
         Write-Host "Moving file and starting script..."
-        Move-Item -Path $source -Destination $dest -Force -Verbose
-      #  Invoke-Expression "robocopy $sourceDirectory $dest $sourceFileName /mov /mt /log+:$dest\log.txt /z"
-        if($?){
-            if([System.IO.Path]::GetExtension($source) -match "7z"){
-                #TODO: Check if the selected file is 7z. if does, extract it (try to learn about the 7z extra modules)
+        $newPath = (Move-Item -Path $source -Destination $dest -Force -Verbose -PassThru).FullName
+        #  Invoke-Expression "robocopy $sourceDirectory $dest $sourceFileName /mov /mt /log+:$dest\log.txt /z"
+        if ($?) {
+            if ([System.IO.Path]::GetExtension($newPath) -match "7z") {
                 $7z = Get-7z
-                #TODO: Change to the path after the moving
+                if (!(Test-DriveStorage $newPath -7z $7z)) {
+                    Read-Host "Press ENTER to continue"
+                    return
+                }
                 Push-Location  $dest
-                $cmd = "$7z x -aou `"$source`""
+                $cmd = "$7z x -aou `"$newPath`""
                 Invoke-Expression $cmd
                 Pop-Location
             }
-        }
-        else {
+        } else {
             Write-Host "Error occured" -ForegroundColor Red
         }
     }
@@ -1692,7 +1695,7 @@ do {
         29 { zBang }
 
         # Get insights into the actual strength and quality of passwords in Active Directory
-        30 {Get-BadPasswords}
+        30 { Get-BadPasswords }
         
         #Menu End
     } 
