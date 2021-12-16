@@ -1463,15 +1463,14 @@ The script will run in background so you would continue to work simultaneously
 Press [ENTER] if the file is already in the right place"
     if ($userInput -eq "M") {
         $source = Get-FileName
-        $dest = Invoke-Expression "scoop prefix getbadpasswords"
-        if (!(Test-Path $dest)) {
-            Write-Host "Error"
+        $GBPFolder = Invoke-Expression "scoop prefix getbadpasswords"
+        if (!(Test-Path $GBPFolder)) {
+            Write-Host "Error, Get-bADPasswords not installed"
             return
         }
-        $dest = Join-Path -Path $dest -ChildPath "Accessible\PasswordLists"
+        $dest = Join-Path -Path $GBPFolder -ChildPath "Accessible\PasswordLists"
         Write-Host "Moving file and starting script..."
         $newPath = (Move-Item -Path $source -Destination $dest -Force -Verbose -PassThru).FullName
-        #  Invoke-Expression "robocopy $sourceDirectory $dest $sourceFileName /mov /mt /log+:$dest\log.txt /z"
         if ($?) {
             if ([System.IO.Path]::GetExtension($newPath) -match "7z") {
                 $7z = Get-7z
@@ -1481,8 +1480,20 @@ Press [ENTER] if the file is already in the right place"
                 }
                 Push-Location  $dest
                 $cmd = "$7z x -aou `"$newPath`""
-                Invoke-Expression $cmd
+                $output = Invoke-Expression $cmd 
                 Pop-Location
+                if ($output | Select-String -Pattern '\.txt$' -Quiet){
+                    Write-Host "Warning! Your file is a txt file and not a bin file"
+                    Write-Host "If you want to save time, it is recommended to repack the file so Get-bADPasswords will read it"
+                    Write-Host "Notice that Get-bADPasswords will do this action anyway"
+                    Write-Host "If you want to do it automatically now, press [R], or [ENTER] to continue"
+                    $userInput = Read-Host
+                    if ($userInput -eq "R"){
+                        #TODO: get the extracted files list and to the repacking on everyone of them
+                        $repackerPath = "$GBPFolder\PSI\PsiRepacker_x64.exe"
+                        Invoke-Expression "$repackerPath $"
+                    }
+                }
             }
         } else {
             Write-Host "Error occured" -ForegroundColor Red
