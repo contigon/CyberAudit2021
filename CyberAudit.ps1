@@ -1462,42 +1462,79 @@ The script will run in background so you would continue to work simultaneously
     $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place.
 Press [ENTER] if the file is already in the right place"
     if ($userInput -eq "M") {
-        $source = Get-FileName
+        [System.IO.FileInfo]$source = Get-FileName
         $GBPFolder = Invoke-Expression "scoop prefix getbadpasswords"
         if (!(Test-Path $GBPFolder)) {
             Write-Host "Error, Get-bADPasswords not installed"
             return
         }
         $dest = Join-Path -Path $GBPFolder -ChildPath "Accessible\PasswordLists"
-        Write-Host "Moving file and starting script..."
-        $newPath = (Move-Item -Path $source -Destination $dest -Force -Verbose -PassThru).FullName
-        if ($?) {
-            if ([System.IO.Path]::GetExtension($newPath) -match "7z") {
+        
+        #region Handling file if it is a 7z or txt
+        
+        if ($source.Extension -match "7z|txt") {
+            [System.Collections.ArrayList]$extractedFiles = [System.Collections.ArrayList]::new()
+
+            #region Handling the file in case it's a 7z file - extract the files
+            if ($source.Extension -match "7z") {
                 $7z = Get-7z
-                if (!(Test-DriveStorage $newPath -7z $7z)) {
+                if (!(Test-DriveStorage $source.FullName $7z)) {
                     Read-Host "Press ENTER to continue"
                     return
                 }
+                Write-Host "Moving file"
+                $newPath = (Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru).FullName
                 Push-Location  $dest
-                $cmd = "$7z x -aou `"$newPath`""
+                # Extract all files to one directory without preserve files tree
+                # But log the files to stdout
+                
+                Write-Host "Extracting 7z"
+                $cmd = "$7z e -bb -aou `"$newPath`""
                 $output = Invoke-Expression $cmd 
                 Pop-Location
-                if ($output | Select-String -Pattern '\.txt$' -Quiet){
-                    Write-Host "Warning! Your file is a txt file and not a bin file"
-                    Write-Host "If you want to save time, it is recommended to repack the file so Get-bADPasswords will read it"
-                    Write-Host "Notice that Get-bADPasswords will do this action anyway"
-                    Write-Host "If you want to do it automatically now, press [R], or [ENTER] to continue"
-                    $userInput = Read-Host
-                    if ($userInput -eq "R"){
-                        #TODO: get the extracted files list and to the repacking on everyone of them
-                        $repackerPath = "$GBPFolder\PSI\PsiRepacker_x64.exe"
-                        Invoke-Expression "$repackerPath $"
+
+                # Adding the files to a file list, based on the output of the extraction process
+                $output | Select-String -Pattern '^- ' | ForEach-Object {
+                    $extractedFiles.add([System.IO.FileInfo] "$dest\$($_ -replace '- ')") | Out-Null
+                } 
+            }
+            #endregion Handling the file in case it a 7z file
+            else {
+               $extractedFiles.Add($(Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru))
+            }
+            #region Handling the file after extraction if needed
+            # Now the $extractedFiles contain txt or bin
+            
+            if (($output | Select-String -Pattern '\.txt$' -Quiet) -or ($file -match '\.txt$')) {
+                Write-Host "Warning! One of the files is a txt file and not a bin file"
+                Write-Host "If you want to save time, it is recommended to repack the file now so Get-bADPasswords will read it slightly"
+                Write-Host "Notice that Get-bADPasswords will do this action anyway"
+                Write-Host "If you want to do it automatically now, press [R], otherwise [ENTER] to continue"
+                $userInput = Read-Host
+
+                if ($userInput -eq "R") {
+                    Write-Host "Repacking files..."
+                    Write-Host "Make sure your RAM memory is big enough to contain each file"
+                    Write-Host ""
+                    
+                    #TODO: get the extracted files list and do the repacking on everyone of them
+                    foreach ($file in $extractedFiles) {
+                        $repacked = "$($file.DirectoryName)\$($file.BaseName).bin"
+                        $repackerPath = "$GBPFolder\PSI\PsiRepacker_x64.exe"                        
+                        Start-Process -NoNewWindow -FilePath "$repackerPath" -ArgumentList @("`"$($file.FullName)`"", "`"$repacked") -Wait
                     }
                 }
             }
-        } else {
-            Write-Host "Error occured" -ForegroundColor Red
+            #endregion Handling the file after extraction if needed
         }
+        #endregion Handling file if it is a 7z or txt
+        elseif ($source.Extension -match "bin") {
+          Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru
+        }else {
+            Write-Host "Warning: Your is neither a txt file or bin file, and won't be helpful for get-bAD-Password" -ForegroundColor Yellow
+            Write-Host "Continuing without this file" -ForegroundColor Yellow
+        }
+
     }
     Start-Process -FilePath "powershell" -Verb RunAs -ArgumentList "-file `"$PSScriptRoot\CyberGetBadPasswords.ps1`""
     Read-Host "Press ENTER to continue"
