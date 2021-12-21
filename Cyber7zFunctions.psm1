@@ -99,18 +99,19 @@ function Test-DriveStorage {
     param (
         [Parameter(Mandatory = $true)]
         [string]
-        $packageFilePath,
+        $PackagePath,
 		
         [string]
         $SevenZ
     )
-    $DestinationDrive = [System.IO.Path]::GetPathRoot($packageFilePath) -replace "\\"
+    [System.IO.FileInfo]$packageFileInfo = $PackagePath
+    $DestinationDrive = [System.IO.Path]::GetPathRoot($packageFileInfo.FullName) -replace "\\"
     $Drive = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DeviceID -eq $DestinationDrive }
     $DriveFreeSpace = [Math]::Round($Drive.FreeSpace / 1MB)
     
     if (!$SevenZ) { $SevenZ = Get-7z }
     Write-Host "Checking file size..."
-    $cmd = "$SevenZ l $packageFilePath"
+    $cmd = "$SevenZ l $($packageFileInfo.FullName)"
     $7zOutput = Invoke-Expression $cmd
     if ($LASTEXITCODE -le 1) {
         $DecompressedSize = [Math]::Round((($7zOutput | select-string -Pattern 'files$') -split '\s+')[2] / 1MB)
@@ -120,7 +121,7 @@ function Test-DriveStorage {
     }
     # If the file is tar.xz, the needed space calculation is made by the inner file size (real uncompressed size) 2 times,
     # because first the tar file needs to be extracted, and then all its data extracted from it.
-    if ((Split-Path -Path $packageFilePath -Leaf) -like "tar.xz") { $mulFactor = 2 }
+    if ($packageFileInfo.Name -match "tar.xz") { $mulFactor = 2 }
     else { $mulFactor = 1 }
 
     if (($DriveFreeSpace - (($DecompressedSize) * $mulFactor)) -lt 0) {

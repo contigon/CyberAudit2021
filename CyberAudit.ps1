@@ -1440,7 +1440,6 @@ The tool is built from five different scanning modules:
     The script runs in background because of the time it can take
 #>
 function Get-BadPasswords {
-    # TODO: Lesader ma she'holeh po
     Clear-Host
     Import-Module "$PSScriptRoot\Cyber7zFunctions.psm1"
     $help = @"
@@ -1487,25 +1486,29 @@ Press [ENTER] if the file is already in the right place"
                 Push-Location  $dest
                 # Extract all files to one directory without preserve files tree
                 # But log the files to stdout
+                # In a conflict, rename extracting file
                 
                 Write-Host "Extracting 7z"
                 $cmd = "$7z e -bb -aou `"$newPath`""
                 $output = Invoke-Expression $cmd 
                 Pop-Location
-
+                if ($LASTEXITCODE -eq 0){
+                    Remove-Item $newPath
+                }
                 # Adding the files to a file list, based on the output of the extraction process
                 $output | Select-String -Pattern '^- ' | ForEach-Object {
                     $extractedFiles.add([System.IO.FileInfo] "$dest\$($_ -replace '- ')") | Out-Null
                 } 
             }
             #endregion Handling the file in case it a 7z file
+            # In case of txt file:
             else {
                $extractedFiles.Add($(Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru))
             }
             #region Handling the file after extraction if needed
             # Now the $extractedFiles contain txt or bin
             
-            if (($output | Select-String -Pattern '\.txt$' -Quiet) -or ($file -match '\.txt$')) {
+            if ($extractedFiles.extension.Contains(".txt")) {
                 Write-Host "Warning! One of the files is a txt file and not a bin file"
                 Write-Host "If you want to save time, it is recommended to repack the file now so Get-bADPasswords will read it slightly"
                 Write-Host "Notice that Get-bADPasswords will do this action anyway"
@@ -1517,11 +1520,14 @@ Press [ENTER] if the file is already in the right place"
                     Write-Host "Make sure your RAM memory is big enough to contain each file"
                     Write-Host ""
                     
-                    #TODO: get the extracted files list and do the repacking on everyone of them
+                    #TODO: get the extracted files list and do the repacking one everyone of them
                     foreach ($file in $extractedFiles) {
                         $repacked = "$($file.DirectoryName)\$($file.BaseName).bin"
                         $repackerPath = "$GBPFolder\PSI\PsiRepacker_x64.exe"                        
                         Start-Process -NoNewWindow -FilePath "$repackerPath" -ArgumentList @("`"$($file.FullName)`"", "`"$repacked") -Wait
+                        Write-Host ''
+                        Write-Host 'Calculating file hash...'
+                        (Get-FileHash -Path $file -Algorithm SHA256).Hash > "$($file.DirectoryName)\$($file.BaseName).chk"
                     }
                 }
             }
@@ -1531,8 +1537,8 @@ Press [ENTER] if the file is already in the right place"
         elseif ($source.Extension -match "bin") {
           Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru
         }else {
-            Write-Host "Warning: Your is neither a txt file or bin file, and won't be helpful for get-bAD-Password" -ForegroundColor Yellow
-            Write-Host "Continuing without this file" -ForegroundColor Yellow
+            Write-Host "Warning: Your file is neither a txt file nor a bin file, and won't be helpful for get-bAD-Password" -ForegroundColor Yellow
+            Write-Host "Continuing without this file..." -ForegroundColor Yellow
         }
 
     }

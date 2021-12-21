@@ -1090,9 +1090,9 @@ function DownloadHIBPDB {
         Write-Host "To download by torrent press [T], or press [H] to download by https"
         $userInput = Read-Host
         if ($userInput -eq "H") {
-            $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z'
+            $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-hash-v8.7z'
         } elseif ($userInput -eq "T") {
-            $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-count-v7.7z.torrent'
+            $DBURL = 'https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ntlm-ordered-by-hash-v8.7z.torrent'
         } else {
             return
         }
