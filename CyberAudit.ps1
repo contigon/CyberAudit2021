@@ -1458,15 +1458,27 @@ The script will run in background so you would continue to work simultaneously
 
 "@
     Write-Host $help
+    $GBPFolder = Invoke-Expression "scoop prefix getbadpasswords"
+    if (!(Test-Path $GBPFolder)) {
+        Write-Host "Error, Get-bADPasswords not installed"
+        return
+    }
+    <# No need becacuse the embedded version works with cleartext passwords, while the outer version works with hashed passwords <facepalm>
+# Check if the copy already done before
+if (!(Test-Path -Path "$GBPFolder\PSI\PsiRepacker_x64.exe.old")){
+    # Insert PSIRepacker instead of the old one, that from non reason is not working
+    $source = "$(scoop prefix "PsiRepacker")\PsiRepacker\*"
+    $dest = "$GBPFolder\PSI\"
+    Copy-Item -Path $source -Destination $dest -Force
+    Rename-Item -Path "$dest\PsiRepacker_x64.exe" -NewName "PsiRepacker_x64.exe.old" -Force
+    Rename-Item -Path "$dest\PsiRepacker.exe" -NewName "PsiRepacker_x64.exe" -Force
+}
+#>
+
     $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place.
 Press [ENTER] if the file is already in the right place"
     if ($userInput -eq "M") {
         [System.IO.FileInfo]$source = Get-FileName
-        $GBPFolder = Invoke-Expression "scoop prefix getbadpasswords"
-        if (!(Test-Path $GBPFolder)) {
-            Write-Host "Error, Get-bADPasswords not installed"
-            return
-        }
         $dest = Join-Path -Path $GBPFolder -ChildPath "Accessible\PasswordLists"
         
         #region Handling file if it is a 7z or txt
@@ -1492,7 +1504,7 @@ Press [ENTER] if the file is already in the right place"
                 $cmd = "$7z e -bb -aou `"$newPath`""
                 $output = Invoke-Expression $cmd 
                 Pop-Location
-                if ($LASTEXITCODE -eq 0){
+                if ($LASTEXITCODE -eq 0) {
                     Remove-Item $newPath
                 }
                 # Adding the files to a file list, based on the output of the extraction process
@@ -1503,7 +1515,7 @@ Press [ENTER] if the file is already in the right place"
             #endregion Handling the file in case it a 7z file
             # In case of txt file:
             else {
-               $extractedFiles.Add($(Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru))
+                $extractedFiles.Add($(Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru))
             }
             #region Handling the file after extraction if needed
             # Now the $extractedFiles contain txt or bin
@@ -1523,7 +1535,7 @@ Press [ENTER] if the file is already in the right place"
                     #TODO: get the extracted files list and do the repacking one everyone of them
                     foreach ($file in $extractedFiles) {
                         $repacked = "$($file.DirectoryName)\$($file.BaseName).bin"
-                        $repackerPath = "$GBPFolder\PSI\PsiRepacker_x64.exe"                        
+                        $repackerPath = "$(scoop prefix PsiRepacker)\PsiRepacker\PsiRepacker.exe"
                         Start-Process -NoNewWindow -FilePath "$repackerPath" -ArgumentList @("`"$($file.FullName)`"", "`"$repacked") -Wait
                         Write-Host ''
                         Write-Host 'Calculating file hash...'
@@ -1535,13 +1547,31 @@ Press [ENTER] if the file is already in the right place"
         }
         #endregion Handling file if it is a 7z or txt
         elseif ($source.Extension -match "bin") {
-          Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru
-        }else {
+            Move-Item -Path $source.FullName -Destination $dest -Force -Verbose -PassThru
+        } else {
             Write-Host "Warning: Your file is neither a txt file nor a bin file, and won't be helpful for get-bAD-Password" -ForegroundColor Yellow
             Write-Host "Continuing without this file..." -ForegroundColor Yellow
         }
 
     }
+
+    $adminGroups = Get-Content  -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt"
+    Write-Host ""
+    Write-Host "The administrative groups that thier members will be checked are:"
+    Write-Host $adminGroups -Separator "`n- "
+    Write-Host ""
+    Write-Host "Do you want to add groups to this list?"
+    Write-Host "You can delete groups manually in the txt file in `"$GBPFolder\Accessible\AccountGroups`""
+    $userInput = Read-Host "Press [A] to add, otherwise press [ENTER] to continue"
+    Write-Host ""
+    if ( $userInput -eq "a") {
+        $userInput = Read-Host "Enter your groups names with comma between them"
+        $groups = $userInput -split '\s*,\s*' | Where-Object { $_ -notmatch '^\s*$' }
+        Write-Host "The groups are: $groups" -Separator "`n- "
+        Add-Content -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt" -Value $groups
+    }
+
+
     Start-Process -FilePath "powershell" -Verb RunAs -ArgumentList "-file `"$PSScriptRoot\CyberGetBadPasswords.ps1`""
     Read-Host "Press ENTER to continue"
 }
