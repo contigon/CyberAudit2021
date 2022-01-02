@@ -42,9 +42,9 @@ function planCustomScan {
     if ($isExcludeFile -eq 'y') {
         $excludeFile = Read-Host "Insert the file path or hit [enter] to use the default file: "
         if ($excludeFile.Length -gt 2) {
-            $excludeFile = "‐‐excludefile " + $excludeFile
+            $excludeFile = "--excludefile " + $excludeFile
         } else {
-            $excludeFile = "‐‐excludefile exclude.txt"
+            $excludeFile = "--excludefile exclude.txt"
         }
     } else {
         $excludeFile = ''
@@ -99,7 +99,7 @@ function scanTopN {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query = "masscan.exe $nets ‐‐top-ports $N ––rate $rate"
+    $query = "masscan.exe $nets --top-ports $N --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -114,7 +114,7 @@ function scanAllPorts {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query = "masscan.exe $nets -p0-65535 ––rate $rate"
+    $query = "masscan.exe $nets -p0-65535 --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -132,7 +132,7 @@ function scanBroadcast {
     $exludedFile = Read-Host "Type here a file contains nets to exclude your scan to avoid risky results:`nIf `
     your'e not sure what you're doing, please hit ctrl^C to exit and avoiding scan unwanted IPs over the INTERNET!!"
     $ports = Read-Host "Type the port(s) you would like to scan in the wide internet"
-    $query = "masscan.exe $nets -p$ports ––rate $rate ‐‐excludefile $exludedFile"
+    $query = "masscan.exe $nets -p$ports --rate $rate --excludefile $exludedFile"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -873,7 +873,7 @@ Creates a folder for each machine found with 2 files
 (ipconfig.txt and netstat.txt)
 
 skybox task:
-We recommend that you use an Import – Directory task to import the
+We recommend that you use an Import - Directory task to import the
 configuration data; the files for each device must be in a separate subdirectory of
 the specified directory (even if you are importing a single device)
                 
@@ -1557,16 +1557,19 @@ Press [ENTER] if the file is already in the right place"
 
     $adminGroups = Get-Content  -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt"
     Write-Host ""
-    Write-Host "The administrative groups that thier members will be checked are:"
-    Write-Host $adminGroups -Separator "`n- "
+    Write-Host "The administrative groups that thier members will be checked are:" -ForegroundColor Yellow
+    $adminGroups.foreach({ Write-Host "- $_"  -ForegroundColor Yellow}) 
     Write-Host ""
-    Write-Host "Do you want to add groups to this list?"
-    Write-Host "You can delete groups manually in the txt file in `"$GBPFolder\Accessible\AccountGroups`""
-    $userInput = Read-Host "Press [A] to add, otherwise press [ENTER] to continue"
+    Write-Host "Do you want to add groups to this list?" -ForegroundColor Yellow
+    Write-Host "You can delete groups manually in the txt file in `"$GBPFolder\Accessible\AccountGroups`"" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Press [A] to add, otherwise press [ENTER] to continue" -ForegroundColor Yellow
+    $userInput = Read-Host 
     Write-Host ""
     if ( $userInput -eq "a") {
-        $userInput = Read-Host "Enter your groups names with comma between them"
+        $userInput = Read-Host "Enter groups names seperated by a comma"
         $groups = $userInput -split '\s*,\s*' | Where-Object { $_ -notmatch '^\s*$' }
+
         Write-Host "The groups are: $groups" -Separator "`n- "
         Add-Content -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt" -Value $groups
     }
