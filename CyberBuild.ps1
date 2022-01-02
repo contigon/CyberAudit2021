@@ -114,111 +114,124 @@ function ShowMenu {
         Write-Host "    99. Quit                                                                      " -ForegroundColor White
         Write-Host ""
         $userInput = Read-Host "Select Script Number"
-    
-        [boolean]$WaitForInput = $True
-    
-        switch ($userInput) {
-            #Check Windows OS and build versions and if needed it can help upgrade an update latest build
-            0 { DevMenu; $WaitForInput = $false }
-
-            #Check Windows OS and build versions and if needed it can help upgrade an update latest build
-            1 { OSCheck; $WaitForInput = $false }
-    
-            #Check Powershell and .Net versions and install if needed and add turn on more features
-            2 { PSCheck; break }
-    
-            #Install RSAT
-            3 { RSATInstall; break }
-    
-            #Install PowerShell Modules from PSGallery Online
-            4 { PSGalleryInstall; break }
-    
-            #Install scoop
-            5 { ScoopInstall; break }
-    
-            #Add buckets and isntall global utilities
-            6 { UtilitiesInstall; break }
-    
-            #Install audit applications from cyberauditbucket
-            7 { InstallCollectors; break }
-    
-            #Install Analyzers and Reporting applications from cyberauditbucket
-            8 { InstallAnalyzers; break }
-    
-            #Install Attacking scripts and tools
-            9 { InstallAttacks; break }
-    
-            #Update scoop, Powershell and applications
-            10 { UpdateScoop; break }
-    
-            #Licenses
-            11 { Licenses; break }
-    
-            #Uninstal scoop utilities, applications and scoop itself
-            12 { Uninstall; $WaitForInput = $false }
-    
-            #Backup
-            13 { BackupAudits; break }
-    
-            #Windows Subsystem for Linux
-            14 { WindowsSubsystem; break }
-            
-            #RAM
-            15 { RAM; break }
-            
-            #Shrink VM
-            16 { ShrinkVM; break }
-
-            # Export and import CAT
-            17 { OfflineCAT; $WaitForInput = $false }
-            
-            # Download `"Have I Been Pwnd`" leaked passwords hashes DB for Get-bADPasswords script
-            18 { DownloadHIBPDB }
-            #Menu End
-        }
+        
+        
+        [boolean]$WaitForInput = HandleMenuChoises -userInput $userInput
         if ($WaitForInput) {
             read-host "Press ENTER to continue" 
         }
         Clear-Host
-        $WaitForInput = $True
     } while ($userInput -ne '99')    
 }
 
+function HandleMenuChoises {
+    param (
+        [Parameter(Mandatory = $True)]
+        $userInput
+    )
+    [boolean]$WaitForInput = $True
+
+    switch ($userInput) {
+        #Check Windows OS and build versions and if needed it can help upgrade an update latest build
+        0 { DevMenu; $WaitForInput = $false }
+
+        #Check Windows OS and build versions and if needed it can help upgrade an update latest build
+        1 { OSCheck; $WaitForInput = $false }
+
+        #Check Powershell and .Net versions and install if needed and add turn on more features
+        2 { PSCheck; break }
+
+        #Install RSAT
+        3 { RSATInstall; break }
+
+        #Install PowerShell Modules from PSGallery Online
+        4 { PSGalleryInstall; break }
+
+        #Install scoop
+        5 { ScoopInstall; break }
+
+        #Add buckets and isntall global utilities
+        6 { UtilitiesInstall; break }
+
+        #Install audit applications from cyberauditbucket
+        7 { InstallCollectors; break }
+
+        #Install Analyzers and Reporting applications from cyberauditbucket
+        8 { InstallAnalyzers; break }
+
+        #Install Attacking scripts and tools
+        9 { InstallAttacks; break }
+
+        #Update scoop, Powershell and applications
+        10 { UpdateScoop; break }
+
+        #Licenses
+        11 { Licenses; break }
+
+        #Uninstal scoop utilities, applications and scoop itself
+        12 { Uninstall; $WaitForInput = $false }
+
+        #Backup
+        13 { BackupAudits; break }
+
+        #Windows Subsystem for Linux
+        14 { WindowsSubsystem; break }
+        
+        #RAM
+        15 { RAM; break }
+        
+        #Shrink VM
+        16 { ShrinkVM; break }
+
+        # Export and import CAT
+        17 { OfflineCAT; $WaitForInput = $false }
+        
+        # Download `"Have I Been Pwnd`" leaked passwords hashes DB for Get-bADPasswords script
+        18 { DownloadHIBPDB }
+        #Menu End
+    }
+    return $WaitForInput
+}
+
 function DevMenu {
+    Clear-Host
     $menuColor = New-Object System.Collections.ArrayList
     for ($i = 0; $i -lt 100; $i++) {
         $null = $menuColor.Add("White")
     }
     
-    do {
-        #Create the main menu
-        Write-Host ""
-        Write-Host "************************************************************************          " -ForegroundColor White
-        Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***          " -ForegroundColor White
-        Write-Host "************************************************************************          " -ForegroundColor White
-        Write-Host ""
-        Write-Host "     install Developer Features:                            " -ForegroundColor White
-        Write-Host ""
-        Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
-        Write-Host ""
-        Write-Host "     1. Export cyberFunctions | create all cyberFunctions methods global and readable by IDE." -ForegroundColor $menuColor[1]
-        Write-Host ""
-        Write-Host "    99. Quit                                                                      " -ForegroundColor White
-        Write-Host ""
-        $userInput = Read-Host "Select Script Number"
+    #Create the main menu
+    Write-Host ""
+    Write-Host "************************************************************************          " -ForegroundColor White
+    Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***          " -ForegroundColor White
+    Write-Host "************************************************************************          " -ForegroundColor White
+    Write-Host ""
+    Write-Host "     install Developer Features:                            " -ForegroundColor White
+    Write-Host ""
+    Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
+    Write-Host ""
+    Write-Host "     1. Export cyberFunctions | create all cyberFunctions methods global and readable by IDE." -ForegroundColor $menuColor[1]
+    Write-Host "     2. Intall as batch       | Run some functions like a batch" -ForegroundColor $menuColor[1]
+    Write-Host ""
+    Write-Host "    99. Quit                                                                      " -ForegroundColor White
+    Write-Host ""
+    $userInput = Read-Host "Select Script Number"
     
-        [boolean]$WaitForInput = $True
-    
-        switch ($userInput) {
-            # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
-            1 { copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions"; $WaitForInput = $false }
+    switch ($userInput) {
+        # copy local cyber functions module into the PSModulePath, update the rootModule and import the module
+        1 { copy-ModuleToDirectory -Name "$PSScriptRoot\CyberFunctions" }
+
+        2 {
+            $userInput = Read-Host "Enter numbers of main actions separated by a comma"
+            $actions = $userInput -split '\s*,\s*' | Sort-Object | Get-Unique
+            $actions.foreach({
+                    HandleMenuChoises -userInput $_
+                })
         }
-        if ($WaitForInput) {
-            read-host "Press ENTER to continue" 
-        }
-        Clear-Host
-        $WaitForInput = $True
-    } while ($userInput -ne '99')        
+        99 { return }
+    }
+
+    Clear-Host
 }
 
 function OSCheck() {
@@ -385,34 +398,29 @@ function PSGalleryInstall {
     $menuColor[4] = "Yellow"
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
     Install-PackageProvider Nuget -Force
-    Install-Module -Name PowerShellGet -Force -AllowClobber -Scope AllUsers
+    if (!(Get-Module PowerShellGet -ListAvailable )) {
+        Install-Module -Name PowerShellGet -Force -AllowClobber -Scope AllUsers
+    }
     
     foreach ($PSGModule in $PSGModules) {
-        if ($PSGModule -eq "7Zip4PowerShell") {
-            Write-Host "installing standard lib package"
-            #Install-Package PowerShellStandard.Library -Version 5.1.0
-            Write-Host "Installing module $PSGModule"
-            Install-Module -Name 7Zip4Powershell -Scope AllUsers -AllowClobber -Force 
-            Import-Module "$PSGModule"
-            Write-Host "Imported module: $PSGModule"
+        if (Get-Module $PSGModule -ListAvailable) {
+            Write-Host "$PSGModule is already installed"
         } else {
-            Write-Host "Installing module $PSGModule"
-            Install-Module -Name $PSGModule -AllowClobber -Force -Scope AllUsers
-            Import-Module "$PSGModule"
-            Write-Host "Imported module: $PSGModule"
+            if ($PSGModule -eq "7Zip4PowerShell") {
+                Write-Host "installing standard lib package"
+                #Install-Package PowerShellStandard.Library -Version 5.1.0
+                Write-Host "Installing module $PSGModule"
+                Install-Module -Name 7Zip4Powershell -Scope AllUsers -AllowClobber -Force 
+                Import-Module "$PSGModule"
+                Write-Host "Imported module: $PSGModule"
+            } else {
+                Write-Host "Installing module $PSGModule"
+                Install-Module -Name $PSGModule -AllowClobber -Force -Scope AllUsers
+                Import-Module "$PSGModule"
+                Write-Host "Imported module: $PSGModule"
+            }
         }
     }
-
-    #Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false
-    #success "These powershell modules are installed"
-    #Get-Module
-    #Write-Host "Saving powershell modules needed for offline running on remote machines"
-    #foreach ($PSGModule in $PSGModulesOffline)
-    #{
-    #
-    #    Save-Module -Name $PSGModulesOffline -Path $PowerShellsDir -Repository PSGallery -Force
-    #}
-    #$null = Start-Process -PassThru explorer $PowerShellsDir
 }
 
 function ScoopInstall {
@@ -438,6 +446,14 @@ function ScoopInstall {
         Minimal requirement is PowerShell 5 (or later, include PowerShell Core) and .NET Framework 4.5 (or later).
 
 "@
+    $errorAction = $ErrorActionPreference
+    $ErrorActionPreference = "SilentlyContinue"
+    if (Invoke-Expression "scoop prefix scoop" -ErrorAction SilentlyContinue) {
+        Write-Host "Scoop is already installed" -ForegroundColor Red
+        $ErrorActionPreference = $errorAction
+        return
+    }
+    $ErrorActionPreference = $errorAction
     Write-Host $help
     $menuColor[5] = "Yellow"
     Write-Host "Backing up Environment Variables before installing scoop"
@@ -467,9 +483,6 @@ function ScoopInstall {
     scoop checkup
     scoop status
     scoop update
-    #sudo Add-MpPreference -ExclusionPath 'C:\CAT2020\Tools\GlobalScoopApps'
-        
-    
 }
 
 function UtilitiesInstall {
@@ -1101,7 +1114,6 @@ function DownloadHIBPDB {
     } catch {
         Write-Host "error"
     }
-    read-host "Press ENTER to continue"
 }
 
 $runningScriptName = $MyInvocation.MyCommand.Name
@@ -1139,7 +1151,7 @@ $DownloadsDir = New-Item -Path $Tools -Name "\Downloads" -ItemType "directory" -
 $PSGModules = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter", "PSWindowsUpdate", "DSInternals")
 $PSGModulesOffline = @("Testimo", "ImportExcel", "Posh-SSH", "7Zip4PowerShell", "FileSplitter")
 $utilities = @("dotnet-sdk", "Net_Framework_Installed_Versions_Getter", "python27", "python39", "zulu11-jdk", "putty", "winscp", "vcredist2013", "nmap-portable", "rclone", "everything", "VoidToolsCLI", "notepadplusplus", "googlechrome", "firefox", "foxit-reader", "irfanview", "grepwin", "sysinternals", "snmpget", "wireshark")
-$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy", "masscan", "LynisPacked", "zBang","getbadpasswords")
+$CollectorApps = @("ntdsaudit", "RemoteExecutionEnablerforPowerShell", "PingCastle", "goddi", "SharpHound", "Red-Team-Scripts", "Scuba-Windows", "azscan3", "LGPO", "grouper2", "Outflank-Dumpert", "lantopolog", "nessus", "NetScanner64", "AdvancedPortScanner", "skyboxwmicollector", "skyboxwmiparser", "skyboxwsuscollector", "PDQDeploy", "masscan", "LynisPacked", "zBang", "getbadpasswords")
 $GPOBaselines = @("PolicyAnalyzerSecurityBaseline")
 $AnalyzerApps = @("PolicyAnalyzer", "SetObjectSecurity", "LGPO", "BloodHoundAD", "neo4j", "ophcrack", "hashcat", "rockyou", "vista_proba_free", "AppInspector")
 $AttackApps = @("nirlauncher", "ruler", "ncat", "metasploit", "infectionmonkey")
