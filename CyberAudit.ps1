@@ -1398,7 +1398,9 @@ The script will run in background so you would continue to work simultaneously
         Write-Host "Error, Get-bADPasswords not installed"
         return
     }
-    <# No need becacuse the embedded version works with cleartext passwords, while the outer version works with hashed passwords <facepalm>
+    <#
+    # No need becacuse a bug, that the embedded version works with cleartext passwords, while the outer version works with hashed passwords <facepalm>
+    # If the bug will fixed, the code below will be useful instead of installing PSIRepacker indepentently
 # Check if the copy already done before
 if (!(Test-Path -Path "$GBPFolder\PSI\PsiRepacker_x64.exe.old")){
     # Insert PSIRepacker instead of the old one, that from non reason is not working
@@ -1423,26 +1425,30 @@ Press [ENTER] if the file is already in the right place"
             #region Handling the file in case it's a 7z file - extract the files
             if ($source.Extension -match "7z") {
                 $7z = Get-7z
-                if (!(Test-DriveStorage $source.FullName $7z)) {
+                if (!(Test-DriveStorage $source.FullName $7z -DestinationToCheck $passwordListPath)) {
                     Read-Host "Press ENTER to continue"
                     return
                 }
-                $userInput = Read-Host "To extract the file in its current place, press [C], or press [ENTER] to move it"
+                $userInput = Read-Host "To extract the from in its current place, press [ENTER], or press [C] to move it"
                 if ($userInput -eq "c") {
                     Write-Host "Moving file"
-                    $newPath = (Move-Item -Path $source.FullName -Destination $passwordListPath -Force -Verbose -PassThru).FullName
+                    $7zFilePath = (Move-Item -Path $source.FullName -Destination $passwordListPath -Force -Verbose -PassThru).FullName
                 } else {
-                    $newPath = $source.FullName
+                    $7zFilePath = $source.FullName
                 }
                 
                 Write-Host "Extracting 7z"
                 # Extract all files to one directory without preserve files tree
                 # But log the files to stdout
                 # In a conflict, rename extracting file
-                $cmd = "$7z e -bb -aou -o`"$passwordListPath`" `"$newPath`""
+                $cmd = "$7z e -bb -aou -o`"$passwordListPath`" `"$7zFilePath`""
                 $output = Invoke-Expression $cmd 
                 if ($LASTEXITCODE -eq 0) {
-                    Remove-Item $newPath
+                    Write-Host "Files extracted successfully, do you want to delete the 7z file?"
+                    $userInput =  Read-Host "Type [Y] to delete, or [ENTER] to continue"
+                    if ($userInput -eq "y"){
+                        Remove-Item $7zFilePath
+                    }
                 }
                 # Adding the files to a file list, based on the output of the extraction process
                 $output | Select-String -Pattern '^- ' | ForEach-Object {
@@ -1469,17 +1475,17 @@ Press [ENTER] if the file is already in the right place"
 
                 if ($userInput -ne "L") {
                     Write-Host "Repacking files..."
-                    Write-Host "Make sure your RAM memory is big enough to contain each file"
                     Write-Host ""
                     
-                    #TODO: get the extracted files list and do the repacking one everyone of them
                     foreach ($file in $extractedFiles) {
                         $repacked = "$passwordListPath\$($file.BaseName).bin"
                         $repackerPath = "$(scoop prefix PsiRepacker)\PsiRepacker\PsiRepacker.exe"
-                        Start-Process -NoNewWindow -FilePath "$repackerPath" -ArgumentList @("`"$($file.FullName)`"", "`"$repacked") -Wait
+                        Start-Process -NoNewWindow -FilePath "$repackerPath" -ArgumentList @("`"$($file.FullName)`"", "`"$repacked`"") -Wait
                         Write-Host ''
                         Write-Host 'Calculating file hash...'
                         (Get-FileHash -Path $file.FullName -Algorithm SHA256).Hash > "$passwordListPath\$($file.BaseName).chk"
+                        Write-Host "Hash saved in: $passwordListPath\$($file.BaseName).chk"
+
                     }
                 }
             }
@@ -1492,7 +1498,6 @@ Press [ENTER] if the file is already in the right place"
             Write-Host "Warning: Your file is neither a txt file nor a bin file, and won't be helpful for get-bAD-Password" -ForegroundColor Yellow
             Write-Host "Continuing without this file..." -ForegroundColor Yellow
         }
-
     }
 
     $adminGroups = Get-Content  -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt"
@@ -1513,6 +1518,8 @@ Press [ENTER] if the file is already in the right place"
         Write-Host "The groups are: $groups" -Separator "`n- "
         Add-Content -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt" -Value $groups
     }
+    Write-Host ""
+    Write-Host "A window will be open with Get-bADpasswords run"
     Start-Process -FilePath "powershell" -Verb RunAs -ArgumentList "-file `"$PSScriptRoot\CyberGetBadPasswords.ps1`""
 }
 function HandleMenuChoises {
@@ -1742,5 +1749,3 @@ do {
 stop-Transcript | out-null
 $cmd = "everything -exit"
 Invoke-Expression $cmd
-
-

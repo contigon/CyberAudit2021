@@ -1,12 +1,12 @@
 function Get-7z {
     Write-Host "Searching for 7zip..."
     Write-Host ""
-    $7zexeResults = Get-ChildItem -Path $PSScriptroot -Filter "*7za*" -File -Recurse -Depth 10 | Where-Object { $_.name -match "7za\.exe`$" } 
+    $7zexeResults = Get-ChildItem -Path $PSScriptroot\Tools -Filter "*7za*" -File -Recurse -Depth 10 | Where-Object { $_.name -match "7za\.exe`$" } 
     # If 7za.exe is not found, extract it from the zip
     if ($null -eq $7zexeResults ) {
-        if (Test-Path -Path "$PSScriptroot\Tools\SevenZ.zip") {
-            Expand-Archive "$PSScriptroot\Tools\SevenZ.zip" -DestinationPath "$PSScriptroot\Tools\SevenZ\" -Force
-            return "$PSScriptroot\Tools\SevenZ\x64\7za.exe"
+        if (Test-Path -Path "$PSScriptroot\Tools\7z.zip") {
+            Expand-Archive "$PSScriptroot\Tools\7z.zip" -DestinationPath "$PSScriptroot\Tools\7z\" -Force
+            return "$PSScriptroot\Tools\7z\x64\7za.exe"
         } else {
             return Get-7zEXEManually 
         }
@@ -33,7 +33,7 @@ function Get-7z {
         } else { return Get-7zEXEManually }
     } 
     
-    # If there is only one exe file called SevenZ or 7za
+    # If there is only one exe file called 7z or 7za
     elseif ($7zexeResults.VersionInfo.InternalName -match "7za?") { 
         return $7zexeResults.FullName
     } else {
@@ -43,18 +43,18 @@ function Get-7z {
 
 <#
 .DESCRIPTION
-If SevenZ cannot be found automatically in root or subfolders, then user can provide it manually
+If 7z cannot be found automatically in root or subfolders, then user can provide it manually
 Or it can be downloaded automatically from the internet
 #>
 function Get-7zEXEManually {
-    write-host "Cannot find SevenZ, if you have it, type [S] to select it. If not, type [D] and it will be downloaded automatically"
+    write-host "Cannot find 7z, if you have it, type [S] to select it. If not, type [D] and it will be downloaded automatically"
     $userInput = Read-Host
     if ($userInput -eq "D") {
-        dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\Tools\SevenZ.zip"
-        Expand-Archive -Path "$PSScriptroot\Tools\SevenZ.zip" -DestinationPath "$psscriptroot\Tools\SevenZ\" -Force
-        if (($?) -and (Test-Path "$PSScriptroot\Tools\SevenZ\x64\7za.exe")) {
-            Remove-Item "$PSScriptroot\Tools\SevenZ.zip" -Force
-            return "$PSScriptroot\Tools\SevenZ\x64\7za.exe"
+        dl 'https://raw.githubusercontent.com/contigon/Downloads/master/7z1900.zip' "$PSScriptroot\Tools\7z.zip"
+        Expand-Archive -Path "$PSScriptroot\Tools\7z.zip" -DestinationPath "$psscriptroot\Tools\7z\" -Force
+        if (($?) -and (Test-Path "$PSScriptroot\Tools\7z\x64\7za.exe")) {
+            Remove-Item "$PSScriptroot\Tools\7z.zip" -Force
+            return "$PSScriptroot\Tools\7z\x64\7za.exe"
         }
         # Manually search for 7zip.exe by user
     } elseif ($userInput -eq "S") {
@@ -62,7 +62,7 @@ function Get-7zEXEManually {
             $7zExeFile = Get-FileName "exe"
             if ($7zExeFile -eq "Cancel") { Clear-Host; exit }
             elseif (!((Get-ItemProperty $7zExeFile).VersionInfo.internalname -match "7za?")) {
-                Write-Host "File is not a SevenZ exe file! Press [ENTER] to select again" -ForegroundColor Red
+                Write-Host "File is not a 7z exe file! Press [ENTER] to select again" -ForegroundColor Red
                 Clear-Host
                 return
             }
@@ -81,7 +81,8 @@ function Get-CompressedFileExt {
     param ([Parameter(Mandatory = $true)]
         $Path
     )
-    $item = (Invoke-Expression "$SevenZ l $path" | select-string "Type = ")
+    $7z = Get-7z
+    $item = (Invoke-Expression "$7z l $path" | select-string "Type = ")
     return $item -replace "Type = "
 }
 
@@ -102,10 +103,17 @@ function Test-DriveStorage {
         $PackagePath,
 		
         [string]
-        $SevenZ
+        $SevenZ,
+
+        [string]
+        $DestinationToCheck
     )
     [System.IO.FileInfo]$packageFileInfo = $PackagePath
-    $DestinationDrive = [System.IO.Path]::GetPathRoot($packageFileInfo.FullName) -replace "\\"
+    if (!$DestinationToCheck){
+        $DestinationDrive = [System.IO.Path]::GetPathRoot($packageFileInfo.FullName) -replace "\\"
+    }else {
+        $DestinationDrive = [System.IO.Path]::GetPathRoot($DestinationToCheck) -replace "\\"
+    }
     $Drive = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DeviceID -eq $DestinationDrive }
     $DriveFreeSpace = [Math]::Round($Drive.FreeSpace / 1MB)
     
