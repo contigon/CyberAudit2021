@@ -9,6 +9,7 @@
 	.DESCRIPTION
 		Cyber Audit Tool - Build
 #>
+#requires -RunAsAdministrator
 
 # Imports
 Set-ExecutionPolicy Unrestricted
@@ -211,7 +212,7 @@ function DevMenu {
     Write-Host "     Baseline folder is $PSScriptroot                                             " -ForegroundColor yellow
     Write-Host ""
     Write-Host "     1. Export cyberFunctions | create all cyberFunctions methods global and readable by IDE." -ForegroundColor $menuColor[1]
-    Write-Host "     2. Intall as batch       | Run some functions like a batch" -ForegroundColor $menuColor[1]
+    Write-Host "     2. Install as batch      | Run some functions like a batch" -ForegroundColor $menuColor[1]
     Write-Host ""
     Write-Host "    99. Quit                                                                      " -ForegroundColor White
     Write-Host ""
