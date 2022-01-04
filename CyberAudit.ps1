@@ -1445,8 +1445,8 @@ Press [ENTER] if the file is already in the right place"
                 $output = Invoke-Expression $cmd 
                 if ($LASTEXITCODE -eq 0) {
                     Write-Host "Files extracted successfully, do you want to delete the 7z file?"
-                    $userInput =  Read-Host "Type [Y] to delete, or [ENTER] to continue"
-                    if ($userInput -eq "y"){
+                    $userInput = Read-Host "Type [Y] to delete, or [ENTER] to continue"
+                    if ($userInput -eq "y") {
                         Remove-Item $7zFilePath
                     }
                 }
@@ -1475,6 +1475,7 @@ Press [ENTER] if the file is already in the right place"
 
                 if ($userInput -ne "L") {
                     Write-Host "Repacking files..."
+                    Write-Host "Make sure your RAM memory is big enough to contain each file"
                     Write-Host ""
                     
                     foreach ($file in $extractedFiles) {
@@ -1485,7 +1486,6 @@ Press [ENTER] if the file is already in the right place"
                         Write-Host 'Calculating file hash...'
                         (Get-FileHash -Path $file.FullName -Algorithm SHA256).Hash > "$passwordListPath\$($file.BaseName).chk"
                         Write-Host "Hash saved in: $passwordListPath\$($file.BaseName).chk"
-
                     }
                 }
             }
@@ -1517,6 +1517,16 @@ Press [ENTER] if the file is already in the right place"
 
         Write-Host "The groups are: $groups" -Separator "`n- "
         Add-Content -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt" -Value $groups
+    }
+    # Moving big txt files to another folder so the scpript wont scan them again as it runs
+    $passwordTxtsDir = (New-Item -Name "PasswordTxts"  -Path "$GBPFolder\Accessible\" -ItemType Directory -Force).FullName
+    $filesInPasswordsFolder = Get-ChildItem -Path "$passwordListPath"
+    foreach ($file in $filesInPasswordsFolder) {
+        if (($file.Extension -match "txt") -and ($(($file.Length)/1MB) -gt 20) ) {
+            if ($filesInPasswordsFolder.Name.Contains("$($file.BaseName).bin")){
+                Move-Item $file.FullName -Destination $passwordTxtsDir -Force
+            }
+        }
     }
     Write-Host ""
     Write-Host "A window will be open with Get-bADpasswords run"
