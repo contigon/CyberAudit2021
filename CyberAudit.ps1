@@ -42,9 +42,9 @@ function planCustomScan {
     if ($isExcludeFile -eq 'y') {
         $excludeFile = Read-Host "Insert the file path or hit [enter] to use the default file: "
         if ($excludeFile.Length -gt 2) {
-            $excludeFile = "‐‐excludefile " + $excludeFile
+            $excludeFile = "--excludefile " + $excludeFile
         } else {
-            $excludeFile = "‐‐excludefile exclude.txt"
+            $excludeFile = "--excludefile exclude.txt"
         }
     } else {
         $excludeFile = ''
@@ -83,7 +83,7 @@ function scanWebServers {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query = "masscan.exe $nets -p80,443,8080 ––rate $rate"
+    $query = "masscan.exe $nets -p80,443,8080 --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -99,7 +99,7 @@ function scanTopN {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query = "masscan.exe $nets ‐‐top-ports $N ––rate $rate"
+    $query = "masscan.exe $nets --top-ports $N --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -114,7 +114,7 @@ function scanAllPorts {
     $rate = "1000000" 
     # holds the nets to scan
     $nets = Read-Host "Enter the subnets or IP addresses to scan [x.y.z.w/s] with spaces between them: "
-    $query = "masscan.exe $nets -p0-65535 ––rate $rate"
+    $query = "masscan.exe $nets -p0-65535 --rate $rate"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -132,7 +132,7 @@ function scanBroadcast {
     $exludedFile = Read-Host "Type here a file contains nets to exclude your scan to avoid risky results:`nIf `
     your'e not sure what you're doing, please hit ctrl^C to exit and avoiding scan unwanted IPs over the INTERNET!!"
     $ports = Read-Host "Type the port(s) you would like to scan in the wide internet"
-    $query = "masscan.exe $nets -p$ports ––rate $rate ‐‐excludefile $exludedFile"
+    $query = "masscan.exe $nets -p$ports --rate $rate --excludefile $exludedFile"
     $isBanners = AskBanners
     $sourceIP = $null
     if ($isBanners) {
@@ -285,7 +285,6 @@ If you want to use domain $domainFromCreds leave empty"
             shutdown /r /f /c "Rebooting computer after Domain joining or disconnecting"
         }
     }
-    read-host "Press ENTER to continue"
 }
 
 function TestDomain {
@@ -326,8 +325,6 @@ function TestDomain {
             RemoteExecutionEnablerforPowerShell
         }
     }
-    read-host "Press ENTER to continue"
-
 }
 
 function NTDSAquire {
@@ -431,9 +428,6 @@ function CollectNetworkConfig {
     lantopolog
     $ScriptToRun = $PSScriptRoot + "\CyberCollectNetworkConfigV2.ps1"
     &$ScriptToRun
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 
 function PingCastle {
@@ -454,10 +448,7 @@ function PingCastle {
     Write-Host $help
     $ACQ = ACQ("PingCastle")
     $ScriptToRun = $PSScriptRoot + "\CyberPingCastle.ps1"
-    &$ScriptToRun
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
+    &$ScriptToRun   
 }
 
 function Testimo {
@@ -485,9 +476,7 @@ function Testimo {
         import-module activedirectory ; Get-ADDomainController -Filter * | Select-Object Name, ipv4Address, OperatingSystem, site | Sort-Object -Property Name
         Invoke-Testimo  -ExcludeSources DCDiagnostics -ReportPath $ACQ\Testimo.html 
         $null = start-Process -PassThru explorer $ACQ
-    }
-    read-host "Press ENTER to continue"
-    
+    }    
 }
 
 function Goddi {
@@ -531,9 +520,6 @@ Domain Admin permissions.
     $Password = $cred.GetNetworkCredential().Password
     goddi-windows-amd64.exe -username="$env:USERNAME" -password="$Password" -domain="$env:USERDNSDOMAIN" -dc="$DC" -unsafe
     Move-Item -Path $goddiPath\csv\* -Destination $ACQ -Force
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function BackupGPO {
     Clear-Host
@@ -572,10 +558,7 @@ Domain Admin permissions
         }
     }
     $cmd = "robocopy $env:LOGONSERVER\sysvol\ $ACQ\sysvol\ /copyall /mir"
-    Invoke-Expression $cmd
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
+    Invoke-Expression $cmd    
 }
 
 function Sharphound {
@@ -616,8 +599,6 @@ function Sharphound {
     $MaXLoop = read-host "Choose Maximum loop time for session collecting task (eg. 30m)"
     Invoke-BloodHound -CollectionMethod SessionLoop -MaxLoopTime $MaXLoop -OutputDirectory $ACQ
     Invoke-BloodHound -SearchForeset -CollectionMethod All, GPOLocalGroup, LoggedOn -OutputDirectory $ACQ
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
     
 }
 function HostEnum {
@@ -654,9 +635,6 @@ Domain Admin permissions.
     Invoke-HostEnum -ALL -HTMLReport -Verbose
     Move-Item -Path *.html -Destination $ACQ
     Pop-Location
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 
 function Scuba {
@@ -695,10 +673,8 @@ Note: Fix timezone issues when auditing mysql server,
         $null = start-Process -PassThru explorer $ACQ
     } else {
         Write-Host "Could not find any Report, please check why and try again"
-    }            
-    read-host "Press ENTER to continue"
+    }
     KillApp("javaw", "Scuba")
-    
 }
 
 function Azscan {
@@ -727,7 +703,6 @@ will run the tests and prepare a report with the results of the audit
     }
     $cmd = "azscan3"
     Invoke-Expression $cmd
-    
 }
 
 function Grouper2 {
@@ -749,9 +724,6 @@ function Grouper2 {
     Invoke-Expression $cmd
     $cmd = " grouper2.exe -f $ACQ\Report.html"
     Invoke-Expression $cmd
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 
 function Dumpert {
@@ -777,9 +749,6 @@ Please use with care and do not execute on critical servers or Virtual machines 
     Copy-Item -Path $appsDir\Outflank-Dumpert\current\Outflank-Dumpert.exe -Destination \\$target\c$\Windows\temp -Recurse -Force
     winrs -r:$target c:\Windows\temp\$cmd
     Copy-Item -Path $target\c$\WINDOWS\Temp\dumpert.dmp -Destination $ACQ -Recurse -Force
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function Runecast {
     Clear-Host
@@ -823,11 +792,8 @@ the PowerCLI script and Execute the script using PowerCLI
     $userInput = Read-Host "Press [R] to run the Create Role Powershell script (or Enter to contine)"
     if ($userInput -eq "R") {
         $ScriptToRun = $PSScriptRoot + "\CyberCreateRunecastRole.ps1"
-        &$ScriptToRuns
+        &$ScriptToRun
     }
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function Misc {
     Clear-Host
@@ -849,9 +815,6 @@ Checks:
     $ACQ = ACQ("Misc")
     $ScriptToRun = $PSScriptRoot + "\CyberMisc.ps1"
     &$ScriptToRun
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function SkyboxWin {
     Clear-Host
@@ -873,7 +836,7 @@ Creates a folder for each machine found with 2 files
 (ipconfig.txt and netstat.txt)
 
 skybox task:
-We recommend that you use an Import – Directory task to import the
+We recommend that you use an Import - Directory task to import the
 configuration data; the files for each device must be in a separate subdirectory of
 the specified directory (even if you are importing a single device)
                 
@@ -891,11 +854,7 @@ the specified directory (even if you are importing a single device)
             $res = Invoke-command -COMPUTER $compname -ScriptBlock { netstat -r } -ErrorAction SilentlyContinue -ErrorVariable ResolutionError
             Out-File -InputObject ($res) -FilePath "$ACQ\$compname\netstat.txt" -Encoding ascii
         }
-    }
-
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
+    }  
 }
 function Nessus {
     Clear-Host
@@ -975,8 +934,6 @@ elseif ($reg -eq "O")
         $sslbypass = $ie.Document.getElementsByTagName("a") | where-object { $_.id -eq "overridelink" }
         $sslbypass.click()
     }
-    read-host "Press ENTER to continue"
-    
 }
 function Printers {
     Clear-Host
@@ -1089,9 +1046,6 @@ function Printers {
     }
     &$loop
     Pop-Location
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function Sensitive {
     Clear-Host
@@ -1121,9 +1075,6 @@ Checks:
     $ext = ".xls|.pdf|.doc|.zip|.7z|.rar|.txt"
     $cmd = "everything -first-instance -admin -reindex -s '$heb|$eng|$ext' "
     Invoke-Expression $cmd
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function NetworkScan {
     Clear-Host
@@ -1176,9 +1127,6 @@ multi-threaded ICMP, Port, IP, NetBIOS, ActiveDirectory and SNMP scanner
     Invoke-Expression $cmd
     $cmd = "netscanner64"
     Invoke-Expression $cmd
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 
 function skyboxWMIScanner {
@@ -1223,9 +1171,6 @@ wmi_collector.exe -s URI -b BASEDN -u USERNAME -p PASSWORD -o
     $cmd = "wmi_parser -i $ACQ -o $ACQ\parsedFiles"
     success "Starting the parsing phase"
     Invoke-Expression $cmd
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-    
 }
 function SkyboxWsusCollection {
     Clear-Host
@@ -1268,9 +1213,6 @@ function SkyboxWsusCollection {
     $cmd = "SkyboxWsusCollection4 -t remote -h $WsusServer -s true -m all -o $ACQ"
     success "Starting the collection phase over SSL protocol"
     Invoke-Expression $cmd
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-
 }
 
 function SkyboxCheckpintCollector {
@@ -1309,9 +1251,7 @@ Optional field:
     success "Starting the collection phase"
     CheckPointOfflineCollector $xmlFile
     Pop-Location
-    read-host "Press ENTER to continue"
     Copy-Item -Path "$FwURL\offline_config_$FwURL.json" -Destination $ACQ
-    $null = start-Process -PassThru explorer $ACQ
 }
 function HamsterBuildDeploy {
     Clear-Host
@@ -1359,9 +1299,6 @@ Steps that will be executed:
     } else {
         failed "Hamster.exe was not located so script will not execute, Please try again"
     }
-    read-host "Press ENTER to continue"
-    $null = start-Process -PassThru explorer $ACQ
-
 }
 
 function CalculateSubnetPrefix {
@@ -1401,7 +1338,6 @@ function Lynis {
     . $PSScriptRoot\CyberLynis.ps1
     $ACQ = ACQ("Lynis")
     Start-Lynis -ACQ $ACQ -Lynis "$psscriptroot\Tools\Lynis\lynis-remote.tgz"
-    read-host "Press ENTER to continue"
 }
 
 function zBang {
@@ -1432,122 +1368,175 @@ The tool is built from five different scanning modules:
     Write-Host "Please note that pressing `"Reload`" will generate a demo data that has nothing to do with the actual network."
     Write-Host ""
     Write-Host "All reports will be saved at the designated acquisition folder"
-    read-host "Press ENTER to continue"
 }
+<#
+.SYNOPSIS
+    Scan AD's password hashes and compare them to leaked passwords list
+    The script runs in background because of the time it can take
+#>
+function Get-BadPasswords {
+    Clear-Host
+    Import-Module "$PSScriptRoot\Cyber7zFunctions.psm1"
+    $help = @"
 
-Clear-Host
-Import-Module $PSScriptRoot\CyberFunctions.psm1 -Force
+Get-bADpasswords
+----------------------
+This module is able to compare password hashes of enabled Active Directory users against bad/weak/non-compliant passwords (e.g. hackers first guess in brute-force attacks).
 
-$runningScriptName = $MyInvocation.MyCommand.Name
-$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
-ShowIncd
-CyberBginfo
+* Performs comparison against one or multiple wordlist(s).
+* Performs additional comparison against publicly leaked passwords.
+* Performs password comparison against 'null' in the Active Directory (i.e. finds empty/null passwords).
+* Performs password comparison between users in the Active Directory (i.e. finds shared passwords).
 
-$menuColor = "White"
-
-$BaseFolder = AcqBaseFolder
-$ACQ = ACQ("Creds")
-$cred = set-creds
-Test-DomainAdmin $cred | Out-Null
-
-start-Transcript -path $PSScriptRoot\CyberAuditPhase.Log -Force -append
+The script will run in background so you would continue to work simultaneously
 
 
-#get external ip information includin ISP
-Write-Host "Getting external IP information..."
-try {
-    $externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
-    $externalIP > $ACQ\externalIP.txt
-} catch {
-    Write-Host "Internet connection is not available" -ForegroundColor Red
+"@
+    Write-Host $help
+    $GBPFolder = Invoke-Expression "scoop prefix getbadpasswords"
+    if (!(Test-Path $GBPFolder)) {
+        Write-Host "Error, Get-bADPasswords not installed"
+        return
+    }
+    <#
+    # No need becacuse a bug, that the embedded version works with cleartext passwords, while the outer version works with hashed passwords <facepalm>
+    # If the bug will fixed, the code below will be useful instead of installing PSIRepacker indepentently
+# Check if the copy already done before
+if (!(Test-Path -Path "$GBPFolder\PSI\PsiRepacker_x64.exe.old")){
+    # Insert PSIRepacker instead of the old one, that from non reason is not working
+    $source = "$(scoop prefix "PsiRepacker")\PsiRepacker\*"
+    $passwordListPath = "$GBPFolder\PSI\"
+    Copy-Item -Path $source -Destination $passwordListPath -Force
+    Rename-Item -Path "$passwordListPath\PsiRepacker_x64.exe" -NewName "PsiRepacker_x64.exe.old" -Force
+    Rename-Item -Path "$passwordListPath\PsiRepacker.exe" -NewName "PsiRepacker_x64.exe" -Force
 }
+#>
 
-#SET Domain controller name
-$i = 0
-$DC = ($env:LOGONSERVER).TrimStart("\\")
-Write-Host "Please wait, searching for a domain controller..."
-try {
-    if ($DClist = Get-ADDomainController -filter * -Credential $cred | Select-Object hostname, operatingsystem) {
-        foreach ($dcontroller in $DClist) { $i++; $a = $dcontroller.hostname; $os = $dcontroller.operatingsystem ; if (($OS -match "2003") -or $OS -match "2008") { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor red } else { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor green } }
-        if ($i -gt 1) {
-            Write-Host "You are currently logged on to domain controller $DC"
-            Write-Host "Some scripts can not execute automatically on Windows 2003/2008 Domain Controllers"
-            $dcName = Read-Host "Input a different Domain Controller name to connect to (or Enter to continue using $DC)"
-            if ($dcName -ne "") {
-                $c = nltest /Server:$env:COMPUTERNAME /SC_RESET:$env:USERDNSDOMAIN\$dcName
-                if ($c.Contains("The command completed successfully")) {
-                    $DC = $dcName
-                    success "Domain controller was changed to $DC"
-                    $menuColor = "green"
+    $userInput = Read-Host "If you have downloaded the DB manually, press [M] to locate it and we will move it to the right place.
+Press [ENTER] if the file is already in the right place"
+    if ($userInput -eq "M") {
+        [System.IO.FileInfo]$source = Get-FileName
+        [System.Collections.ArrayList]$extractedFiles = [System.Collections.ArrayList]::new()
+        $passwordListPath = Join-Path -Path $GBPFolder -ChildPath "Accessible\PasswordLists"
+        
+        #region Handling file if it is a 7z or txt
+        if ($source.Extension -match "7z|txt") {
+            
+            #region Handling the file in case it's a 7z file - extract the files
+            if ($source.Extension -match "7z") {
+                $7z = Get-7z
+                if (!(Test-DriveStorage $source.FullName $7z -DestinationToCheck $passwordListPath)) {
+                    Read-Host "Press ENTER to continue"
+                    return
+                }
+                $userInput = Read-Host "To extract the from in its current place, press [ENTER], or press [C] to move it"
+                if ($userInput -eq "c") {
+                    Write-Host "Moving file"
+                    $7zFilePath = (Move-Item -Path $source.FullName -Destination $passwordListPath -Force -Verbose -PassThru).FullName
+                } else {
+                    $7zFilePath = $source.FullName
+                }
+                
+                Write-Host "Extracting 7z"
+                # Extract all files to one directory without preserve files tree
+                # But log the files to stdout
+                # In a conflict, rename extracting file
+                $cmd = "$7z e -bb -aou -o`"$passwordListPath`" `"$7zFilePath`""
+                $output = Invoke-Expression $cmd 
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Host "Files extracted successfully, do you want to delete the 7z file?"
+                    $userInput = Read-Host "Type [Y] to delete, or [ENTER] to continue"
+                    if ($userInput -eq "y") {
+                        Remove-Item $7zFilePath
+                    }
+                }
+                # Adding the files to a file list, based on the output of the extraction process
+                $output | Select-String -Pattern '^- ' | ForEach-Object {
+                    $extractedFiles.add([System.IO.FileInfo] "$passwordListPath\$($_ -replace '- ')") | Out-Null
+                } 
+            }
+            #endregion Handling the file in case it a 7z file
+            # In case of txt file:
+            else {
+                # The operation can be changed to moving the file, but it may be more convenient to leave it where it is
+                #$extractedFiles.Add($(Move-Item -Path $source.FullName -Destination $passwordListPath -Force -Verbose -PassThru))
+                $extractedFiles.Add($source) | Out-Null
+            }
+            #region Handling the file after extraction if needed
+            # Now the $extractedFiles contain txt or bin
+            
+            if ($extractedFiles.extension.Contains(".txt")) {
+                Write-Host ""
+                Write-Host "Warning! One of the files is a txt file and not a bin file" -ForegroundColor Yellow
+                Write-Host "If you want to save time, it is recommended to repack the file now so Get-bADPasswords will read it slightly" -ForegroundColor Yellow
+                Write-Host "Notice that Get-bADPasswords will do this action anyway" -ForegroundColor Yellow
+                Write-Host "If you want to do it later press [L], otherwise [ENTER] to do it now automatically" -ForegroundColor Yellow
+                $userInput = Read-Host
+
+                if ($userInput -ne "L") {
+                    Write-Host "Repacking files..."
+                    Write-Host "Make sure your RAM memory is big enough to contain each file"
+                    Write-Host ""
+                    
+                    foreach ($file in $extractedFiles) {
+                        $repacked = "$passwordListPath\$($file.BaseName).bin"
+                        $repackerPath = "$(scoop prefix PsiRepacker)\PsiRepacker\PsiRepacker.exe"
+                        Start-Process -NoNewWindow -FilePath "$repackerPath" -ArgumentList @("`"$($file.FullName)`"", "`"$repacked`"") -Wait
+                        Write-Host ''
+                        Write-Host 'Calculating file hash...'
+                        (Get-FileHash -Path $file.FullName -Algorithm SHA256).Hash > "$passwordListPath\$($file.BaseName).chk"
+                        Write-Host "Hash saved in: $passwordListPath\$($file.BaseName).chk"
+                    }
                 }
             }
+            #endregion Handling the file after extraction if needed
         }
-    } else {
-        failed "No domain server was found, please connect this machine to a domain"
-        $DC = "YOU ARE CURRENTLY NOT CONNECTED TO ANY DOMAIN !!!"
-        $menuColor = "red"
+        #endregion Handling file if it is a 7z or txt
+        elseif ($source.Extension -match "bin") {
+            Move-Item -Path $source.FullName -Destination $passwordListPath -Force -Verbose -PassThru
+        } else {
+            Write-Host "Warning: Your file is neither a txt file nor a bin file, and won't be helpful for get-bAD-Password" -ForegroundColor Yellow
+            Write-Host "Continuing without this file..." -ForegroundColor Yellow
+        }
     }
-} catch {
-    failed "No domain server was found, please connect this machine to a domain"
-    $DC = "YOU ARE CURRENTLY NOT CONNECTED TO ANY DOMAIN !!!"
-    $menuColor = "red"
+
+    $adminGroups = Get-Content  -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt"
+    Write-Host ""
+    Write-Host "The administrative groups which their members will be checked are:" -ForegroundColor Yellow
+    $adminGroups.foreach({ Write-Host "- $_"  -ForegroundColor Yellow }) 
+    Write-Host ""
+    Write-Host "Do you want to add groups to this list?" -ForegroundColor Yellow
+    Write-Host "You can delete groups manually in the txt file in `"$GBPFolder\Accessible\AccountGroups`"" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Press [A] to add, otherwise press [ENTER] to continue" -ForegroundColor Yellow
+    $userInput = Read-Host 
+    Write-Host ""
+    if ( $userInput -eq "a") {
+        $userInput = Read-Host "Enter groups names seperated by a comma"
+        $groups = $userInput -split '\s*,\s*' | Where-Object { $_ -notmatch '^\s*$' }
+
+        Write-Host "The groups are: $groups" -Separator "`n- "
+        Add-Content -Path "$GBPFolder\Accessible\AccountGroups\1 - Administrative.txt" -Value $groups
+    }
+    # Moving big txt files to another folder so the scpript wont scan them again as it runs
+    $passwordTxtsDir = (New-Item -Name "PasswordTxts"  -Path "$GBPFolder\Accessible\" -ItemType Directory -Force).FullName
+    $filesInPasswordsFolder = Get-ChildItem -Path "$passwordListPath"
+    foreach ($file in $filesInPasswordsFolder) {
+        if (($file.Extension -match "txt") -and ($(($file.Length)/1MB) -gt 20) ) {
+            if ($filesInPasswordsFolder.Name.Contains("$($file.BaseName).bin")){
+                Move-Item $file.FullName -Destination $passwordTxtsDir -Force
+            }
+        }
+    }
+    Write-Host ""
+    Write-Host "A window will be open with Get-bADpasswords run"
+    Start-Process -FilePath "powershell" -Verb RunAs -ArgumentList "-file `"$PSScriptRoot\CyberGetBadPasswords.ps1`""
 }
-
-
-Read-Host "Press Enter to start the audit collection phase (or Ctrl+C to quit)"
-
-Clear-Host
-function ShowAuditMenu {
-    #Create the main menu
-    Write-Host ""
-    Write-Host "************************************************************************           " -ForegroundColor White
-    Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***           " -ForegroundColor White
-    Write-Host "************************************************************************           " -ForegroundColor White
-    Write-Host ""
-    Write-Host "     Audit Data Collection:                                                        " -ForegroundColor White
-    Write-Host ""
-    Write-Host "     Domain Controller: $DC                                                        " -ForegroundColor $menuColor
-    Write-Host "     Aquisition folder: $BaseFolder                                             " -ForegroundColor yellow
-    Write-Host ""
-    Write-Host "     1. Domain		| Join/Disconnect machine to/from a Domain                     " -ForegroundColor White
-    Write-Host "     2. Test		| Test Domain Connections and Configurations for audit         " -ForegroundColor White
-    Write-Host "     3. goddi		| dumps Active Directory domain information                    " -ForegroundColor White
-    Write-Host "     4. NTDS		| Remote aquire ntds/SYSTEM from ActiveDirectory               " -ForegroundColor White
-    Write-Host "     5. PingCastle 	| Active Directory Security Scoring                            " -ForegroundColor White
-    Write-Host "     6. GPO      	| Backup Domain GPO to compare using Microsoft PolicyAnalyzer  " -ForegroundColor White
-    Write-Host "     7. Testimo 	| Running audit checks of Active Directory                     " -ForegroundColor White
-    Write-Host "     8. SharpHound	| BloodHound Ingestor for collecting data from AD              " -ForegroundColor White
-    Write-Host "     9. Grouper2 	| Find ActiveDirectory GPO security-related misconfigurations  " -ForegroundColor White
-    Write-Host "    10. HostEnum	| Red-Team-Script Collecting info from remote host and Domain  " -ForegroundColor White
-    Write-Host "    11. SCUBA		| Vulnerability scanning Oracle,MS-SQL,SAP-Sybase,IBM-DB2,MySQ " -ForegroundColor White
-    Write-Host "    12. azscan		| Oracle,Unix-Linux,iSeries,AS400-OS400,HP-Alpha,Vax,DECVax,VMS" -ForegroundColor White
-    Write-Host "    13. Runecast	| Security Hardening checks of VMWARE vSphere/NSX/cloud        " -ForegroundColor White
-    Write-Host "    14. Nessus    	| Vulnerability misconfigurations scanning of OS,Net,Apps,DB..." -ForegroundColor White
-    Write-Host "    15. Misc    	| collection of scripts that checks miscofigurations or vulns  " -ForegroundColor White
-    Write-Host "    16. Printers  	| Searching for printers and print servers vulnerabilities     " -ForegroundColor White
-    Write-Host "    17. Sensitive  	| Searching for Sensitive documents and files on fileservers   " -ForegroundColor White
-    Write-Host "    18. Scanners	| ICMP, Port, IP, NetBIOS, ActiveDirectory and SNMP scanners   " -ForegroundColor White
-    Write-Host "    19. Network 	| Collect config files and routing from network devices (V2)   " -ForegroundColor White
-    Write-Host "    20. Skybox-WMI	| WMI collector of installed programs from all windows machine " -ForegroundColor White
-    Write-Host "    21. Skybox-WSUS	| Collect information from WSUS server                         " -ForegroundColor White
-    Write-Host "    22. Skybox-CP	| Collect information from Checkpoint R80.10 and lower version " -ForegroundColor White
-    Write-Host "    23. Skybox-Win	| All windows machines interface and routing config collector  " -ForegroundColor White
-    Write-Host "    24. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
-    Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
-    Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
-    Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
-    Write-Host "    28. Lynis	 	| Check security of a linux server via ssh                     " -ForegroundColor White
-    Write-Host "    29. zBang	 	| Detects potential privileged account threats in network      " -ForegroundColor White
-    Write-Host ""
-    Write-Host "    99. Quit                                                                       " -ForegroundColor White
-    Write-Host ""
-}
-
-do {
-    ShowAuditMenu
-   
-    $userInput = Read-Host "Select Script Number"
-
+function HandleMenuChoises {
+    param (
+        [Parameter(Mandatory = $true)]
+        $userInput
+    )
     switch ($userInput) { 
         #Domain
         1 { Domain }
@@ -1635,14 +1624,138 @@ do {
 
         # detects potential privileged account threats
         29 { zBang }
+
+        # Get insights into the actual strength and quality of passwords in Active Directory
+        30 { Get-BadPasswords }
         
         #Menu End
-    } 
+    }
+}
+
+function ShowAuditMenu {
+    #Create the main menu
+    Write-Host ""
+    Write-Host "************************************************************************           " -ForegroundColor White
+    Write-Host "*** Cyber Audit Tool (Powershell Edition) - ISRAEL CYBER DIRECTORATE ***           " -ForegroundColor White
+    Write-Host "************************************************************************           " -ForegroundColor White
+    Write-Host ""
+    Write-Host "     Audit Data Collection:                                                        " -ForegroundColor White
+    Write-Host ""
+    Write-Host "     Domain Controller: $DC                                                        " -ForegroundColor $menuColor
+    Write-Host "     Aquisition folder: $BaseFolder                                             " -ForegroundColor yellow
+    Write-Host ""
+    Write-Host "     1. Domain		| Join/Disconnect machine to/from a Domain                     " -ForegroundColor White
+    Write-Host "     2. Test		| Test Domain Connections and Configurations for audit         " -ForegroundColor White
+    Write-Host "     3. goddi		| dumps Active Directory domain information                    " -ForegroundColor White
+    Write-Host "     4. NTDS		| Remote aquire ntds/SYSTEM from ActiveDirectory               " -ForegroundColor White
+    Write-Host "     5. PingCastle 	| Active Directory Security Scoring                            " -ForegroundColor White
+    Write-Host "     6. GPO      	| Backup Domain GPO to compare using Microsoft PolicyAnalyzer  " -ForegroundColor White
+    Write-Host "     7. Testimo 	| Running audit checks of Active Directory                     " -ForegroundColor White
+    Write-Host "     8. SharpHound	| BloodHound Ingestor for collecting data from AD              " -ForegroundColor White
+    Write-Host "     9. Grouper2 	| Find ActiveDirectory GPO security-related misconfigurations  " -ForegroundColor White
+    Write-Host "    10. HostEnum	| Red-Team-Script Collecting info from remote host and Domain  " -ForegroundColor White
+    Write-Host "    11. SCUBA		| Vulnerability scanning Oracle,MS-SQL,SAP-Sybase,IBM-DB2,MySQ " -ForegroundColor White
+    Write-Host "    12. azscan		| Oracle,Unix-Linux,iSeries,AS400-OS400,HP-Alpha,Vax,DECVax,VMS" -ForegroundColor White
+    Write-Host "    13. Runecast	| Security Hardening checks of VMWARE vSphere/NSX/cloud        " -ForegroundColor White
+    Write-Host "    14. Nessus    	| Vulnerability misconfigurations scanning of OS,Net,Apps,DB..." -ForegroundColor White
+    Write-Host "    15. Misc    	| collection of scripts that checks miscofigurations or vulns  " -ForegroundColor White
+    Write-Host "    16. Printers  	| Searching for printers and print servers vulnerabilities     " -ForegroundColor White
+    Write-Host "    17. Sensitive  	| Searching for Sensitive documents and files on fileservers   " -ForegroundColor White
+    Write-Host "    18. Scanners	| ICMP, Port, IP, NetBIOS, ActiveDirectory and SNMP scanners   " -ForegroundColor White
+    Write-Host "    19. Network 	| Collect config files and routing from network devices (V2)   " -ForegroundColor White
+    Write-Host "    20. Skybox-WMI	| WMI collector of installed programs from all windows machine " -ForegroundColor White
+    Write-Host "    21. Skybox-WSUS	| Collect information from WSUS server                         " -ForegroundColor White
+    Write-Host "    22. Skybox-CP	| Collect information from Checkpoint R80.10 and lower version " -ForegroundColor White
+    Write-Host "    23. Skybox-Win	| All windows machines interface and routing config collector  " -ForegroundColor White
+    Write-Host "    24. Hamster    	| Collect information from windows desktops and servers        " -ForegroundColor White
+    Write-Host "    25. Dumpert	 	| LSASS memory dumper for offline extraction of credentials    " -ForegroundColor White
+    Write-Host "    26. DNSTests	| Compare current DNS filtering results against other public DNS servers" -ForegroundColor White
+    Write-Host "    27. masscan	 	| Speed Port Scanning                                          " -ForegroundColor White
+    Write-Host "    28. Lynis	 	| Check security of a linux server via ssh                     " -ForegroundColor White
+    Write-Host "    29. zBang	 	| Detects potential privileged account threats in network      " -ForegroundColor White
+    Write-Host "    30. bADpasswords 	| Get insights into the actual strength and quality of passwords in AD" -ForegroundColor White
+    Write-Host ""
+    Write-Host "    99. Quit                                                                       " -ForegroundColor White
+    Write-Host ""
+}
+
+Clear-Host
+Import-Module $PSScriptRoot\CyberFunctions.psm1 -Force
+
+$runningScriptName = $MyInvocation.MyCommand.Name
+$Host.UI.RawUI.WindowTitle = "Cyber Audit Tool 2021 [$runningScriptName]"
+ShowIncd
+CyberBginfo
+
+$menuColor = "White"
+
+$BaseFolder = AcqBaseFolder
+$ACQ = ACQ("Creds")
+$cred = set-creds
+Test-DomainAdmin $cred | Out-Null
+
+start-Transcript -path $PSScriptRoot\CyberAuditPhase.Log -Force -append
+
+
+#get external ip information includin ISP
+Write-Host "Getting external IP information..."
+try {
+    $externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
+    $externalIP > $ACQ\externalIP.txt
+} catch {
+    Write-Host "Internet connection is not available" -ForegroundColor Red
+}
+
+#SET Domain controller name
+$i = 0
+$DC = ($env:LOGONSERVER).TrimStart("\\")
+Write-Host "Please wait, searching for a domain controller..."
+try {
+    if ($DClist = Get-ADDomainController -filter * -Credential $cred | Select-Object hostname, operatingsystem) {
+        foreach ($dcontroller in $DClist) { $i++; $a = $dcontroller.hostname; $os = $dcontroller.operatingsystem ; if (($OS -match "2003") -or $OS -match "2008") { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor red } else { Write-Host "Domain Controller $i => $a ($OS)" -ForegroundColor green } }
+        if ($i -gt 1) {
+            Write-Host "You are currently logged on to domain controller $DC"
+            Write-Host "Some scripts can not execute automatically on Windows 2003/2008 Domain Controllers"
+            $dcName = Read-Host "Input a different Domain Controller name to connect to (or Enter to continue using $DC)"
+            if ($dcName -ne "") {
+                $c = nltest /Server:$env:COMPUTERNAME /SC_RESET:$env:USERDNSDOMAIN\$dcName
+                if ($c.Contains("The command completed successfully")) {
+                    $DC = $dcName
+                    success "Domain controller was changed to $DC"
+                    $menuColor = "green"
+                }
+            }
+        }
+    } else {
+        failed "No domain server was found, please connect this machine to a domain"
+        $DC = "YOU ARE CURRENTLY NOT CONNECTED TO ANY DOMAIN !!!"
+        $menuColor = "red"
+    }
+} catch {
+    failed "No domain server was found, please connect this machine to a domain"
+    $DC = "YOU ARE CURRENTLY NOT CONNECTED TO ANY DOMAIN !!!"
+    $menuColor = "red"
+}
+
+
+Read-Host "Press Enter to start the audit collection phase (or Ctrl+C to quit)"
+
+Clear-Host
+
+
+do {
+    ShowAuditMenu   
+    Write-Host "Select Script Number"
+    Write-Host "You can choose multiple actions by writing them sequently, separated by a comma"
+    $userInput = Read-Host 
+    $actions = $userInput -split '\s*,\s*' 
+    $actions.foreach({
+            HandleMenuChoises -userInput $_
+        })
+    read-host "Press ENTER to continue"
     Clear-Host
 } while ($userInput -ne '99')
 
 stop-Transcript | out-null
 $cmd = "everything -exit"
 Invoke-Expression $cmd
-
-

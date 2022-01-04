@@ -60,7 +60,7 @@ Function ACQ {
             'Network', 'PingCastle', 'Testimo', 'goddi', 'GPO', 'Sharphound', 'HostEnum', 'Scuba', 'azscan',
             'grouper2', 'Dumpert', 'Runecast', 'Misc', 'IpconfigNetstat', 'Nessuus', 'Printers', 'Sensitive',
             'Netscanner', 'Skybox-WMI', 'Skybox-WSUS', 'Skybox-CheckPointcollector', 'Hamster', 'netstat',
-            'arp', 'PathPing', 'Creds', 'Lynis', "zBang")]
+            'arp', 'PathPing', 'Creds', 'Lynis', "zBang","GetBadPasswords")]
         $dir
     )
     $ACQdir = New-Item -Path $AcqBaseFolder -Name $dir -ItemType "directory" -Force
@@ -918,7 +918,7 @@ function activateWinOptFeatures {
 # Get credential detailes from user and validate them on the domain server
 function Set-Creds {    
     $DomainName = (Get-WmiObject -Namespace root\cimv2 -Class Win32_ComputerSystem).Domain
-    $Credential = Get-Credential -Message "Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName "$DomainName\"
+    $Credential = Get-Credential -Message "Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName "$DomainName\$env:USERNAME"
     while (($null -ne $Credential) -and (-not(Test-Cred $Credential))) {
         $Credential = Get-Credential  -Message "User or password are wrong
 Enter an admin user name which have Domain-Admin permissions, include the domain prefix" -UserName $Credential.UserName
@@ -1021,4 +1021,31 @@ function Add-ACLForRemoteFolder {
     $NewAcl.SetAccessRuleProtection($false, $true)
     $NewAcl.SetAccessRule($fileSystemAccessRule)
     Get-ChildItem -Path $Path -Recurse -Directory -Force | Set-Acl -AclObject $NewAcl
+}
+<#
+.SYNOPSIS
+Smart download from http/s URL by aria2
+#>
+function DownloadWithAria2 {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]
+        $URL,
+        [Parameter(Mandatory=$true)]
+        [string]
+        $destFolder
+    )
+    $ariaParent = Invoke-Expression "scoop prefix aria2" 6>&1
+    $ariaEXEPath = Join-Path -Path $ariaParent -ChildPath "aria2c.exe"
+    if (!(Test-Path $ariaEXEPath)){
+        Write-Host = "Error: aria2 is not installed properly"
+        return
+    }
+    # Check if link is a torrent or direct link
+    if ([System.IO.Path]::GetExtension($URL) -match "torrent"){
+        Start-Process -FilePath $ariaEXEPath -ArgumentList "-d `"$destFolder`" -l `"$ariaParent\arialog.txt`" `"$URL`""
+    }else {
+        Start-Process -FilePath $ariaEXEPath -ArgumentList "-x5 -d `"$destFolder`" -l `"$ariaParent\arialog.txt`" `"$URL`""
+    }
 }
