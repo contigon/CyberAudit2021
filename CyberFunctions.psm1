@@ -1049,3 +1049,15 @@ function DownloadWithAria2 {
         Start-Process -FilePath $ariaEXEPath -ArgumentList "-x5 -d `"$destFolder`" -l `"$ariaParent\arialog.txt`" `"$URL`""
     }
 }
+
+function Get-IPInformation {
+    #get external ip information includin ISP
+    Write-Host "Getting external IP information..."
+    try {
+        $ACQ = ACQ("Creds") *>$null
+        $externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/') -TimeoutSec 10).ip
+        $externalIP > $ACQ\externalIP.txt
+    } catch {
+        Write-Host "Internet connection is not available" -ForegroundColor Red
+    }
+}   

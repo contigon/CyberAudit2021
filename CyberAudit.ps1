@@ -1688,23 +1688,16 @@ ShowIncd
 CyberBginfo
 
 $menuColor = "White"
-
+$IPJob = Start-Job -ScriptBlock {Import-Module $input -Function Get-IPInformation; Get-IPInformation} -InputObject "$PSScriptRoot\CyberFunctions.psm1"
 $BaseFolder = AcqBaseFolder
 $ACQ = ACQ("Creds")
 $cred = set-creds
 Test-DomainAdmin $cred | Out-Null
 
 start-Transcript -path $PSScriptRoot\CyberAuditPhase.Log -Force -append
+Receive-Job -Job $IPJob
 
 
-#get external ip information includin ISP
-Write-Host "Getting external IP information..."
-try {
-    $externalIP = (Invoke-RestMethod -Uri ('https://ipinfo.io/')).ip
-    $externalIP > $ACQ\externalIP.txt
-} catch {
-    Write-Host "Internet connection is not available" -ForegroundColor Red
-}
 
 #SET Domain controller name
 $i = 0
